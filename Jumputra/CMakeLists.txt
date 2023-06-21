@@ -29,7 +29,7 @@ endif()
 # Libraries
 #SFML
 set(SFML_STATIC_LIBRARIES TRUE)
-set(SFML_DIR ../ext/${CONFIGURATION}/SFML-2.6.0/lib/cmake/SFML)
+set(SFML_DIR ../ext/${CMAKE_SYSTEM_NAME}/${CONFIGURATION}/SFML-2.6.0/lib/cmake/SFML)
 find_package(SFML 2.6.0 COMPONENTS graphics window audio REQUIRED)
 
 target_link_libraries(Jumputra PRIVATE sfml-graphics sfml-window sfml-audio)
