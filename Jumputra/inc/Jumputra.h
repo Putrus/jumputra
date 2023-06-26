@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../inc/Menu.h"
-#include "../inc/ResourceManager.h"
+#include "../inc/StateStack.h"
 
 namespace jumputra
 {

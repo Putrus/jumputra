@@ -1,5 +1,12 @@
+#include "State.h"
 
-class StateStack : private sf::NonCopyable
+#include <stack>
+
+namespace jumputra
 {
-
-};
+   class StateStack : private sf::NonCopyable
+   {
+   private:
+      std::stack<State> stack;
+   };
+}

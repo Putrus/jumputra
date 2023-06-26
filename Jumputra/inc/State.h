@@ -1,9 +1,23 @@
-#include <SFML/Graphics.hpp>
+#include "ResourceManager.h"
 
-class State
+namespace jumputra
 {
-public:
-   virtual bool handleEvent(const sf::Event& event) = 0;
-   virtual void render() = 0;
-   virtual bool update(const sf::Time& dt) = 0;
-};
+   struct Context
+   {
+      std::shared_ptr<sf::RenderWindow> window;
+      std::shared_ptr<FontManager> fontManager;
+   };
+
+   class StateStack;
+
+   class State
+   {
+   public:
+      virtual bool handleEvent(const sf::Event& event) = 0;
+      virtual void render() = 0;
+      virtual bool update(const sf::Time& dt) = 0;
+
+   private:
+      std::shared_ptr<StateStack> stack;
+   };
+}
