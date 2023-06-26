@@ -5,7 +5,7 @@
 # Add source to this project's executable.
 file(GLOB SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/src/*.h)
-if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows2")
    add_executable (Jumputra WIN32 ${SOURCES} ${HEADERS})
 else()
    add_executable (Jumputra ${SOURCES} ${HEADERS})
@@ -23,7 +23,7 @@ if (CMAKE_SIZEOF_VOID_P EQUAL 8)
 endif()
 
 if (MSVC)
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ENTRY:mainCRTStartup")
+  #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ENTRY:mainCRTStartup")
 endif()
 
 # Libraries

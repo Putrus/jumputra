@@ -1,9 +1,16 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include "../inc/Menu.h"
+#include "../inc/ResourceManager.h"
 
-namespace put
+namespace jumputra
 {
+   enum JumputraState
+   {
+      MENU = 0,
+      GAME
+   };
+
    class Jumputra
    {
    public:
@@ -12,6 +19,11 @@ namespace put
       void run();
 
    private:
+      void processEvents();
+      void render();
+      void update(const sf::Time& elapsedTime);
+
       std::unique_ptr<sf::RenderWindow> window;
+      std::shared_ptr<FontManager> fontManager;
    };
 }
