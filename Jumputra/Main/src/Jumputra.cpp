@@ -5,8 +5,9 @@
 
 namespace jp
 {
-   Jumputra::Jumputra(unsigned int sizeX, unsigned int sizeY) : mWindow(new sf::RenderWindow(sf::VideoMode(sizeX, sizeY), "Jumputra")),
-      mFontManager(new res::FontManager())
+   Jumputra::Jumputra(unsigned int sizeX, unsigned int sizeY) :
+      mWindow(new sf::RenderWindow(sf::VideoMode(sizeX, sizeY), "Jumputra")),
+      mFontManager(new res::FontManager()), mTimePerFrame(sf::seconds(1.f / 60.f))
    {
       mFontManager->load(res::Font::Pixel, "Resources/Fonts/Pixel.ttf");
       state::Context context = { mWindow, mFontManager };
@@ -48,13 +49,12 @@ namespace jp
       mWindow->display();
    }
 
-   void Jumputra::update(sf::Time& elapsedTime)
+   void Jumputra::update(sf::Time& dt)
    {
-      sf::Time timePerFrame(sf::seconds(1.f / 60.f));
-      while (elapsedTime > timePerFrame)
+      while (dt > mTimePerFrame)
       {
-         elapsedTime -= timePerFrame;
-         mStateStack->update(timePerFrame);
+         dt -= mTimePerFrame;
+         mStateStack->update(mTimePerFrame);
       }
    }
 }
