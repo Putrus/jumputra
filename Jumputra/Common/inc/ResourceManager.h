@@ -1,3 +1,5 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
 
 #include <cassert>
@@ -5,25 +7,10 @@
 #include <stdexcept>
 #include <string>
 
-namespace jumputra
+namespace jp::res
 {
-   enum Font
-   {
-      Pixel = 0
-   };
-
-   enum Texture
-   {
-
-   };
-
-   enum Sound
-   {
-
-   };
-
    template <typename Enum, typename Resource>
-   class ResourceManager
+   class ResourceManager final
    {
    public:
       void load(Enum id, const std::string& path)
@@ -46,6 +33,4 @@ namespace jumputra
    private:
       std::map<Enum, std::unique_ptr<Resource>> resources;
    };
-
-   typedef ResourceManager<Font, sf::Font> FontManager;
 }

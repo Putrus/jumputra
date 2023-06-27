@@ -3,12 +3,12 @@
 #
 
 # Add source to this project's executable.
-file(GLOB SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
-file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/src/*.h)
+file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/Common/inc/*.h ${CMAKE_CURRENT_SOURCE_DIR}/Main/inc/*.h ${CMAKE_CURRENT_SOURCE_DIR}/States/inc/*.h)
+file(GLOB SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Common/src/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Main/src/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/States/src/*.cpp)
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows2")
-   add_executable (Jumputra WIN32 ${SOURCES} ${HEADERS})
+   add_executable (Jumputra WIN32 ${HEADERS} ${SOURCES} )
 else()
-   add_executable (Jumputra ${SOURCES} ${HEADERS})
+   add_executable (Jumputra ${HEADERS} ${SOURCES})
 endif()
 
 # CMake version

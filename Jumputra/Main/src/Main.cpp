@@ -2,7 +2,7 @@
 
 int main()
 {
-   jumputra::Jumputra jumputra(300, 300);
+   jp::Jumputra jumputra(600, 600);
    jumputra.run();
    return 0;
 }
