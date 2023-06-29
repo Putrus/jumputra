@@ -63,10 +63,10 @@ namespace jp::state
             switch (action.id)
             {
             case StateID::Menu:
-               mStack.push_back(std::make_shared<StateMenu>(shared_from_this(), mContext));
+               mStack.push_back(std::make_shared<StateMenu>(this, mContext));
                break;
             case StateID::Game:
-               mStack.push_back(std::make_shared<StateGame>(shared_from_this(), mContext));
+               mStack.push_back(std::make_shared<StateGame>(this, mContext));
                break;
             }
             break;

@@ -7,13 +7,14 @@ namespace jp::state
       setPosition(position);
    }
 
-   StateMenu::StateMenu(std::shared_ptr<StateStack> stack, const Context& context) : State(stack, context)
+   StateMenu::StateMenu(StateStack* stack, const Context& context) : State(stack, context)
    {
-      const float xPos = getContext().window->getSize().x / 2.f - 30.f;
+      const float xPos = getContext().window.getSize().x / 2.f - 30.f;
       float yPos = 50;
-      mItems.push_back(MenuText(sf::Vector2f(xPos, yPos), "Play", context.fontManager->get(res::Font::Pixel)));
+      mItems.push_back(MenuText(sf::Vector2f(xPos, yPos), "Play", context.resources.getFont(res::Font::Pixel)));
       yPos += 50;
-      mItems.push_back(MenuText(sf::Vector2f(xPos, yPos), "Quit", context.fontManager->get(res::Font::Pixel)));
+      mItems.push_back(MenuText(sf::Vector2f(xPos, yPos), "Quit", context.resources.getFont(res::Font::Pixel)));
+      updateSelected(0);
    }
 
    void StateMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -39,7 +40,7 @@ namespace jp::state
          case sf::Keyboard::Enter:
             if (mSelected == 1)
             {
-               getContext().window->close();
+               getContext().window.close();
             }
             else
             {

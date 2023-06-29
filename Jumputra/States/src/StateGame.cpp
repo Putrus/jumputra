@@ -2,7 +2,7 @@
 
 namespace jp::state
 {
-   StateGame::StateGame(std::shared_ptr<StateStack> stack, const Context& context) : State(stack, context)
+   StateGame::StateGame(StateStack* stack, const Context& context) : State(stack, context)
    {
       shape.setRadius(50.f);
       shape.setFillColor(sf::Color::Green);

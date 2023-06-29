@@ -7,7 +7,7 @@ namespace jp::state
    class StateGame final : public State
    {
    public:
-      StateGame(std::shared_ptr<StateStack> stack, const Context& context);
+      StateGame(StateStack* stack, const Context& context);
 
       void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
       bool event(const sf::Event& event) override;

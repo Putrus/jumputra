@@ -7,7 +7,7 @@
 namespace jp::state
 {
    class StateStack final : public sf::Drawable, public Eventable,
-      public Updatable, public std::enable_shared_from_this<StateStack>
+      public Updatable
    {
    public:
       StateStack(const Context& context);

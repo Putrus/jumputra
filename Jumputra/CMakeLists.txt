@@ -29,6 +29,8 @@ endif()
 # Libraries
 #SFML
 set(SFML_STATIC_LIBRARIES TRUE)
+message(${CMAKE_SYSTEM_NAME})
+message(${CONFIGURATION})
 set(SFML_DIR ../ext/${CMAKE_SYSTEM_NAME}/${CONFIGURATION}/SFML-2.6.0/lib/cmake/SFML)
 find_package(SFML 2.6.0 COMPONENTS graphics window audio REQUIRED)
 

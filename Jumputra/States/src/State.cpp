@@ -3,7 +3,7 @@
 
 namespace jp::state
 {
-   State::State(std::shared_ptr<StateStack> stack, const Context& context) : mStack(stack), mContext(context) {}
+   State::State(StateStack* stack, const Context& context) : mStack(stack), mContext(context) {}
 
    const Context& State::getContext() const
    {
