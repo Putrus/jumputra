@@ -16,6 +16,5 @@ namespace jp::state
    private:
       sf::Sprite shape;
       sf::Vector2f speed;
-      std::vector<sf::Sprite> sprites;
    };
 }

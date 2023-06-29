@@ -12,10 +12,6 @@ namespace jp::state
    void StateGame::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
       target.draw(shape);
-      for (const auto& s : sprites)
-      {
-         target.draw(s);
-      }
    }
 
    bool StateGame::event(const sf::Event& event)
@@ -34,18 +30,6 @@ namespace jp::state
          case sf::Keyboard::Right:
             speed = { 0.f, 0.f };
             //view.zoom(0.1);
-            break;
-         case sf::Keyboard::Space:
-            for (int i = 0; i < 300; ++i)
-            {
-               sf::Sprite sprite;
-               sprite.setTexture(getContext().resources.getTexture(res::Texture::Penguin));
-               int rx = std::rand() % 500 + 5;
-               int ry = std::rand() % 500 + 5;
-               sprite.setTextureRect(sf::IntRect(0, 0, 31, 31));
-               sprite.setPosition(rx, ry);
-               sprites.push_back(sprite);
-            }
             break;
          }
       }
