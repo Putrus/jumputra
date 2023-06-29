@@ -14,7 +14,8 @@ namespace jp::state
       bool update(const sf::Time& dt) override;
 
    private:
-      sf::CircleShape shape;
+      sf::Sprite shape;
       sf::Vector2f speed;
+      std::vector<sf::Sprite> sprites;
    };
 }
