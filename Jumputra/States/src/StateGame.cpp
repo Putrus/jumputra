@@ -4,14 +4,14 @@ namespace jp::state
 {
    StateGame::StateGame(StateStack* stack, const Context& context) : State(stack, context)
    {
-      shape.setTexture(context.resources.getTexture(res::Texture::Penguin));
-      shape.setScale(sf::Vector2f(3.f, 3.f));
-      shape.setTextureRect(sf::IntRect(0, 0, 31, 31));
+      player.dyn.setRect(sf::FloatRect(0, 0, 30, 60));
+      player.shape.setSize(sf::Vector2f(30, 60));
+      player.shape.setPosition(0.f, 0.f);
    }
 
    void StateGame::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
-      target.draw(shape);
+      target.draw(player.shape);
    }
 
    bool StateGame::event(const sf::Event& event)
@@ -28,7 +28,7 @@ namespace jp::state
          case sf::Keyboard::Down:
          case sf::Keyboard::Left:
          case sf::Keyboard::Right:
-            speed = { 0.f, 0.f };
+            /*speed = { 0.f, 0.f };*/
             //view.zoom(0.1);
             break;
          }
@@ -38,18 +38,7 @@ namespace jp::state
          float v = 1.f;
          switch (event.key.code)
          {
-         case sf::Keyboard::Up:
-            speed.y = -v;
-            break;
-         case sf::Keyboard::Down:
-            speed.y = v;
-            break;
-         case sf::Keyboard::Left:
-            speed.x = -v;
-            break;
-         case sf::Keyboard::Right:
-            speed.x = v;
-            break;
+         
          }
       }
       return true;
@@ -57,7 +46,13 @@ namespace jp::state
 
    bool StateGame::update(const sf::Time& dt)
    {
-      shape.move({ speed.x * dt.asMilliseconds(), speed.y * dt.asMilliseconds() });
+      std::vector<jp::game::physics::StaticObject> obj;
+      for (const auto& object : objects)
+      {
+         obj.push_back(object.sta);
+      }
+      player.dyn.update(dt, obj);
+      player.shape.setPosition(player.dyn.getPosition());
       return true;
    }
 }

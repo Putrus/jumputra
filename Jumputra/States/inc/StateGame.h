@@ -1,6 +1,7 @@
 #pragma once
 
 #include "State.h"
+#include "../../Game/Physics/inc/DynamicObject.h"
 
 namespace jp::state
 {
@@ -14,7 +15,17 @@ namespace jp::state
       bool update(const sf::Time& dt) override;
 
    private:
-      sf::Sprite shape;
-      sf::Vector2f speed;
+      struct DynObject
+      {
+         sf::RectangleShape shape;
+         jp::game::physics::DynamicObject dyn;
+      } player;
+
+      struct StaObject
+      {
+         sf::RectangleShape shape;
+         jp::game::physics::StaticObject sta;
+      };
+      std::vector<StaObject> objects;
    };
 }
