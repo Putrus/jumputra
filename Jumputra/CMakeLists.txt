@@ -3,8 +3,16 @@
 #
 
 # Add source to this project's executable.
-file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/Common/inc/*.h ${CMAKE_CURRENT_SOURCE_DIR}/Main/inc/*.h ${CMAKE_CURRENT_SOURCE_DIR}/States/inc/*.h)
-file(GLOB SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Common/src/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Main/src/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/States/src/*.cpp)
+file(GLOB HEADERS
+${CMAKE_CURRENT_SOURCE_DIR}/Common/inc/*.h
+${CMAKE_CURRENT_SOURCE_DIR}/Main/inc/*.h
+${CMAKE_CURRENT_SOURCE_DIR}/States/inc/*.h
+${CMAKE_CURRENT_SOURCE_DIR}/Game/Physics/inc/*.h)
+file(GLOB SOURCES
+${CMAKE_CURRENT_SOURCE_DIR}/Common/src/*.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/Main/src/*.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/States/src/*.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/Game/Physics/src/*.cpp)
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows2")
    add_executable (Jumputra WIN32 ${HEADERS} ${SOURCES} )
 else()

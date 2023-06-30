@@ -7,6 +7,10 @@ namespace jp::game::physics
    class StaticObject
    {
    public:
+      StaticObject();
+      StaticObject(const sf::FloatRect& rect);
+      StaticObject(const sf::Vector2f& position, const sf::Vector2f& size);
+
       sf::FloatRect getRect() const;
       sf::Vector2f getPosition() const;
       
