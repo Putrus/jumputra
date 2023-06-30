@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Vector2.h"
+
 namespace jp::game::physics
 {
    class StaticObject

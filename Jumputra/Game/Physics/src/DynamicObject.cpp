@@ -48,11 +48,14 @@ namespace jp::game::physics
                   direction.x = 1.0f;
                }
             }
-            else {
-               if (difference.y > 0) {
+            else
+            {
+               if (difference.y > 0)
+               {
                   direction.y = -1.0f;
                }
-               else {
+               else
+               {
                   direction.y = 1.0f;
                }
             }
@@ -62,16 +65,29 @@ namespace jp::game::physics
                newRect.top = object.getRect().top - newRect.height;
                mVelocity.y = 0.f;
                ret = false;
+               //std::cout << "dy = -1" << std::endl;
                break;
             }
             else if (direction.y == 1.0f)
             {
+               newRect.top = object.getRect().top + object.getRect().height;
                mVelocity.y *= -1.f;
                collision = true;
+               std::cout << "dy = 1" << std::endl;
                break;
             }
             else if (direction.x != 0.0f)
             {
+               if (direction.x > 0)
+               {
+                  std::cout << "dx = 1" << std::endl;
+                  newRect.left = object.getRect().left + object.getRect().width;
+               }
+               else
+               {
+                  std::cout << "dx = -1" << std::endl;
+                  newRect.left = object.getRect().left - newRect.width;
+               }
                mVelocity.x *= -1.f;
                collision = true;
                break;
@@ -79,10 +95,7 @@ namespace jp::game::physics
          }
       }
 
-      if (!collision)
-      {
-         setRect(newRect);
-      }
+      setRect(newRect);
 
       mVelocity.x = mVelocity.x + mAcceleration.x * t;
       mVelocity.y = mVelocity.y + mAcceleration.y * t;
