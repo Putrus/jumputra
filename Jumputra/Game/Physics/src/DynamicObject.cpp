@@ -27,19 +27,55 @@ namespace jp::game::physics
       bool ret = true;
       for (const StaticObject& object : objects)
       {
-         //check collision
          if (newRect.intersects(object.getRect()))
          {
-            if (newRect.top + newRect.height <= object.getRect().top + 10.f)
+            sf::Vector2f center1(newRect.left + newRect.width / 2.f, newRect.top + newRect.height / 2.f);
+            sf::Vector2f center2(object.getRect().left + object.getRect().width / 2.f, object.getRect().top + object.getRect().height / 2.f);
+
+            sf::Vector2f difference = center2 - center1;
+            sf::Vector2f direction(0.0f, 0.0f);
+
+            float xOverlap = (newRect.width + object.getRect().width) / 2.f - std::abs(difference.x);
+            float yOverlap = (newRect.height + object.getRect().height) / 2.f - std::abs(difference.y);
+
+            if (xOverlap <= yOverlap)
+            {
+               if (difference.x > 0)
+               {
+                  direction.x = -1.0f;
+               }
+               else {
+                  direction.x = 1.0f;
+               }
+            }
+            else {
+               if (difference.y > 0) {
+                  direction.y = -1.0f;
+               }
+               else {
+                  direction.y = 1.0f;
+               }
+            }
+
+            if (direction.y == -1.0f)
             {
                newRect.top = object.getRect().top - newRect.height;
                mVelocity.y = 0.f;
                ret = false;
                break;
             }
-            mVelocity.x *= -1.f;
-            collision = true;
-            break;
+            else if (direction.y == 1.0f)
+            {
+               mVelocity.y *= -1.f;
+               collision = true;
+               break;
+            }
+            else if (direction.x != 0.0f)
+            {
+               mVelocity.x *= -1.f;
+               collision = true;
+               break;
+            }
          }
       }
 

@@ -4,7 +4,7 @@ namespace jp::state
 {
    StateGame::StateGame(StateStack* stack, const Context& context) : State(stack, context)
    {
-      player.setPosition({ 300.f, 400.f });
+      player.setPosition({ 310.f, 400.f });
       player.setSize({ 30.f, 60.f });
       player.dyn.setVelocity({ 0.f, 0.f });
       player.dyn.setAcceleration({ 0.0f, 0.001f });
@@ -39,6 +39,14 @@ namespace jp::state
             popState();
             pushState(StateID::Menu);
             break;
+         case sf::Keyboard::Left:
+         case sf::Keyboard::Right:
+            if (!player.jumping)
+            {
+               player.dyn.setVelocity({ 0.f, player.dyn.getVelocity().y });
+               player.jumpSpeed = 0.f;
+            }
+            break;
          case sf::Keyboard::Space:
             if (player.duringSpace)
             {
@@ -49,14 +57,6 @@ namespace jp::state
                player.duringSpace = false;
                player.jumping = true;
                player.dyn.setVelocity({ player.jumpSpeed, -0.8f });
-            }
-            break;
-         case sf::Keyboard::Left:
-         case sf::Keyboard::Right:
-            if (!player.jumping)
-            {
-               player.dyn.setVelocity({ 0.f, player.dyn.getVelocity().y });
-               player.jumpSpeed = 0.f;
             }
             break;
          }
