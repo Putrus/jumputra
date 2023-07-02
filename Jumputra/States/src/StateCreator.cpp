@@ -5,6 +5,7 @@
 #include <jsoncpp.cpp>
 
 #include <iostream>
+#include <filesystem>
 #include <fstream>
 
 namespace jp::state
@@ -45,28 +46,11 @@ namespace jp::state
             moveView(static_cast<float>(mContext.window.getSize().y));
             break;
          case sf::Keyboard::S:
-         {
-            Json::Value jsonRects(Json::arrayValue);
-            for (const auto& object : mObjects)
-            {
-               Json::Value jsonRect;
-               jsonRect["left"] = object.getLeft();
-               jsonRect["top"] = object.getTop();
-               jsonRect["width"] = object.getWidth();
-               jsonRect["height"] = object.getHeight();
-               jsonRects.append(jsonRect);
-            }
-            std::ofstream file(generateJsonFilename());
-            if (file.is_open())
-            {
-               file << jsonRects;
-               file.close();
-            }
-            else
-            {
-               throw std::runtime_error("Failed to save json file");
-            }
-         }
+            saveJson();
+            break;
+         case sf::Keyboard::L:
+            loadLastJson();
+            break;
          }
       }
       if (event.type == sf::Event::MouseButtonReleased)
@@ -131,12 +115,71 @@ namespace jp::state
       mContext.window.setView(mView);
    }
 
+   void StateCreator::saveJson() const
+   {
+      Json::Value jsonRects(Json::arrayValue);
+      for (const auto& object : mObjects)
+      {
+         Json::Value jsonRect;
+         jsonRect["left"] = object.getLeft();
+         jsonRect["top"] = object.getTop();
+         jsonRect["width"] = object.getWidth();
+         jsonRect["height"] = object.getHeight();
+         jsonRects.append(jsonRect);
+      }
+      if (!std::filesystem::exists("StaticObjects"))
+      {
+         std::filesystem::create_directory("StaticObjects");
+      }
+      std::ofstream file(generateJsonFilename());
+      if (file.is_open())
+      {
+         file << jsonRects;
+         file.close();
+      }
+      else
+      {
+         throw std::runtime_error("Failed to save json file");
+      }
+   }
+
+   void StateCreator::loadLastJson()
+   {
+      std::string directory = "StaticObjects";
+      std::filesystem::path newestPath;
+      for (const auto& entry : std::filesystem::directory_iterator(directory))
+      {
+         if (std::filesystem::is_regular_file(entry) && entry.path().extension() == ".json" && (!std::filesystem::exists(newestPath) ||
+            std::filesystem::last_write_time(entry.path()) > std::filesystem::last_write_time(newestPath)))
+         {
+            newestPath = entry.path();
+         }
+      }
+
+      if (std::filesystem::exists(newestPath))
+      {
+         std::ifstream file(newestPath.string());
+         if (file.is_open())
+         {
+            mObjects.clear();
+            Json::Value jsonObjects;
+            file >> jsonObjects;
+            for (const auto& jsonObject : jsonObjects)
+            {
+               mObjects.push_back(game::physics::StaticObject(sf::FloatRect(jsonObject["left"].asFloat(),
+                  jsonObject["top"].asFloat(), jsonObject["width"].asFloat(), jsonObject["height"].asFloat())));
+            }
+            file.close();
+         }
+      }
+   }
+
    std::string StateCreator::generateJsonFilename() const
    {
       std::time_t now = std::time(nullptr);
       std::tm* timeinfo = std::localtime(&now);
       char buffer[80];
       std::strftime(buffer, sizeof(buffer), "%Y-%m-%d_%H-%M-%S", timeinfo);
-      return std::string(buffer) + ".json";
+      return "StaticObjects/" + std::string(buffer) + ".json";
    }
 }

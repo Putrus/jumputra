@@ -23,6 +23,7 @@ endif()
 if (CMAKE_VERSION VERSION_GREATER 3.12)
    set_property(TARGET Jumputra PROPERTY CXX_STANDARD 20)
 endif()
+   set_property(TARGET Jumputra PROPERTY CXX_STANDARD 17)
 
 # Configuration
 set(CONFIGURATION x86)
