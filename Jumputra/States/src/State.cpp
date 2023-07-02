@@ -5,11 +5,6 @@ namespace jp::state
 {
    State::State(StateStack* stack, const Context& context) : mStack(stack), mContext(context) {}
 
-   const Context& State::getContext() const
-   {
-      return mContext;
-   }
-
    void State::pushState(StateID id)
    {
       mStack->pushState(id);

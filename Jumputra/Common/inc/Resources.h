@@ -10,7 +10,6 @@ namespace jp::res
       Pixel = 0
    };
 
-
    enum class Texture : int
    {
       Penguin = 0

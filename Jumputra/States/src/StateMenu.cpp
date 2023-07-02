@@ -9,7 +9,7 @@ namespace jp::state
 
    StateMenu::StateMenu(StateStack* stack, const Context& context) : State(stack, context)
    {
-      const float xPos = getContext().window.getSize().x / 2.f - 30.f;
+      const float xPos = mContext.window.getSize().x / 2.f - 30.f;
       float yPos = 50;
       mItems.push_back(MenuText(sf::Vector2f(xPos, yPos), "Play", context.resources.getFont(res::Font::Pixel)));
       yPos += 50;
@@ -40,7 +40,7 @@ namespace jp::state
          case sf::Keyboard::Enter:
             if (mSelected == 1)
             {
-               getContext().window.close();
+               mContext.window.close();
             }
             else
             {

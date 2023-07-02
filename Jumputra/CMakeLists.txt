@@ -34,8 +34,13 @@ if (MSVC)
   #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ENTRY:mainCRTStartup")
 endif()
 
-# Libraries
-#SFML
+# Header-only Libraries
+set(JSONCPP_DIR ../ext/${CMAKE_SYSTEM_NAME}/${CONFIGURATION}/jsoncpp-1.9.5/dist)
+
+include_directories(${JSONCPP_DIR})
+
+# Static Libraries
+# SFML
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR ../ext/${CMAKE_SYSTEM_NAME}/${CONFIGURATION}/SFML-2.6.0/lib/cmake/SFML)
 find_package(SFML 2.6.0 COMPONENTS graphics window audio REQUIRED)

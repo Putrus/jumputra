@@ -31,7 +31,6 @@ namespace jp::game::physics
       void draw(sf::RenderTarget& target, sf::RenderStates states, const sf::Color& color) const;
 
    private:
-
       sf::FloatRect mRect;
    };
 }

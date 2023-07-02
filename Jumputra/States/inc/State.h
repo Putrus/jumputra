@@ -20,13 +20,12 @@ namespace jp::state
       virtual bool update(const sf::Time& dt) override = 0;
 
    protected:
-      const Context& getContext() const;
-
       void pushState(StateID id);
       void popState();
 
+      Context mContext;
+
    private:
       StateStack* mStack;
-      Context mContext;
    };
 }

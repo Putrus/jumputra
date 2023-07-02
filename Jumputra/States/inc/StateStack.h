@@ -27,7 +27,7 @@ namespace jp::state
          enum class Action : int
          {
             Push = 0,
-            Pop = 1
+            Pop
          } action;
          StateID id = StateID::None;
       };
