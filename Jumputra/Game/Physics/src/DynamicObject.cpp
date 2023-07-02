@@ -1,104 +1,37 @@
 #include "../inc/DynamicObject.h"
 
-#include <iostream>
-
 namespace jp::game::physics
 {
-   DynamicObject::DynamicObject()
-   {}
+   DynamicObject::DynamicObject() {}
 
    DynamicObject::DynamicObject(const sf::FloatRect& rect,
-      const sf::Vector2f& velocity, const sf::Vector2f& acceleration)
-      : StaticObject(rect), mVelocity(velocity), mAcceleration(acceleration)
-   {}
+      const sf::Vector2f& velocity /*= sf::Vector2f(0.f, 0.f)*/,
+      const sf::Vector2f& acceleration /*= sf::Vector2f(0.f, 0.f)*/)
+      : StaticObject(rect), mVelocity(velocity), mAcceleration(acceleration) {}
 
    DynamicObject::DynamicObject(const sf::Vector2f& position, const sf::Vector2f& size,
-      const sf::Vector2f& velocity, const sf::Vector2f& acceleration)
-      : StaticObject(position, size), mVelocity(velocity), mAcceleration(acceleration)
-   {}
+      const sf::Vector2f& velocity /*= sf::Vector2f(0.f, 0.f)*/,
+      const sf::Vector2f& acceleration /*= sf::Vector2f(0.f, 0.f)*/)
+      : StaticObject(position, size), mVelocity(velocity), mAcceleration(acceleration) {}
+
+   void DynamicObject::draw(sf::RenderTarget& target, sf::RenderStates states) const
+   {
+      StaticObject::draw(target, states, sf::Color::Red);
+   }
 
    bool DynamicObject::update(const sf::Time& dt, const std::vector<StaticObject>& objects)
    {
       sf::FloatRect newRect = getRect();
-      float t = dt.asMilliseconds();
+      float t = static_cast<float>(dt.asMilliseconds());
       newRect.left += mVelocity.x * t + (mAcceleration.x * t * t) / 2.f;
       newRect.top += mVelocity.y * t + (mAcceleration.y * t * t) / 2.f;
-      bool collision = false;
       bool ret = true;
       for (const StaticObject& object : objects)
       {
-         if (newRect.intersects(object.getRect()))
-         {
-            sf::Vector2f center1(newRect.left + newRect.width / 2.f, newRect.top + newRect.height / 2.f);
-            sf::Vector2f center2(object.getRect().left + object.getRect().width / 2.f, object.getRect().top + object.getRect().height / 2.f);
-
-            sf::Vector2f difference = center2 - center1;
-            sf::Vector2f direction(0.0f, 0.0f);
-
-            float xOverlap = (newRect.width + object.getRect().width) / 2.f - std::abs(difference.x);
-            float yOverlap = (newRect.height + object.getRect().height) / 2.f - std::abs(difference.y);
-
-            if (xOverlap <= yOverlap)
-            {
-               if (difference.x > 0)
-               {
-                  direction.x = -1.0f;
-               }
-               else {
-                  direction.x = 1.0f;
-               }
-            }
-            else
-            {
-               if (difference.y > 0)
-               {
-                  direction.y = -1.0f;
-               }
-               else
-               {
-                  direction.y = 1.0f;
-               }
-            }
-
-            if (direction.y == -1.0f)
-            {
-               newRect.top = object.getRect().top - newRect.height;
-               mVelocity.y = 0.f;
-               ret = false;
-               //std::cout << "dy = -1" << std::endl;
-               break;
-            }
-            else if (direction.y == 1.0f)
-            {
-               newRect.top = object.getRect().top + object.getRect().height;
-               mVelocity.y *= -1.f;
-               collision = true;
-               std::cout << "dy = 1" << std::endl;
-               break;
-            }
-            else if (direction.x != 0.0f)
-            {
-               if (direction.x > 0)
-               {
-                  std::cout << "dx = 1" << std::endl;
-                  newRect.left = object.getRect().left + object.getRect().width;
-               }
-               else
-               {
-                  std::cout << "dx = -1" << std::endl;
-                  newRect.left = object.getRect().left - newRect.width;
-               }
-               mVelocity.x *= -1.f;
-               collision = true;
-               break;
-            }
-         }
+         ret = checkCollision(newRect, object);
       }
-
       setRect(newRect);
-
-      mVelocity.x = mVelocity.x + mAcceleration.x * t;
-      mVelocity.y = mVelocity.y + mAcceleration.y * t;
+      mVelocity = mVelocity + mAcceleration * t;
       return ret;
    }
 
@@ -120,5 +53,60 @@ namespace jp::game::physics
    void DynamicObject::setAcceleration(const sf::Vector2f& acceleration)
    {
       mAcceleration = acceleration;
+   }
+
+   bool DynamicObject::checkCollision(sf::FloatRect& newRect, const StaticObject& object)
+   {
+      if (newRect.intersects(object.getRect()))
+      {
+         sf::Vector2f newRectCenter(newRect.left + newRect.width / 2.f,
+            newRect.top + newRect.height / 2.f);
+         sf::Vector2f objectCenter(object.getRect().left + object.getRect().width / 2.f,
+            object.getRect().top + object.getRect().height / 2.f);
+
+         sf::Vector2f difference = objectCenter - newRectCenter;
+         sf::Vector2f direction(0.0f, 0.0f);
+
+         sf::Vector2f overlap((newRect.width + object.getRect().width) / 2.f - std::abs(difference.x),
+            (newRect.height + object.getRect().height) / 2.f - std::abs(difference.y));
+
+         if (overlap.x <= overlap.y)
+         {
+            direction.x = difference.x > 0.f ? -1.f : 1.f;
+         }
+         else
+         {
+            direction.y = difference.y > 0.f ? -mAcceleration.y : mAcceleration.y;
+         }
+
+         if (direction.y < 0.f)
+         {
+            //dynamic object hit or is on the ground
+            newRect.top = object.getRect().top - newRect.height;
+            mVelocity.y = 0.f;
+            return true;
+         }
+         else if (direction.y > 0.f)
+         {
+            //dynamic object hit the ceiling/top
+            newRect.top = object.getRect().top + object.getRect().height;
+            mVelocity.y *= -1.f;
+            return true;
+         }
+         else if (direction.x != 0.0f)
+         {
+            //dynamic object hit the wall to the left or right
+            newRect.left = direction.x > 0 ? object.getRect().left + object.getRect().width
+               : object.getRect().left - newRect.width;
+            //if dynamic object is in the air, it bounces, and if it's on the ground, it stops
+            mVelocity.x = inAir ? -mVelocity.x : 0.f;
+            return true;
+         }
+         else
+         {
+            throw std::runtime_error("Failed to check collision, collision direction is { 0, 0 }");
+         }
+      }
+      return false;
    }
 }

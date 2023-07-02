@@ -22,10 +22,10 @@ namespace jp::state
 
    void StateGame::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
-      target.draw(player.shape);
+      target.draw(player.dyn);
       for (const auto& obj : objects)
       {
-         target.draw(obj.shape);
+         target.draw(obj.sta);
       }
    }
 
@@ -115,7 +115,8 @@ namespace jp::state
          {
             player.jumpSpeed = 0.f;
             player.dyn.setVelocity({ 0.f, 0.f });
-         }
+            std::cout << "size: " << sizeof(obj[0]) << std::endl;
+         } 
          player.jumping = false;
       }
       player.shape.setPosition(player.dyn.getPosition());
