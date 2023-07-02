@@ -18,7 +18,7 @@ namespace jp::game::physics
 
       virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-      bool update(const sf::Time& dt, const std::vector<StaticObject>& objects);
+      void update(const sf::Time& dt, const std::vector<StaticObject>& objects);
 
       sf::Vector2f getVelocity() const;
       sf::Vector2f getAcceleration() const;

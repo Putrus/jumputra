@@ -2,16 +2,16 @@
 
 namespace jp::game::physics
 {
-   DynamicObject::DynamicObject() {}
+   DynamicObject::DynamicObject() : mAcceleration(sf::Vector2f(0.f, GRAVITY)) {}
 
    DynamicObject::DynamicObject(const sf::FloatRect& rect,
       const sf::Vector2f& velocity /*= sf::Vector2f(0.f, 0.f)*/,
-      const sf::Vector2f& acceleration /*= sf::Vector2f(0.f, 0.f)*/)
+      const sf::Vector2f& acceleration /*= sf::Vector2f(0.f, GRAVITY)*/)
       : StaticObject(rect), mVelocity(velocity), mAcceleration(acceleration) {}
 
    DynamicObject::DynamicObject(const sf::Vector2f& position, const sf::Vector2f& size,
       const sf::Vector2f& velocity /*= sf::Vector2f(0.f, 0.f)*/,
-      const sf::Vector2f& acceleration /*= sf::Vector2f(0.f, 0.f)*/)
+      const sf::Vector2f& acceleration /*= sf::Vector2f(0.f, GRAVITY)*/)
       : StaticObject(position, size), mVelocity(velocity), mAcceleration(acceleration) {}
 
    void DynamicObject::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -19,20 +19,21 @@ namespace jp::game::physics
       StaticObject::draw(target, states, sf::Color::Red);
    }
 
-   bool DynamicObject::update(const sf::Time& dt, const std::vector<StaticObject>& objects)
+   void DynamicObject::update(const sf::Time& dt, const std::vector<StaticObject>& objects)
    {
       sf::FloatRect newRect = getRect();
       float t = static_cast<float>(dt.asMilliseconds());
       newRect.left += mVelocity.x * t + (mAcceleration.x * t * t) / 2.f;
       newRect.top += mVelocity.y * t + (mAcceleration.y * t * t) / 2.f;
-      bool ret = true;
       for (const StaticObject& object : objects)
       {
-         ret = checkCollision(newRect, object);
+         if (checkCollision(newRect, object))
+         {
+            break;
+         }
       }
       setRect(newRect);
       mVelocity = mVelocity + mAcceleration * t;
-      return ret;
    }
 
    sf::Vector2f DynamicObject::getVelocity() const
