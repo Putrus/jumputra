@@ -13,6 +13,8 @@ namespace jp::state
       float yPos = 50;
       mItems.push_back(MenuText(sf::Vector2f(xPos, yPos), "Play", context.resources.getFont(res::Font::Pixel)));
       yPos += 50;
+      mItems.push_back(MenuText(sf::Vector2f(xPos, yPos), "Creator", context.resources.getFont(res::Font::Pixel)));
+      yPos += 50;
       mItems.push_back(MenuText(sf::Vector2f(xPos, yPos), "Quit", context.resources.getFont(res::Font::Pixel)));
       updateSelected(0);
    }
@@ -38,9 +40,14 @@ namespace jp::state
             updateSelected(1);
             break;
          case sf::Keyboard::Enter:
-            if (mSelected == 1)
+            if (mSelected == 2)
             {
                mContext.window.close();
+            }
+            else if (mSelected == 1)
+            {
+               popState();
+               pushState(StateID::Creator);
             }
             else
             {

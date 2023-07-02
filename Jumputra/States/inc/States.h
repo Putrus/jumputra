@@ -6,6 +6,7 @@ namespace jp::state
    {
       None = 0,
       Menu,
-      Game
+      Game,
+      Creator
    };
 }

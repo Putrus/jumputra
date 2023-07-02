@@ -1,3 +1,4 @@
+#include "../inc/StateCreator.h"
 #include "../inc/StateGame.h"
 #include "../inc/StateMenu.h"
 #include "../inc/StateStack.h"
@@ -67,6 +68,9 @@ namespace jp::state
                break;
             case StateID::Game:
                mStack.push_back(std::make_shared<StateGame>(this, mContext));
+               break;
+            case StateID::Creator:
+               mStack.push_back(std::make_shared<StateCreator>(this, mContext));
                break;
             }
             break;
