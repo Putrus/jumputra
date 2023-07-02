@@ -45,8 +45,16 @@ namespace jp::state
          case sf::Keyboard::Down:
             moveView(static_cast<float>(mContext.window.getSize().y));
             break;
-         case sf::Keyboard::S:
-            saveJson();
+         case sf::Keyboard::Num1:
+         case sf::Keyboard::Num2:
+         case sf::Keyboard::Num3:
+         case sf::Keyboard::Num4:
+         case sf::Keyboard::Num5:
+         case sf::Keyboard::Num6:
+         case sf::Keyboard::Num7:
+         case sf::Keyboard::Num8:
+         case sf::Keyboard::Num9:
+            saveJson(static_cast<int>(event.key.code) - 26);
             break;
          case sf::Keyboard::L:
             loadLastJson();
@@ -115,7 +123,7 @@ namespace jp::state
       mContext.window.setView(mView);
    }
 
-   void StateCreator::saveJson() const
+   void StateCreator::saveJson(int num) const
    {
       Json::Value jsonRects(Json::arrayValue);
       for (const auto& object : mObjects)
@@ -131,7 +139,7 @@ namespace jp::state
       {
          std::filesystem::create_directory("StaticObjects");
       }
-      std::ofstream file(generateJsonFilename());
+      std::ofstream file("StaticObjects/so_0" + std::to_string(num) + ".json");
       if (file.is_open())
       {
          file << jsonRects;
@@ -172,14 +180,5 @@ namespace jp::state
             file.close();
          }
       }
-   }
-
-   std::string StateCreator::generateJsonFilename() const
-   {
-      std::time_t now = std::time(nullptr);
-      std::tm* timeinfo = std::localtime(&now);
-      char buffer[80];
-      std::strftime(buffer, sizeof(buffer), "%Y-%m-%d_%H-%M-%S", timeinfo);
-      return "StaticObjects/" + std::string(buffer) + ".json";
    }
 }

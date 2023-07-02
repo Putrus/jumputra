@@ -18,10 +18,8 @@ namespace jp::state
    private:
       void moveView(float offset);
       void resetView();
-      void saveJson() const;
+      void saveJson(int num) const;
       void loadLastJson();
-
-      std::string generateJsonFilename() const;
 
       std::vector<game::physics::StaticObject> mObjects;
       sf::View mView;
