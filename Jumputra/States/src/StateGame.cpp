@@ -21,17 +21,13 @@ namespace jp::state
             popState();
             pushState(StateID::Menu);
             break;
-         case sf::Keyboard::Left:
-         case sf::Keyboard::Right:
-         case sf::Keyboard::Space:
-            break;
          }
       }
       if (event.type == sf::Event::KeyPressed)
       {
          switch (event.key.code)
          {
-
+            //to do
          }
       }
       return true;

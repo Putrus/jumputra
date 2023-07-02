@@ -22,7 +22,7 @@ namespace jp::game::physics
    void DynamicObject::update(const sf::Time& dt, const std::vector<StaticObject>& objects)
    {
       sf::FloatRect newRect = getRect();
-      float t = static_cast<float>(dt.asMilliseconds());
+      float t = dt.asSeconds();
       newRect.left += mVelocity.x * t + (mAcceleration.x * t * t) / 2.f;
       newRect.top += mVelocity.y * t + (mAcceleration.y * t * t) / 2.f;
       for (const StaticObject& object : objects)
