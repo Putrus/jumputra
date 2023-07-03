@@ -27,12 +27,18 @@ namespace jp::game::physics
       float t = dt.asSeconds();
       newRect.left += mVelocity.x * t + (mAcceleration.x * t * t) / 2.f;
       newRect.top += mVelocity.y * t + (mAcceleration.y * t * t) / 2.f;
+      bool collision = false;
       for (const StaticObject& object : objects)
       {
          if (checkCollision(newRect, object))
          {
-            break;
+            collision = true;
          }
+      }
+      if (!collision)
+      {
+         //no collision means that object is in air
+         inAir = true;
       }
       setRect(newRect);
       mVelocity = mVelocity + mAcceleration * t;
@@ -78,7 +84,7 @@ namespace jp::game::physics
          sf::Vector2f overlap((newRect.width + object.getRect().width) / 2.f - std::abs(difference.x),
             (newRect.height + object.getRect().height) / 2.f - std::abs(difference.y));
 
-         if (overlap.x <= overlap.y)
+         if (overlap.x < overlap.y)
          {
             direction.x = difference.x > 0.f ? -1.f : 1.f;
          }
@@ -92,6 +98,11 @@ namespace jp::game::physics
             //dynamic object hit or is on the ground
             newRect.top = object.getRect().top - newRect.height;
             mVelocity.y = 0.f;
+            if (inAir)
+            {
+               //if object was in air set x-asis velocity to zero
+               mVelocity.x = 0.f;
+            }
             inAir = false;
             return true;
          }
@@ -102,18 +113,16 @@ namespace jp::game::physics
             mVelocity.y *= -1.f;
             return true;
          }
-         else if (direction.x != 0.f)
+         else if (direction.x != 0.f && ((getBottom() > object.getTop() && getBottom() <= object.getBottom()) ||
+            getTop() < object.getBottom() && getTop() >= object.getTop()))
          {
+            //this long if statement fix falling on edges
             //dynamic object hit the wall to the left or right
             newRect.left = direction.x > 0 ? object.getRect().left + object.getRect().width
                : object.getRect().left - newRect.width;
             //if dynamic object is in the air, it bounces, and if it's on the ground, it stops
             mVelocity.x = inAir ? -mVelocity.x : 0.f;
             return true;
-         }
-         else
-         {
-            throw std::runtime_error("Failed to check collision, direction is { 0, 0 }");
          }
       }
       //there is no collision

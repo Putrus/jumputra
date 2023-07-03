@@ -18,6 +18,9 @@ namespace jp::game
       void update(const sf::Time& dt, const std::vector<physics::StaticObject>& objects);
 
       void jump(const sf::Vector2f& velocity);
+      void go(bool right);
+      void stop();
+
       void setScale(float factorX, float factorY);
 
    private:

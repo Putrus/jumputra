@@ -13,7 +13,7 @@ namespace jp::game
 
    bool Game::event(const sf::Event& event)
    {
-      return true;
+      return mWorld.event(event);
    }
    
    bool Game::update(const sf::Time& dt)

@@ -22,7 +22,6 @@ namespace jp::state
    {
       if (event.type == sf::Event::KeyReleased)
       {
-         float height = static_cast<float>(mContext.window.getSize().y);
          switch (event.key.code)
          {
          case sf::Keyboard::Escape:
@@ -31,15 +30,7 @@ namespace jp::state
             break;
          }
       }
-
-      if (event.type == sf::Event::KeyPressed)
-      {
-         switch (event.key.code)
-         {
-            //to do
-         }
-      }
-      return true;
+      return mGame.event(event);
    }
 
    bool StateGame::update(const sf::Time& dt)

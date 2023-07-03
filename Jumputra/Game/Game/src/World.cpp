@@ -26,6 +26,34 @@ namespace jp::game
       }
    }
 
+   bool World::event(const sf::Event& event)
+   {
+      if (event.type == sf::Event::KeyReleased)
+      {
+         switch(event.key.code)
+         {
+         case sf::Keyboard::Left:
+         case sf::Keyboard::Right:
+            mCharacters[0].stop();
+            break;
+         }
+      }
+
+      if (event.type == sf::Event::KeyPressed)
+      {
+         switch (event.key.code)
+         {
+         case sf::Keyboard::Left:
+            mCharacters[0].go(false);
+            break;
+         case sf::Keyboard::Right:
+            mCharacters[0].go(true);
+            break;
+         }
+      }
+      return true;
+   }
+
    bool World::update(const sf::Time& dt)
    {
       for (Character& character : mCharacters)

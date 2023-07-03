@@ -47,7 +47,37 @@ namespace jp::game
 
    void Character::jump(const sf::Vector2f& velocity)
    {
-   
+      if (!mObject.isInAir())
+      {
+         //jump
+         mObject.setVelocity(velocity);
+      }
+   }
+
+   void Character::go(bool right)
+   {
+      if (!mObject.isInAir())
+      {
+         if (right)
+         {
+            //go right
+            mObject.setVelocity(sf::Vector2f(VELOCITY_X, 0.f));
+         }
+         else
+         {
+            //go left
+            mObject.setVelocity(sf::Vector2f(-VELOCITY_X, 0.f));
+         }
+      }
+   }
+
+   void Character::stop()
+   {
+      if (!mObject.isInAir())
+      {
+         //stop running
+         mObject.setVelocity(sf::Vector2f(0.f, 0.f));
+      }
    }
 
    void Character::setScale(float factorX, float factorY)
