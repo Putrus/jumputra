@@ -5,26 +5,11 @@
 
 namespace jp::res
 {
-   enum class Font : int
-   {
-      Pixel = 0
-   };
-
-   enum class Texture : int
-   {
-      Penguin = 0
-   };
-
-   enum class SoundBuffer : int
-   {
-
-   };
-
-   template <typename Enum, typename Resource>
+   template <typename Resource>
    class ResourceManager final
    {
    public:
-      void load(Enum id, const std::string& path)
+      void load(const std::string& id, const std::string& path)
       {
          auto resource = std::make_unique<Resource>();
          if (!resource->loadFromFile(path))
@@ -34,32 +19,32 @@ namespace jp::res
          resources[id] = std::move(resource);
       }
 
-      const Resource& get(Enum id) const
+      const Resource& get(const std::string& name) const
       {
-         auto resource = resources.find(id);
+         auto resource = resources.find(name);
          if (resource == resources.end())
          {
-            throw std::runtime_error("Resource with id " + std::to_string(static_cast<int>(id)) + " doesn't exist");
+            throw std::runtime_error("Resource with name " + name + " doesn't exist");
          }
          return *resource->second;
       }
 
    private:
-      std::map<Enum, std::unique_ptr<Resource>> resources;
+      std::map<std::string, std::unique_ptr<Resource>> resources;
    };
 
-   typedef ResourceManager<Texture, sf::Texture> TextureManager;
-   typedef ResourceManager<Font, sf::Font> FontManager;
-   typedef ResourceManager<SoundBuffer, sf::SoundBuffer> SoundBufferManager;
+   typedef ResourceManager<sf::Texture> TextureManager;
+   typedef ResourceManager<sf::Font> FontManager;
+   typedef ResourceManager<sf::SoundBuffer> SoundBufferManager;
 
    class Resources final
    {
    public:
       Resources();
 
-      const sf::Font& getFont(Font font) const;
-      const sf::Texture& getTexture(Texture texture) const;
-      const sf::SoundBuffer getSoundBuffer(SoundBuffer soundBuffer) const;
+      const sf::Font& getFont(const std::string& font) const;
+      const sf::Texture& getTexture(const std::string& texture) const;
+      const sf::SoundBuffer getSoundBuffer(const std::string& soundBuffer) const;
 
    private:
       void load();

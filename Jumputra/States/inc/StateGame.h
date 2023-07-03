@@ -1,6 +1,8 @@
 #pragma once
 
 #include "State.h"
+
+#include "../../Game/Game/inc/Game.h"
 #include "../../Game/Physics/inc/DynamicObject.h"
 
 namespace jp::state
@@ -17,6 +19,7 @@ namespace jp::state
    private:
       void StateGame::loadLastJson();
 
+      jp::game::Game mGame;
       std::vector<game::physics::StaticObject> mObjects;
       game::physics::DynamicObject mPlayer;
    };

@@ -6,21 +6,16 @@
 #include <filesystem>
 #include <fstream>
 
-
 namespace jp::state
 {
-   StateGame::StateGame(StateStack* stack, const Context& context) : State(stack, context)
+   StateGame::StateGame(StateStack* stack, const Context& context) : State(stack, context), mGame(context)
    {
       loadLastJson();
    }
 
    void StateGame::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
-      target.draw(mPlayer, states);
-      for (const auto& object : mObjects)
-      {
-         target.draw(object, states);
-      }
+      target.draw(mGame, states);
    }
 
    bool StateGame::event(const sf::Event& event)
@@ -49,7 +44,7 @@ namespace jp::state
 
    bool StateGame::update(const sf::Time& dt)
    {
-      return true;
+      return mGame.update(dt);
    }
 
    void StateGame::loadLastJson()

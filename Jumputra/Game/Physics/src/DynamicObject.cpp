@@ -1,5 +1,7 @@
 #include "../inc/DynamicObject.h"
 
+#include <iostream>
+
 namespace jp::game::physics
 {
    DynamicObject::DynamicObject() : mAcceleration(sf::Vector2f(0.f, GRAVITY)) {}

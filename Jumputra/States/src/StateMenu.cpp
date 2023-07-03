@@ -11,11 +11,11 @@ namespace jp::state
    {
       const float xPos = mContext.window.getSize().x / 2.f - 30.f;
       float yPos = 50;
-      mItems.push_back(MenuText(sf::Vector2f(xPos, yPos), "Play", context.resources.getFont(res::Font::Pixel)));
+      mItems.push_back(MenuText(sf::Vector2f(xPos, yPos), "Play", context.resources.getFont("Pixel")));
       yPos += 50;
-      mItems.push_back(MenuText(sf::Vector2f(xPos, yPos), "Creator", context.resources.getFont(res::Font::Pixel)));
+      mItems.push_back(MenuText(sf::Vector2f(xPos, yPos), "Creator", context.resources.getFont("Pixel")));
       yPos += 50;
-      mItems.push_back(MenuText(sf::Vector2f(xPos, yPos), "Quit", context.resources.getFont(res::Font::Pixel)));
+      mItems.push_back(MenuText(sf::Vector2f(xPos, yPos), "Quit", context.resources.getFont("Pixel")));
       updateSelected(0);
    }
 

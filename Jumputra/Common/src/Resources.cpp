@@ -10,17 +10,17 @@ namespace jp::res
       load();
    }
 
-   const sf::Font& Resources::getFont(Font font) const
+   const sf::Font& Resources::getFont(const std::string& font) const
    {
       return mFontManager.get(font);
    }
 
-   const sf::Texture& Resources::getTexture(Texture texture) const
+   const sf::Texture& Resources::getTexture(const std::string& texture) const
    {
       return mTextureManager.get(texture);
    }
 
-   const sf::SoundBuffer Resources::getSoundBuffer(SoundBuffer soundBuffer) const
+   const sf::SoundBuffer Resources::getSoundBuffer(const std::string& soundBuffer) const
    {
       return mSoundBufferManager.get(soundBuffer);
    }
@@ -41,9 +41,9 @@ namespace jp::res
 
    void Resources::loadFonts()
    {
-      std::string dir = std::string(DATA_DIR) + '/' + std::string(RESOURCES_DIR) + '/' + std::string(FONTS_DIR) + '/';
+      std::string dir = std::string(FONTS_DIR);
 
-      mFontManager.load(Font::Pixel, dir + "Pixel.ttf");
+      mFontManager.load("Pixel", dir + "Pixel.ttf");
    }
 
    void Resources::loadSoundBuffers()
@@ -53,8 +53,8 @@ namespace jp::res
 
    void Resources::loadTextures()
    {
-      std::string dir = std::string(DATA_DIR) + '/' + std::string(RESOURCES_DIR) + '/' + std::string(TEXTURES_DIR) + '/';
+      std::string dir = std::string(TEXTURES_DIR);
 
-      mTextureManager.load(Texture::Penguin, dir + "Pixel.ttf");
+      mTextureManager.load("Penguin", dir + "Penguin.png");
    }
 }
