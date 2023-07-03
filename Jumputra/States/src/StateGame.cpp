@@ -1,15 +1,26 @@
 #include "../inc/StateGame.h"
 
+#include <json/json.h>
+
 #include <iostream>
+#include <filesystem>
+#include <fstream>
+
 
 namespace jp::state
 {
    StateGame::StateGame(StateStack* stack, const Context& context) : State(stack, context)
    {
+      loadLastJson();
    }
 
    void StateGame::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
+      target.draw(mPlayer, states);
+      for (const auto& object : mObjects)
+      {
+         target.draw(object, states);
+      }
    }
 
    bool StateGame::event(const sf::Event& event)
@@ -39,5 +50,36 @@ namespace jp::state
    bool StateGame::update(const sf::Time& dt)
    {
       return true;
+   }
+
+   void StateGame::loadLastJson()
+   {
+      std::string directory = "StaticObjects";
+      std::filesystem::path newestPath;
+      for (const auto& entry : std::filesystem::directory_iterator(directory))
+      {
+         if (std::filesystem::is_regular_file(entry) && entry.path().extension() == ".json" && (!std::filesystem::exists(newestPath) ||
+            std::filesystem::last_write_time(entry.path()) > std::filesystem::last_write_time(newestPath)))
+         {
+            newestPath = entry.path();
+         }
+      }
+
+      if (std::filesystem::exists(newestPath))
+      {
+         std::ifstream file(newestPath.string());
+         if (file.is_open())
+         {
+            mObjects.clear();
+            Json::Value jsonObjects;
+            file >> jsonObjects;
+            for (const auto& jsonObject : jsonObjects)
+            {
+               mObjects.push_back(game::physics::StaticObject(sf::FloatRect(jsonObject["left"].asFloat(),
+                  jsonObject["top"].asFloat(), jsonObject["width"].asFloat(), jsonObject["height"].asFloat())));
+            }
+            file.close();
+         }
+      }
    }
 }

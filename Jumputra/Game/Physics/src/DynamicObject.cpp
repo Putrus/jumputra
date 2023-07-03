@@ -46,6 +46,11 @@ namespace jp::game::physics
       return mAcceleration;
    }
 
+   bool DynamicObject::isInAir() const
+   {
+      return inAir;
+   }
+
    void DynamicObject::setVelocity(const sf::Vector2f& velocity)
    {
       mVelocity = velocity;
@@ -85,6 +90,7 @@ namespace jp::game::physics
             //dynamic object hit or is on the ground
             newRect.top = object.getRect().top - newRect.height;
             mVelocity.y = 0.f;
+            inAir = false;
             return true;
          }
          else if (direction.y > 0.f)
@@ -94,7 +100,7 @@ namespace jp::game::physics
             mVelocity.y *= -1.f;
             return true;
          }
-         else if (direction.x != 0.0f)
+         else if (direction.x != 0.f)
          {
             //dynamic object hit the wall to the left or right
             newRect.left = direction.x > 0 ? object.getRect().left + object.getRect().width
@@ -105,9 +111,10 @@ namespace jp::game::physics
          }
          else
          {
-            throw std::runtime_error("Failed to check collision, collision direction is { 0, 0 }");
+            throw std::runtime_error("Failed to check collision, direction is { 0, 0 }");
          }
       }
+      //there is no collision
       return false;
    }
 }

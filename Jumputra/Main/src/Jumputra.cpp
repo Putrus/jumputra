@@ -1,12 +1,14 @@
 #include "../inc/Jumputra.h"
 
+#include "../../Common/inc/Constant.h"
+
 #include <iostream>
 #include <memory>
 
 namespace jp
 {
    Jumputra::Jumputra(unsigned int sizeX, unsigned int sizeY) :
-      mWindow(sf::VideoMode(sizeX, sizeY), "Jumputra"), mTimePerFrame(sf::seconds(1.f / 90.f)),
+      mWindow(sf::VideoMode(sizeX, sizeY), "Jumputra"), mTimePerFrame(sf::seconds(SECONDS_PER_FRAME)),
       mStateStack(Context(mWindow, mResources))
    {
       mStateStack.pushState(state::StateID::Menu);

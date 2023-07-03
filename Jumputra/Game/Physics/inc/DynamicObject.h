@@ -1,7 +1,8 @@
 #pragma once
 
-#include "PhysicsGlobals.h"
 #include "StaticObject.h"
+
+#include "../../../Common/inc/Constant.h"
 
 #include <vector>
 
@@ -22,6 +23,7 @@ namespace jp::game::physics
 
       sf::Vector2f getVelocity() const;
       sf::Vector2f getAcceleration() const;
+      bool isInAir() const;
 
       void setVelocity(const sf::Vector2f& velocity);
       void setAcceleration(const sf::Vector2f& acceleration);

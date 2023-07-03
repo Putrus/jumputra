@@ -63,9 +63,12 @@ namespace jp::res
 
    private:
       void load();
+      void loadFonts();
+      void loadTextures();
+      void loadSoundBuffers();
 
-      TextureManager mTextureManager;
       FontManager mFontManager;
       SoundBufferManager mSoundBufferManager;
+      TextureManager mTextureManager;
    };
 }
