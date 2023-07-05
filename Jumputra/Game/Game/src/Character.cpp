@@ -20,9 +20,8 @@ namespace jp::game
          {
             if (character["name"] == name)
             {
-               mFrameSize.x = character["frameSize"]["width"].asInt();
-               mFrameSize.y = character["frameSize"]["height"].asInt();
-               mSprite.setTextureRect(sf::IntRect(0, 0, mFrameSize.x, mFrameSize.y));
+               mSprite.setTextureRect(sf::IntRect(0, 0, character["frameSize"]["width"].asInt(),
+                  character["frameSize"]["height"].asInt()));
                mCollisionOffset.x = character["collisionRect"]["left"].asFloat();
                mCollisionOffset.y = character["collisionRect"]["top"].asFloat();
                mObject = physics::DynamicObject(sf::FloatRect(0.f, 0.f,
@@ -42,7 +41,7 @@ namespace jp::game
    void Character::update(const sf::Time& dt, const std::vector<physics::StaticObject>& objects)
    {
       mObject.update(dt, objects);
-      mSprite.setPosition(mObject.getPosition() - mCollisionOffset);
+      mSprite.update(dt, mObject.getPosition() - mCollisionOffset);
    }
 
    void Character::jump(const sf::Vector2f& velocity)
@@ -58,6 +57,8 @@ namespace jp::game
    {
       if (!mObject.isInAir())
       {
+         mSprite.setAnimation(CharacterAnimation::RunSide);
+         mSprite.setSide(right);
          if (right)
          {
             //go right
@@ -77,6 +78,7 @@ namespace jp::game
       {
          //stop running
          mObject.setVelocity(sf::Vector2f(0.f, 0.f));
+         mSprite.setAnimation(CharacterAnimation::IdleSide);
       }
    }
 

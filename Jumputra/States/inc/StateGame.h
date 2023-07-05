@@ -17,10 +17,6 @@ namespace jp::state
       bool update(const sf::Time& dt) override;
 
    private:
-      void StateGame::loadLastJson();
-
       jp::game::Game mGame;
-      std::vector<game::physics::StaticObject> mObjects;
-      game::physics::DynamicObject mPlayer;
    };
 }

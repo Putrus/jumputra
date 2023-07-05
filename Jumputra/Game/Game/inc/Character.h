@@ -1,5 +1,7 @@
 #pragma once
 
+#include "CharacterSprite.h"
+
 #include "../../Physics/inc/DynamicObject.h"
 
 #include "../../../Common/inc/Context.h"
@@ -25,8 +27,7 @@ namespace jp::game
 
    private:
       physics::DynamicObject mObject;
-      sf::Sprite mSprite; //animated sprite
-      sf::Vector2i mFrameSize;
+      CharacterSprite mSprite;
       sf::Vector2f mCollisionOffset;
    };
 }
