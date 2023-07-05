@@ -41,6 +41,22 @@ namespace jp::game
    void Character::update(const sf::Time& dt, const std::vector<physics::StaticObject>& objects)
    {
       mObject.update(dt, objects);
+      if (mObject.isInAir())
+      {
+         mSprite.setAnimation(CharacterAnimation::FlySide);
+         if (mObject.getVelocity().y > 0)
+         {
+            mSprite.setCurrentFrame(1);
+         }
+         else
+         {
+            mSprite.setCurrentFrame(0);
+         }
+      }
+      else if (mSprite.getAnimation() == CharacterAnimation::FlySide)
+      {
+         mSprite.setAnimation(CharacterAnimation::IdleSide);
+      }
       mSprite.update(dt, mObject.getPosition() - mCollisionOffset);
    }
 
@@ -57,18 +73,51 @@ namespace jp::game
    {
       if (!mObject.isInAir())
       {
-         mSprite.setAnimation(CharacterAnimation::RunSide);
-         mSprite.setSide(right);
+         CharacterSide side = mSprite.getSide();
          if (right)
          {
+            mSprite.setSide(CharacterSide::Right);
+            if (side == CharacterSide::Left)
+            {
+               mSprite.setAnimation(CharacterAnimation::TurnFront, 0);
+            }
+            else if (side == CharacterSide::Front)
+            {
+               mSprite.setAnimation(CharacterAnimation::TurnSide, 0);
+            }
+            else if (side == CharacterSide::Right)
+            {
+               mSprite.setAnimation(CharacterAnimation::RunSide);
+               mObject.setVelocity(sf::Vector2f(VELOCITY_X, 0.f));
+            }
             //go right
-            mObject.setVelocity(sf::Vector2f(VELOCITY_X, 0.f));
          }
          else
          {
+            mSprite.setSide(CharacterSide::Left);
             //go left
-            mObject.setVelocity(sf::Vector2f(-VELOCITY_X, 0.f));
+            if (side == CharacterSide::Right)
+            {
+               mSprite.setAnimation(CharacterAnimation::TurnFront, 0);
+            }
+            else if (side == CharacterSide::Front)
+            {
+               mSprite.setAnimation(CharacterAnimation::TurnSide, 0);
+            }
+            else if (side == CharacterSide::Left)
+            {
+               mSprite.setAnimation(CharacterAnimation::RunSide);
+               mObject.setVelocity(sf::Vector2f(-VELOCITY_X, 0.f));
+            }
          }
+      }
+   }
+
+   void Character::readyForJump()
+   {
+      if (mSprite.getAnimation() != CharacterAnimation::JumpSide)
+      {
+         mSprite.setAnimation(CharacterAnimation::JumpSide, 0);
       }
    }
 
@@ -77,8 +126,12 @@ namespace jp::game
       if (!mObject.isInAir())
       {
          //stop running
+         CharacterSide side = mSprite.getSide();
          mObject.setVelocity(sf::Vector2f(0.f, 0.f));
-         mSprite.setAnimation(CharacterAnimation::IdleSide);
+         if (side == CharacterSide::Left || side == CharacterSide::Right)
+         {
+            mSprite.setAnimation(CharacterAnimation::IdleSide);
+         }
       }
    }
 

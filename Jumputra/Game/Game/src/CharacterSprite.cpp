@@ -65,6 +65,41 @@ namespace jp::game
          }
          break;
       }
+      case CharacterAnimation::JumpSide:
+      {
+         animUpdateSeconds = 0.5f;
+         while (mAnimSeconds > animUpdateSeconds)
+         {
+            int currentFrame = getCurrentFrame();
+            if (currentFrame != 2)
+            {
+               setCurrentFrame(++currentFrame);
+            }
+            mAnimSeconds -= animUpdateSeconds;
+         }
+         break;
+      }
+      case CharacterAnimation::TurnFront:
+      case CharacterAnimation::TurnSide:
+         animUpdateSeconds = 0.2f;
+         while (mAnimSeconds > animUpdateSeconds)
+         {
+            int currentFrame = getCurrentFrame();
+            if (currentFrame != 2)
+            {
+               setCurrentFrame(++currentFrame);
+            }
+            else if (getAnimation() == CharacterAnimation::TurnFront)
+            {
+               setAnimation(CharacterAnimation::IdleFront, 0);
+            }
+            else
+            {
+               setAnimation(CharacterAnimation::IdleSide, 0);
+            }
+            mAnimSeconds -= animUpdateSeconds;
+         }
+         break;
       }
       return true;
    }
@@ -74,17 +109,46 @@ namespace jp::game
       return static_cast<CharacterAnimation>(getTextureRect().top / getTextureRect().height);
    }
 
-   void CharacterSprite::setAnimation(CharacterAnimation animation)
+   CharacterSide CharacterSprite::getSide() const
    {
-      setTextureRectTop(static_cast<int>(animation));
+      CharacterAnimation animation = getAnimation();
+      if (animation == CharacterAnimation::IdleFront ||
+         animation == CharacterAnimation::FlyFront ||
+         animation == CharacterAnimation::JumpFront)
+      {
+         return CharacterSide::Front;
+      }
+      else if (animation == CharacterAnimation::TurnFront || animation == CharacterAnimation::TurnSide)
+      {
+         return CharacterSide::Turning;
+      }
+      else
+      {
+         return getTextureRect().width > 0 ? CharacterSide::Right : CharacterSide::Left;
+      }
    }
 
-   void CharacterSprite::setSide(bool right)
+   void CharacterSprite::setAnimation(CharacterAnimation animation, int frame /*= -1*/)
+   {
+      CharacterAnimation previousAnimation = getAnimation();
+      if (previousAnimation != getAnimation())
+      {
+         //animation change so timer reset
+         mAnimSeconds = 0.f;
+      }
+      setTextureRectTop(static_cast<int>(animation));
+      if (frame > -1 && frame < 3)
+      {
+         setCurrentFrame(frame);
+      }
+   }
+
+   void CharacterSprite::setSide(CharacterSide side)
    {
       sf::IntRect textureRect = getTextureRect();
       //for blinking bug
       int currentFrame = getCurrentFrame();
-      if (right)
+      if (side == CharacterSide::Front || side == CharacterSide::Right)
       {
          textureRect.width = std::abs(textureRect.width);
       }
@@ -94,13 +158,6 @@ namespace jp::game
       }
       setTextureRect(textureRect);
       setCurrentFrame(currentFrame);
-   }
-
-   void CharacterSprite::setTextureRectTop(int top)
-   {
-      sf::IntRect textureRect = getTextureRect();
-      textureRect.top = top * textureRect.height;
-      setTextureRect(textureRect);
    }
 
    void CharacterSprite::setCurrentFrame(int frame)
@@ -115,6 +172,11 @@ namespace jp::game
       setTextureRect(textureRect);
    }
 
+   bool CharacterSprite::isFlipped() const
+   {
+      return getTextureRect().width < 0;
+   }
+
    int CharacterSprite::getCurrentFrame() const
    {
       int currentFrame = getTextureRect().left / std::abs(getTextureRect().width);
@@ -125,8 +187,10 @@ namespace jp::game
       return currentFrame;
    }
 
-   bool CharacterSprite::isFlipped() const
+   void CharacterSprite::setTextureRectTop(int top)
    {
-      return getTextureRect().width < 0;
+      sf::IntRect textureRect = getTextureRect();
+      textureRect.top = top * textureRect.height;
+      setTextureRect(textureRect);
    }
 }

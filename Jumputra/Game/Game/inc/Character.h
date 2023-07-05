@@ -21,6 +21,7 @@ namespace jp::game
 
       void jump(const sf::Vector2f& velocity);
       void go(bool right);
+      void readyForJump();
       void stop();
 
       void setScale(float factorX, float factorY);
@@ -29,5 +30,7 @@ namespace jp::game
       physics::DynamicObject mObject;
       CharacterSprite mSprite;
       sf::Vector2f mCollisionOffset;
+      float mJumpSeconds = 0.f;
+      sf::Clock mClock;
    };
 }

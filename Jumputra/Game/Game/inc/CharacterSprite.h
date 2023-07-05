@@ -4,6 +4,14 @@
 
 namespace jp::game
 {
+   enum class CharacterSide : int
+   {
+      Front = 0,
+      Left,
+      Right,
+      Turning
+   };
+
    enum class CharacterAnimation : int
    {
       IdleFront = 0,
@@ -24,17 +32,18 @@ namespace jp::game
       bool update(const sf::Time& dt, const sf::Vector2f& position);
 
       CharacterAnimation getAnimation() const;
+      CharacterSide getSide() const;
 
-      void setAnimation(CharacterAnimation animation);
-      void setSide(bool right);
+      void setAnimation(CharacterAnimation animation, int frame = -1);
+      void setSide(CharacterSide side);
+      void setCurrentFrame(int frame);
 
    private:
-      void setTextureRectTop(int top);
-      void setCurrentFrame(int frame);
+      bool isFlipped() const;
 
       int getCurrentFrame() const;
 
-      bool isFlipped() const;
+      void setTextureRectTop(int top);
 
       float mAnimSeconds = 0.f;
       bool mRun = false;

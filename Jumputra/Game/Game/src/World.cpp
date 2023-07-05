@@ -15,14 +15,14 @@ namespace jp::game
 
    void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
-      for (const Character& character : mCharacters)
-      {
-         target.draw(character, states);
-      }
-
       for (const physics::StaticObject& object : mObjects)
       {
          target.draw(object, states);
+      }
+
+      for (const Character& character : mCharacters)
+      {
+         target.draw(character, states);
       }
    }
 
@@ -48,6 +48,9 @@ namespace jp::game
             break;
          case sf::Keyboard::Right:
             mCharacters[0].go(true);
+            break;
+         case sf::Keyboard::Space:
+            mCharacters[0].readyForJump();
             break;
          }
       }
