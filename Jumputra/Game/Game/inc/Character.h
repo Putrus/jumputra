@@ -19,7 +19,7 @@ namespace jp::game
       void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
       void update(const sf::Time& dt, const std::vector<physics::StaticObject>& objects);
 
-      void jump(const sf::Vector2f& velocity);
+      void jump();
       void go(bool right);
       void readyForJump();
       void stop();
@@ -30,7 +30,7 @@ namespace jp::game
       physics::DynamicObject mObject;
       CharacterSprite mSprite;
       sf::Vector2f mCollisionOffset;
-      float mJumpSeconds = 0.f;
+      float mJumpVelocity = 0.f;
       sf::Clock mClock;
    };
 }

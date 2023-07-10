@@ -41,9 +41,21 @@ namespace jp::game
    void Character::update(const sf::Time& dt, const std::vector<physics::StaticObject>& objects)
    {
       mObject.update(dt, objects);
+      CharacterAnimation previousAnimation = mSprite.getAnimation();
       if (mObject.isInAir())
       {
-         mSprite.setAnimation(CharacterAnimation::FlySide);
+         if (previousAnimation == CharacterAnimation::TurnFront ||
+            previousAnimation == CharacterAnimation::IdleFront ||
+            previousAnimation == CharacterAnimation::JumpFront ||
+            previousAnimation == CharacterAnimation::FlyFront)
+         {
+            mSprite.setAnimation(CharacterAnimation::FlyFront);
+         }
+         else
+         {
+            mSprite.setAnimation(CharacterAnimation::FlySide);
+         }
+
          if (mObject.getVelocity().y > 0)
          {
             mSprite.setCurrentFrame(1);
@@ -53,19 +65,43 @@ namespace jp::game
             mSprite.setCurrentFrame(0);
          }
       }
-      else if (mSprite.getAnimation() == CharacterAnimation::FlySide)
+      else if (previousAnimation == CharacterAnimation::FlyFront)
+      {
+         //set idle animation
+         mSprite.setAnimation(CharacterAnimation::IdleFront);
+      }
+      else if (previousAnimation == CharacterAnimation::FlySide)
       {
          mSprite.setAnimation(CharacterAnimation::IdleSide);
+      }
+      else if (previousAnimation == CharacterAnimation::JumpFront ||
+         previousAnimation == CharacterAnimation::JumpSide)
+      {
+         mJumpVelocity = std::max(mJumpVelocity + dt.asSeconds() * JUMP_VELOCITY_Y, MAX_JUMP_VELOCITY_Y);
       }
       mSprite.update(dt, mObject.getPosition() - mCollisionOffset);
    }
 
-   void Character::jump(const sf::Vector2f& velocity)
+   void Character::jump()
    {
       if (!mObject.isInAir())
       {
-         //jump
-         mObject.setVelocity(velocity);
+         CharacterSide side = mSprite.getSide();
+         //fix situation when y velocity is 0.f;
+         mJumpVelocity = std::min(mJumpVelocity, -10.f);
+         if (side == CharacterSide::Front)
+         {
+            mObject.setVelocity(sf::Vector2f(0.f, mJumpVelocity));
+         }
+         else if (side == CharacterSide::Right)
+         {
+            mObject.setVelocity(sf::Vector2f(JUMP_VELOCITY_X, mJumpVelocity));
+         }
+         else
+         {
+            mObject.setVelocity(sf::Vector2f(-JUMP_VELOCITY_X, mJumpVelocity));
+         }
+         mJumpVelocity = 0.f;
       }
    }
 
@@ -77,6 +113,8 @@ namespace jp::game
          if (right)
          {
             mSprite.setSide(CharacterSide::Right);
+            //go right
+            mObject.setVelocity(sf::Vector2f(GROUND_VELOCITY_X, 0.f));
             if (side == CharacterSide::Left)
             {
                mSprite.setAnimation(CharacterAnimation::TurnFront, 0);
@@ -88,14 +126,13 @@ namespace jp::game
             else if (side == CharacterSide::Right)
             {
                mSprite.setAnimation(CharacterAnimation::RunSide);
-               mObject.setVelocity(sf::Vector2f(VELOCITY_X, 0.f));
             }
-            //go right
          }
          else
          {
             mSprite.setSide(CharacterSide::Left);
             //go left
+            mObject.setVelocity(sf::Vector2f(-GROUND_VELOCITY_X, 0.f));
             if (side == CharacterSide::Right)
             {
                mSprite.setAnimation(CharacterAnimation::TurnFront, 0);
@@ -107,7 +144,6 @@ namespace jp::game
             else if (side == CharacterSide::Left)
             {
                mSprite.setAnimation(CharacterAnimation::RunSide);
-               mObject.setVelocity(sf::Vector2f(-VELOCITY_X, 0.f));
             }
          }
       }
@@ -115,9 +151,22 @@ namespace jp::game
 
    void Character::readyForJump()
    {
-      if (mSprite.getAnimation() != CharacterAnimation::JumpSide)
+      CharacterAnimation animation = mSprite.getAnimation();
+      if (animation != CharacterAnimation::JumpSide && animation != CharacterAnimation::JumpFront)
       {
-         mSprite.setAnimation(CharacterAnimation::JumpSide, 0);
+         if (mObject.getVelocity().x > 0.f && animation != CharacterAnimation::FlyFront && animation != CharacterAnimation::FlySide)
+         {
+            mObject.setVelocity(sf::Vector2f(0.f, 0.f));
+         }
+         CharacterSide side = mSprite.getSide();
+         if (side == CharacterSide::Left || side == CharacterSide::Right)
+         {
+            mSprite.setAnimation(CharacterAnimation::JumpSide, 0);
+         }
+         else if (side == CharacterSide::Front)
+         {
+            mSprite.setAnimation(CharacterAnimation::JumpFront, 0);
+         }
       }
    }
 

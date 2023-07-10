@@ -36,6 +36,9 @@ namespace jp::game
          case sf::Keyboard::Right:
             mCharacters[0].stop();
             break;
+         case sf::Keyboard::Space:
+            mCharacters[0].jump();
+            break;
          }
       }
 

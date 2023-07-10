@@ -121,7 +121,7 @@ namespace jp::game::physics
             newRect.left = direction.x > 0 ? object.getRect().left + object.getRect().width
                : object.getRect().left - newRect.width;
             //if dynamic object is in the air, it bounces, and if it's on the ground, it stops
-            mVelocity.x = inAir ? -mVelocity.x : 0.f;
+            mVelocity.x = inAir ? -mVelocity.x * BOUNCE_FACTOR : 0.f;
             return true;
          }
       }

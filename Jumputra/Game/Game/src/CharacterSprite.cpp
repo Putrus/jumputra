@@ -7,19 +7,18 @@ namespace jp::game
    bool CharacterSprite::update(const sf::Time& dt, const sf::Vector2f& position)
    {
       setPosition(position);
-
       mAnimSeconds += dt.asSeconds();
       float animUpdateSeconds = 0.f;
+      int currentFrame = getCurrentFrame();
       switch (getAnimation())
       {
       case CharacterAnimation::IdleFront:
       case CharacterAnimation::IdleSide:
       {
          animUpdateSeconds = 0.5f;
-         while (mAnimSeconds > animUpdateSeconds)
+         if (mAnimSeconds > animUpdateSeconds)
          {
-            mAnimSeconds -= animUpdateSeconds;
-            if (getCurrentFrame() == 1)
+            if (currentFrame == 1)
             {
                //20% chance for blink
                int random = std::rand() % 100 + 1;
@@ -36,16 +35,16 @@ namespace jp::game
             {
                setCurrentFrame(1);
             }
+            mAnimSeconds = 0.f;
          }
          break;
       }
       case CharacterAnimation::RunSide:
       {
          animUpdateSeconds = 0.2f;
-         while (mAnimSeconds > animUpdateSeconds)
+         if (mAnimSeconds > animUpdateSeconds)
          {
-            mAnimSeconds -= animUpdateSeconds;
-            if (getCurrentFrame() == 1)
+            if (currentFrame == 1)
             {
                if (mRun)
                {
@@ -62,29 +61,30 @@ namespace jp::game
             {
                setCurrentFrame(1);
             }
+            mAnimSeconds = 0.f;
          }
          break;
       }
+      case CharacterAnimation::JumpFront:
       case CharacterAnimation::JumpSide:
       {
          animUpdateSeconds = 0.5f;
-         while (mAnimSeconds > animUpdateSeconds)
+         if (mAnimSeconds > animUpdateSeconds)
          {
-            int currentFrame = getCurrentFrame();
             if (currentFrame != 2)
             {
                setCurrentFrame(++currentFrame);
             }
-            mAnimSeconds -= animUpdateSeconds;
+            mAnimSeconds = 0.f;
          }
          break;
       }
       case CharacterAnimation::TurnFront:
       case CharacterAnimation::TurnSide:
-         animUpdateSeconds = 0.2f;
-         while (mAnimSeconds > animUpdateSeconds)
+      {
+         animUpdateSeconds = 0.1f;
+         if (mAnimSeconds > animUpdateSeconds)
          {
-            int currentFrame = getCurrentFrame();
             if (currentFrame != 2)
             {
                setCurrentFrame(++currentFrame);
@@ -97,9 +97,10 @@ namespace jp::game
             {
                setAnimation(CharacterAnimation::IdleSide, 0);
             }
-            mAnimSeconds -= animUpdateSeconds;
+            mAnimSeconds = 0.f;
          }
          break;
+      }
       }
       return true;
    }
@@ -131,7 +132,7 @@ namespace jp::game
    void CharacterSprite::setAnimation(CharacterAnimation animation, int frame /*= -1*/)
    {
       CharacterAnimation previousAnimation = getAnimation();
-      if (previousAnimation != getAnimation())
+      if (animation != previousAnimation)
       {
          //animation change so timer reset
          mAnimSeconds = 0.f;
@@ -152,7 +153,7 @@ namespace jp::game
       {
          textureRect.width = std::abs(textureRect.width);
       }
-      else
+      else if (side == CharacterSide::Left)
       {
          textureRect.width = -std::abs(textureRect.width);
       }
