@@ -12,6 +12,8 @@ namespace jp
       mStateStack(Context(mWindow, mResources))
    {
       mStateStack.pushState(state::StateID::Menu);
+      mWindow.setSize(sf::Vector2u(1280, 720));
+      mWindow.setPosition(sf::Vector2i(0, 0));
    }
 
    void Jumputra::run()

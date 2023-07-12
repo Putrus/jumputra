@@ -68,7 +68,7 @@ namespace jp::game
       case CharacterAnimation::JumpFront:
       case CharacterAnimation::JumpSide:
       {
-         animUpdateSeconds = 0.5f;
+         animUpdateSeconds = 0.4f;
          if (mAnimSeconds > animUpdateSeconds)
          {
             if (currentFrame != 2)

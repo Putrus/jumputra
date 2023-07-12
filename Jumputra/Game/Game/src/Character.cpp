@@ -31,8 +31,8 @@ namespace jp::game
          }
          file.close();
       }
-      setScale(3.f, 3.f);
    }
+
    void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
       target.draw(mSprite);
@@ -110,6 +110,7 @@ namespace jp::game
       if (!mObject.isInAir())
       {
          CharacterSide side = mSprite.getSide();
+         CharacterAnimation animation = mSprite.getAnimation();
          if (right)
          {
             mSprite.setSide(CharacterSide::Right);
@@ -182,13 +183,5 @@ namespace jp::game
             mSprite.setAnimation(CharacterAnimation::IdleSide);
          }
       }
-   }
-
-   void Character::setScale(float factorX, float factorY)
-   {
-      mSprite.setScale(factorX, factorY);
-      mObject.setSize(sf::Vector2f(mObject.getSize().x * factorX, mObject.getSize().y * factorY));
-      mCollisionOffset.x *= factorX;
-      mCollisionOffset.y *= factorY;
    }
 }

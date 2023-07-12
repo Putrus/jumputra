@@ -24,8 +24,6 @@ namespace jp::game
       void readyForJump();
       void stop();
 
-      void setScale(float factorX, float factorY);
-
    private:
       physics::DynamicObject mObject;
       CharacterSprite mSprite;
