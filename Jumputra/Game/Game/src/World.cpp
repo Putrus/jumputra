@@ -9,18 +9,17 @@ namespace jp::game
 {
    World::World(const Context& context)
    {
-      mCharacters.push_back(Character("Penguin", context));
       loadJson();
    }
 
    void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
-      for (const physics::StaticObject& object : mObjects)
+      for (const physics::StaticObject& object : mStatics)
       {
          target.draw(object, states);
       }
 
-      for (const Character& character : mCharacters)
+      for (const physics::DynamicObject& character : mDynamics)
       {
          target.draw(character, states);
       }
@@ -32,13 +31,6 @@ namespace jp::game
       {
          switch(event.key.code)
          {
-         case sf::Keyboard::Left:
-         case sf::Keyboard::Right:
-            mCharacters[0].stop();
-            break;
-         case sf::Keyboard::Space:
-            mCharacters[0].jump();
-            break;
          }
       }
 
@@ -46,15 +38,6 @@ namespace jp::game
       {
          switch (event.key.code)
          {
-         case sf::Keyboard::Left:
-            mCharacters[0].go(false);
-            break;
-         case sf::Keyboard::Right:
-            mCharacters[0].go(true);
-            break;
-         case sf::Keyboard::Space:
-            mCharacters[0].readyForJump();
-            break;
          }
       }
       return true;
@@ -62,9 +45,9 @@ namespace jp::game
 
    bool World::update(const sf::Time& dt)
    {
-      for (Character& character : mCharacters)
+      for (physics::DynamicObject& character : mDynamics)
       {
-         character.update(dt, mObjects);
+         character.update(dt, mStatics);
       }
       return true;
    }
@@ -74,12 +57,12 @@ namespace jp::game
       std::ifstream file(WORLD_JSON);
       if (file.is_open())
       {
-         mObjects.clear();
+         mStatics.clear();
          Json::Value jsonObjects;
          file >> jsonObjects;
          for (const auto& jsonObject : jsonObjects)
          {
-            mObjects.push_back(game::physics::StaticObject(sf::FloatRect(jsonObject["left"].asFloat(),
+            mStatics.push_back(game::physics::StaticObject(sf::FloatRect(jsonObject["left"].asFloat(),
                jsonObject["top"].asFloat(), jsonObject["width"].asFloat(), jsonObject["height"].asFloat())));
          }
          file.close();

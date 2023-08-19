@@ -1,50 +1,380 @@
 [
+	//1 tent and old man in the forest
 	{
-		"height" : 10.0,
+		"height" : 32.0,
+		"left" : 128.0,
+		"top" : 15448.0,
+		"width" : 224.0
+	},
+	{
+		"height" : 176.0,
 		"left" : 0.0,
-		"top" : 350.0,
-		"width" : 640.0
+		"top" : 15304.0,
+		"width" : 128.0
 	},
 	{
-		"height" : 150.0,
+		"height" : 176.0,
+		"left" : 352.0,
+		"top" : 15304.0,
+		"width" : 128.0
+	},
+	{
+		"height" : 184.0,
 		"left" : 0.0,
-		"top" : 200.0,
-		"width" : 200.0
-	},
-	{
-		"height" : 150.0,
-		"left" : 440.0,
-		"top" : 200.0,
-		"width" : 200.0
-	},
-	{
-		"height" : 41.0,
-		"left" : 200.0,
-		"top" : 309.0,
-		"width" : 52.0
-	},
-	{
-		"height" : 46.0,
-		"left" : 252.0,
-		"top" : 304.0,
+		"top" : 15120.0,
 		"width" : 8.0
 	},
 	{
-		"height" : 41.0,
-		"left" : 388.0,
-		"top" : 309.0,
-		"width" : 52.0
-	},
-	{
-		"height" : 46.0,
-		"left" : 380.0,
-		"top" : 304.0,
+		"height" : 184.0,
+		"left" : 472.0,
+		"top" : 15120.0,
 		"width" : 8.0
 	},
 	{
-		"height" : 25.0,
-		"left" : 240.0,
-		"top" : 75.0,
+		"height" : 48.0,
+		"left" : 184.0,
+		"top" : 15160.0,
+		"width" : 112.0
+	},
+	//2 just forest
+	{
+		"height" : 32.0,
+		"left" : 295.0,
+		"top" : 15056.0,
+		"width" : 98.0
+	},
+	{
+		"height" : 32.0,
+		"left" : 408.0,
+		"top" : 14958.0,
+		"width" : 64.0
+	},
+	{
+		"height" : 32.0,
+		"left" : 256.0,
+		"top" : 14958.0,
+		"width" : 72.0
+	},
+	{
+		"height" : 64.0,
+		"left" : 120.0,
+		"top" : 14863.0,
+		"width" : 72.0
+	},
+	{
+		"height" : 90.0,
+		"left" : 8.0,
+		"top" : 14840.0,
+		"width" : 72.0
+	},
+	{
+		"height" : 360.0,
+		"left" : 0.0,
+		"top" : 14760.0,
+		"width" : 8.0
+	},
+	{
+		"height" : 360.0,
+		"left" : 472.0,
+		"top" : 14760.0,
+		"width" : 8.0
+	},
+	//3 forest continue
+	{
+		"height" : 16.0,
+		"left" : 208.0,
+		"top" : 14704.0,
+		"width" : 48.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 320.0,
+		"top" : 14704.0,
+		"width" : 57.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 424.0,
+		"top" : 14656.0,
+		"width" : 48.0
+	},
+	{
+		"height" : 48.0,
+		"left" : 288.0,
+		"top" : 14608.0,
+		"width" : 48.0
+	},
+	{
+		"height" : 32.0,
+		"left" : 192.0,
+		"top" : 14624.0,
+		"width" : 96.0
+	},
+	{
+		"height" : 46.0,
+		"left" : 160.0,
+		"top" : 14519.0,
+		"width" : 56.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 8.0,
+		"top" : 14496.0,
+		"width" : 56.0
+	},
+	{
+		"height" : 360.0,
+		"left" : 0.0,
+		"top" : 14400.0,
+		"width" : 8.0
+	},
+	{
+		"height" : 360.0,
+		"left" : 472.0,
+		"top" : 14400.0,
+		"width" : 8.0
+	},
+	//4 big tree with red leaves
+	{
+		"height" : 56.0,
+		"left" : 136.0,
+		"top" : 14360.0,
+		"width" : 72.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 8.0,
+		"top" : 14256.0,
+		"width" : 56.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 136.0,
+		"top" : 14256.0,
+		"width" : 72.0
+	},
+	{
+		"height" : 72.0,
+		"left" : 296.0,
+		"top" : 14200.0,
+		"width" : 32.0
+	},
+	{
+		"height" : 160.0,
+		"left" : 328.0,
+		"top" : 14112.0,
+		"width" : 16.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 344.0,
+		"top" : 14112.0,
+		"width" : 56.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 432.0,
+		"top" : 14168.0,
 		"width" : 40.0
-	}
+	},
+	{
+		"height" : 80.0,
+		"left" : 136.0,
+		"top" : 14128.0,
+		"width" : 40.0
+	},
+	{
+		"height" : 136.0,
+		"left" : 136.0,
+		"top" : 13992.0,
+		"width" : 16.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 112.0,
+		"top" : 13992.0,
+		"width" : 24.0
+	},
+	{
+		"height" : 64.0,
+		"left" : 328.0,
+		"top" : 13992.0,
+		"width" : 16.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 344.0,
+		"top" : 13992.0,
+		"width" : 24.0
+	},
+	{
+		"height" : 360.0,
+		"left" : 0.0,
+		"top" : 14040.0,
+		"width" : 8.0
+	},
+	{
+		"height" : 360.0,
+		"left" : 472.0,
+		"top" : 14040.0,
+		"width" : 8.0
+	},
+	//5 red forest continue
+	{
+		"height" : 16.0,
+		"left" : 8.0,
+		"top" : 13920.0,
+		"width" : 32.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 328.0,
+		"top" : 13920.0,
+		"width" : 40.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 440.0,
+		"top" : 13840.0,
+		"width" : 32.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 288.0,
+		"top" : 13768.0,
+		"width" : 32.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 224.0,
+		"top" : 13752.0,
+		"width" : 32.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 160.0,
+		"top" : 13736.0,
+		"width" : 32.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 40.0,
+		"top" : 13768.0,
+		"width" : 32.0
+	},
+	{
+		"height" : 48.0,
+		"left" : 152.0,
+		"top" : 13648.0,
+		"width" : 176.0
+	},
+	{
+		"height" : 360.0,
+		"left" : 0.0,
+		"top" : 13680.0,
+		"width" : 8.0
+	},
+	{
+		"height" : 360.0,
+		"left" : 472.0,
+		"top" : 13680.0,
+		"width" : 8.0
+	},
+	//6 canals entrance
+	{
+		"height" : 16.0,
+		"left" : 128.0,
+		"top" : 13560.0,
+		"width" : 48.0
+	},
+	{
+		"height" : 176.0,
+		"left" : 288.0,
+		"top" : 13400.0,
+		"width" : 16.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 304.0,
+		"top" : 13400.0,
+		"width" : 168.0
+	},
+	{
+		"height" : 24.0,
+		"left" : 304.0,
+		"top" : 13464.0,
+		"width" : 40.0
+	},
+	{
+		"height" : 72.0,
+		"left" : 440.0,
+		"top" : 13504.0,
+		"width" : 32.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 8.0,
+		"top" : 13504.0,
+		"width" : 48.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 56.0,
+		"top" : 13392.0,
+		"width" : 24.0
+	},
+	{
+		"height" : 40.0,
+		"left" : 80.0,
+		"top" : 13392.0,
+		"width" : 16.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 80.0,
+		"top" : 13432.0,
+		"width" : 112.0
+	},
+	{
+		"height" : 56.0,
+		"left" : 136.0,
+		"top" : 13320.0,
+		"width" : 56.0
+	},
+	{
+		"height" : 136.0,
+		"left" : 8.0,
+		"top" : 13200.0,
+		"width" : 96.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 104.0,
+		"top" : 13320.0,
+		"width" : 32.0
+	},
+	{
+		"height" : 16.0,
+		"left" : 328.0,
+		"top" : 13344.0,
+		"width" : 96.0
+	},
+	{
+		"height" : 40.0,
+		"left" : 288.0,
+		"top" : 13304.0,
+		"width" : 136.0
+	},
+	{
+		"height" : 360.0,
+		"left" : 0.0,
+		"top" : 13320.0,
+		"width" : 8.0
+	},
+	{
+		"height" : 360.0,
+		"left" : 472.0,
+		"top" : 13320.0,
+		"width" : 8.0
+	},
 ]

@@ -19,5 +19,7 @@ namespace jp::game
 
    private:
       World mWorld;
+      sf::View mView;
+      const Context& mContext;
    };
 }

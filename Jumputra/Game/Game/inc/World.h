@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Character.h"
+#include "../../Physics/inc/DynamicObject.h"
 
+#include "../../../Common/inc/Context.h"
 #include "../../../Common/inc/Eventable.h"
 #include "../../../Common/inc/Updatable.h"
 
@@ -21,7 +22,7 @@ namespace jp::game
    private:
       void loadJson();
 
-      std::vector<Character> mCharacters;
-      std::vector<physics::StaticObject> mObjects;
+      std::vector<physics::DynamicObject> mDynamics;
+      std::vector<physics::StaticObject> mStatics;
    };
 }
