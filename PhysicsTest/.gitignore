@@ -1,0 +1,8 @@
+.git
+.vs
+
+ext
+out
+
+Debug
+*.dll
