@@ -15,12 +15,12 @@ Game::Game() :
 
    mPlatforms.push_back(jp::physics::Platform({ { 500.f, 200.f }, { 640.f, 60.f } }));
 
-   mPlatforms.push_back(jp::physics::Platform({ { 400.f, 240.f }, { 500.f, 240.f } }, jp::physics::SurfaceType::Slippery));
+   mPlatforms.push_back(jp::physics::Platform({ { 400.f, 240.f }, { 500.f, 240.f } }/*, jp::physics::SurfaceType::Slippery*/));
    
    mPlatforms.push_back(
-      jp::physics::Platform({ { 150.f, 350.f }, { 400.f, 350.f } }, jp::physics::SurfaceType::Slippery));
+      jp::physics::Platform({ { 150.f, 350.f }, { 400.f, 350.f } }/*, jp::physics::SurfaceType::Slippery*/));
 
-   mPlatforms.push_back(jp::physics::Platform({ { 400.f, 240.f }, { 400.f, 350.f } }, jp::physics::SurfaceType::Slippery));
+   mPlatforms.push_back(jp::physics::Platform({ { 400.f, 240.f }, { 400.f, 350.f } }/*, jp::physics::SurfaceType::Slippery*/));
    //std::cout << "line size: " << sizeof(mLines[0]) << std::endl;
    mObjects.push_back(Object(jp::math::Rect<float>(5.f, 5.f, 24.f, 24.f), jp::math::Vector2<float>(0.f, 0.f), jp::math::Vector2<float>(0.f, 0.f)));
    jp::math::Vector2<float> v(5.f, 5.f);

@@ -25,24 +25,21 @@ void Object::update(float seconds, const std::vector<jp::physics::Platform>& pla
    newRect.left += mVelocity.x * seconds + ((mAcceleration.x + WIND) * seconds * seconds) / 2.f;
    newRect.top += mVelocity.y * seconds + ((mAcceleration.y + GRAVITY) * seconds * seconds) / 2.f;
 
-   /*jp::math::Vector2<float> dir1 = newRect.getRightTop() - newRect.getLeftTop();
-   jp::math::Vector2<float> dir2 = newRect.getLeftTop() - newRect.getRightBottom();
-   jp::math::Vector2<float> dir3 = newRect.getRightBottom() - newRect.getLeftBottom();
-   jp::math::Vector2<float> dir4 = newRect.getLeftBottom() - newRect.getLeftTop();*/
    for (const auto& platform : platforms)
    {
-      for (size_t i = 0; i < platform.mPoints.size(); ++i)
+      for (size_t startIdx = 0; startIdx < platform.mPoints.size(); ++startIdx)
       {
-         size_t next = (i == platform.mPoints.size() - 1) ? 0 : i + 1;
-
-         const jp::math::Vector2<float>& a = platform.mPoints[i];
-         const jp::math::Vector2<float>& b = platform.mPoints[next];
-         float bounceFactor = 0.5f;
+         size_t endIdx = (startIdx + 1) % platform.mPoints.size();
+         //start segment point
+         const jp::math::Vector2<float>& a = platform.mPoints[startIdx];
+         //end segment point
+         const jp::math::Vector2<float>& b = platform.mPoints[endIdx];
+         //vertical segment
          if (a.x == b.x)
          {
             //for vertical segment we take into account only rect's horizontal segments
-            if (jp::math::intersects(newRect.getLeftTop(), newRect.getRightTop(), a, b) ||
-               jp::math::intersects(newRect.getRightBottom(), newRect.getLeftBottom(), a, b))
+            if (jp::math::segmentsIntersect(newRect.getLeftTop(), newRect.getRightTop(), a, b) ||
+               jp::math::segmentsIntersect(newRect.getRightBottom(), newRect.getLeftBottom(), a, b))
             {
                if (a.x < mRect.getCenter().x)
                {
@@ -52,29 +49,52 @@ void Object::update(float seconds, const std::vector<jp::physics::Platform>& pla
                {
                   newRect.left = a.x - newRect.width;
                }
-               mVelocity.x = -mVelocity.x * bounceFactor;
+               //bounce only if object skates or is in air
+               if (mState == ObjectState::Sliding || mState== ObjectState::Flying)
+               {
+                  mVelocity.x = -mVelocity.x * BOUNCE_FACTOR;
+                  mState = ObjectState::Bouncing;
+               }
+               break;
             }
-            
          }
          else if (a.y == b.y)
          {
             //for horizontal segment we take into account only rect's vertical segments
-            if (jp::math::intersects(newRect.getRightTop(), newRect.getRightBottom(), a, b) ||
-               jp::math::intersects(newRect.getLeftBottom(), newRect.getLeftTop(), a, b))
+            if (jp::math::segmentsIntersect(newRect.getRightTop(), newRect.getRightBottom(), a, b) ||
+               jp::math::segmentsIntersect(newRect.getLeftBottom(), newRect.getLeftTop(), a, b))
             {
                if (a.y < mRect.getCenter().y)
                {
                   newRect.top = a.y;
                   //bounce or stay depends on gravity sign
-                  mVelocity.y = mAcceleration.y > 0.f ? -mVelocity.y * bounceFactor : 0;
+                  if (GRAVITY > 0.f)
+                  {
+                     mVelocity.y = -mVelocity.y * BOUNCE_FACTOR;
+                     mState = ObjectState::Bouncing;
+                  }
+                  else
+                  {
+                     mVelocity.y = 0.f;
+                     mState = ObjectState::Standing;
+                  }
                }
                else
                {
                   newRect.top = a.y - newRect.height;
                   //bounce or stay depends on gravity sign
-                  mVelocity.y = mAcceleration.y < 0.f ? -mVelocity.y * bounceFactor : 0;
+                  if (GRAVITY < 0.f)
+                  {
+                     mVelocity.y = -mVelocity.y * BOUNCE_FACTOR;
+                     mState = ObjectState::Bouncing;
+                  }
+                  else
+                  {
+                     mVelocity.y = 0.f;
+                     mState = ObjectState::Standing;
+                  }
                }
-               if (platform.mType == jp::physics::SurfaceType::Slippery)
+               /*if (platform.mType == jp::physics::SurfaceType::Slippery)
                {
                   newRect.top = mRect.top;
                   mVelocity.y = 0;
@@ -87,13 +107,13 @@ void Object::update(float seconds, const std::vector<jp::physics::Platform>& pla
                      mAcceleration.x = 0.f;
                      mVelocity.x = 0.f;
                   }
-               }
+               }*/
             }
          }
          else
          {
-            if (jp::math::intersects(newRect.getLeftTop(), newRect.getRightTop(), a, b) ||
-               jp::math::intersects(newRect.getRightBottom(), newRect.getLeftBottom(), a, b))
+            if (jp::math::segmentsIntersect(newRect.getLeftTop(), newRect.getRightTop(), a, b) ||
+               jp::math::segmentsIntersect(newRect.getRightBottom(), newRect.getLeftBottom(), a, b))
             {
                newRect.top = mRect.top;
                mVelocity.x = mVelocity.y = 200.f;
@@ -101,9 +121,9 @@ void Object::update(float seconds, const std::vector<jp::physics::Platform>& pla
                {
                   mVelocity.x = -mVelocity.y;
                }
-                  std::cout << "diagonal" << std::endl;
                newRect.left += mVelocity.x * seconds;
                newRect.top += mVelocity.y * seconds;
+               break;
             }
          }
       }
@@ -113,6 +133,19 @@ void Object::update(float seconds, const std::vector<jp::physics::Platform>& pla
    mVelocity.x = mVelocity.x + (mAcceleration.x + WIND) * seconds;
    mVelocity.y = mVelocity.y + (mAcceleration.x + GRAVITY) * seconds;
 }
+
+//to do
+//plan jest taki, ¿e checkCollision jest typu const i wyznacza newRect oraz zwraca nowy stan obiektu
+//jeœli nie ma ¿adnej kolizji no to zwraca stan Flying
+//zastanowiæ siê te¿ muszê nad stanem Bouncing. Mo¿e powinno byæ coœ w stylu "Falling" jeœli to jest w powietrzu
+//a w sumie na ziemi po odbiciu to dalej jest sliding, tak¿e bouncing jest do wywalenia prawdopodobnie
+//perfekcyjnie to siê zgrywa, bo jak jest falling a potem sliding no to nie mo¿emy podnieœæ obiektu. Trzeba by by³o dodaæ coœ w stylu DeadlySliding
+
+//ObjectState Object::checkCollision(const std::vector<jp::physics::Platform>& platforms, jp::math::Rect<float>& newRect) const
+//{
+//
+//   return ObjectState::Sliding;
+//}
 
 jp::math::Rect<float> Object::getRect() const
 {

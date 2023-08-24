@@ -5,7 +5,7 @@
 namespace jp::math
 {
    template<typename T>
-   bool intersects(const Vector2<T>& a, const Vector2<T>& b, const Vector2<T>& c, const Vector2<T>& d)
+   bool segmentsIntersect(const Vector2<T>& a, const Vector2<T>& b, const Vector2<T>& c, const Vector2<T>& d)
    {
       //calculate all direction vectors
       //first segment
