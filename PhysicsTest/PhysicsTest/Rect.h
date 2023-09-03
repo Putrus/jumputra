@@ -24,6 +24,10 @@ namespace jp::math
       T getRight() const;
       T getBottom() const;
 
+      Rect operator+(const Vector2<T>& vec) const;
+
+      Rect& operator+=(const Vector2<T>& vec);
+
       T left;
       T top;
       T width;
@@ -94,5 +98,19 @@ namespace jp::math
    Vector2<T> Rect<T>::getCenter() const
    {
       return { (left + getRight()) / (T)2, (top + getBottom()) / (T)2 };
+   }
+
+   template <typename T>
+   Rect<T> Rect<T>::operator+(const Vector2<T>& vec) const
+   {
+      return { left + vec.x, top + vec.y, width, height };
+   }
+
+   template <typename T>
+   Rect<T>& Rect<T>::operator+=(const Vector2<T>& vec)
+   {
+      left += vec.x;
+      top += vec.y;
+      return *this;
    }
 }

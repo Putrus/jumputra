@@ -12,7 +12,12 @@ namespace jp::math
       Segment(T aX, T aY, T bX, T bY);
       Segment(const Vector2<T>& a, const Vector2<T>& b);
 
+      bool isHorizontal() const;
+      bool isVertical() const;
+      bool isDiagonal() const;
+
       bool intersects(const Segment& other) const;
+      bool intersects(const Vector2<T>& a, const Vector2<T>& b) const;
 
       Vector2<T> a;
       Vector2<T> b;
@@ -25,14 +30,32 @@ namespace jp::math
    Segment<T>::Segment(T aX, T aY, T bX, T bY) : a(aX, aY), b(bX, bY) {}
 
    template <typename T>
-   Segment<T>::Segment(const Vector2<T>& p1, const Vector2<T>& p2) : p1(p1), p2(p2) {}
+   Segment<T>::Segment(const Vector2<T>& a, const Vector2<T>& b) : a(a), b(b) {}
+
+   template <typename T>
+   bool Segment<T>::isHorizontal() const
+   {
+      return a.y == b.y;
+   }
+
+   template <typename T>
+   bool Segment<T>::isVertical() const
+   {
+      return a.x == b.x;
+   }
+
+   template <typename T>
+   bool Segment<T>::isDiagonal() const
+   {
+      return std::abs(a.x - b.x) == std::abs(a.y - b.y);
+   }
 
    template <typename T>
    bool Segment<T>::intersects(const Segment& other) const
    {
       //to better visualisation
-      float c = other.a;
-      float d = other.b;
+      const jp::math::Vector2<float>& c = other.a;
+      const jp::math::Vector2<float>& d = other.b;
 
       //calculate all direction vectors
       //current segment
@@ -56,8 +79,13 @@ namespace jp::math
          return true;
       }
 
-      //here it could be checking if the end of a segment intersects another, but it's not needed
-
+      //here it could be checking if the end of a segment intersects other, but it's not needed
       return false;
+   }
+
+   template <typename T>
+   bool Segment<T>::intersects(const Vector2<T>& a, const Vector2<T>& b) const
+   {
+      return intersects({ a, b });
    }
 }

@@ -1,24 +1,37 @@
 #pragma once
 
-#include "Vector2.h"
+#include "Segment.h"
 
 #include <vector>
 
 namespace jp::physics
 {
-   enum class SurfaceType
+   enum class PlatformType
    {
-      Normal,
+      Ordinary,
       Slippery,
       Sticky
+   };
+
+   struct PlatformSegment
+   {
+      math::Segment<float> segment;
+      PlatformType type;
    };
 
    class Platform
    {
    public:
-      Platform(const std::vector<math::Vector2<float>>& points, SurfaceType type = SurfaceType::Normal);
+      Platform(const std::vector<math::Vector2<float>>& points, PlatformType type = PlatformType::Ordinary);
 
+      const std::vector<math::Vector2<float>>& getPoints() const;
+      PlatformSegment getSegment(size_t id) const;
+      std::vector<PlatformSegment> getSegments() const;
+      size_t getSegmentsSize() const;
+      PlatformType getType() const;
+
+   private:
       std::vector<math::Vector2<float>> mPoints;
-      SurfaceType mType;
+      PlatformType mType;
    };
 }

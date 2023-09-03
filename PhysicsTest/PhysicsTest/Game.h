@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Object.h"
+#include "Segment.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -21,6 +22,7 @@ private:
    sf::RenderWindow mWindow;
    sf::Time mTimePerFrame;
 
+   std::vector<jp::physics::PlatformSegment> mSegments;
    std::vector<jp::physics::Platform> mPlatforms;
    std::vector<Object> mObjects;
 };

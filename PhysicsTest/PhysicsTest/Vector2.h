@@ -19,6 +19,7 @@ namespace jp::math
       Vector2 operator+(const Vector2& other) const;
       Vector2 operator-(const Vector2& other) const;
       Vector2 operator*(T num) const;
+      Vector2 operator/(T num) const;
 
       Vector2& operator+=(const Vector2& other);
       Vector2& operator-=(const Vector2& other);
@@ -65,6 +66,12 @@ namespace jp::math
    Vector2<T> Vector2<T>::operator*(T num) const
    {
       return { x * num, y * num };
+   }
+
+   template <typename T>
+   Vector2<T> Vector2<T>::operator/(T num) const
+   {
+      return { x / num, y / num };
    }
 
    template <typename T>
