@@ -1,6 +1,0 @@
-{
-    "cmake.useCMakePresets": "always",
-    "files.associations": {
-        "ostream": "cpp"
-    }
-}
