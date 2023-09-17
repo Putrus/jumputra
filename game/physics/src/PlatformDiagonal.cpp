@@ -1,6 +1,7 @@
 #include "../inc/PlatformDiagonal.hpp"
 
 #include <algorithm>
+#include <sstream>
 
 namespace jp::game::physics
 {
@@ -8,7 +9,9 @@ namespace jp::game::physics
     {
         if (!mSegment.isDiagonal())
         {
-            throw std::invalid_argument("Failed to create diagonal platform, segment isn't diagonal!");
+            std::stringstream ss;
+            ss << "Failed to create diagonal platform, segment " << segment << " isn't diagonal!";
+            throw std::invalid_argument(ss.str());
         }
 
         if (mSegment.a.x > mSegment.b.x)
@@ -25,16 +28,14 @@ namespace jp::game::physics
         {
             return newRect.getCenter().y > oldRect.getCenter().y ? Collision::Roof : Collision::Attic;
         }
+        return Collision::No;
     }
 
     bool PlatformDiagonal::checkCollision(math::Vector2<float> a, math::Vector2<float> b) const
     {
-        const math::Vector2<float>& c = mSegment.a;
-        const math::Vector2<float>& d = mSegment.b;
-
-        float slope = (d.y - c.y) / (d.x - c.x);
-        float intercept = d.y - slope * d.x;
+        float slope = (mSegment.b.y - mSegment.a.y) / (mSegment.b.x - mSegment.a.x);
+        float intercept = mSegment.b.y - slope * mSegment.b.x;
         float commonX = (a.y - intercept) / slope;
-        return commonX >= a.x && commonX <= b.x && commonX >= c.x && commonX <= d.x;
+        return commonX >= a.x && commonX <= b.x && commonX >= mSegment.a.x && commonX <= mSegment.b.x;
     }
 }

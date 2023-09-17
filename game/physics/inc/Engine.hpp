@@ -18,7 +18,6 @@ namespace jp::game::physics
     private:
         float mBounce;
         float mGravity;
-        float mCollisionHeight;
         std::shared_ptr<Wind> mWind;
         std::vector<std::shared_ptr<Body>> mBodies;
     };

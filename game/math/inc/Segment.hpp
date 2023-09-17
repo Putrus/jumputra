@@ -54,4 +54,11 @@ namespace jp::game::math
     {
         std::swap(a, b);
     }
+
+    template <typename T>
+    std::ostream& operator<<(std::ostream& os, const Segment<T>& segment)
+    {
+        os << segment.a << " -> " << segment.b;
+        return os;
+    }
 }

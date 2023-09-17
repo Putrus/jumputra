@@ -1,6 +1,7 @@
 #include "../inc/PlatformVertical.hpp"
 
 #include <algorithm>
+#include <sstream>
 
 namespace jp::game::physics
 {
@@ -8,7 +9,9 @@ namespace jp::game::physics
     {
         if (!mSegment.isVertical())
         {
-            throw std::invalid_argument("Failed to create vertical platform, segment isn't vertical!");
+            std::stringstream ss;
+            ss << "Failed to create vertical platform, segment " << segment << " isn't vertical!";
+            throw std::invalid_argument(ss.str());
         }
 
         if (mSegment.a.y > mSegment.b.y)
@@ -45,8 +48,6 @@ namespace jp::game::physics
 
     bool PlatformVertical::checkCollision(math::Vector2<float> a, math::Vector2<float> b) const
     {
-        const math::Vector2<float>& c = mSegment.a;
-        const math::Vector2<float>& d = mSegment.b;
-        return a.y > c.y && a.y < d.y && c.x > a.x && c.x < b.x;
+        return a.y > mSegment.a.y && a.y < mSegment.b.y && mSegment.a.x > a.x && mSegment.a.x < b.x;
     }
 }
