@@ -2,13 +2,11 @@
 
 #include <iostream>
 
-
 namespace jp::game::math
 {
     template <typename T>
-    class Vector2
+    struct Vector2
     {
-    public:
         Vector2();
         Vector2(T value);
         Vector2(T x, T y);

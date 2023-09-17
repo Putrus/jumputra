@@ -5,9 +5,8 @@
 namespace jp::game::math
 {
     template <typename T>
-    class Rect
+    struct Rect
     {
-    public:
         Rect();
         Rect(T left, T top, T width, T height);
         Rect(const Vector2<T>& position, const Vector2<T>& size);
