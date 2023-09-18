@@ -9,11 +9,10 @@ namespace jp::game::physics
         : mMaxVelocity(maxVelocity), Kinematics(acceleration, velocity)
     {}
 
-    const math::Vector2<float>& Wind::getMaxVelocity() const
+    void UpdatableWind::update(float dt)
     {
         return mMaxVelocity;
     }
-
     void Wind::setMaxVelocity(const math::Vector2<float>& velocity)
     {
         mMaxVelocity = velocity;

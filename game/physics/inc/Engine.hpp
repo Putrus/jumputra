@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KinematicRect.hpp"
+#include "Parameters.hpp"
 #include "Platform.hpp"
 #include "Wind.hpp"
 
@@ -16,7 +17,7 @@ namespace jp::game::physics
         void update(float dt);
 
     private:
-        float mBounce;
-        float mGravity;
+        std::shared_ptr<UpdatableParameters> mParameters;
+        std::vector<std::shared_ptr<UpdatableBody>> mBodies;
     };
 }
