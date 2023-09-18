@@ -10,17 +10,11 @@ namespace jp::game::physics
         Wind(const math::Vector2<float>& maxVelocity, const math::Vector2<float>& acceleration,
             const math::Vector2<float>& velocity = math::Vector2<float>());
 
-    protected:
+        const math::Vector2<float>& getMaxVelocity() const;
 
         void setMaxVelocity(const math::Vector2<float>& velocity);
 
     protected:
         math::Vector2<float> mMaxVelocity;
-    };
-
-    class UpdatableWind final : public Wind
-    {
-    public:
-        void update(float dt);
     };
 }

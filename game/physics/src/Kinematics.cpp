@@ -25,4 +25,14 @@ namespace jp::game::physics
     {
         mVelocity = velocity;
     }
+
+    void Kinematics::setVelocityX(float x)
+    {
+        mVelocity.x = x;
+    }
+
+    void Kinematics::setVelocityY(float y)
+    {
+        mVelocity.y = y;
+    }
 }

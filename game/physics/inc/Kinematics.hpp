@@ -14,7 +14,9 @@ namespace jp::game::physics
 
         void setAcceleration(const math::Vector2<float>& acceleration);
         void setVelocity(const math::Vector2<float>& velocity);
-
+        void setVelocityX(float x);
+        void setVelocityY(float y);
+        
     protected:
         math::Vector2<float> mAcceleration;
         math::Vector2<float> mVelocity;
