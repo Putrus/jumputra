@@ -8,7 +8,12 @@ namespace jp::game::physics
     : mAcceleration(acceleration), mMaxVelocity(maxVelocity), mVelocity(velocity)
     {}
 
-    void Wind::update(float dt)
+    float Wind::getVelocity() const
+    {
+        return mVelocity;
+    }
+
+    void UpdatableWind::update(float dt)
     {
         mVelocity += mAcceleration * dt;
         float absVelocity = std::abs(mVelocity);
@@ -17,10 +22,5 @@ namespace jp::game::physics
             mVelocity = mMaxVelocity * (mVelocity / absVelocity);
             mAcceleration *= -1.f;
         }
-    }
-
-    float Wind::getVelocity() const
-    {
-        return mVelocity;
     }
 }

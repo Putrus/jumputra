@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Body.hpp"
+#include "Parameters.hpp"
 #include "Platform.hpp"
 #include "Wind.hpp"
 
@@ -16,9 +17,7 @@ namespace jp::game::physics
         void update(float dt);
 
     private:
-        float mBounce;
-        float mGravity;
-        std::shared_ptr<Wind> mWind;
-        std::vector<std::shared_ptr<Body>> mBodies;
+        std::shared_ptr<UpdatableParameters> mParameters;
+        std::vector<std::shared_ptr<UpdatableBody>> mBodies;
     };
 }

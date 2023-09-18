@@ -6,12 +6,17 @@ namespace jp::game::physics
     {
     public:
         Wind(float acceleration, float maxVelocity, float velocity = 0.f);
-        void update(float dt);
         float getVelocity() const;
 
-    private:
+    protected:
         float mAcceleration;
         float mMaxVelocity;
         float mVelocity;
     };  
+
+    class UpdatableWind final : public Wind
+    {
+    public:
+        void update(float dt);
+    };
 }

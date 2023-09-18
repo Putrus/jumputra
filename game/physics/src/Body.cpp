@@ -2,11 +2,11 @@
 
 namespace jp::game::physics
 {
-    void Body::update(float dt)
+    Body::Body(const math::Rect<float>& rect, const math::Vector2<float>& velocity = math::Vector2<float>(0.f, 0.f),
+            const math::Vector2<float>& acceleration = math::Vector2<float>(0.f, 0.f))
+            : mRect(rect), mAcceleration(acceleration), mVelocity(velocity), 
     {
-        Body newBody = *this;
-        newBody.updateVelocity(dt);
-        newBody.updatePosition(dt);
+
     }
 
     const math::Rect<float>& Body::getRect() const
@@ -14,12 +14,8 @@ namespace jp::game::physics
         return mRect;
     }
 
-    void Body::updatePosition(float dt)
+    void UpdatableBody::update(float dt)
     {
-
-    }
-
-    void Body::updateVelocity(float dt)
-    {
+        Body newBody = *this;
     }
 }
