@@ -1,17 +1,20 @@
 #pragma once
 
+#include "Kinematics.hpp"
+
 namespace jp::game::physics
 {
-    class Wind
+    class Wind : public Kinematics
     {
     public:
-        Wind(float acceleration, float maxVelocity, float velocity = 0.f);
-        void update(float dt);
-        float getVelocity() const;
+        Wind(const math::Vector2<float>& maxVelocity, const math::Vector2<float>& acceleration,
+            const math::Vector2<float>& velocity = math::Vector2<float>());
 
-    private:
-        float mAcceleration;
-        float mMaxVelocity;
-        float mVelocity;
-    };  
+        math::Vector2<float> getMaxVelocity() const;
+
+        void setMaxVelocity(const math::Vector2<float>& velocity);
+
+    protected:
+        math::Vector2<float> mMaxVelocity;
+    };
 }

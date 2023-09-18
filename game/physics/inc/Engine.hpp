@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Body.hpp"
+#include "KinematicRect.hpp"
 #include "Platform.hpp"
 #include "Wind.hpp"
 
@@ -18,7 +18,5 @@ namespace jp::game::physics
     private:
         float mBounce;
         float mGravity;
-        std::shared_ptr<Wind> mWind;
-        std::vector<std::shared_ptr<Body>> mBodies;
     };
 }

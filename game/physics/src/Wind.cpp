@@ -4,23 +4,19 @@
 
 namespace jp::game::physics
 {
-    Wind::Wind(float acceleration, float maxVelocity, float velocity /*= 0.f*/)
-    : mAcceleration(acceleration), mMaxVelocity(maxVelocity), mVelocity(velocity)
+    Wind::Wind(const math::Vector2<float>& maxVelocity, const math::Vector2<float>& acceleration,
+        const math::Vector2<float>& velocity/* = math::Vector2<float>()*/)
+        : mMaxVelocity(maxVelocity), Kinematics(acceleration, velocity)
     {}
 
-    void Wind::update(float dt)
+    const math::Vector2<float>& Wind::getMaxVelocity() const
     {
-        mVelocity += mAcceleration * dt;
-        float absVelocity = std::abs(mVelocity);
-        if (absVelocity >= mMaxVelocity)
-        {
-            mVelocity = mMaxVelocity * (mVelocity / absVelocity);
-            mAcceleration *= -1.f;
-        }
+        return mMaxVelocity;
     }
 
-    float Wind::getVelocity() const
+    void Wind::setMaxVelocity(const math::Vector2<float>& velocity)
     {
-        return mVelocity;
+        mMaxVelocity = velocity;
     }
+
 }
