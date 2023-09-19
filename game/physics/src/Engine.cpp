@@ -4,13 +4,11 @@ namespace jp::game::physics
 {
     void Engine::update(float dt)
     {
-        math::Vector2<float> globalAcceleration = math::Vector2<float>(mWind->getAcceleration() +
-            math::Vector2<float>(0.f, mGravity));
+        updateWind(dt);
         for (auto& entity : mEntities)
         {
             Entity newEntity = *entity;
-            newEntity.setVelocity(newEntity.getVelocity() + (newEntity.getAcceleration() + globalAcceleration) * dt);
-            newEntity.move((entity->getVelocity() + newEntity.getVelocity()) * dt / 2.f);
+            updateEntity(dt, newEntity);
             for (const auto& platform : mPlatforms)
             {
                 if (platform->getSegment().a.y > newEntity.getPosition().y + mCheckCollisionDistance)
@@ -31,13 +29,21 @@ namespace jp::game::physics
                     case Collision::Left:
                     {
                         newEntity.setRectLeft(platform->getSegment().b.x);
-                        newEntity.setVelocityX(-entity->getVelocity().x * mBounce);
+                        if (entity->getState() == EntityState::Flying ||
+                            entity->getState() == EntityState::Sliding)
+                        {
+                            newEntity.setVelocityX(-entity->getVelocity().x * mBounceFactor);
+                        }
                         break;
                     }
                     case Collision::Right:
                     {
                         newEntity.setRectRight(platform->getSegment().a.x);
-                        newEntity.setVelocityX(-entity->getVelocity().x * mBounce);
+                        if (entity->getState() == EntityState::Flying ||
+                            entity->getState() == EntityState::Sliding)
+                        {
+                            newEntity.setVelocityX(-entity->getVelocity().x * mBounceFactor);
+                        }
                         break;
                     }
                     case Collision::Top:
@@ -64,6 +70,24 @@ namespace jp::game::physics
                     }
                 }
             }
+        }
+    }
+
+    void Engine::updateEntity(float dt, Entity& entity) const
+    {
+        math::Vector2<float> oldVelocity = entity.getVelocity();
+        entity.setVelocity(entity.getVelocity() + (entity.getAcceleration() + math::Vector2<float>(0.f, mGravity)) * dt);
+        entity.move((oldVelocity + entity.getVelocity() + mWind->getVelocity()) * dt / 2.f);
+    }
+
+    void Engine::updateWind(float dt)
+    {
+        mWind->setVelocity(mWind->getVelocity() + mWind->getAcceleration() * dt);
+        float absVelocity = std::abs(mWind->getVelocity().x);
+        if (absVelocity >= mWind->getMaxVelocity().x)
+        {
+            mWind->setVelocity(mWind->getMaxVelocity() * (mWind->getVelocity().x / absVelocity));
+            mWind->setAcceleration(mWind->getAcceleration() * -1.f);
         }
     }
 }

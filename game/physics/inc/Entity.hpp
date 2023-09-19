@@ -6,6 +6,15 @@
 
 namespace jp::game::physics
 {
+    enum class EntityState : unsigned int
+    {
+        Falling = 0,
+        Flying,
+        Sledding,
+        Sliding,
+        Standing
+    };
+
     class Entity : public Kinematics
     {
     public:
@@ -16,14 +25,17 @@ namespace jp::game::physics
 
         const math::Rect<float>& getRect() const;
         math::Vector2<float> getPosition() const;
+        EntityState getState() const;
 
         void setRect(const math::Rect<float>& rect);
         void setRectTop(float y);
         void setRectBottom(float y);
         void setRectLeft(float x);
         void setRectRight(float x);
+        void setState(EntityState state);
 
     protected:
         math::Rect<float> mRect;
+        EntityState mState;
     };
 }

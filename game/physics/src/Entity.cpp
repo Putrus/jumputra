@@ -5,7 +5,7 @@ namespace jp::game::physics
     Entity::Entity(const math::Rect<float>& rect,
         const math::Vector2<float>& velocity, const math::Vector2<float>& acceleration)
         : mRect(rect), Kinematics(velocity, acceleration)
-        {}
+    {}
 
     void Entity::move(const math::Vector2<float>& vec)
     {
@@ -20,6 +20,11 @@ namespace jp::game::physics
     math::Vector2<float> Entity::getPosition() const
     {
         return mRect.getPosition();
+    }
+
+    EntityState Entity::getState() const
+    {
+        return mState;
     }
 
     void Entity::setRect(const math::Rect<float>& rect)
@@ -45,5 +50,10 @@ namespace jp::game::physics
     void Entity::setRectRight(float x)
     {
         mRect.left = x - mRect.width;
+    }
+
+    void Entity::setState(EntityState state)
+    {
+        mState = state;
     }
 }

@@ -16,9 +16,14 @@ namespace jp::game::physics
         void update(float dt);
 
     private:
-        float mBounce;
+        void updateEntity(float dt, Entity& entity) const;
+
+        void updateWind(float dt);
+
         float mGravity;
         float mCheckCollisionDistance;
+        float mBounceFactor;
+        float mWindFactor;
         std::shared_ptr<Wind> mWind;
         std::vector<std::shared_ptr<Entity>> mEntities;
         std::vector<std::shared_ptr<Platform>> mPlatforms;
