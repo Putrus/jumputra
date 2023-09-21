@@ -1,22 +1,28 @@
 #include "../inc/Wind.hpp"
 
-#include <cmath>
-
 namespace jp::game::physics
 {
-    Wind::Wind(const math::Vector2<float>& maxVelocity, const math::Vector2<float>& acceleration,
-        const math::Vector2<float>& velocity/* = math::Vector2<float>()*/)
-        : mMaxVelocity(maxVelocity), Kinematics(acceleration, velocity)
+    Wind::Wind(float acceleration, float velocity/* = 0.f*/)
+    : Kinematics(math::Vector2<float>(acceleration, 0.f), math::Vector2<float>(velocity, 0.f))
     {}
 
-    const math::Vector2<float>& Wind::getMaxVelocity() const
+    float Wind::getAcceleration() const
     {
-        return mMaxVelocity;
+        return mAcceleration.x;
     }
 
-    void Wind::setMaxVelocity(const math::Vector2<float>& velocity)
+    float Wind::getVelocity() const
     {
-        mMaxVelocity = velocity;
+        return mVelocity.x;
     }
 
+    void Wind::setAcceleration(float acceleration)
+    {
+        mAcceleration.x = acceleration;
+    }
+
+    void Wind::setVelocity(float velocity)
+    {
+        mVelocity.x = velocity;
+    }
 }

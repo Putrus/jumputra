@@ -2,6 +2,7 @@
 
 #include "Entity.hpp"
 #include "Platform.hpp"
+#include "Properties.hpp"
 #include "Wind.hpp"
 
 #include <map>
@@ -20,12 +21,9 @@ namespace jp::game::physics
 
         void updateWind(float dt);
 
-        float mGravity;
-        float mCheckCollisionDistance;
-        float mBounceFactor;
-        float mWindFactor;
-        std::shared_ptr<Wind> mWind;
         std::vector<std::shared_ptr<Entity>> mEntities;
         std::vector<std::shared_ptr<Platform>> mPlatforms;
+        std::shared_ptr<Wind> mWind;
+        Properties mProperties;
     };
 }

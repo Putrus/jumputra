@@ -2,10 +2,10 @@
 
 namespace jp::game::physics
 {
-    class PlatformVertical final : public Platform
+    class DiagonalPlatform final : public Platform
     {
     public:
-        PlatformVertical(const math::Segment<float>& segment, Surface surface);
+        DiagonalPlatform(const math::Segment<float>& segment, Surface surface);
         virtual Collision checkCollision(const math::Rect<float>& oldRect,
             const math::Rect<float>& newRect) const override;
 

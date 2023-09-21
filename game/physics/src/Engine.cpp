@@ -2,6 +2,7 @@
 
 namespace jp::game::physics
 {
+    /*
     void Engine::update(float dt)
     {
         updateWind(dt);
@@ -90,4 +91,5 @@ namespace jp::game::physics
             mWind->setAcceleration(mWind->getAcceleration() * -1.f);
         }
     }
+    */
 }

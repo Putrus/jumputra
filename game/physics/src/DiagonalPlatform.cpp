@@ -1,11 +1,11 @@
-#include "../inc/PlatformDiagonal.hpp"
+#include "../inc/DiagonalPlatform.hpp"
 
 #include <algorithm>
 #include <sstream>
 
 namespace jp::game::physics
 {
-    PlatformDiagonal::PlatformDiagonal(const math::Segment<float>& segment, Surface surface) : Platform(segment, surface)
+    DiagonalPlatform::DiagonalPlatform(const math::Segment<float>& segment, Surface surface) : Platform(segment, surface)
     {
         if (!mSegment.isDiagonal())
         {
@@ -20,7 +20,7 @@ namespace jp::game::physics
         }
     }
 
-    Collision PlatformDiagonal::checkCollision(const math::Rect<float>& oldRect,
+    Collision DiagonalPlatform::checkCollision(const math::Rect<float>& oldRect,
             const math::Rect<float>& newRect) const
     {
         if (checkCollision(newRect.getLeftTop(), newRect.getRightTop()) ||
@@ -31,7 +31,7 @@ namespace jp::game::physics
         return Collision::No;
     }
 
-    bool PlatformDiagonal::checkCollision(math::Vector2<float> a, math::Vector2<float> b) const
+    bool DiagonalPlatform::checkCollision(math::Vector2<float> a, math::Vector2<float> b) const
     {
         float slope = (mSegment.b.y - mSegment.a.y) / (mSegment.b.x - mSegment.a.x);
         float intercept = mSegment.b.y - slope * mSegment.b.x;

@@ -4,17 +4,15 @@
 
 namespace jp::game::physics
 {
-    class Wind : public Kinematics
+    class Wind final : public Kinematics
     {
     public:
-        Wind(const math::Vector2<float>& maxVelocity, const math::Vector2<float>& acceleration,
-            const math::Vector2<float>& velocity = math::Vector2<float>());
+        Wind(float acceleration, float velocity = 0.f);
 
-        const math::Vector2<float>& getMaxVelocity() const;
+        float getAcceleration() const;
+        float getVelocity() const;
 
-        void setMaxVelocity(const math::Vector2<float>& velocity);
-
-    protected:
-        math::Vector2<float> mMaxVelocity;
+        void setAcceleration(float acceleration);
+        void setVelocity(float velocity);
     };
 }

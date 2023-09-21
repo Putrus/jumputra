@@ -1,11 +1,11 @@
-#include "../inc/PlatformHorizontal.hpp"
+#include "../inc/HorizontalPlatform.hpp"
 
 #include <algorithm>
 #include <sstream>
 
 namespace jp::game::physics
 {
-    PlatformHorizontal::PlatformHorizontal(const math::Segment<float>& segment, Surface surface) : Platform(segment, surface)
+    HorizontalPlatform::HorizontalPlatform(const math::Segment<float>& segment, Surface surface) : Platform(segment, surface)
     {
         if (!mSegment.isHorizontal())
         {
@@ -20,7 +20,7 @@ namespace jp::game::physics
         }
     }
 
-    Collision PlatformHorizontal::checkCollision(const math::Rect<float>& oldRect,
+    Collision HorizontalPlatform::checkCollision(const math::Rect<float>& oldRect,
             const math::Rect<float>& newRect) const
     {
         if (checkCollision(newRect.getLeftTop(), newRect.getLeftBottom()) ||
@@ -46,7 +46,7 @@ namespace jp::game::physics
         return Collision::No;
     }
 
-    bool PlatformHorizontal::checkCollision(math::Vector2<float> a, math::Vector2<float> b) const
+    bool HorizontalPlatform::checkCollision(math::Vector2<float> a, math::Vector2<float> b) const
     {
         return a.x > mSegment.a.x && a.x < mSegment.b.x && mSegment.a.y > a.y && mSegment.a.y < b.y;
     }
