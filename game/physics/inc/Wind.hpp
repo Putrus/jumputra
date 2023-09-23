@@ -1,10 +1,8 @@
 #pragma once
 
-#include "Kinematics.hpp"
-
 namespace jp::game::physics
 {
-    class Wind final : public Kinematics
+    class Wind final
     {
     public:
         Wind(float acceleration, float velocity = 0.f);
@@ -14,5 +12,9 @@ namespace jp::game::physics
 
         void setAcceleration(float acceleration);
         void setVelocity(float velocity);
+
+    private:
+        float mAcceleration;
+        float mVelocity;
     };
 }

@@ -19,9 +19,10 @@ namespace jp::game::math
         Vector2<T> getRightTop() const;
         Vector2<T> getRightBottom() const;
         Vector2<T> getCenter() const;
-
         T getRight() const;
         T getBottom() const;
+
+        void setPosition(const Vector2<T>& position);
 
         Rect operator+(const Vector2<T>& vec) const;
 
@@ -97,6 +98,13 @@ namespace jp::game::math
     Vector2<T> Rect<T>::getCenter() const
     {
         return { (left + getRight()) / (T)2, (top + getBottom()) / (T)2 };
+    }
+
+    template <typename T>
+    void Rect<T>::setPosition(const Vector2<T>& position)
+    {
+        left = position.x;
+        top = position.y;
     }
 
     template <typename T>

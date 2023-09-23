@@ -5,7 +5,7 @@
 
 namespace jp::game::physics
 {
-    VerticalPlatform::VerticalPlatform(const math::Segment<float>& segment, Surface surface) : Platform(segment, surface)
+    VerticalPlatform::VerticalPlatform(const math::Segment<float>& segment, PlatformSurface surface) : Platform(segment, surface)
     {
         if (!mSegment.isVertical())
         {
@@ -20,7 +20,7 @@ namespace jp::game::physics
         }
     }
 
-    Collision VerticalPlatform::checkCollision(const math::Rect<float>& oldRect,
+    PlatformCollision VerticalPlatform::checkCollision(const math::Rect<float>& oldRect,
             const math::Rect<float>& newRect) const
     {
         if (checkCollision(newRect.getLeftTop(), newRect.getRightTop()) ||
@@ -28,22 +28,22 @@ namespace jp::game::physics
         {
             if (oldRect.top >= mSegment.b.y)
             {
-                return Collision::Top;
+                return PlatformCollision::Top;
             }
             else if (oldRect.getBottom() <= mSegment.a.y)
             {
-                return Collision::Bottom;
+                return PlatformCollision::Bottom;
             }
             else if (oldRect.getCenter().x > mSegment.b.x)
             {
-                return Collision::Left;
+                return PlatformCollision::Left;
             }
             else
             {
-                return Collision::Right;
+                return PlatformCollision::Right;
             }
         }
-        return Collision::No;
+        return PlatformCollision::No;
     }
 
     bool VerticalPlatform::checkCollision(math::Vector2<float> a, math::Vector2<float> b) const

@@ -11,7 +11,6 @@ add_executable(game main.cpp
     physics/inc/Entity.hpp physics/src/Entity.cpp
     physics/inc/EntityUpdater.hpp physics/src/EntityUpdater.cpp
     physics/inc/HorizontalPlatform.hpp physics/src/HorizontalPlatform.cpp
-    physics/inc/Kinematics.hpp physics/src/Kinematics.cpp
     physics/inc/Platform.hpp physics/src/Platform.cpp
     physics/inc/Properties.hpp physics/src/Properties.cpp
     physics/inc/Updater.hpp physics/src/Updater.cpp

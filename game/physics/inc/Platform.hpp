@@ -5,14 +5,14 @@
 
 namespace jp::game::physics
 {
-    enum class Surface : unsigned int
+    enum class PlatformSurface : unsigned int
     {
         Ordinary = 0,
         Slippery,
         Sticky
     };
 
-    enum class Collision : unsigned int
+    enum class PlatformCollision : unsigned int
     {
         No = 0,
         Top,
@@ -26,15 +26,15 @@ namespace jp::game::physics
     class Platform
     {
     public:
-        Platform(const math::Segment<float>& segment, Surface surface);
-        virtual Collision checkCollision(const math::Rect<float>& oldRect,
+        Platform(const math::Segment<float>& segment, PlatformSurface surface);
+        virtual PlatformCollision checkCollision(const math::Rect<float>& oldRect,
             const math::Rect<float>& newRect) const = 0;
 
         const math::Segment<float>& getSegment() const;
-        Surface getSurface() const;
+        PlatformSurface getSurface() const;
 
     protected:
         math::Segment<float> mSegment;
-        Surface mSurface;
+        PlatformSurface mSurface;
     };
 }

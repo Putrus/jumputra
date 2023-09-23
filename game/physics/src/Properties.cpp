@@ -23,6 +23,11 @@ namespace jp::game::physics
         return mBounceFactor;
     }
 
+    float Properties::getFriction() const
+    {
+        return mFriction;
+    }
+
     float Properties::getWindFactor() const
     {
         return mWindFactor;
@@ -46,6 +51,11 @@ namespace jp::game::physics
     void Properties::setBounceFactor(float bounceFactor)
     {
         mBounceFactor = bounceFactor;
+    }
+
+    void Properties::setFriction(float friction)
+    {
+        mFriction = friction;
     }
 
     void Properties::setWindFactor(float windFactor)

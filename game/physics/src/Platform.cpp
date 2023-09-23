@@ -2,7 +2,7 @@
 
 namespace jp::game::physics
 {
-    Platform::Platform(const math::Segment<float>& segment, Surface surface)
+    Platform::Platform(const math::Segment<float>& segment, PlatformSurface surface)
     : mSegment(segment), mSurface(surface)
     {}
 
@@ -11,7 +11,7 @@ namespace jp::game::physics
         return mSegment;
     }
 
-    Surface Platform::getSurface() const
+    PlatformSurface Platform::getSurface() const
     {
         return mSurface;
     }

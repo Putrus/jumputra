@@ -5,8 +5,8 @@ namespace jp::game::physics
     class HorizontalPlatform final : public Platform
     {
     public:
-        HorizontalPlatform(const math::Segment<float>& segment, Surface surface);
-        virtual Collision checkCollision(const math::Rect<float>& oldRect,
+        HorizontalPlatform(const math::Segment<float>& segment, PlatformSurface surface);
+        virtual PlatformCollision checkCollision(const math::Rect<float>& oldRect,
             const math::Rect<float>& newRect) const override;
 
     private:
