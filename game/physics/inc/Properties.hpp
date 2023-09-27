@@ -5,28 +5,33 @@ namespace jp::game::physics
     class Properties
     {
     public:
-        Properties(float gravity, float checkCollisionDistance,
-            float bounceFactor, float windFactor, float windMaxVelocity);
+        Properties();
 
-        float getGravity() const;
-        float getCheckCollisionDistance() const;
+        void loadFromFile();
+        void saveToFile() const;
+
         float getBounceFactor() const;
+        float getCheckCollisionDistance() const;
+        float getFallVelocity() const;
         float getFriction() const;
+        float getGravity() const;
         float getWindFactor() const;
         float getWindMaxVelocity() const;
 
-        void setGravity(float gravity);
-        void setCheckCollisionDistance(float checkCollisionDistance);
         void setBounceFactor(float bounceFactor);
+        void setCheckCollisionDistance(float distance);
+        void setFallVelocity(float velocity);
         void setFriction(float friction);
+        void setGravity(float gravity);
         void setWindFactor(float windFactor);
         void setWindMaxVelocity(float windMaxVelocity);
 
     private:
-        float mGravity;
-        float mCheckCollisionDistance;
         float mBounceFactor;
-        float mFriction; 
+        float mCheckCollisionDistance;
+        float mFallVelocity;
+        float mFriction;
+        float mGravity;
         float mWindFactor;
         float mWindMaxVelocity;
     };

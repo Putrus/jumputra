@@ -2,8 +2,8 @@
 
 namespace jp::game::physics
 {
-    EntityUpdater::EntityUpdater(std::shared_ptr<Entity> entity, const Properties& properties, const Wind& wind)
-    : mEntity(entity), mUpdatedEntity(*entity), Updater(properties), mWind(wind)
+    EntityUpdater::EntityUpdater(const Properties& properties, const Wind& wind)
+    : Updater(properties), mWind(wind)
     {}
 
     void EntityUpdater::handlePlatformCollision(const Platform& platform)
@@ -15,44 +15,22 @@ namespace jp::game::physics
             break;
             case PlatformCollision::Left:
             {
-                bounceLeft(platform.getSegment().b.x);
+                leftPlatformCollision(platform.getSegment().b.x);
                 break;
             }
             case PlatformCollision::Right:
             {
-                bounceRight(platform.getSegment().a.x);
+                rightPlatformCollision(platform.getSegment().a.x);
                 break;
             }
             case PlatformCollision::Top:
             {
-                mUpdatedEntity.setRectTop(platform.getSegment().b.y);
-                if (getProperties().getGravity() < 0.f)
-                {
-                    if (mEntity->getState() == EntityState::Running)
-                    {
-                        break;
-                    }
-
-                    if (platform.getSurface() == PlatformSurface::Slippery)
-                    {
-                        mUpdatedEntity.setState(EntityState::Sliding);
-                    }
-                    else
-                    {
-                        mUpdatedEntity.setState(mEntity->getState() == EntityState::Falling ? EntityState::Dying : EntityState::Standing);
-                        mUpdatedEntity.setVelocityX(0.f);
-                    }
-                }
-                else
-                {
-                    mUpdatedEntity.setState(EntityState::Flying);
-                }
+                topPlatformCollision(platform.getSegment().b.y, platform.getSurface());
                 break;
             }
             case PlatformCollision::Bottom:
             {
-                mUpdatedEntity.setRectBottom(platform.getSegment().a.y);
-                mUpdatedEntity.setVelocityY(0.f);
+                bottomPlatformCollision(platform.getSegment().a.y, platform.getSurface());
                 break;
             }
             case PlatformCollision::Attic:
@@ -70,22 +48,33 @@ namespace jp::game::physics
         }
     }
 
+    void EntityUpdater::update()
+    {
+        *mEntity = mUpdatedEntity;
+    }
+
     void EntityUpdater::updatePosition(float dt)
     {
-        //to do
+        mUpdatedEntity.move((mEntity->getVelocity() + mEntity->getSlideVelocity()) * dt + math::Vector2<float>(mWind.getVelocity() * 
+            getProperties().getWindFactor() + mEntity->getSlideAcceleration(), getProperties().getGravity()) * dt * dt / 2.f);
     }
 
     void EntityUpdater::updateVelocity(float dt)
     {
-        mUpdatedEntity.setSlideVelocity(mEntity->getSlideVelocity() + mEntity->getSlideAcceleration());
+        mUpdatedEntity.setSlideVelocity(mEntity->getSlideVelocity() + mEntity->getSlideAcceleration() * dt);
         if (mUpdatedEntity.getSlideVelocity() < 1.f)
         {
             mUpdatedEntity.setSlideVelocity(0.f);
             mUpdatedEntity.setSlideAcceleration(0.f);
         }
         mUpdatedEntity.setVelocity(mUpdatedEntity.getVelocity() +
-            (math::Vector2<float>(mWind.getVelocity() *
+            (math::Vector2<float>(mWind.getVelocity() * 
             getProperties().getWindFactor(), getProperties().getGravity())) * dt);
+    }
+
+    const Entity& EntityUpdater::getUpdatedEntity() const
+    {
+        return mUpdatedEntity;
     }
 
     void EntityUpdater::setEntity(std::shared_ptr<Entity> entity)
@@ -103,15 +92,60 @@ namespace jp::game::physics
         }
     }
 
-    void EntityUpdater::bounceLeft(float x)
+    void EntityUpdater::leftPlatformCollision(float x)
     {
         mUpdatedEntity.setRectLeft(x);
         bounce();
     }
 
-    void EntityUpdater::bounceRight(float x)
+    void EntityUpdater::rightPlatformCollision(float x)
     {
         mUpdatedEntity.setRectRight(x);
         bounce();
+    }
+
+    void EntityUpdater::land(bool top, PlatformSurface platformSurface)
+    {
+        bool landing = top ? getProperties().getGravity() < 0.f : getProperties().getGravity() > 0.f;
+        if (landing)
+        {
+            if (mEntity->getState() == EntityState::Running)
+            {
+                return;
+            }
+
+            if (platformSurface == PlatformSurface::Slippery)
+            {
+                mUpdatedEntity.setState(EntityState::Sliding);
+                if (mEntity->getVelocity().x != 0.f)
+                {
+                    float resultantVelocity = mUpdatedEntity.getVelocity().x + mUpdatedEntity.getSlideVelocity();
+                    mUpdatedEntity.setSlideVelocity(resultantVelocity);
+                    mUpdatedEntity.setSlideAcceleration(getProperties().getFriction() * (resultantVelocity / std::abs(resultantVelocity)));
+                }
+            }
+            else
+            {
+                mUpdatedEntity.setState(mEntity->getState() == EntityState::Falling ? EntityState::Dying : EntityState::Standing);
+            }
+            mUpdatedEntity.setVelocityX(0.f);
+        }
+        else
+        {
+            mUpdatedEntity.setState(EntityState::Flying);
+        }
+    }
+
+
+    void EntityUpdater::topPlatformCollision(float y, PlatformSurface platformSurface)
+    {
+        mUpdatedEntity.setRectTop(y);
+        land(true, platformSurface);
+    }
+
+    void EntityUpdater::bottomPlatformCollision(float y, PlatformSurface platformSurface)
+    {
+        mUpdatedEntity.setRectBottom(y);
+        land(false, platformSurface);
     }
 }

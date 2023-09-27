@@ -12,12 +12,14 @@ namespace jp::game::physics
         Running,
         Sledding,
         Sliding,
+        Squatting,
         Standing
     };
 
     class Entity
     {
     public:
+        Entity();
         Entity(const math::Rect<float>& rect);
 
         void move(const math::Vector2<float>& vec);
@@ -28,7 +30,8 @@ namespace jp::game::physics
         float getSlideVelocity() const;
         EntityState getState() const;
         const math::Vector2<float>& getVelocity() const;
-        
+        float getVelocityXSign() const;
+
         void setPosition(const math::Vector2<float>& position);
         void setRect(const math::Rect<float>& rect);
         void setRectTop(float y);

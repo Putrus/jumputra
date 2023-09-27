@@ -2,6 +2,9 @@
 
 namespace jp::game::physics
 {
+    Entity::Entity()
+    {}
+
     Entity::Entity(const math::Rect<float>& rect)
         : mRect(rect)
     {}
@@ -44,6 +47,11 @@ namespace jp::game::physics
     const math::Vector2<float>& Entity::getVelocity() const
     {
         return mVelocity;
+    }
+
+    float Entity::getVelocityXSign() const
+    {
+        return mVelocity.x / std::abs(mVelocity.x);
     }
 
     void Entity::setRect(const math::Rect<float>& rect)

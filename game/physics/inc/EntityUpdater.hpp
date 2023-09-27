@@ -12,19 +12,26 @@ namespace jp::game::physics
     class EntityUpdater : public Updater
     {
     public:
-        EntityUpdater(std::shared_ptr<Entity> entity, const Properties& properties, const Wind& wind);
+        EntityUpdater(const Properties& properties, const Wind& wind);
 
         void handlePlatformCollision(const Platform& platform);
 
+        void update();
         void updatePosition(float dt);
         void updateVelocity(float dt);
+
+        const Entity& getUpdatedEntity() const;
 
         void setEntity(std::shared_ptr<Entity> entity);
 
     private:
         void bounce();
-        void bounceLeft(float x);
-        void bounceRight(float x);
+        void leftPlatformCollision(float x);
+        void rightPlatformCollision(float x);
+
+        void land(bool top, PlatformSurface platformSurface);
+        void topPlatformCollision(float y, PlatformSurface platformSurface);
+        void bottomPlatformCollision(float y, PlatformSurface platformSurface);
 
         std::shared_ptr<Entity> mEntity;
         Entity mUpdatedEntity;

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Entity.hpp"
+#include "EntityUpdater.hpp"
 #include "Platform.hpp"
 #include "Properties.hpp"
-#include "Wind.hpp"
+#include "WindUpdater.hpp"
 
 #include <map>
 #include <memory>
@@ -14,16 +14,22 @@ namespace jp::game::physics
     class Engine
     {
     public:
+        Engine(Properties&& properties, std::vector<std::shared_ptr<Entity>>&& entities,
+            std::vector<std::shared_ptr<Platform>>&& platforms, std::shared_ptr<Wind>&& wind);
+
         void update(float dt);
 
     private:
-        void updateEntity(float dt, Entity& entity) const;
-
+        void updateEntities(float dt);
         void updateWind(float dt);
+
+        Properties mProperties;
 
         std::vector<std::shared_ptr<Entity>> mEntities;
         std::vector<std::shared_ptr<Platform>> mPlatforms;
         std::shared_ptr<Wind> mWind;
-        Properties mProperties;
+
+        EntityUpdater mEntityUpdater;
+        WindUpdater mWindUpdater;
     };
 }
