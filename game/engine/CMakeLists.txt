@@ -10,12 +10,12 @@ set(ALL_FILES
     src/main.cpp
     inc/Character.hpp src/Character.cpp
     math/inc/Rect.hpp math/inc/Segment.hpp math/inc/Vector2.hpp
-    physics/inc/PhysicsProperties.hpp physics/src/PhysicsProperties.cpp
     physics/inc/DiagonalPlatform.hpp physics/src/DiagonalPlatform.cpp
     physics/inc/Entity.hpp physics/src/Entity.cpp
     physics/inc/EntityUpdater.hpp physics/src/EntityUpdater.cpp
     physics/inc/HorizontalPlatform.hpp physics/src/HorizontalPlatform.cpp
     physics/inc/PhysicsEngine.hpp physics/src/PhysicsEngine.cpp
+    physics/inc/PhysicsProperties.hpp physics/src/PhysicsProperties.cpp
     physics/inc/Platform.hpp physics/src/Platform.cpp
     physics/inc/Updater.hpp physics/src/Updater.cpp
     physics/inc/Wind.hpp physics/src/Wind.cpp
