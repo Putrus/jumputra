@@ -2,10 +2,10 @@
 
 namespace jp::game::engine::physics
 {
-    class Properties
+    class PhysicsProperties
     {
     public:
-        Properties();
+        PhysicsProperties();
 
         void loadFromFile();
         void saveToFile() const;

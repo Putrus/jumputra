@@ -1,6 +1,6 @@
 #include "Platform.hpp"
 
-namespace jp::game::physics
+namespace jp::game::engine::physics
 {
     class VerticalPlatform final : public Platform
     {

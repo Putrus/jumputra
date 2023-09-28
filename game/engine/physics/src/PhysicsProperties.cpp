@@ -1,15 +1,15 @@
-#include "../inc/Properties.hpp"
+#include "../inc/PhysicsProperties.hpp"
 
 #include <fstream>
 
 namespace jp::game::engine::physics
 {
-    Properties::Properties()
+    PhysicsProperties::PhysicsProperties()
     {
         loadFromFile();
     }
 
-    void Properties::loadFromFile()
+    void PhysicsProperties::loadFromFile()
     {
         std::fstream file("data/properties/physics.jp");
         if (!file.is_open() || file.bad())
@@ -29,7 +29,7 @@ namespace jp::game::engine::physics
         file.close();
     }
 
-    void Properties::saveToFile() const
+    void PhysicsProperties::saveToFile() const
     {
         std::fstream file("data/properties/physics.jp");
         if (!file.is_open() || file.bad())
@@ -47,72 +47,72 @@ namespace jp::game::engine::physics
         file.close();
     }
 
-    float Properties::getBounceFactor() const
+    float PhysicsProperties::getBounceFactor() const
     {
         return mBounceFactor;
     }
 
-    float Properties::getCheckCollisionDistance() const
+    float PhysicsProperties::getCheckCollisionDistance() const
     {
         return mCheckCollisionDistance;
     }
 
-    float Properties::getFallVelocity() const
+    float PhysicsProperties::getFallVelocity() const
     {
         return mFallVelocity;
     }
 
-    float Properties::getFriction() const
+    float PhysicsProperties::getFriction() const
     {
         return mFriction;
     }
 
-    float Properties::getGravity() const
+    float PhysicsProperties::getGravity() const
     {
         return mGravity;
     }
 
-    float Properties::getWindFactor() const
+    float PhysicsProperties::getWindFactor() const
     {
         return mWindFactor;
     }
 
-    float Properties::getWindMaxVelocity() const
+    float PhysicsProperties::getWindMaxVelocity() const
     {
         return mWindMaxVelocity;
     }
 
-    void Properties::setBounceFactor(float bounceFactor)
+    void PhysicsProperties::setBounceFactor(float bounceFactor)
     {
         mBounceFactor = bounceFactor;
     }
 
-    void Properties::setCheckCollisionDistance(float distance)
+    void PhysicsProperties::setCheckCollisionDistance(float distance)
     {
         mCheckCollisionDistance = distance;
     }
 
-    void Properties::setFallVelocity(float velocity)
+    void PhysicsProperties::setFallVelocity(float velocity)
     {
         mFallVelocity = velocity;
     }
 
-    void Properties::setFriction(float friction)
+    void PhysicsProperties::setFriction(float friction)
     {
         mFriction = friction;
     }
 
-    void Properties::setGravity(float gravity)
+    void PhysicsProperties::setGravity(float gravity)
     {
         mGravity = gravity;
     }
 
-    void Properties::setWindFactor(float windFactor)
+    void PhysicsProperties::setWindFactor(float windFactor)
     {
         mWindFactor = windFactor;
     }
 
-    void Properties::setWindMaxVelocity(float windMaxVelocity)
+    void PhysicsProperties::setWindMaxVelocity(float windMaxVelocity)
     {
         mWindMaxVelocity = windMaxVelocity;
     }

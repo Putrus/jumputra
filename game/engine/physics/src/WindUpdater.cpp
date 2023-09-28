@@ -2,7 +2,7 @@
 
 namespace jp::game::engine::physics
 {
-    WindUpdater::WindUpdater(std::shared_ptr<Wind> wind, const Properties& properties)
+    WindUpdater::WindUpdater(std::shared_ptr<Wind> wind, const PhysicsProperties& properties)
     : mWind(wind), Updater(properties)
     {}
 

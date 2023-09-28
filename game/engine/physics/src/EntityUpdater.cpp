@@ -2,7 +2,7 @@
 
 namespace jp::game::engine::physics
 {
-    EntityUpdater::EntityUpdater(const jp::game::engine::physics::Properties& properties, const jp::game::engine::physics::Wind& wind)
+    EntityUpdater::EntityUpdater(const PhysicsProperties& properties, const jp::game::engine::physics::Wind& wind)
     : Updater(properties), mWind(wind)
     {}
 

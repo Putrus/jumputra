@@ -1,19 +1,17 @@
 #pragma once
 
-#include "Properties.hpp"
-
-#include <memory>
+#include "PhysicsProperties.hpp"
 
 namespace jp::game::engine::physics
 {
     class Updater
     {
     public:
-        Updater(const jp::game::engine::physics::Properties& properties);
+        Updater(const PhysicsProperties& properties);
 
-        const jp::game::engine::physics::Properties& getProperties() const;
+        const PhysicsProperties& getProperties() const;
 
     private:
-        const jp::game::engine::physics::Properties& mProperties;
+        const PhysicsProperties& mProperties;
     };
 }

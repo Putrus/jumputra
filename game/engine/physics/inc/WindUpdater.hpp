@@ -3,12 +3,14 @@
 #include "Updater.hpp"
 #include "Wind.hpp"
 
-namespace jp::game::physics
+#include <memory>
+
+namespace jp::game::engine::physics
 {
     class WindUpdater final : public Updater
     {
     public:
-        WindUpdater(std::shared_ptr<Wind> wind, const Properties& properties);
+        WindUpdater(std::shared_ptr<Wind> wind, const PhysicsProperties& properties);
 
         void update(float dt);
 

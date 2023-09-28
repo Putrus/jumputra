@@ -2,7 +2,7 @@
 
 namespace jp::game::engine::physics
 {
-    PhysicsEngine::PhysicsEngine(Properties&& properties, std::vector<std::shared_ptr<Entity>>&& entities,
+    PhysicsEngine::PhysicsEngine(PhysicsProperties&& properties, std::vector<std::shared_ptr<Entity>>&& entities,
         std::vector<std::shared_ptr<Platform>>&& platforms, std::shared_ptr<Wind>&& wind)
         : mProperties(properties), mEntities(entities), mPlatforms(platforms), mWind(wind),
             mEntityUpdater(mProperties, *mWind), mWindUpdater(mWind, mProperties)

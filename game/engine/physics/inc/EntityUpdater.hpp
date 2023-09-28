@@ -12,7 +12,7 @@ namespace jp::game::engine::physics
     class EntityUpdater : public Updater
     {
     public:
-        EntityUpdater(const jp::game::engine::physics::Properties& properties, const jp::game::engine::physics::Wind& wind);
+        EntityUpdater(const PhysicsProperties& properties, const Wind& wind);
 
         void handlePlatformCollision(const Platform* platform);
 
@@ -35,6 +35,6 @@ namespace jp::game::engine::physics
 
         std::shared_ptr<Entity> mEntity;
         Entity mUpdatedEntity;
-        const jp::game::engine::physics::Wind& mWind;
+        const Wind& mWind;
     };
 }
