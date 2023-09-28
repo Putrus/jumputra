@@ -1,0 +1,40 @@
+#pragma once
+
+#include "Entity.hpp"
+#include "Platform.hpp"
+#include "Updater.hpp"
+#include "Wind.hpp"
+
+#include <memory>
+
+namespace jp::game::engine::physics
+{
+    class EntityUpdater : public Updater
+    {
+    public:
+        EntityUpdater(const jp::game::engine::physics::Properties& properties, const jp::game::engine::physics::Wind& wind);
+
+        void handlePlatformCollision(const Platform* platform);
+
+        void update();
+        void updatePosition(float dt);
+        void updateVelocity(float dt);
+
+        const Entity& getUpdatedEntity() const;
+
+        void setEntity(std::shared_ptr<Entity> entity);
+
+    private:
+        void bounce();
+        void leftPlatformCollision(float x);
+        void rightPlatformCollision(float x);
+
+        void land(bool top, PlatformSurface platformSurface);
+        void topPlatformCollision(float y, PlatformSurface platformSurface);
+        void bottomPlatformCollision(float y, PlatformSurface platformSurface);
+
+        std::shared_ptr<Entity> mEntity;
+        Entity mUpdatedEntity;
+        const jp::game::engine::physics::Wind& mWind;
+    };
+}
