@@ -2,6 +2,6 @@
 
 int main()
 {
-    std::cout << "SFM game!" << std::endl;
+    std::cout << "SFML game!" << std::endl;
     return 0;
 }
