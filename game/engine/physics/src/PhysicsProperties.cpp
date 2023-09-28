@@ -18,7 +18,6 @@ namespace jp::game::engine::physics
             throw std::runtime_error("Failed to open file data/properties/physics.jp");
         }
         std::string key;
-        float value;
         file >> key >> mBounceFactor;
         file >> key >> mCheckCollisionDistance;
         file >> key >> mFallVelocity;
