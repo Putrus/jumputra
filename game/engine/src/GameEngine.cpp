@@ -11,6 +11,7 @@ namespace jp::game::engine
     {
         physics::PhysicsProperties properties(0.4f, 600.f, 700.f, 100.f, 1000.f, 0.4f, 0.f);
         auto entity = std::make_shared<physics::Entity>(math::Rect<float>(10.f, 20.f, 24.f, 24.f)); 
+        mCharacters.push_back(Character(entity));
         std::vector<std::shared_ptr<physics::Entity>> entities;
         entities.push_back(entity);
         std::vector<std::shared_ptr<physics::Platform>> platforms;
@@ -46,6 +47,7 @@ namespace jp::game::engine
 
     void GameEngine::update(float dt)
     {
+        std::cout << "update2!" << std::endl;
         mPhysicsEngine->update(dt);
     }
 }

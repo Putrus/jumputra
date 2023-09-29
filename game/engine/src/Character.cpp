@@ -55,6 +55,11 @@ namespace jp::game::engine
         mEntity->setVelocityX(100.f);
     }
 
+    const math::Rect<float>& Character::getRect() const
+    {
+        return mEntity->getRect();
+    }
+
     void Character::setJumpDirection(CharacterJumpDirection jumpDirection)
     {
         mJumpDirection = jumpDirection;

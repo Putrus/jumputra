@@ -11,11 +11,18 @@ namespace jp::game::engine::physics
     void PhysicsEngine::update(float dt)
     {
         updateWind(dt);
+        std::cout << "update entities" << std::endl;
         updateEntities(dt);
+    }
+
+    const std::vector<std::shared_ptr<Platform>>& PhysicsEngine::getPlatforms() const
+    {
+        return mPlatforms;
     }
 
     void PhysicsEngine::updateEntities(float dt)
     {
+        std::cout << "entities size: " << mEntities.size() << std::endl;
         for (auto& entity : mEntities)
         {
             mEntityUpdater.setEntity(entity);

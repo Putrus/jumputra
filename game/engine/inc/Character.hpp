@@ -27,6 +27,8 @@ namespace jp::game::engine
         void runLeft();
         void runRight();
 
+        const math::Rect<float>& getRect() const;
+
         void setJumpDirection(CharacterJumpDirection jumpDirection);
 
     private:

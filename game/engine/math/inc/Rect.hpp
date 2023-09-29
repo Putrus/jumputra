@@ -120,4 +120,11 @@ namespace jp::game::engine::math
         top += vec.y;
         return *this;
     }
+
+    template <typename T>
+    std::ostream& operator<<(std::ostream& os, const Rect<T>& rect)
+    {
+        os << rect.left << ' ' << rect.top << ' ' << rect.width << ' ' << rect.height;
+        return os;
+    }
 }

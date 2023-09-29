@@ -84,6 +84,7 @@ namespace jp::game::engine::physics
 
     void EntityUpdater::setEntity(std::shared_ptr<Entity> entity)
     {
+        std::cout << "set entity " << entity->getRect() << std::endl;
         mEntity = entity;
         mUpdatedEntity = *entity;
     }

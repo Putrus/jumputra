@@ -10,11 +10,11 @@ namespace jp::game::engine
     {
     public:
         GameEngine();
-        void run();
+        virtual void run();
 
-    private:
+    protected:
         void update(float dt);
-        
+
         std::unique_ptr<physics::PhysicsEngine> mPhysicsEngine;
         std::vector<Character> mCharacters;
     };

@@ -5,7 +5,8 @@ project(game-window)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(ALL_FILES src/main.cpp)
+set(ALL_FILES src/main.cpp
+   inc/Game.hpp src/Game.cpp)
 
 add_executable(game-window ${ALL_FILES})
 

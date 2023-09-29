@@ -17,6 +17,7 @@ namespace jp::game::engine::physics
             std::vector<std::shared_ptr<Platform>>&& platforms, std::shared_ptr<Wind>&& wind);
 
         void update(float dt);
+        const std::vector<std::shared_ptr<Platform>>& getPlatforms() const;
 
     private:
         void updateEntities(float dt);
