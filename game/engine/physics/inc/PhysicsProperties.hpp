@@ -6,6 +6,8 @@ namespace jp::game::engine::physics
     {
     public:
         PhysicsProperties();
+        PhysicsProperties(float bounce, float collision, float fall,
+            float friction, float gravity, float windFactor, float windMaxVelocity);
 
         void loadFromFile();
         void saveToFile() const;

@@ -9,6 +9,12 @@ namespace jp::game::engine::physics
         loadFromFile();
     }
 
+    PhysicsProperties::PhysicsProperties(float bounce, float collision, float fall,
+        float friction, float gravity, float windFactor, float windMaxVelocity)
+        : mBounceFactor(bounce), mCheckCollisionDistance(collision), mFallVelocity(fall),
+            mFriction(friction), mGravity(gravity), mWindFactor(windFactor), mWindMaxVelocity(windMaxVelocity)
+    {}
+
     void PhysicsProperties::loadFromFile()
     {
         std::fstream file("data/properties/physics.jp");

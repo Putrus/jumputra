@@ -9,6 +9,7 @@ message(${CMAKE_CURRENT_SOURCE_DIR})
 set(ALL_FILES
     src/main.cpp
     inc/Character.hpp src/Character.cpp
+    inc/GameEngine.hpp src/GameEngine.cpp
     math/inc/Rect.hpp math/inc/Segment.hpp math/inc/Vector2.hpp
     physics/inc/DiagonalPlatform.hpp physics/src/DiagonalPlatform.cpp
     physics/inc/Entity.hpp physics/src/Entity.cpp
