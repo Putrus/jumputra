@@ -11,7 +11,6 @@ namespace jp::game::engine::physics
     void PhysicsEngine::update(float dt)
     {
         updateWind(dt);
-        std::cout << "update entities" << std::endl;
         updateEntities(dt);
     }
 
@@ -22,7 +21,6 @@ namespace jp::game::engine::physics
 
     void PhysicsEngine::updateEntities(float dt)
     {
-        std::cout << "entities size: " << mEntities.size() << std::endl;
         for (auto& entity : mEntities)
         {
             mEntityUpdater.setEntity(entity);

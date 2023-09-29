@@ -60,8 +60,9 @@ namespace jp::game::engine::physics
 
     void EntityUpdater::updatePosition(float dt)
     {
-        mUpdatedEntity.move((mEntity->getVelocity() + mEntity->getSlideVelocity()) * dt + math::Vector2<float>(mWind.getVelocity() * 
-            getProperties().getWindFactor() + mEntity->getSlideAcceleration(), getProperties().getGravity()) * dt * dt / 2.f);
+        math::Vector2<float> v = (mEntity->getVelocity() + mEntity->getSlideVelocity()) * dt + math::Vector2<float>(mWind.getVelocity() * 
+            getProperties().getWindFactor() + mEntity->getSlideAcceleration(), getProperties().getGravity()) * dt * dt / 2.f;
+        mUpdatedEntity.move(v);
     }
 
     void EntityUpdater::updateVelocity(float dt)
@@ -84,7 +85,6 @@ namespace jp::game::engine::physics
 
     void EntityUpdater::setEntity(std::shared_ptr<Entity> entity)
     {
-        std::cout << "set entity " << entity->getRect() << std::endl;
         mEntity = entity;
         mUpdatedEntity = *entity;
     }

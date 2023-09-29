@@ -23,7 +23,7 @@ namespace jp::game::window
             while (time > UPDATE_NANOSECONDS)
             {
                 time -= UPDATE_NANOSECONDS;
-                engine::GameEngine::update(time);
+                engine::GameEngine::update(UPDATE_NANOSECONDS / 1000000000);
                 draw();
             }
             event();
@@ -64,6 +64,14 @@ namespace jp::game::window
             if (event.type == sf::Event::Closed)
             {
                 mWindow.close();
+            }
+
+            if (event.type == sf::Event::KeyPressed)
+            {
+                if (event.key.code == sf::Keyboard::L)
+                {
+                    std::cout << mCharacters[0].getRect() << std::endl;
+                }
             }
         }
         return;

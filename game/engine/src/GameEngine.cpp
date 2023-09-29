@@ -47,7 +47,6 @@ namespace jp::game::engine
 
     void GameEngine::update(float dt)
     {
-        std::cout << "update2!" << std::endl;
         mPhysicsEngine->update(dt);
     }
 }

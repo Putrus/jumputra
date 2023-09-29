@@ -8,6 +8,11 @@ namespace jp::game::engine::physics
 
     void WindUpdater::update(float dt)
     {
+        if (getProperties().getWindMaxVelocity() == 0.f)
+        {
+            return;
+        }
+        
         mWind->setVelocity(mWind->getVelocity() + mWind->getAcceleration() * dt);
         float absVelocity = std::abs(mWind->getVelocity());
         if (absVelocity >= getProperties().getWindMaxVelocity())
