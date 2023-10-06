@@ -113,6 +113,7 @@ namespace jp::game::engine::physics
     void EntityUpdater::land(bool top, PlatformSurface platformSurface)
     {
         bool landing = top ? getProperties().getGravity() < 0.f : getProperties().getGravity() > 0.f;
+        mUpdatedEntity.setVelocityY(0.f);
         if (landing)
         {
             if (mEntity->getState() == EntityState::Running)
@@ -130,9 +131,13 @@ namespace jp::game::engine::physics
                     mUpdatedEntity.setSlideAcceleration(getProperties().getFriction() * (resultantVelocity / std::abs(resultantVelocity)));
                 }
             }
-            else
+            else if (mEntity->getState() == EntityState::Falling)
             {
-                mUpdatedEntity.setState(mEntity->getState() == EntityState::Falling ? EntityState::Dying : EntityState::Standing);
+                mUpdatedEntity.setState(EntityState::Dying);
+            }
+            else if (mEntity->getState() == EntityState::Flying)
+            {
+                mUpdatedEntity.setState(EntityState::Standing);
             }
             mUpdatedEntity.setVelocityX(0.f);
         }

@@ -24,6 +24,7 @@ namespace jp::game::window
             {
                 time -= UPDATE_NANOSECONDS;
                 engine::GameEngine::update(UPDATE_NANOSECONDS / 1000000000);
+                mCharacters[0].update(UPDATE_NANOSECONDS / 1000000000);
                 draw();
             }
             event();
@@ -71,6 +72,45 @@ namespace jp::game::window
                 if (event.key.code == sf::Keyboard::L)
                 {
                     std::cout << mCharacters[0].getRect() << std::endl;
+                }
+
+                if (event.key.code == sf::Keyboard::Space)
+                {
+                    mCharacters[0].squat();
+                }
+
+                if (event.key.code == sf::Keyboard::A)
+                {
+                    mCharacters[0].runLeft();
+                    mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Left);
+                }
+
+                if (event.key.code == sf::Keyboard::D)
+                {
+                    mCharacters[0].runRight();
+                    mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Right);
+                }
+            }
+
+            if (event.type == sf::Event::KeyReleased)
+            {
+                if (event.key.code == sf::Keyboard::Space)
+                {
+                    mCharacters[0].jump();
+                }
+
+                if ((event.key.code == sf::Keyboard::A &&
+                    mCharacters[0].getJumpDirection() == engine::CharacterJumpDirection::Left) ||
+                    (event.key.code == sf::Keyboard::D &&
+                    mCharacters[0].getJumpDirection() == engine::CharacterJumpDirection::Right))
+                {
+                    mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Up);
+                }
+
+                if (event.key.code == sf::Keyboard::A ||
+                    event.key.code == sf::Keyboard::D)
+                {
+                    //to do
                 }
             }
         }

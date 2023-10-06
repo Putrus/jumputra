@@ -5,6 +5,15 @@ namespace jp::game::engine
     Character::Character(std::shared_ptr<physics::Entity> entity) : mEntity(entity)
     {}
 
+    void Character::update(float dt)
+    {
+        if (mEntity->getState() == physics::EntityState::Squatting)
+        {
+            //to do 1000.f can't be hardcoded
+            mJumpPower += dt * 1000.f;
+        }
+    }
+
     bool Character::canMove() const
     {
         return mEntity->getState() == physics::EntityState::Dying ||
@@ -27,37 +36,57 @@ namespace jp::game::engine
                 case CharacterJumpDirection::Left:
                 {
                     mEntity->setVelocity({ -100.f, -mJumpPower });
+                    break;
                 }
                 case CharacterJumpDirection::Right:
                 {
                     mEntity->setVelocity({ 100.f, -mJumpPower });
+                    break;
                 }
                 default:
                 break;
             }
+            mJumpPower = 0.f;
+            mEntity->setState(physics::EntityState::Flying);
         }
     }
 
     void Character::squat()
     {
-        mEntity->setState(physics::EntityState::Squatting);
+        if (mEntity->getState() == physics::EntityState::Running ||
+            mEntity->getState() == physics::EntityState::Sliding ||
+            mEntity->getState() == physics::EntityState::Standing)
+        {
+            mEntity->setState(physics::EntityState::Squatting);
+        }
     }
 
     void Character::runLeft()
     {
-        mEntity->setState(physics::EntityState::Running);
-        mEntity->setVelocityX(-100.f);
+        if (canMove())
+        {
+            mEntity->setState(physics::EntityState::Running);
+            mEntity->setVelocityX(-100.f);
+        }
     }
 
     void Character::runRight()
     {
-        mEntity->setState(physics::EntityState::Running);
-        mEntity->setVelocityX(100.f);
+        if (canMove())
+        {
+            mEntity->setState(physics::EntityState::Running);
+            mEntity->setVelocityX(100.f);
+        }
     }
 
     const math::Rect<float>& Character::getRect() const
     {
         return mEntity->getRect();
+    }
+
+    CharacterJumpDirection Character::getJumpDirection() const
+    {
+        return mJumpDirection;
     }
 
     void Character::setJumpDirection(CharacterJumpDirection jumpDirection)

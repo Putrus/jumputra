@@ -28,12 +28,13 @@ namespace jp::game::engine
         void runRight();
 
         const math::Rect<float>& getRect() const;
+        CharacterJumpDirection getJumpDirection() const;
 
         void setJumpDirection(CharacterJumpDirection jumpDirection);
 
     private:
         std::shared_ptr<physics::Entity> mEntity;
         CharacterJumpDirection mJumpDirection = CharacterJumpDirection::Up;
-        float mJumpPower = 0;
+        float mJumpPower = 0.f;
     };
 }
