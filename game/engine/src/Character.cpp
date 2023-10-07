@@ -35,12 +35,12 @@ namespace jp::game::engine
                 }
                 case CharacterJumpDirection::Left:
                 {
-                    mEntity->setVelocity({ -100.f, -mJumpPower });
+                    mEntity->setVelocity({ -mJumpPower / 2.f, -mJumpPower });
                     break;
                 }
                 case CharacterJumpDirection::Right:
                 {
-                    mEntity->setVelocity({ 100.f, -mJumpPower });
+                    mEntity->setVelocity({ mJumpPower / 2.f, -mJumpPower });
                     break;
                 }
                 default:
@@ -58,6 +58,15 @@ namespace jp::game::engine
             mEntity->getState() == physics::EntityState::Standing)
         {
             mEntity->setState(physics::EntityState::Squatting);
+        }
+    }
+
+    void Character::stop()
+    {
+        if (mEntity->getState() == physics::EntityState::Running)
+        {
+            mEntity->setVelocityX(0.f);
+            mEntity->setState(physics::EntityState::Standing);
         }
     }
 
@@ -92,5 +101,12 @@ namespace jp::game::engine
     void Character::setJumpDirection(CharacterJumpDirection jumpDirection)
     {
         mJumpDirection = jumpDirection;
+    }
+
+    //to remove
+    void Character::printInfo()
+    {
+        std::cout << getRect() << std::endl;
+        std::cout << (int)mEntity->getState() << std::endl;
     }
 }

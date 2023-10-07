@@ -69,11 +69,6 @@ namespace jp::game::window
 
             if (event.type == sf::Event::KeyPressed)
             {
-                if (event.key.code == sf::Keyboard::L)
-                {
-                    std::cout << mCharacters[0].getRect() << std::endl;
-                }
-
                 if (event.key.code == sf::Keyboard::Space)
                 {
                     mCharacters[0].squat();
@@ -94,6 +89,10 @@ namespace jp::game::window
 
             if (event.type == sf::Event::KeyReleased)
             {
+                if (event.key.code == sf::Keyboard::L)
+                {
+                    mCharacters[0].printInfo();
+                }
                 if (event.key.code == sf::Keyboard::Space)
                 {
                     mCharacters[0].jump();
@@ -105,12 +104,7 @@ namespace jp::game::window
                     mCharacters[0].getJumpDirection() == engine::CharacterJumpDirection::Right))
                 {
                     mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Up);
-                }
-
-                if (event.key.code == sf::Keyboard::A ||
-                    event.key.code == sf::Keyboard::D)
-                {
-                    //to do
+                    mCharacters[0].stop();
                 }
             }
         }

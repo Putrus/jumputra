@@ -87,6 +87,7 @@ namespace jp::game::engine::physics
     {
         mEntity = entity;
         mUpdatedEntity = *entity;
+        mUpdatedEntity.setState(mEntity->getState() == EntityState::Falling ? EntityState::Falling : EntityState::Flying);
     }
 
     void EntityUpdater::bounce()
@@ -118,6 +119,7 @@ namespace jp::game::engine::physics
         {
             if (mEntity->getState() == EntityState::Running)
             {
+                mUpdatedEntity.setState(EntityState::Running);
                 return;
             }
 
@@ -138,6 +140,10 @@ namespace jp::game::engine::physics
             else if (mEntity->getState() == EntityState::Flying)
             {
                 mUpdatedEntity.setState(EntityState::Standing);
+            }
+            else
+            {
+                mUpdatedEntity.setState(mEntity->getState());
             }
             mUpdatedEntity.setVelocityX(0.f);
         }

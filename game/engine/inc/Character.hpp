@@ -24,6 +24,7 @@ namespace jp::game::engine
 
         void jump();
         void squat();
+        void stop();
         void runLeft();
         void runRight();
 
@@ -32,6 +33,7 @@ namespace jp::game::engine
 
         void setJumpDirection(CharacterJumpDirection jumpDirection);
 
+        void printInfo();
     private:
         std::shared_ptr<physics::Entity> mEntity;
         CharacterJumpDirection mJumpDirection = CharacterJumpDirection::Up;

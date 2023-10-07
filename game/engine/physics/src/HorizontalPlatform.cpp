@@ -21,7 +21,7 @@ namespace jp::game::engine::physics
     }
 
     PlatformCollision HorizontalPlatform::checkCollision(const math::Rect<float>& oldRect,
-            const math::Rect<float>& newRect) const
+        const math::Rect<float>& newRect) const
     {
         if (checkCollision(newRect.getLeftTop(), newRect.getLeftBottom()) ||
             checkCollision(newRect.getRightTop(), newRect.getRightBottom()))
@@ -48,6 +48,6 @@ namespace jp::game::engine::physics
 
     bool HorizontalPlatform::checkCollision(math::Vector2<float> a, math::Vector2<float> b) const
     {
-        return a.x > mSegment.a.x && a.x < mSegment.b.x && mSegment.a.y > a.y && mSegment.a.y < b.y;
+        return a.x >= mSegment.a.x && a.x <= mSegment.b.x && mSegment.a.y >= a.y && mSegment.a.y <= b.y;
     }
 }
