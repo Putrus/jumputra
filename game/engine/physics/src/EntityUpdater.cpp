@@ -42,13 +42,56 @@ namespace jp::game::engine::physics
             }
             case PlatformCollision::Attic:
             {
-                std::cout << "Collision attic!" << std::endl;
+                //to do
+                float slope = (platform->getSegment().b.y - platform->getSegment().a.y) / (platform->getSegment().b.x - platform->getSegment().a.x);
+                float intercept = platform->getSegment().b.y - slope * platform->getSegment().b.x;
+                if (slope > 0.f)
+                {
+                    mUpdatedEntity.setRectTop(std::min(platform->getSegment().b.y,
+                        std::max(mUpdatedEntity.getRect().left, mUpdatedEntity.getRect().getRight()) + slope * intercept));
+                }
+                else
+                {
+                    mUpdatedEntity.setRectTop(std::min(platform->getSegment().a.y, (std::min(mUpdatedEntity.getRect().left,
+                        mUpdatedEntity.getRect().getRight()) + slope * intercept) * slope));
+                }
+
+                if (getProperties().getGravity() < 0.f)
+                {
+                    mUpdatedEntity.setVelocityX(slope * mUpdatedEntity.getVelocity().y);
+                }
+                else
+                {
+                    mUpdatedEntity.setVelocity(math::Vector2<float>());
+                }
+                mUpdatedEntity.setState(EntityState::Sledding);
                 break;
             }
             case PlatformCollision::Roof:
             {
-                std::cout << "Collision roof!" << std::endl;
-                break;
+                //to do
+                float slope = (platform->getSegment().b.y - platform->getSegment().a.y) / (platform->getSegment().b.x - platform->getSegment().a.x);
+                float intercept = platform->getSegment().b.y - slope * platform->getSegment().b.x;
+                if (slope > 0.f)
+                {
+                    mUpdatedEntity.setRectBottom(std::max(platform->getSegment().a.y, std::min(mUpdatedEntity.getRect().left,
+                        mUpdatedEntity.getRect().getRight()) + slope * intercept));
+                }
+                else
+                {
+                    mUpdatedEntity.setRectBottom(std::max(platform->getSegment().b.y, (std::max(mUpdatedEntity.getRect().left,
+                        mUpdatedEntity.getRect().getRight()) + slope * intercept) * slope));
+                }
+
+                if (getProperties().getGravity() > 0.f)
+                {
+                    mUpdatedEntity.setVelocityX(slope * mUpdatedEntity.getVelocity().y);
+                }
+                else
+                {
+                    mUpdatedEntity.setVelocity(math::Vector2<float>());
+                }
+                mUpdatedEntity.setState(EntityState::Sledding);
             }
             default:
             break;
@@ -126,7 +169,6 @@ namespace jp::game::engine::physics
                 //to do error handling
                 std::cout << "Something wrong! Controlled velocity isn't empty!" << std::endl;
             }
-            std::cout << "EntityUpdater::bounce" << std::endl;
             mUpdatedEntity.setAccelerationX(-mUpdatedEntity.getAcceleration().x);
             mUpdatedEntity.setVelocityX(-mEntity->getVelocity().x * getProperties().getBounceFactor());
         }
