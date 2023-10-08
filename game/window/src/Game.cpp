@@ -1,6 +1,7 @@
 #include "../inc/Game.hpp"
 
 #include <chrono>
+#include <thread>
 
 namespace jp::game::window
 {
@@ -15,6 +16,8 @@ namespace jp::game::window
         float time = 0.f;
         //60 frames per second
         float UPDATE_NANOSECONDS = 16666666;
+        std::thread t(&Game::keyPressed, this);
+        t.detach();
         while(mWindow.isOpen())
         {
             end = std::chrono::steady_clock::now();
@@ -68,26 +71,6 @@ namespace jp::game::window
                 mWindow.close();
             }
 
-            if (event.type == sf::Event::KeyPressed)
-            {
-                if (event.key.code == sf::Keyboard::Space)
-                {
-                    mCharacters[0].squat();
-                }
-
-                if (event.key.code == sf::Keyboard::A)
-                {
-                    mCharacters[0].runLeft();
-                    mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Left);
-                }
-
-                if (event.key.code == sf::Keyboard::D)
-                {
-                    mCharacters[0].runRight();
-                    mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Right);
-                }
-            }
-
             if (event.type == sf::Event::KeyReleased)
             {
                 if (event.key.code == sf::Keyboard::L)
@@ -110,5 +93,28 @@ namespace jp::game::window
             }
         }
         return;
+    }
+
+    void Game::keyPressed()
+    {
+        while (true)
+        {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Space))
+        {
+            mCharacters[0].squat();
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::A))
+        {
+            mCharacters[0].runLeft();
+            mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Left);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::D))
+        {
+            mCharacters[0].runRight();
+            mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Right);
+        }
+        }
     }
 }

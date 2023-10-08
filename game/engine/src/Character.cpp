@@ -1,5 +1,7 @@
 #include "../inc/Character.hpp"
 
+#include "../math/inc/Function.hpp"
+
 namespace jp::game::engine
 {
     Character::Character(std::shared_ptr<physics::Entity> entity) : mEntity(entity)
@@ -10,7 +12,7 @@ namespace jp::game::engine
         if (mEntity->getState() == physics::EntityState::Squatting)
         {
             //to do 1000.f can't be hardcoded
-            mJumpPower += dt * 1000.f;
+            mJumpPower += dt * 500.f;
         }
     }
 
@@ -30,25 +32,24 @@ namespace jp::game::engine
             {
                 case CharacterJumpDirection::Up:
                 {
-                    mEntity->setVelocity({ mEntity->getSlideVelocity(), -mJumpPower });
+                    mEntity->setVelocity({ mEntity->getVelocity().x, -mJumpPower });
                     break;
                 }
                 case CharacterJumpDirection::Left:
                 {
-                    mEntity->setVelocity({ -mJumpPower / 2.f + mEntity->getSlideVelocity(), -mJumpPower });
+                    mEntity->setVelocity({ -mJumpPower + mEntity->getVelocity().x, -mJumpPower });
                     break;
                 }
                 case CharacterJumpDirection::Right:
                 {
-                    mEntity->setVelocity({ mJumpPower / 2.f + mEntity->getSlideVelocity(), -mJumpPower });
+                    mEntity->setVelocity({ mJumpPower + mEntity->getVelocity().x, -mJumpPower });
                     break;
                 }
                 default:
                 break;
             }
             mJumpPower = 0.f;
-            mEntity->setSlideVelocity(0.f);
-            mEntity->setSlideAcceleration(0.f);
+            mEntity->setAccelerationX(0.f);
             mEntity->setState(physics::EntityState::Flying);
         }
     }
@@ -73,8 +74,12 @@ namespace jp::game::engine
     {
         if (canMove())
         {
+            if (math::sign(mEntity->getVelocity().x) == -1.f)
+            {
+                mEntity->setVelocityX(std::max(0.f, mEntity->getVelocity().x + 100.f));
+            }
             mEntity->setState(physics::EntityState::Running);
-            mEntity->setVelocityX(-100.f);
+            mEntity->setControlledVelocityX(-100.f);
         }
     }
 
@@ -82,8 +87,12 @@ namespace jp::game::engine
     {
         if (canMove())
         {
+            if (math::sign(mEntity->getVelocity().x) == 1.f)
+            {
+                mEntity->setVelocityX(std::min(0.f, mEntity->getVelocity().x - 100.f));
+            }
             mEntity->setState(physics::EntityState::Running);
-            mEntity->setVelocityX(100.f);
+            mEntity->setControlledVelocityX(100.f);
         }
     }
 
@@ -105,7 +114,7 @@ namespace jp::game::engine
     //to remove
     void Character::printInfo()
     {
-        std::cout << "rect: " << getRect() << std::endl;
+        std::cout << "r: " << getRect() << std::endl;
         std::string state = "Standing";
         switch(mEntity->getState())
         {
@@ -137,8 +146,10 @@ namespace jp::game::engine
                 state = "Undefined";
                 break;
         }
-        std::cout << "state: " << state << std::endl;
-        std::cout << "velocity: " << mEntity->getVelocity() << std::endl;
-        std::cout << "slide v: " << mEntity->getSlideVelocity() << " a: " << mEntity->getSlideAcceleration() << std::endl << std::endl;
+        std::cout << "s: " << state << std::endl;
+        std::cout << "v: " << mEntity->getVelocity() << std::endl;
+        std::cout << "cv: " << mEntity->getControlledVelocity() << std::endl;
+        std::cout << "a: " << mEntity->getAcceleration() << std::endl;
+        std::cout << "d: " << (int)mJumpDirection << std::endl << std::endl;
     }
 }

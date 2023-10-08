@@ -13,7 +13,7 @@ namespace jp::game::engine::math
         Vector2(const Vector2& other);
         virtual ~Vector2();
 
-        T cross(const Vector2& other);
+        T cross(const Vector2& other) const;
 
         Vector2 operator+(const Vector2& other) const;
         Vector2 operator-(const Vector2& other) const;
@@ -44,7 +44,7 @@ namespace jp::game::engine::math
     Vector2<T>::~Vector2() {}
 
     template <typename T>
-    T Vector2<T>::cross(const Vector2& other)
+    T Vector2<T>::cross(const Vector2& other) const
     {
         return x * other.y - other.x * y;
     }

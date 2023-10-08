@@ -82,7 +82,12 @@ namespace jp::game::engine::physics
         return mWindFactor;
     }
 
-    float PhysicsProperties::getWindMaxVelocity() const
+    const math::Vector2<float>& PhysicsProperties::getWindAcceleration() const
+    {
+        return mWindAcceleration;
+    }
+
+    const math::Vector2<float>& PhysicsProperties::getWindMaxVelocity() const
     {
         return mWindMaxVelocity;
     }
@@ -117,7 +122,12 @@ namespace jp::game::engine::physics
         mWindFactor = windFactor;
     }
 
-    void PhysicsProperties::setWindMaxVelocity(float windMaxVelocity)
+    void PhysicsProperties::setWindAcceleration(const math::Vector2<float>& windAcceleration)
+    {
+        mWindAcceleration = windAcceleration;
+    }
+
+    void PhysicsProperties::setWindMaxVelocity(const math::Vector2<float>& windMaxVelocity)
     {
         mWindMaxVelocity = windMaxVelocity;
     }

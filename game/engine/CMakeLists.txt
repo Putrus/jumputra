@@ -11,10 +11,12 @@ set(ALL_FILES
     inc/Character.hpp src/Character.cpp
     inc/GameEngine.hpp src/GameEngine.cpp
     math/inc/Rect.hpp math/inc/Segment.hpp math/inc/Vector2.hpp
+    math/inc/Function.hpp math/src/Function.cpp
     physics/inc/DiagonalPlatform.hpp physics/src/DiagonalPlatform.cpp
     physics/inc/Entity.hpp physics/src/Entity.cpp
     physics/inc/EntityUpdater.hpp physics/src/EntityUpdater.cpp
     physics/inc/HorizontalPlatform.hpp physics/src/HorizontalPlatform.cpp
+    physics/inc/Kinematics.hpp physics/src/Kinematics.cpp
     physics/inc/PhysicsEngine.hpp physics/src/PhysicsEngine.cpp
     physics/inc/PhysicsProperties.hpp physics/src/PhysicsProperties.cpp
     physics/inc/Platform.hpp physics/src/Platform.cpp

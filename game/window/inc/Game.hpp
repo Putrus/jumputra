@@ -13,7 +13,7 @@ namespace jp::game::window
         void run() override;
         void draw();
         void event();
-
+        void keyPressed();
     private:
         sf::RenderWindow mWindow;
     };

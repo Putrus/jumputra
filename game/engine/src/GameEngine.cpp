@@ -16,6 +16,10 @@ namespace jp::game::engine
         entities.push_back(entity);
         std::vector<std::shared_ptr<physics::Platform>> platforms;
         platforms.push_back(std::make_shared<physics::HorizontalPlatform>(
+            math::Segment<float>(1.f, 0.f, 400.f, 0.f), physics::PlatformSurface::Ordinary));
+        platforms.push_back(std::make_shared<physics::VerticalPlatform>(
+            math::Segment<float>(1.f, 0.f, 1.f, 100.f), physics::PlatformSurface::Ordinary));
+        platforms.push_back(std::make_shared<physics::HorizontalPlatform>(
             math::Segment<float>(1.f, 100.f, 50.f, 100.f), physics::PlatformSurface::Ordinary));
         platforms.push_back(std::make_shared<physics::VerticalPlatform>(
             math::Segment<float>(50.f, 100.f, 50.f, 350.f), physics::PlatformSurface::Ordinary));
@@ -25,6 +29,8 @@ namespace jp::game::engine
             math::Segment<float>(300.f, 350.f, 300.f, 150.f), physics::PlatformSurface::Ordinary));
         platforms.push_back(std::make_shared<physics::HorizontalPlatform>(
             math::Segment<float>(300.f, 150.f, 400.f, 150.f), physics::PlatformSurface::Ordinary));
+        platforms.push_back(std::make_shared<physics::VerticalPlatform>(
+            math::Segment<float>(400.f, 150.f, 400.f, 0.f), physics::PlatformSurface::Ordinary));
         auto wind = std::make_shared<physics::Wind>(0.f);
         mPhysicsEngine = std::make_unique<physics::PhysicsEngine>(
             std::move(properties), std::move(entities), std::move(platforms),

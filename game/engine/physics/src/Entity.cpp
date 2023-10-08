@@ -9,19 +9,14 @@ namespace jp::game::engine::physics
         : mRect(rect)
     {}
 
-    void Entity::setPosition(const math::Vector2<float>& position)
-    {
-        mRect.setPosition(position);
-    }
-
     void Entity::move(const math::Vector2<float>& vec)
     {
         mRect += vec;
     }
 
-    const math::Rect<float>& Entity::getRect() const
+    const math::Vector2<float>& Entity::getControlledVelocity() const
     {
-        return mRect;
+        return mControlledVelocity;
     }
 
     math::Vector2<float> Entity::getPosition() const
@@ -29,14 +24,9 @@ namespace jp::game::engine::physics
         return mRect.getPosition();
     }
 
-    float Entity::getSlideAcceleration() const
+    const math::Rect<float>& Entity::getRect() const
     {
-        return mSlideAcceleration;
-    }
-
-    float Entity::getSlideVelocity() const
-    {
-        return mSlideVelocity;
+        return mRect;
     }
 
     EntityState Entity::getState() const
@@ -44,14 +34,24 @@ namespace jp::game::engine::physics
         return mState;
     }
 
-    const math::Vector2<float>& Entity::getVelocity() const
+    void Entity::setControlledVelocity(const math::Vector2<float>& velocity)
     {
-        return mVelocity;
+        mControlledVelocity = velocity;
     }
 
-    float Entity::getVelocityXSign() const
+    void Entity::setControlledVelocityX(float x)
     {
-        return mVelocity.x / std::abs(mVelocity.x);
+        mControlledVelocity.x = x;
+    }
+
+    void Entity::setControlledVelocityY(float y)
+    {
+        mControlledVelocity.y = y;
+    }
+
+    void Entity::setPosition(const math::Vector2<float>& position)
+    {
+        mRect.setPosition(position);
     }
 
     void Entity::setRect(const math::Rect<float>& rect)
@@ -79,33 +79,8 @@ namespace jp::game::engine::physics
         mRect.left = x - mRect.width;
     }
 
-    void Entity::setSlideAcceleration(float acceleration)
-    {
-        mSlideAcceleration = acceleration;
-    }
-
-    void Entity::setSlideVelocity(float velocity)
-    {
-        mSlideVelocity = velocity;
-    }
-
     void Entity::setState(EntityState state)
     {
         mState = state;
-    }
-
-    void Entity::setVelocity(const math::Vector2<float>& velocity)
-    {
-        mVelocity = velocity;
-    }
-
-    void Entity::setVelocityX(float x)
-    {
-        mVelocity.x = x;
-    }
-
-    void Entity::setVelocityY(float y)
-    {
-        mVelocity.y = y;
-    }
+    }  
 }

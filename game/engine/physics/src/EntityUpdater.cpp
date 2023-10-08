@@ -1,5 +1,7 @@
 #include "../inc/EntityUpdater.hpp"
 
+#include "../../math/inc/Function.hpp"
+
 namespace jp::game::engine::physics
 {
     EntityUpdater::EntityUpdater(const PhysicsProperties& properties, const jp::game::engine::physics::Wind& wind)
@@ -60,22 +62,46 @@ namespace jp::game::engine::physics
 
     void EntityUpdater::updatePosition(float dt)
     {
-        math::Vector2<float> v = (mEntity->getVelocity() + math::Vector2<float>(mEntity->getSlideVelocity(), 0.f)) * dt + math::Vector2<float>(mWind.getVelocity() * 
-            getProperties().getWindFactor() + mEntity->getSlideAcceleration(), getProperties().getGravity()) * dt * dt / 2.f;
-        mUpdatedEntity.move(v);
+        //distance/spatium = v * t + a * t^2 / 2 
+        math::Vector2<float> distance = getResultantVelocity(*mEntity) * dt +
+            getResultantAcceleration(*mEntity) * dt * dt / 2.f;
+        mUpdatedEntity.move(distance);
     }
 
     void EntityUpdater::updateVelocity(float dt)
     {
-        mUpdatedEntity.setSlideVelocity(mEntity->getSlideVelocity() + mEntity->getSlideAcceleration() * dt);
-        if (mUpdatedEntity.getSlideVelocity() < 1.f && mUpdatedEntity.getSlideVelocity() > -1.f)
+        math::Vector2<float> updatedVelocity = mEntity->getVelocity() + getResultantAcceleration(*mEntity) * dt;
+        math::Vector2<float> updatedAcceleration = mEntity->getAcceleration();
+        if (mEntity->getState() != EntityState::Running)
         {
-            mUpdatedEntity.setSlideVelocity(0.f);
-            mUpdatedEntity.setSlideAcceleration(0.f);
+            updatedVelocity += mEntity->getControlledVelocity();
+            mUpdatedEntity.setControlledVelocity(math::Vector2<float>(0.f));
         }
-        mUpdatedEntity.setVelocity(mUpdatedEntity.getVelocity() +
-            (math::Vector2<float>(mWind.getVelocity() * 
-            getProperties().getWindFactor(), getProperties().getGravity())) * dt);
+
+        if (updatedVelocity.x < 1.f && updatedVelocity.x > -1.f)
+        {
+            updatedAcceleration.x = 0.f;
+            updatedVelocity.x = 0.f;
+        }
+        else
+        {
+            if (mEntity->getState() == EntityState::Dying || 
+                mEntity->getState() == EntityState::Running ||
+                mEntity->getState() == EntityState::Sliding ||
+                mEntity->getState() == EntityState::Squatting)
+            {
+                updatedAcceleration.x = -math::sign(updatedVelocity.x) * getProperties().getFriction();
+            }
+        }
+
+        if (updatedVelocity.y >= getProperties().getFallVelocity())
+        {
+            mUpdatedEntity.setState(EntityState::Falling);
+            updatedVelocity.y = getProperties().getFallVelocity();
+        }
+
+        mUpdatedEntity.setAcceleration(updatedAcceleration); 
+        mUpdatedEntity.setVelocity(updatedVelocity);
     }
 
     const Entity& EntityUpdater::getUpdatedEntity() const
@@ -95,9 +121,14 @@ namespace jp::game::engine::physics
         if (mEntity->getState() == EntityState::Flying ||
             mEntity->getState() == EntityState::Sliding)
         {
+            if (mUpdatedEntity.getControlledVelocity() != math::Vector2<float>())
+            {
+                //to do error handling
+                std::cout << "Something wrong! Controlled velocity isn't empty!" << std::endl;
+            }
+            std::cout << "EntityUpdater::bounce" << std::endl;
+            mUpdatedEntity.setAccelerationX(-mUpdatedEntity.getAcceleration().x);
             mUpdatedEntity.setVelocityX(-mEntity->getVelocity().x * getProperties().getBounceFactor());
-            mUpdatedEntity.setSlideVelocity(-mEntity->getSlideVelocity() * getProperties().getBounceFactor());
-            mUpdatedEntity.setSlideAcceleration(-mEntity->getSlideAcceleration());
         }
     }
 
@@ -127,20 +158,15 @@ namespace jp::game::engine::physics
 
             if (platformSurface == PlatformSurface::Slippery)
             {
-                if (mEntity->getState() != EntityState::Squatting)
+                if (mEntity->getState() == EntityState::Squatting)
                 {
-                    mUpdatedEntity.setState(EntityState::Sliding);
+                    mUpdatedEntity.setState(EntityState::Squatting); 
                 }    
                 else
                 {
-                    mUpdatedEntity.setState(mEntity->getState());
+                    mUpdatedEntity.setState(EntityState::Sliding);
                 }
-                if (mEntity->getVelocity().x != 0.f)
-                {
-                    float resultantVelocity = mUpdatedEntity.getVelocity().x + mUpdatedEntity.getSlideVelocity();
-                    mUpdatedEntity.setSlideVelocity(resultantVelocity);
-                    mUpdatedEntity.setSlideAcceleration(getProperties().getFriction() * -(resultantVelocity / std::abs(resultantVelocity)));
-                }
+                return;
             }
             else if (mEntity->getState() == EntityState::Falling)
             {
@@ -173,5 +199,16 @@ namespace jp::game::engine::physics
     {
         mUpdatedEntity.setRectBottom(y);
         land(false, platformSurface);
+    }
+
+    math::Vector2<float> EntityUpdater::getResultantAcceleration(const Entity& entity) const
+    {
+        return entity.getAcceleration() + mWind.getVelocity() * getProperties().getWindFactor() +
+            math::Vector2<float>(0.f, getProperties().getGravity());
+    }
+
+    math::Vector2<float> EntityUpdater::getResultantVelocity(const Entity& entity) const
+    {
+        return entity.getControlledVelocity() + entity.getVelocity();
     }
 }

@@ -1,20 +1,14 @@
 #pragma once
 
+#include "Kinematics.hpp"
+
 namespace jp::game::engine::physics
 {
-    class Wind final
+    class Wind final : public Kinematics
     {
     public:
-        Wind(float acceleration, float velocity = 0.f);
-
-        float getAcceleration() const;
-        float getVelocity() const;
-
-        void setAcceleration(float acceleration);
-        void setVelocity(float velocity);
-
-    private:
-        float mAcceleration;
-        float mVelocity;
+        Wind();
+        Wind(const math::Vector2<float>& acceleration,
+            const math::Vector2<float>& velocity = math::Vector2<float>(0.f));
     };
 }

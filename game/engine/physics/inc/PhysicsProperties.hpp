@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../../math/inc/Vector2.hpp"
+
 namespace jp::game::engine::physics
 {
     class PhysicsProperties
@@ -18,7 +20,8 @@ namespace jp::game::engine::physics
         float getFriction() const;
         float getGravity() const;
         float getWindFactor() const;
-        float getWindMaxVelocity() const;
+        const math::Vector2<float>& getWindAcceleration() const;
+        const math::Vector2<float>& getWindMaxVelocity() const;
 
         void setBounceFactor(float bounceFactor);
         void setCheckCollisionDistance(float distance);
@@ -26,7 +29,8 @@ namespace jp::game::engine::physics
         void setFriction(float friction);
         void setGravity(float gravity);
         void setWindFactor(float windFactor);
-        void setWindMaxVelocity(float windMaxVelocity);
+        void setWindAcceleration(const math::Vector2<float>& windAcceleration);
+        void setWindMaxVelocity(const math::Vector2<float>& windMaxVelocity);
 
     private:
         float mBounceFactor;
@@ -35,6 +39,7 @@ namespace jp::game::engine::physics
         float mFriction;
         float mGravity;
         float mWindFactor;
-        float mWindMaxVelocity;
+        math::Vector2<float> mWindAcceleration;
+        math::Vector2<float> mWindMaxVelocity;
     };
 }

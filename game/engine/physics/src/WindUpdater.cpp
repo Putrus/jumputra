@@ -7,18 +7,19 @@ namespace jp::game::engine::physics
     {}
 
     void WindUpdater::update(float dt)
-    {
-        if (getProperties().getWindMaxVelocity() == 0.f)
+    {   
+        //wind update implemented only for x axis
+        if (getProperties().getWindMaxVelocity().x == 0.f)
         {
             return;
         }
-        
         mWind->setVelocity(mWind->getVelocity() + mWind->getAcceleration() * dt);
-        float absVelocity = std::abs(mWind->getVelocity());
-        if (absVelocity >= getProperties().getWindMaxVelocity())
+        float absVelocity = std::abs(mWind->getVelocity().x);
+        if (absVelocity >= getProperties().getWindMaxVelocity().x)
         {
-            mWind->setVelocity(getProperties().getWindMaxVelocity() * (mWind->getVelocity() / absVelocity));
-            mWind->setAcceleration(mWind->getAcceleration() * -1.f);
+            float velocitySign = mWind->getVelocity().x / absVelocity;
+            mWind->setVelocity(getProperties().getWindMaxVelocity() * velocitySign);
+            mWind->setAcceleration(getProperties().getWindAcceleration() * -velocitySign);
         }
     }
 }

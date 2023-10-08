@@ -33,6 +33,9 @@ namespace jp::game::engine::physics
         void topPlatformCollision(float y, PlatformSurface platformSurface);
         void bottomPlatformCollision(float y, PlatformSurface platformSurface);
 
+        math::Vector2<float> getResultantAcceleration(const Entity& entity) const;
+        math::Vector2<float> getResultantVelocity(const Entity& entity) const;
+
         std::shared_ptr<Entity> mEntity;
         Entity mUpdatedEntity;
         const Wind& mWind;
