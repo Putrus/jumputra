@@ -36,10 +36,11 @@ namespace jp::game::window
         mWindow.clear();
         for (const auto& platform : mPhysicsEngine->getPlatforms())
         {
+            sf::Color color = platform->getSurface() == engine::physics::PlatformSurface::Slippery ? sf::Color::Cyan : sf::Color::White;
             sf::Vertex line[] = 
             {
-                sf::Vertex(sf::Vector2f(platform->getSegment().a.x, platform->getSegment().a.y)),
-                sf::Vertex(sf::Vector2f(platform->getSegment().b.x, platform->getSegment().b.y))
+                sf::Vertex(sf::Vector2f(platform->getSegment().a.x, platform->getSegment().a.y), color),
+                sf::Vertex(sf::Vector2f(platform->getSegment().b.x, platform->getSegment().b.y), color)
             };
             mWindow.draw(line, 2, sf::Lines);
         }

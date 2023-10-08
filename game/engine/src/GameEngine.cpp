@@ -20,7 +20,7 @@ namespace jp::game::engine
         platforms.push_back(std::make_shared<physics::VerticalPlatform>(
             math::Segment<float>(50.f, 100.f, 50.f, 350.f), physics::PlatformSurface::Ordinary));
         platforms.push_back(std::make_shared<physics::HorizontalPlatform>(
-            math::Segment<float>(50.f, 350.f, 300.f, 350.f), physics::PlatformSurface::Ordinary));
+            math::Segment<float>(50.f, 350.f, 300.f, 350.f), physics::PlatformSurface::Slippery));
         platforms.push_back(std::make_shared<physics::VerticalPlatform>(
             math::Segment<float>(300.f, 350.f, 300.f, 150.f), physics::PlatformSurface::Ordinary));
         platforms.push_back(std::make_shared<physics::HorizontalPlatform>(

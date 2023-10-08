@@ -60,7 +60,7 @@ namespace jp::game::engine::physics
 
     void EntityUpdater::updatePosition(float dt)
     {
-        math::Vector2<float> v = (mEntity->getVelocity() + mEntity->getSlideVelocity()) * dt + math::Vector2<float>(mWind.getVelocity() * 
+        math::Vector2<float> v = (mEntity->getVelocity() + math::Vector2<float>(mEntity->getSlideVelocity(), 0.f)) * dt + math::Vector2<float>(mWind.getVelocity() * 
             getProperties().getWindFactor() + mEntity->getSlideAcceleration(), getProperties().getGravity()) * dt * dt / 2.f;
         mUpdatedEntity.move(v);
     }
@@ -68,7 +68,7 @@ namespace jp::game::engine::physics
     void EntityUpdater::updateVelocity(float dt)
     {
         mUpdatedEntity.setSlideVelocity(mEntity->getSlideVelocity() + mEntity->getSlideAcceleration() * dt);
-        if (mUpdatedEntity.getSlideVelocity() < 1.f)
+        if (mUpdatedEntity.getSlideVelocity() < 1.f && mUpdatedEntity.getSlideVelocity() > -1.f)
         {
             mUpdatedEntity.setSlideVelocity(0.f);
             mUpdatedEntity.setSlideAcceleration(0.f);
@@ -96,6 +96,8 @@ namespace jp::game::engine::physics
             mEntity->getState() == EntityState::Sliding)
         {
             mUpdatedEntity.setVelocityX(-mEntity->getVelocity().x * getProperties().getBounceFactor());
+            mUpdatedEntity.setSlideVelocity(-mEntity->getSlideVelocity() * getProperties().getBounceFactor());
+            mUpdatedEntity.setSlideAcceleration(-mEntity->getSlideAcceleration());
         }
     }
 
@@ -125,12 +127,19 @@ namespace jp::game::engine::physics
 
             if (platformSurface == PlatformSurface::Slippery)
             {
-                mUpdatedEntity.setState(EntityState::Sliding);
+                if (mEntity->getState() != EntityState::Squatting)
+                {
+                    mUpdatedEntity.setState(EntityState::Sliding);
+                }    
+                else
+                {
+                    mUpdatedEntity.setState(mEntity->getState());
+                }
                 if (mEntity->getVelocity().x != 0.f)
                 {
                     float resultantVelocity = mUpdatedEntity.getVelocity().x + mUpdatedEntity.getSlideVelocity();
                     mUpdatedEntity.setSlideVelocity(resultantVelocity);
-                    mUpdatedEntity.setSlideAcceleration(getProperties().getFriction() * (resultantVelocity / std::abs(resultantVelocity)));
+                    mUpdatedEntity.setSlideAcceleration(getProperties().getFriction() * -(resultantVelocity / std::abs(resultantVelocity)));
                 }
             }
             else if (mEntity->getState() == EntityState::Falling)
