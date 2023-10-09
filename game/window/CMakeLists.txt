@@ -15,9 +15,12 @@ if (CMAKE_SIZEOF_VOID_P EQUAL 8)
    set(CONFIGURATION x64)
 endif()
 
+#set(SFML_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/${CMAKE_SYSTEM_NAME}/${CONFIGURATION}/SFML-2.6.0/lib/cmake/SFML)
 set(SFML_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/${CMAKE_SYSTEM_NAME}/${CONFIGURATION}/SFML-2.6.0/include)
 set(SFML_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext/${CMAKE_SYSTEM_NAME}/${CONFIGURATION}/SFML-2.6.0/lib)
 target_include_directories(game-window PRIVATE ${SFML_INCLUDE_DIR})
 target_link_directories(game-window PRIVATE ${SFML_LIB_DIR})
 
+#set(SFML_STATIC_LIBRARIES TRUE)
+#find_package(SFML 2.6.0 COMPONENTS graphics audio window system REQUIRED)
 target_link_libraries(game-window PRIVATE jp-game-engine sfml-graphics sfml-window sfml-audio sfml-system)
