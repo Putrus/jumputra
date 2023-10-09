@@ -1,5 +1,7 @@
 #pragma once
 
+#include "CharacterProperties.hpp"
+
 #include "../physics/inc/Entity.hpp"
 
 #include <memory>
@@ -16,7 +18,7 @@ namespace jp::game::engine
     class Character
     {
     public:
-        Character(std::shared_ptr<physics::Entity> entity);
+        Character(std::shared_ptr<physics::Entity> entity, const CharacterProperties& properties);
 
         void update(float dt);
 
@@ -37,6 +39,7 @@ namespace jp::game::engine
     private:
         std::shared_ptr<physics::Entity> mEntity;
         CharacterJumpDirection mJumpDirection = CharacterJumpDirection::Up;
-        float mJumpPower = 0.f;
+        math::Vector2<float> mJumpPower = math::Vector2<float>();
+        const CharacterProperties& mProperties;
     };
 }

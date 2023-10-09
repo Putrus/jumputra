@@ -13,6 +13,7 @@ message(${CMAKE_CURRENT_SOURCE_DIR})
 set(ALL_FILES
     src/main.cpp
     inc/Character.hpp src/Character.cpp
+    inc/CharacterProperties.hpp src/CharacterProperties.cpp
     inc/GameEngine.hpp src/GameEngine.cpp
     math/inc/Rect.hpp math/inc/Segment.hpp math/inc/Vector2.hpp
     math/inc/Function.hpp math/src/Function.cpp

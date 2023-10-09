@@ -8,12 +8,12 @@
 
 namespace jp::game::engine
 {
-    GameEngine::GameEngine()
+    GameEngine::GameEngine() : mCharacterProperties(math::Vector2<float>(24.f, 24.f), math::Vector2<float>(500.f, 1000.f), math::Vector2<float>(500.f, 1000.f), 200.f)
     {
-        physics::PhysicsProperties properties(0.4f, 600.f, 700.f, 100.f, 1000.f, 0.4f, 1000.f);
+        physics::PhysicsProperties properties(0.4f, 600.f, 700.f, 100.f, 1000.f, 0.4f, 0.f);
         properties.setWindAcceleration(math::Vector2<float>(100.f, 0.f));
-        auto entity = std::make_shared<physics::Entity>(math::Rect<float>(10.f, 20.f, 24.f, 24.f)); 
-        mCharacters.push_back(Character(entity));
+        auto entity = std::make_shared<physics::Entity>(math::Rect<float>(10.f, 20.f, 24.f, 24.f));
+        mCharacters.push_back(Character(entity, mCharacterProperties));
         std::vector<std::shared_ptr<physics::Entity>> entities;
         entities.push_back(entity);
         std::vector<std::shared_ptr<physics::Platform>> platforms;

@@ -15,7 +15,7 @@ namespace jp::game::engine
     protected:
         void update(float dt);
 
-        //CharacterProperties mCharacterProperties;
+        CharacterProperties mCharacterProperties;
         std::vector<Character> mCharacters;
         //physics::PhysicsProperties mPhysicsProperties;
         std::unique_ptr<physics::PhysicsEngine> mPhysicsEngine;

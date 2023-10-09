@@ -4,7 +4,8 @@
 
 namespace jp::game::engine
 {
-    Character::Character(std::shared_ptr<physics::Entity> entity) : mEntity(entity)
+    Character::Character(std::shared_ptr<physics::Entity> entity, const CharacterProperties& properties)
+    : mEntity(entity), mProperties(properties)
     {}
 
     void Character::update(float dt)
@@ -12,7 +13,7 @@ namespace jp::game::engine
         if (mEntity->getState() == physics::EntityState::Squatting)
         {
             //to do 1000.f can't be hardcoded
-            mJumpPower += dt * 500.f;
+            mJumpPower += mProperties.getJumpGain() * dt;
         }
     }
 
@@ -32,23 +33,23 @@ namespace jp::game::engine
             {
                 case CharacterJumpDirection::Up:
                 {
-                    mEntity->setVelocity({ mEntity->getVelocity().x, -mJumpPower });
+                    mEntity->setVelocity(math::Vector2<float>(mEntity->getVelocity().x, -mJumpPower.y));
                     break;
                 }
                 case CharacterJumpDirection::Left:
                 {
-                    mEntity->setVelocity({ -mJumpPower + mEntity->getVelocity().x, -mJumpPower });
+                    mEntity->setVelocity(math::Vector2<float>(-mJumpPower.x + mEntity->getVelocity().x, -mJumpPower.y));
                     break;
                 }
                 case CharacterJumpDirection::Right:
                 {
-                    mEntity->setVelocity({ mJumpPower + mEntity->getVelocity().x, -mJumpPower });
+                   mEntity->setVelocity(math::Vector2<float>(mJumpPower.x + mEntity->getVelocity().x, -mJumpPower.y));
                     break;
                 }
                 default:
                 break;
             }
-            mJumpPower = 0.f;
+            mJumpPower = math::Vector2<float>();
             mEntity->setAccelerationX(0.f);
             mEntity->setState(physics::EntityState::Flying);
         }
