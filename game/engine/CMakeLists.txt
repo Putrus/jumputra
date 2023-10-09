@@ -5,6 +5,10 @@ project(game-engine)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+endif()
+
 message(${CMAKE_CURRENT_SOURCE_DIR})
 set(ALL_FILES
     src/main.cpp
@@ -28,4 +32,4 @@ set(ALL_FILES
 
 add_executable(game-engine ${ALL_FILES})
 add_library(jp-game-engine SHARED ${ALL_FILES})
-set_target_properties(jp-game-engine PROPERTIES PREFIX "")
+target_compile_definitions(jp-game-engine PRIVATE DLL_EXPORT)
