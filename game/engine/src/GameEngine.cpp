@@ -1,8 +1,8 @@
 #include "../inc/GameEngine.hpp"
 
-#include "../physics/inc/DiagonalPlatform.hpp"
-#include "../physics/inc/HorizontalPlatform.hpp"
-#include "../physics/inc/VerticalPlatform.hpp"
+#include "../../physics/inc/DiagonalPlatform.hpp"
+#include "../../physics/inc/HorizontalPlatform.hpp"
+#include "../../physics/inc/VerticalPlatform.hpp"
 
 #include <chrono>
 

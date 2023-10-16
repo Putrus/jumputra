@@ -2,7 +2,7 @@
 
 #include "CharacterProperties.hpp"
 
-#include "../physics/inc/Entity.hpp"
+#include "../../physics/inc/Entity.hpp"
 
 #include <memory>
 

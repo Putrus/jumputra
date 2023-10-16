@@ -1,6 +1,7 @@
 #include "../inc/Character.hpp"
 
-#include "../math/inc/Function.hpp"
+#include "../../math/inc/Vector2.hpp"
+#include "../../math/inc/Function.hpp"
 
 namespace jp::game::engine
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../math/inc/Vector2.hpp"
+#include "../../math/inc/Vector2.hpp"
 
 namespace jp::game::engine
 {
@@ -11,7 +11,6 @@ namespace jp::game::engine
         CharacterProperties(const math::Vector2<float>& entitySize, const math::Vector2<float>& jumpGain,
             const math::Vector2<float>& jumpMax, float runVelocity);
 
-        const math::Vector2<float>& getEntitySize() const;
         const math::Vector2<float>& getJumpGain() const;
         const math::Vector2<float>& getJumpMax() const;
         float getRunVelocity() const;

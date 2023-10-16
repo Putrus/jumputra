@@ -7,11 +7,6 @@ namespace jp::game::engine
         : mEntitySize(entitySize), mJumpGain(jumpGain), mJumpMax(jumpMax), mRunVelocity(runVelocity)
     {}
 
-    const math::Vector2<float>& CharacterProperties::getEntitySize() const
-    {
-        return mEntitySize;
-    }
-
     const math::Vector2<float>& CharacterProperties::getJumpGain() const
     {
         return mJumpGain;
