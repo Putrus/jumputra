@@ -12,7 +12,7 @@ namespace jp::game::view
         mWindow.setView(view);
         mWindow.setVerticalSyncEnabled(true);
         //to do, now code is for testing
-        addCharacter({ 100.f, 13300.f });
+        addCharacter({ 200.f, 13300.f });
     }
 
     void Game::run()
