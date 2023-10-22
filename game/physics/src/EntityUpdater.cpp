@@ -5,7 +5,7 @@
 namespace jp::game::physics
 {
     EntityUpdater::EntityUpdater(const PhysicsProperties& properties, const Wind& wind)
-    : Updater(properties), mWind(wind)
+        : Updater(properties), mWind(wind)
     {}
 
     void EntityUpdater::handlePlatformCollision(const Platform* platform)

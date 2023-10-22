@@ -20,6 +20,11 @@ namespace jp::game::physics
         }
     }
 
+    DiagonalPlatform::DiagonalPlatform(const math::Vector2<float>& a,
+        const math::Vector2<float>& b, PlatformSurface surface)
+        : DiagonalPlatform(math::Segment<float>(a, b), surface)
+    {}
+
     PlatformCollision DiagonalPlatform::checkCollision(const math::Rect<float>& oldRect,
             const math::Rect<float>& newRect) const
     {
@@ -36,6 +41,6 @@ namespace jp::game::physics
         float slope = (mSegment.b.y - mSegment.a.y) / (mSegment.b.x - mSegment.a.x);
         float intercept = mSegment.b.y - slope * mSegment.b.x;
         float commonX = (a.y - intercept) / slope;
-        return commonX >= a.x && commonX <= b.x && commonX >= mSegment.a.x && commonX <= mSegment.b.x;
+        return commonX > a.x && commonX < b.x && commonX > mSegment.a.x && commonX < mSegment.b.x;
     }
 }

@@ -6,7 +6,7 @@ namespace jp::game::physics
     {}
     
     Kinematics::Kinematics(const math::Vector2<float>& acceleration, const math::Vector2<float>& velocity)
-    : mAcceleration(acceleration), mVelocity(velocity)
+        : mAcceleration(acceleration), mVelocity(velocity)
     {}
 
     const math::Vector2<float>& Kinematics::getAcceleration() const

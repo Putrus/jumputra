@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Character.hpp"
+#include "PlatformsManager.hpp"
+#include "PropertiesManager.hpp"
 
 #include "../../physics/inc/PhysicsEngine.hpp"
 
@@ -12,12 +14,14 @@ namespace jp::game::engine
         GameEngine();
         virtual void run();
 
+        void addCharacter(const math::Vector2<float>& position);
+
     protected:
         void update(float dt);
 
-        CharacterProperties mCharacterProperties;
         std::vector<Character> mCharacters;
-        //physics::PhysicsProperties mPhysicsProperties;
+        PlatformsManager mPlatformsManager;
+        PropertiesManager mPropertiesManager;
         std::unique_ptr<physics::PhysicsEngine> mPhysicsEngine;
     };
 }

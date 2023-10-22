@@ -6,6 +6,6 @@ namespace jp::game::physics
     {}
     
     Wind::Wind(const math::Vector2<float>& acceleration, const math::Vector2<float>& velocity/* = math::Vector2<float>(0.f)*/)
-    : Kinematics(acceleration, velocity)
+        : Kinematics(acceleration, velocity)
     {}
 }

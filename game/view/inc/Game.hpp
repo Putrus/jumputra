@@ -4,7 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace jp::game::window
+namespace jp::game::view
 {
     class Game : public engine::GameEngine
     {

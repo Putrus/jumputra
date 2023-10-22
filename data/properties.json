@@ -4,7 +4,7 @@
    "collision": 600.0,
    "fall": 700.0,
    "friction": 100.0,
-   "gravity": -1000.0,
+   "gravity": 1000.0,
    "entity": {
       "size": {
          "x": 24,
@@ -20,8 +20,8 @@
 "character": {
    "jump": {
       "gain": {
-         "x": 50.0,
-         "y": 100.0
+         "x": 500.0,
+         "y": 1000.0
       },
       "max": {
          "x": 500.0,

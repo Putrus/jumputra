@@ -18,7 +18,8 @@ namespace jp::game::engine
     class Character
     {
     public:
-        Character(std::shared_ptr<physics::Entity> entity, const CharacterProperties& properties);
+        Character(const std::shared_ptr<physics::Entity>& entity, const CharacterProperties& properties);
+        Character& operator=(const Character& other);
 
         void update(float dt);
 
@@ -31,6 +32,7 @@ namespace jp::game::engine
         void runRight();
 
         const math::Rect<float>& getRect() const;
+        const math::Vector2<float>& getPosition() const;
         CharacterJumpDirection getJumpDirection() const;
 
         void setJumpDirection(CharacterJumpDirection jumpDirection);

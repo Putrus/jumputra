@@ -3,7 +3,7 @@
 namespace jp::game::physics
 {
     WindUpdater::WindUpdater(std::shared_ptr<Wind> wind, const PhysicsProperties& properties)
-    : mWind(wind), Updater(properties)
+        : mWind(wind), Updater(properties)
     {}
 
     void WindUpdater::update(float dt)

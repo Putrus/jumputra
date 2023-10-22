@@ -20,6 +20,11 @@ namespace jp::game::physics
         }
     }
 
+    HorizontalPlatform::HorizontalPlatform(const math::Vector2<float>& a,
+        const math::Vector2<float>& b, PlatformSurface surface)
+        : HorizontalPlatform(math::Segment<float>(a, b), surface)
+    {}
+
     PlatformCollision HorizontalPlatform::checkCollision(const math::Rect<float>& oldRect,
         const math::Rect<float>& newRect) const
     {
@@ -48,6 +53,6 @@ namespace jp::game::physics
 
     bool HorizontalPlatform::checkCollision(math::Vector2<float> a, math::Vector2<float> b) const
     {
-        return a.x >= mSegment.a.x && a.x <= mSegment.b.x && mSegment.a.y >= a.y && mSegment.a.y <= b.y;
+        return a.x > mSegment.a.x && a.x < mSegment.b.x && mSegment.a.y > a.y && mSegment.a.y < b.y;
     }
 }

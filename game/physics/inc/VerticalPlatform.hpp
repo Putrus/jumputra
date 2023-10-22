@@ -6,6 +6,8 @@ namespace jp::game::physics
     {
     public:
         VerticalPlatform(const math::Segment<float>& segment, PlatformSurface surface);
+        VerticalPlatform(const math::Vector2<float>& a,
+            const math::Vector2<float>& b, PlatformSurface surface);
 
         virtual PlatformCollision checkCollision(const math::Rect<float>& oldRect,
             const math::Rect<float>& newRect) const override;

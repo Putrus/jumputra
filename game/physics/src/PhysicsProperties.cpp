@@ -2,6 +2,10 @@
 
 namespace jp::game::physics
 {
+    PhysicsProperties::PhysicsProperties() : mBounceFactor(0.f), mCheckCollisionDistance(0.f),
+        mFallVelocity(0.f), mFriction(0.f), mGravity(0.f), mWindFactor(0.f), mWindMaxVelocity(0.f)
+    {}
+
     PhysicsProperties::PhysicsProperties(float bounce, float collision, float fall,
         float friction, float gravity, float windFactor, float windMaxVelocity)
         : mBounceFactor(bounce), mCheckCollisionDistance(collision), mFallVelocity(fall),

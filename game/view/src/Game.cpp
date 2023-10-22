@@ -3,10 +3,17 @@
 #include <chrono>
 #include <thread>
 
-namespace jp::game::window
+namespace jp::game::view
 {
-    Game::Game() : mWindow(sf::VideoMode(480, 360), "Game"), engine::GameEngine()
-    {}
+    Game::Game() : mWindow(sf::VideoMode(480, 360), "Jumputra"),
+        engine::GameEngine()
+    {
+        sf::View view(sf::FloatRect(0.f, 15120.f, 480.f, 360.f));
+        mWindow.setView(view);
+        mWindow.setVerticalSyncEnabled(true);
+        //to do, now code is for testing
+        addCharacter({ 100.f, 13300.f });
+    }
 
     void Game::run()
     {
@@ -20,17 +27,33 @@ namespace jp::game::window
         t.detach();
         while(mWindow.isOpen())
         {
+            event();
             end = std::chrono::steady_clock::now();
             time += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
             begin = std::move(end);
             while (time > UPDATE_NANOSECONDS)
             {
                 time -= UPDATE_NANOSECONDS;
-                engine::GameEngine::update(UPDATE_NANOSECONDS / 1000000000);
-                mCharacters[0].update(UPDATE_NANOSECONDS / 1000000000);
+                engine::GameEngine::update(UPDATE_NANOSECONDS / 1000000000.f);
+                if (mCharacters.size() > 0)
+                {
+                    mCharacters[0].update(UPDATE_NANOSECONDS / 1000000000.f);
+                    if (mCharacters[0].getPosition().y < mWindow.getView().getCenter().y - 180.f - mCharacters[0].getRect().height)
+                    {
+                        sf::View view = mWindow.getView();
+                        view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y - 360.f));
+                        mWindow.setView(view);
+                    }
+                    else if (mCharacters[0].getPosition().y > mWindow.getView().getCenter().y + 180.f)
+                    {
+
+                        sf::View view = mWindow.getView();
+                        view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y + 360.f));
+                        mWindow.setView(view);
+                    }
+                }
                 draw();
             }
-            event();
         }
     }
 
@@ -71,12 +94,26 @@ namespace jp::game::window
                 mWindow.close();
             }
 
-            if (event.type == sf::Event::KeyReleased)
+
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                if (event.mouseButton.button == sf::Mouse::Left)
+                {
+                    auto mp = sf::Mouse::getPosition(mWindow);
+                    auto pos = math::Vector2<float>(mp.x, mp.y);
+                    pos.y += mWindow.getView().getCenter().y - 180.f;
+                    std::cout << pos << std::endl;
+                    addCharacter(pos);
+                }
+            }
+
+            if (mCharacters.size() > 0 && event.type == sf::Event::KeyReleased)
             {
                 if (event.key.code == sf::Keyboard::L)
                 {
                     mCharacters[0].printInfo();
                 }
+
                 if (event.key.code == sf::Keyboard::Space)
                 {
                     mCharacters[0].jump();
@@ -90,6 +127,25 @@ namespace jp::game::window
                     mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Up);
                     mCharacters[0].stop();
                 }
+
+                if (event.key.code == sf::Keyboard::R)
+                {
+                    mCharacters.erase(mCharacters.begin());
+                }
+
+                if (event.key.code == sf::Keyboard::T)
+                {
+                    float posX = std::rand() % 360 + 10;
+                    addCharacter({ posX, 15200.f });
+                }
+
+                if (event.key.code == sf::Keyboard::Y)
+                {
+                    for (auto& character : mCharacters)
+                    {
+                        float power = std::rand() % 360 + 10;
+                    }
+                }
             }
         }
         return;
@@ -99,22 +155,27 @@ namespace jp::game::window
     {
         while (true)
         {
+            if (mCharacters.size() == 0)
+            {
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                continue;
+            }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Space))
-        {
-            mCharacters[0].squat();
-        }
+            {
+                mCharacters[0].squat();
+            }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::A))
-        {
-            mCharacters[0].runLeft();
-            mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Left);
-        }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::A))
+            {
+                mCharacters[0].runLeft();
+                mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Left);
+            }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::D))
-        {
-            mCharacters[0].runRight();
-            mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Right);
-        }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::D))
+            {
+                mCharacters[0].runRight();
+                mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Right);
+            }
         }
     }
 }

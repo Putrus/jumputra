@@ -2,11 +2,21 @@
 
 namespace jp::game::physics
 {
-    PhysicsEngine::PhysicsEngine(PhysicsProperties&& properties, std::vector<std::shared_ptr<Entity>>&& entities,
-        std::vector<std::shared_ptr<Platform>>&& platforms, std::shared_ptr<Wind>&& wind)
-        : mProperties(properties), mEntities(entities), mPlatforms(platforms), mWind(wind),
+    PhysicsEngine::PhysicsEngine(const PhysicsProperties& properties, std::vector<std::shared_ptr<Platform>>&& platforms,
+        std::shared_ptr<Wind>&& wind, std::vector<std::shared_ptr<Entity>>&& entities/* = std::vector<std::shared_ptr<Entity>>()*/)
+        : mProperties(properties), mPlatforms(platforms), mWind(wind), mEntities(entities),
             mEntityUpdater(mProperties, *mWind), mWindUpdater(mWind, mProperties)
     {}
+
+    void PhysicsEngine::addEntity(const std::shared_ptr<Entity>& entity)
+    {
+        mEntities.push_back(entity);
+    }
+
+    void PhysicsEngine::addEntity(std::shared_ptr<Entity>&& entity)
+    {
+        mEntities.push_back(std::move(entity));
+    }
     
     void PhysicsEngine::update(float dt)
     {
@@ -21,9 +31,14 @@ namespace jp::game::physics
 
     void PhysicsEngine::updateEntities(float dt)
     {
-        for (auto& entity : mEntities)
+        for (auto entityIt = mEntities.begin(); entityIt != mEntities.end(); ++entityIt)
         {
-            mEntityUpdater.setEntity(entity);
+            mEntityUpdater.setEntity(*entityIt);
+            //remove entity if it only exists in the physics engine
+            if (entityIt->use_count() == 2)
+            {
+                entityIt = --mEntities.erase(entityIt);
+            }
             mEntityUpdater.updatePosition(dt);
             mEntityUpdater.updateVelocity(dt);
             for (const auto& platform : mPlatforms)

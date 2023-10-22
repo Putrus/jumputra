@@ -5,9 +5,17 @@
 
 namespace jp::game::engine
 {
-    Character::Character(std::shared_ptr<physics::Entity> entity, const CharacterProperties& properties)
-    : mEntity(entity), mProperties(properties)
+    Character::Character(const std::shared_ptr<physics::Entity>& entity, const CharacterProperties& properties)
+        : mEntity(entity), mProperties(properties)
     {}
+
+    Character& Character::operator=(const Character& other)
+    {
+        mEntity = other.mEntity;
+        mJumpDirection = other.mJumpDirection;
+        mJumpPower = other.mJumpPower;
+        return *this;
+    }
 
     void Character::update(float dt)
     {
@@ -15,6 +23,11 @@ namespace jp::game::engine
         {
             //to do 1000.f can't be hardcoded
             mJumpPower += mProperties.getJumpGain() * dt;
+            if (mJumpPower.x > mProperties.getJumpMax().x && mJumpPower.y > mProperties.getJumpMax().y)
+            {
+                mJumpPower = mProperties.getJumpMax();
+                jump();
+            }
         }
     }
 
@@ -103,6 +116,11 @@ namespace jp::game::engine
         return mEntity->getRect();
     }
 
+    const math::Vector2<float>& Character::getPosition() const
+    {
+        return mEntity->getPosition();
+    }
+
     CharacterJumpDirection Character::getJumpDirection() const
     {
         return mJumpDirection;
@@ -152,6 +170,7 @@ namespace jp::game::engine
         std::cout << "v: " << mEntity->getVelocity() << std::endl;
         std::cout << "cv: " << mEntity->getControlledVelocity() << std::endl;
         std::cout << "a: " << mEntity->getAcceleration() << std::endl;
-        std::cout << "d: " << (int)mJumpDirection << std::endl << std::endl;
+        std::cout << "d: " << (int)mJumpDirection << std::endl;
+        std::cout << "uc: " << mEntity.use_count() << std::endl << std::endl;
     }
 }
