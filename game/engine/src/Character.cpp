@@ -89,12 +89,12 @@ namespace jp::game::engine
     {
         if (canMove())
         {
-            if (math::sign(mEntity->getVelocity().x) == -1.f)
+            if (mEntity->getControlledVelocity().x > 0.f)
             {
-                mEntity->setVelocityX(std::max(0.f, mEntity->getVelocity().x + 100.f));
+                mEntity->setVelocityX(std::max(0.f, mEntity->getVelocity().x + mEntity->getControlledVelocity().x));
             }
             mEntity->setState(physics::EntityState::Running);
-            mEntity->setControlledVelocityX(-100.f);
+            mEntity->setControlledVelocityX(-mProperties.getRunVelocity());
         }
     }
 
@@ -102,12 +102,12 @@ namespace jp::game::engine
     {
         if (canMove())
         {
-            if (math::sign(mEntity->getVelocity().x) == 1.f)
+            if (mEntity->getControlledVelocity().x < 0.f)
             {
-                mEntity->setVelocityX(std::min(0.f, mEntity->getVelocity().x - 100.f));
+                mEntity->setVelocityX(std::max(0.f, mEntity->getVelocity().x + mEntity->getControlledVelocity().x));
             }
             mEntity->setState(physics::EntityState::Running);
-            mEntity->setControlledVelocityX(100.f);
+            mEntity->setControlledVelocityX(mProperties.getRunVelocity());
         }
     }
 

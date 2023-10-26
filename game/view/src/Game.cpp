@@ -10,7 +10,7 @@ namespace jp::game::view
     {
         sf::View view(sf::FloatRect(0.f, 15120.f, 480.f, 360.f));
         mWindow.setView(view);
-        mWindow.setVerticalSyncEnabled(true);
+        //mWindow.setVerticalSyncEnabled(true);
         //to do, now code is for testing
         addCharacter({ 200.f, 15300.f });
     }
@@ -94,6 +94,25 @@ namespace jp::game::view
                 mWindow.close();
             }
 
+            if (event.type == sf::Event::KeyPressed)
+            {
+                if (event.key.code == sf::Keyboard::Space)
+                {
+                    mCharacters[0].squat();
+                }
+
+                if (event.key.code == sf::Keyboard::A)
+                {
+                    mCharacters[0].runLeft();
+                    mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Left);
+                }
+
+                if (event.key.code == sf::Keyboard::D)
+                {
+                    mCharacters[0].runRight();
+                    mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Right);
+                }
+            }
 
             if (event.type == sf::Event::MouseButtonPressed)
             {
@@ -160,22 +179,7 @@ namespace jp::game::view
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
                 continue;
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Space))
-            {
-                mCharacters[0].squat();
-            }
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::A))
-            {
-                mCharacters[0].runLeft();
-                mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Left);
-            }
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::D))
-            {
-                mCharacters[0].runRight();
-                mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Right);
-            }
+            
         }
     }
 }
