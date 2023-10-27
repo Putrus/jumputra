@@ -52,12 +52,12 @@ namespace jp::game::engine
                 }
                 case CharacterJumpDirection::Left:
                 {
-                    mEntity->setVelocity(math::Vector2<float>(-mJumpPower.x + mEntity->getVelocity().x, -mJumpPower.y));
+                    mEntity->setVelocity(math::Vector2<float>(-mProperties.getJumpMax().x + mEntity->getVelocity().x, -mJumpPower.y));
                     break;
                 }
                 case CharacterJumpDirection::Right:
                 {
-                   mEntity->setVelocity(math::Vector2<float>(mJumpPower.x + mEntity->getVelocity().x, -mJumpPower.y));
+                   mEntity->setVelocity(math::Vector2<float>(mProperties.getJumpMax().x + mEntity->getVelocity().x, -mJumpPower.y));
                     break;
                 }
                 default:
@@ -89,12 +89,12 @@ namespace jp::game::engine
     {
         if (canMove())
         {
-            if (mEntity->getControlledVelocity().x > 0.f)
+            if (mEntity->getRunVelocity() > 0.f)
             {
-                mEntity->setVelocityX(std::max(0.f, mEntity->getVelocity().x + mEntity->getControlledVelocity().x));
+                mEntity->setVelocityX(std::max(0.f, mEntity->getVelocity().x + mEntity->getRunVelocity()));
             }
             mEntity->setState(physics::EntityState::Running);
-            mEntity->setControlledVelocityX(-mProperties.getRunVelocity());
+            mEntity->setRunVelocity(-mProperties.getRunVelocity());
         }
     }
 
@@ -102,12 +102,12 @@ namespace jp::game::engine
     {
         if (canMove())
         {
-            if (mEntity->getControlledVelocity().x < 0.f)
+            if (mEntity->getRunVelocity() < 0.f)
             {
-                mEntity->setVelocityX(std::max(0.f, mEntity->getVelocity().x + mEntity->getControlledVelocity().x));
+                mEntity->setVelocityX(std::min(0.f, mEntity->getVelocity().x + mEntity->getRunVelocity()));
             }
             mEntity->setState(physics::EntityState::Running);
-            mEntity->setControlledVelocityX(mProperties.getRunVelocity());
+            mEntity->setRunVelocity(mProperties.getRunVelocity());
         }
     }
 
@@ -168,7 +168,7 @@ namespace jp::game::engine
         }
         std::cout << "s: " << state << std::endl;
         std::cout << "v: " << mEntity->getVelocity() << std::endl;
-        std::cout << "cv: " << mEntity->getControlledVelocity() << std::endl;
+        std::cout << "rv: " << mEntity->getRunVelocity() << std::endl;
         std::cout << "a: " << mEntity->getAcceleration() << std::endl;
         std::cout << "d: " << (int)mJumpDirection << std::endl;
         std::cout << "uc: " << mEntity.use_count() << std::endl << std::endl;

@@ -26,25 +26,23 @@ namespace jp::game::physics
 
         void move(const math::Vector2<float>& vec);
 
-        const math::Vector2<float>& getControlledVelocity() const;
+        float getRunVelocity() const;
         math::Vector2<float> getPosition() const;
         const math::Rect<float>& getRect() const;
         EntityState getState() const;
 
-        void setControlledVelocity(const math::Vector2<float>& velocity);
-        void setControlledVelocityX(float x);
-        void setControlledVelocityY(float y);
         void setPosition(const math::Vector2<float>& position);
         void setRect(const math::Rect<float>& rect);
         void setRectTop(float y);
         void setRectBottom(float y);
         void setRectLeft(float x);
         void setRectRight(float x);
+        void setRunVelocity(float runVelocity);
         void setState(EntityState state);
 
     protected:
-        math::Vector2<float> mControlledVelocity;
         math::Rect<float> mRect;
+        float mRunVelocity = 0.f;
         EntityState mState = EntityState::Flying;
     };
 }

@@ -117,8 +117,8 @@ namespace jp::game::physics
         math::Vector2<float> updatedAcceleration = mEntity->getAcceleration();
         if (mEntity->getState() != EntityState::Running)
         {
-            updatedVelocity += mEntity->getControlledVelocity();
-            mUpdatedEntity.setControlledVelocity(math::Vector2<float>(0.f));
+            updatedVelocity.x += mEntity->getRunVelocity();
+            mUpdatedEntity.setRunVelocity(0.f);
         }
 
         if (updatedVelocity.x < 1.f && updatedVelocity.x > -1.f)
@@ -164,7 +164,7 @@ namespace jp::game::physics
         if (mEntity->getState() == EntityState::Flying ||
             mEntity->getState() == EntityState::Sliding)
         {
-            if (mUpdatedEntity.getControlledVelocity() != math::Vector2<float>())
+            if (mUpdatedEntity.getRunVelocity() != 0.f)
             {
                 //to do error handling
                 std::cout << "Something wrong! Controlled velocity isn't empty!" << std::endl;
@@ -203,7 +203,7 @@ namespace jp::game::physics
                 if (mEntity->getState() == EntityState::Squatting)
                 {
                     mUpdatedEntity.setState(EntityState::Squatting); 
-                }    
+                }
                 else
                 {
                     mUpdatedEntity.setState(EntityState::Sliding);
@@ -230,7 +230,6 @@ namespace jp::game::physics
         }
     }
 
-
     void EntityUpdater::topPlatformCollision(float y, PlatformSurface platformSurface)
     {
         mUpdatedEntity.setRectTop(y);
@@ -251,6 +250,6 @@ namespace jp::game::physics
 
     math::Vector2<float> EntityUpdater::getResultantVelocity(const Entity& entity) const
     {
-        return entity.getControlledVelocity() + entity.getVelocity();
+        return entity.getVelocity() + math::Vector2<float>(entity.getRunVelocity(), 0.f);
     }
 }

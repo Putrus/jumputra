@@ -14,11 +14,6 @@ namespace jp::game::physics
         mRect += vec;
     }
 
-    const math::Vector2<float>& Entity::getControlledVelocity() const
-    {
-        return mControlledVelocity;
-    }
-
     math::Vector2<float> Entity::getPosition() const
     {
         return mRect.getPosition();
@@ -29,24 +24,14 @@ namespace jp::game::physics
         return mRect;
     }
 
+    float Entity::getRunVelocity() const
+    {
+        return mRunVelocity;
+    }
+
     EntityState Entity::getState() const
     {
         return mState;
-    }
-
-    void Entity::setControlledVelocity(const math::Vector2<float>& velocity)
-    {
-        mControlledVelocity = velocity;
-    }
-
-    void Entity::setControlledVelocityX(float x)
-    {
-        mControlledVelocity.x = x;
-    }
-
-    void Entity::setControlledVelocityY(float y)
-    {
-        mControlledVelocity.y = y;
     }
 
     void Entity::setPosition(const math::Vector2<float>& position)
@@ -77,6 +62,11 @@ namespace jp::game::physics
     void Entity::setRectRight(float x)
     {
         mRect.left = x - mRect.width;
+    }
+
+    void Entity::setRunVelocity(float runVelocity)
+    {
+        mRunVelocity = runVelocity;
     }
 
     void Entity::setState(EntityState state)

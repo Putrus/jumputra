@@ -101,13 +101,13 @@ namespace jp::game::view
                     mCharacters[0].squat();
                 }
 
-                if (event.key.code == sf::Keyboard::A)
+                if (event.key.code == sf::Keyboard::Left)
                 {
                     mCharacters[0].runLeft();
                     mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Left);
                 }
 
-                if (event.key.code == sf::Keyboard::D)
+                if (event.key.code == sf::Keyboard::Right)
                 {
                     mCharacters[0].runRight();
                     mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Right);
@@ -138,9 +138,9 @@ namespace jp::game::view
                     mCharacters[0].jump();
                 }
 
-                if ((event.key.code == sf::Keyboard::A &&
+                if ((event.key.code == sf::Keyboard::Left &&
                     mCharacters[0].getJumpDirection() == engine::CharacterJumpDirection::Left) ||
-                    (event.key.code == sf::Keyboard::D &&
+                    (event.key.code == sf::Keyboard::Right &&
                     mCharacters[0].getJumpDirection() == engine::CharacterJumpDirection::Right))
                 {
                     mCharacters[0].setJumpDirection(engine::CharacterJumpDirection::Up);

@@ -37,7 +37,11 @@ namespace jp::game::physics
             //remove entity if it only exists in the physics engine
             if (entityIt->use_count() == 2)
             {
-                entityIt = --mEntities.erase(entityIt);
+                entityIt = mEntities.erase(entityIt);
+                if (entityIt == mEntities.end())
+                {
+                    break;
+                }
             }
             mEntityUpdater.updatePosition(dt);
             mEntityUpdater.updateVelocity(dt);
