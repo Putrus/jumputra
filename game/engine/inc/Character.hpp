@@ -24,6 +24,7 @@ namespace jp::game::engine
         void update(float dt);
 
         bool canMove() const;
+        bool isDying() const;
         bool isSquating() const;
 
         void jump();

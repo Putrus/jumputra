@@ -172,6 +172,11 @@ namespace jp::game::physics
             mUpdatedEntity.setAccelerationX(-mUpdatedEntity.getAcceleration().x);
             mUpdatedEntity.setVelocityX(-mEntity->getVelocity().x * getProperties().getBounceFactor());
         }
+        else
+        {
+            mUpdatedEntity.setAccelerationX(0.f);
+            mUpdatedEntity.setVelocityX(0.f);
+        }
     }
 
     void EntityUpdater::leftPlatformCollision(float x)

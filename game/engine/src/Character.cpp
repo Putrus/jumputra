@@ -39,6 +39,11 @@ namespace jp::game::engine
             mEntity->getState() == physics::EntityState::Standing;
     }
 
+    bool Character::isDying() const
+    {
+        return mEntity->getState() == physics::EntityState::Dying;
+    }
+
     bool Character::isSquating() const
     {
         return mEntity->getState() == physics::EntityState::Squatting;

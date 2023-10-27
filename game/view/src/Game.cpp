@@ -84,6 +84,11 @@ namespace jp::game::view
                 rect[0].position.y += character.getRect().height / 4.f;
                 rect[1].position.y += character.getRect().height / 4.f;
             }
+            else if (character.isDying())
+            {
+                rect[0].position.y += character.getRect().height * 0.75f;
+                rect[1].position.y += character.getRect().height * 0.75f;
+            }
             mWindow.draw(rect);
         }
         mWindow.display();

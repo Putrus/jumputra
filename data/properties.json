@@ -2,7 +2,7 @@
    "physics": {
    "bounce": 0.5,
    "collision": 600.0,
-   "fall": 700.0,
+   "fall": 500.0,
    "friction": 200.0,
    "gravity": 800.0,
    "entity": {
