@@ -227,6 +227,7 @@ namespace jp::game::physics
         else
         {
             mUpdatedEntity.setState(EntityState::Flying);
+            mUpdatedEntity.setVelocityX(mEntity->getVelocity().x * getProperties().getBounceFactor());
         }
     }
 

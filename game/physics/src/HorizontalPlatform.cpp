@@ -53,6 +53,6 @@ namespace jp::game::physics
 
     bool HorizontalPlatform::checkCollision(math::Vector2<float> a, math::Vector2<float> b) const
     {
-        return a.x > mSegment.a.x && a.x < mSegment.b.x && mSegment.a.y > a.y && mSegment.a.y < b.y;
+        return a.x >= mSegment.a.x && a.x <= mSegment.b.x && mSegment.a.y >= a.y && mSegment.a.y <= b.y;
     }
 }

@@ -12,7 +12,7 @@ namespace jp::game::view
         mWindow.setView(view);
         //mWindow.setVerticalSyncEnabled(true);
         //to do, now code is for testing
-        addCharacter({ 200.f, 15300.f });
+        addCharacter({ 10.f, 15000.f });
     }
 
     void Game::run()
@@ -75,10 +75,15 @@ namespace jp::game::view
         {
             sf::Color color = sf::Color::Red;
             sf::VertexArray rect(sf::Quads, 4);
-            rect[0] = sf::Vertex({ character.getRect().left, character.getRect().top}, color);
-            rect[1] = sf::Vertex({ character.getRect().getRight(), character.getRect().top}, color);
-            rect[2] = sf::Vertex({ character.getRect().getRight(), character.getRect().getBottom()}, color);
-            rect[3] = sf::Vertex({ character.getRect().left, character.getRect().getBottom()}, color);
+            rect[0] = sf::Vertex({ character.getRect().left, character.getRect().top }, color);
+            rect[1] = sf::Vertex({ character.getRect().getRight(), character.getRect().top }, color);
+            rect[2] = sf::Vertex({ character.getRect().getRight(), character.getRect().getBottom() }, color);
+            rect[3] = sf::Vertex({ character.getRect().left, character.getRect().getBottom() }, color);
+            if (character.isSquating())
+            {
+                rect[0].position.y += character.getRect().height / 4.f;
+                rect[1].position.y += character.getRect().height / 4.f;
+            }
             mWindow.draw(rect);
         }
         mWindow.display();

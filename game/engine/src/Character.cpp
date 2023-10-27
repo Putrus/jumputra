@@ -39,6 +39,11 @@ namespace jp::game::engine
             mEntity->getState() == physics::EntityState::Standing;
     }
 
+    bool Character::isSquating() const
+    {
+        return mEntity->getState() == physics::EntityState::Squatting;
+    }
+
     void Character::jump()
     {
         if (mEntity->getState() == physics::EntityState::Squatting)
