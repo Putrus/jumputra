@@ -100,7 +100,13 @@ namespace jp::game::physics
 
     void EntityUpdater::update()
     {
+        if (mUpdatedEntity.getState() == EntityState::Falling ||
+            mUpdatedEntity.getState() == EntityState::Flying)
+        {
+            mUpdatedEntity.setAccelerationX(0.f);
+        }
         *mEntity = mUpdatedEntity;
+        
     }
 
     void EntityUpdater::updatePosition(float dt)
