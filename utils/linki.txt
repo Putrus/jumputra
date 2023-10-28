@@ -1,0 +1,16 @@
+https://magisterna5.pl/temat-pracy-magisterskiej/ -> o temacie pracy magisterskiej.
+Na stronie jest też dużo więcej ciekawych materiałów
+
+https://github.com/SethHWeidman/DLFS_code
+ftp.helion.pl/przyklady/uczgle.zip
+Repozytorium książki "Uczenie głębokie od zera"
+
+
+Książki, które przerobiłem/przerabiałem
+Uczenie głębokie od zera, Seth Weidman, Helion 2020, ISBN 978-83-283-6597-1
+
+
+Książki, na które mogę zerknąć
+Investments Notes, John Cochrane, oreil.ly/33CVXjg, 2006
+
+https://trello.com/b/7koDP87x/jumputra
