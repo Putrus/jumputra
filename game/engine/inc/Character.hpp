@@ -8,7 +8,7 @@
 
 namespace jp::game::engine
 {
-    enum class CharacterJumpDirection
+    enum class CharacterDirection : int
     {
         Up = 0,
         Left,
@@ -26,24 +26,24 @@ namespace jp::game::engine
         bool canRun() const;
         bool canSquat() const;
         bool isDying() const;
-        bool isSquating() const;
+        bool isSquatting() const;
 
         void jump();
+        void run(CharacterDirection direction);
         void squat();
         void stop();
-        void runLeft();
-        void runRight();
 
         const math::Rect<float>& getRect() const;
         const math::Vector2<float>& getPosition() const;
-        CharacterJumpDirection getJumpDirection() const;
+        CharacterDirection getDirection() const;
+        float getJumpPower() const;
 
-        void setJumpDirection(CharacterJumpDirection jumpDirection);
+        void setDirection(CharacterDirection direction);
 
         void printInfo();
     private:
         std::shared_ptr<physics::Entity> mEntity;
-        CharacterJumpDirection mJumpDirection = CharacterJumpDirection::Up;
+        CharacterDirection mDirection = CharacterDirection::Up;
         math::Vector2<float> mJumpPower = math::Vector2<float>();
         const CharacterProperties& mProperties;
     };

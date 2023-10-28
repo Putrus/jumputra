@@ -43,6 +43,19 @@ namespace jp::game::engine
         mPhysicsEngine->addEntity(std::move(entity));
     }
 
+    void GameEngine::removeAllCharacters()
+    {
+        mCharacters.clear();
+    }
+
+    void GameEngine::removeCharacter(size_t id)
+    {
+        if (id < mCharacters.size())
+        {
+            mCharacters.erase(mCharacters.begin() + id);
+        }
+    }
+
     void GameEngine::update(float dt)
     {
         mPhysicsEngine->update(dt);

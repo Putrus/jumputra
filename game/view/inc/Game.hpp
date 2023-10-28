@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../engine/inc/GameEngine.hpp"
+#include "Wind.hpp"
 
-#include <SFML/Graphics.hpp>
+#include "../../engine/inc/GameEngine.hpp"
 
 namespace jp::game::view
 {
@@ -13,8 +13,8 @@ namespace jp::game::view
         void run() override;
         void draw();
         void event();
-        void keyPressed();
     private:
         sf::RenderWindow mWindow;
+        Wind mWindView;
     };
 }

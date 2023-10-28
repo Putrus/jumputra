@@ -21,6 +21,7 @@ namespace jp::game::physics
         void update(float dt);
 
         const std::vector<std::shared_ptr<Platform>>& getPlatforms() const;
+        const std::shared_ptr<Wind>& getWind() const;
 
     private:
         void updateEntities(float dt);

@@ -29,6 +29,11 @@ namespace jp::game::physics
         return mPlatforms;
     }
 
+    const std::shared_ptr<Wind>& PhysicsEngine::getWind() const
+    {
+        return mWind;
+    }
+
     void PhysicsEngine::updateEntities(float dt)
     {
         for (auto entityIt = mEntities.begin(); entityIt != mEntities.end(); ++entityIt)

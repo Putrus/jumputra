@@ -195,7 +195,8 @@ namespace jp::game::physics
             {
                 mUpdatedEntity.setState(EntityState::Dying);
             }
-            else if (mEntity->getState() == EntityState::Flying)
+            else if (mEntity->getState() == EntityState::Flying ||
+                mEntity->getState() == EntityState::Stopping)
             {
                 switch (platformSurface)
                 {

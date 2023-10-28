@@ -15,6 +15,8 @@ namespace jp::game::engine
         virtual void run();
 
         void addCharacter(const math::Vector2<float>& position);
+        void removeAllCharacters();
+        void removeCharacter(size_t id);
 
     protected:
         void update(float dt);

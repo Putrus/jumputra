@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCE_FILES src/main.cpp
    inc/Game.hpp src/Game.cpp
+   inc/Wind.hpp src/Wind.cpp
    )
 
 add_executable(jp-game-view ${SOURCE_FILES})

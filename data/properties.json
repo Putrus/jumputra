@@ -14,13 +14,17 @@
    "wind": {
       "acceleration": 100.0,
       "factor": 0.4,
-      "max": 0.0
+      "max": 300.0,
+      "position": {
+         "start": 3960.0,
+         "end": 6479
+      }
    }
 },
 "character": {
    "jump": {
       "gain": {
-         "x": 10000.0,
+         "x": 0.0,
          "y": 1000.0
       },
       "max": {
