@@ -12,17 +12,8 @@ namespace jp::game::engine
         CharacterProperties(const math::Vector2<float>& jumpGain,
             const math::Vector2<float>& jumpMax, float runVelocity);
 
-        const math::Vector2<float>& getJumpGain() const;
-        const math::Vector2<float>& getJumpMax() const;
-        float getRunVelocity() const;
-
-        void setJumpGain(const math::Vector2<float>& jumpGain);
-        void setJumpMax(const math::Vector2<float>& jumpMax);
-        void setRunVelocity(float runVelocity);
-        
-    private:
-        math::Vector2<float> mJumpGain;
-        math::Vector2<float> mJumpMax;
-        float mRunVelocity;
+        math::Vector2<float> jumpGain = math::Vector2<float>();
+        math::Vector2<float> jumpMax = math::Vector2<float>();
+        float runVelocity = 0.f;
     };
 }

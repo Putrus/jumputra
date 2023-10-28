@@ -11,7 +11,7 @@ namespace jp::game::engine
 {
     GameEngine::GameEngine() : mPlatformsManager("data/platforms.json"), mPropertiesManager("data/properties.json"),
         mPhysicsEngine(new physics::PhysicsEngine(mPropertiesManager.physicsProperties, mPlatformsManager.load(),
-            std::make_shared<physics::Wind>(mPropertiesManager.physicsProperties.getWindAcceleration())))
+            std::make_shared<physics::Wind>(mPropertiesManager.physicsProperties.wind)))
     {}
 
     void GameEngine::run()
@@ -38,7 +38,7 @@ namespace jp::game::engine
     void GameEngine::addCharacter(const math::Vector2<float>& position)
     {
         auto entity = std::make_shared<physics::Entity>(math::Rect<float>(position,
-            mPropertiesManager.physicsProperties.getEntitySize()));
+            mPropertiesManager.physicsProperties.entitySize));
         mCharacters.push_back(Character(entity, mPropertiesManager.characterProperties));
         mPhysicsEngine->addEntity(std::move(entity));
     }

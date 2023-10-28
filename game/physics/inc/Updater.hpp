@@ -4,14 +4,20 @@
 
 namespace jp::game::physics
 {
+    template <typename T>
     class Updater
     {
     public:
-        Updater(const PhysicsProperties& properties);
+        Updater(const T& properties)
+            : mProperties(properties)
+        {}
 
-        const PhysicsProperties& getProperties() const;
+        const T& getProperties() const
+        {
+            return mProperties;
+        }
 
     private:
-        const PhysicsProperties& mProperties;
+        const T& mProperties;
     };
 }

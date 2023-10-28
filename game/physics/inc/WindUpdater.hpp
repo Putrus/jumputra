@@ -7,10 +7,10 @@
 
 namespace jp::game::physics
 {
-    class WindUpdater final : public Updater
+    class WindUpdater final : public Updater<WindProperties>
     {
     public:
-        WindUpdater(std::shared_ptr<Wind> wind, const PhysicsProperties& properties);
+        WindUpdater(std::shared_ptr<Wind> wind, const WindProperties& properties);
 
         void update(float dt);
 

@@ -15,7 +15,8 @@ namespace jp::game::physics
         Sledding,
         Sliding,
         Squatting,
-        Standing
+        Standing,
+        Sticking
     };
 
     class Entity : public Kinematics

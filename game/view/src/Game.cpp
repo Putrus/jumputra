@@ -62,7 +62,15 @@ namespace jp::game::view
         mWindow.clear();
         for (const auto& platform : mPhysicsEngine->getPlatforms())
         {
-            sf::Color color = platform->getSurface() == physics::PlatformSurface::Slippery ? sf::Color::Cyan : sf::Color::White;
+            sf::Color color = sf::Color::White;
+            if (platform->getSurface() == physics::PlatformSurface::Slippery)
+            {
+                color = sf::Color::Cyan;
+            }
+            else if (platform->getSurface() == physics::PlatformSurface::Sticky)
+            {
+                color = sf::Color::Blue;
+            }
             sf::Vertex line[] = 
             {
                 sf::Vertex(sf::Vector2f(platform->getSegment().a.x, platform->getSegment().a.y), color),

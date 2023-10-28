@@ -23,7 +23,8 @@ namespace jp::game::engine
 
         void update(float dt);
 
-        bool canMove() const;
+        bool canRun() const;
+        bool canSquat() const;
         bool isDying() const;
         bool isSquating() const;
 

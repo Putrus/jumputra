@@ -14,10 +14,11 @@ set(SOURCE_FILES
     inc/PhysicsEngine.hpp src/PhysicsEngine.cpp
     inc/PhysicsProperties.hpp src/PhysicsProperties.cpp
     inc/Platform.hpp src/Platform.cpp
-    inc/Updater.hpp src/Updater.cpp
-    inc/Wind.hpp src/Wind.cpp
-    inc/WindUpdater.hpp src/WindUpdater.cpp
+    inc/Updater.hpp
     inc/VerticalPlatform.hpp src/VerticalPlatform.cpp
+    inc/Wind.hpp src/Wind.cpp
+    inc/WindProperties.hpp src/WindProperties.cpp
+    inc/WindUpdater.hpp src/WindUpdater.cpp
     )
 
 add_library(jp-game-physics STATIC ${SOURCE_FILES})

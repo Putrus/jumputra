@@ -22,21 +22,26 @@ namespace jp::game::engine
         if (mEntity->getState() == physics::EntityState::Squatting)
         {
             //to do 1000.f can't be hardcoded
-            mJumpPower += mProperties.getJumpGain() * dt;
-            if (mJumpPower.x > mProperties.getJumpMax().x && mJumpPower.y > mProperties.getJumpMax().y)
+            mJumpPower += mProperties.jumpGain * dt;
+            if (mJumpPower.y > mProperties.jumpGain.y)
             {
-                mJumpPower = mProperties.getJumpMax();
+                mJumpPower = mProperties.jumpMax;
                 jump();
             }
         }
     }
 
-    bool Character::canMove() const
+    bool Character::canRun() const
     {
         return mEntity->getState() == physics::EntityState::Dying ||
             mEntity->getState() == physics::EntityState::Running ||
             mEntity->getState() == physics::EntityState::Sliding ||
             mEntity->getState() == physics::EntityState::Standing;
+    }
+
+    bool Character::canSquat() const
+    {
+        return canRun() || mEntity->getState() == physics::EntityState::Sticking;
     }
 
     bool Character::isDying() const
@@ -62,12 +67,12 @@ namespace jp::game::engine
                 }
                 case CharacterJumpDirection::Left:
                 {
-                    mEntity->setVelocity(math::Vector2<float>(-mProperties.getJumpMax().x + mEntity->getVelocity().x, -mJumpPower.y));
+                    mEntity->setVelocity(math::Vector2<float>(-mProperties.jumpMax.x + mEntity->getVelocity().x, -mJumpPower.y));
                     break;
                 }
                 case CharacterJumpDirection::Right:
                 {
-                   mEntity->setVelocity(math::Vector2<float>(mProperties.getJumpMax().x + mEntity->getVelocity().x, -mJumpPower.y));
+                    mEntity->setVelocity(math::Vector2<float>(mProperties.jumpMax.x + mEntity->getVelocity().x, -mJumpPower.y));
                     break;
                 }
                 default:
@@ -81,7 +86,7 @@ namespace jp::game::engine
 
     void Character::squat()
     {
-        if (canMove())
+        if (canSquat())
         {
             mEntity->setState(physics::EntityState::Squatting);
         }
@@ -91,33 +96,33 @@ namespace jp::game::engine
     {
         if (mEntity->getState() == physics::EntityState::Running)
         {
-            mEntity->setState(physics::EntityState::Standing);
+            mEntity->setState(physics::EntityState::Flying);
         }
     }
 
     void Character::runLeft()
     {
-        if (canMove())
+        if (canRun())
         {
             if (mEntity->getRunVelocity() > 0.f)
             {
                 mEntity->setVelocityX(std::max(0.f, mEntity->getVelocity().x + mEntity->getRunVelocity()));
             }
             mEntity->setState(physics::EntityState::Running);
-            mEntity->setRunVelocity(-mProperties.getRunVelocity());
+            mEntity->setRunVelocity(-mProperties.runVelocity);
         }
     }
 
     void Character::runRight()
     {
-        if (canMove())
+        if (canRun())
         {
             if (mEntity->getRunVelocity() < 0.f)
             {
                 mEntity->setVelocityX(std::min(0.f, mEntity->getVelocity().x + mEntity->getRunVelocity()));
             }
             mEntity->setState(physics::EntityState::Running);
-            mEntity->setRunVelocity(mProperties.getRunVelocity());
+            mEntity->setRunVelocity(mProperties.runVelocity);
         }
     }
 
@@ -171,6 +176,9 @@ namespace jp::game::engine
                 break;
             case physics::EntityState::Standing:
                 state = "Standing";
+                break;
+            case physics::EntityState::Sticking:
+                state = "Sticking";
                 break;
             default:
                 state = "Undefined";

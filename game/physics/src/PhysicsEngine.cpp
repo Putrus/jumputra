@@ -5,7 +5,7 @@ namespace jp::game::physics
     PhysicsEngine::PhysicsEngine(const PhysicsProperties& properties, std::vector<std::shared_ptr<Platform>>&& platforms,
         std::shared_ptr<Wind>&& wind, std::vector<std::shared_ptr<Entity>>&& entities/* = std::vector<std::shared_ptr<Entity>>()*/)
         : mProperties(properties), mPlatforms(platforms), mWind(wind), mEntities(entities),
-            mEntityUpdater(mProperties, *mWind), mWindUpdater(mWind, mProperties)
+            mEntityUpdater(mProperties), mWindUpdater(mWind, mProperties.wind)
     {}
 
     void PhysicsEngine::addEntity(const std::shared_ptr<Entity>& entity)
@@ -43,21 +43,22 @@ namespace jp::game::physics
                     break;
                 }
             }
-            mEntityUpdater.updatePosition(dt);
-            mEntityUpdater.updateVelocity(dt);
+            mEntityUpdater.updatePosition(dt, *mWind);
+            mEntityUpdater.updateVelocity(dt, *mWind);
             for (const auto& platform : mPlatforms)
             {
-                if (platform->getSegment().a.y > mEntityUpdater.getUpdatedEntity().getPosition().y + mProperties.getCheckCollisionDistance())
+                if (platform->getSegment().a.y > mEntityUpdater.getUpdatedEntity().getPosition().y + mProperties.checkCollisionDistance)
                 {
                     continue;
                 }
 
-                if (platform->getSegment().a.y < mEntityUpdater.getUpdatedEntity().getPosition().y - mProperties.getCheckCollisionDistance())
+                if (platform->getSegment().a.y < mEntityUpdater.getUpdatedEntity().getPosition().y - mProperties.checkCollisionDistance)
                 {
                     break;
                 }
-                mEntityUpdater.handlePlatformCollision(platform.get());
+                mEntityUpdater.handlePlatformCollision(*platform);
             }
+            mEntityUpdater.handleNoCollision();
             mEntityUpdater.update();
         }
     }
