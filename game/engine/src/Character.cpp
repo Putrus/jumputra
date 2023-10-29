@@ -5,7 +5,7 @@
 
 namespace jp::game::engine
 {
-    Character::Character(const std::shared_ptr<physics::Entity>& entity, const CharacterProperties& properties)
+    Character::Character(const std::shared_ptr<physics::Character>& entity, const CharacterProperties& properties)
         : mEntity(entity), mProperties(properties)
     {}
 
@@ -19,7 +19,7 @@ namespace jp::game::engine
 
     void Character::update(float dt)
     {
-        if (mEntity->getState() == physics::EntityState::Squatting)
+        if (mEntity->getState() == physics::CharacterState::Squatting)
         {
             mJumpPower += mProperties.jumpGain * dt;
             if (mJumpPower.y >= mProperties.jumpGain.y)
@@ -31,33 +31,33 @@ namespace jp::game::engine
 
     bool Character::canRun() const
     {
-        return mEntity->getState() == physics::EntityState::Dying ||
-            mEntity->getState() == physics::EntityState::Running ||
-            mEntity->getState() == physics::EntityState::Sliding ||
-            mEntity->getState() == physics::EntityState::Standing ||
-            mEntity->getState() == physics::EntityState::Stopping;
+        return mEntity->getState() == physics::CharacterState::Dying ||
+            mEntity->getState() == physics::CharacterState::Running ||
+            mEntity->getState() == physics::CharacterState::Sliding ||
+            mEntity->getState() == physics::CharacterState::Standing ||
+            mEntity->getState() == physics::CharacterState::Stopping;
     }
 
     bool Character::canSquat() const
     {
-        return canRun() || mEntity->getState() == physics::EntityState::Sticking;
+        return canRun() || mEntity->getState() == physics::CharacterState::Sticking;
     }
 
     bool Character::isDying() const
     {
-        return mEntity->getState() == physics::EntityState::Dying;
+        return mEntity->getState() == physics::CharacterState::Dying;
     }
 
     bool Character::isSquatting() const
     {
-        return mEntity->getState() == physics::EntityState::Squatting;
+        return mEntity->getState() == physics::CharacterState::Squatting;
     }
 
     void Character::jump()
     {
-        if (mEntity->getState() == physics::EntityState::Squatting)
+        if (mEntity->getState() == physics::CharacterState::Squatting)
         {
-            mEntity->setState(physics::EntityState::Flying);
+            mEntity->setState(physics::CharacterState::Flying);
             mEntity->setAccelerationX(0.f);
             switch(mDirection)
             {
@@ -91,7 +91,7 @@ namespace jp::game::engine
         mDirection = direction;
         if (canRun() && direction != CharacterDirection::Up)
         {
-            mEntity->setState(physics::EntityState::Running);
+            mEntity->setState(physics::CharacterState::Running);
             float directionSign = direction == CharacterDirection::Left ? -1.f : 1.f;
             if (math::sign(mEntity->getRunVelocity()) != directionSign)
             {
@@ -106,15 +106,15 @@ namespace jp::game::engine
     {
         if (canSquat())
         {
-            mEntity->setState(physics::EntityState::Squatting);
+            mEntity->setState(physics::CharacterState::Squatting);
         }
     }
 
     void Character::stop()
     {
-        if (mEntity->getState() == physics::EntityState::Running)
+        if (mEntity->getState() == physics::CharacterState::Running)
         {
-            mEntity->setState(physics::EntityState::Stopping);
+            mEntity->setState(physics::CharacterState::Stopping);
             mEntity->setVelocity(math::Vector2<float>(mEntity->getVelocity().x + mEntity->getRunVelocity(), 0.f));
             mEntity->setRunVelocity(0.f);
         }
@@ -152,34 +152,34 @@ namespace jp::game::engine
         std::string state = "Standing";
         switch(mEntity->getState())
         {
-            case physics::EntityState::Dying:
+            case physics::CharacterState::Dying:
                 state = "Dying";
                 break;
-            case physics::EntityState::Falling:
+            case physics::CharacterState::Falling:
                 state = "Falling";
                 break;
-            case physics::EntityState::Flying:
+            case physics::CharacterState::Flying:
                 state = "Flying";
                 break;
-            case physics::EntityState::Running:
+            case physics::CharacterState::Running:
                 state = "Running";
                 break;
-            case physics::EntityState::Sledding:
+            case physics::CharacterState::Sledding:
                 state = "Sledding";
                 break;
-            case physics::EntityState::Sliding:
+            case physics::CharacterState::Sliding:
                 state = "Sliding";
                 break;
-            case physics::EntityState::Squatting:
+            case physics::CharacterState::Squatting:
                 state = "Squatting";
                 break;
-            case physics::EntityState::Standing:
+            case physics::CharacterState::Standing:
                 state = "Standing";
                 break;
-            case physics::EntityState::Sticking:
+            case physics::CharacterState::Sticking:
                 state = "Sticking";
                 break;
-            case physics::EntityState::Stopping:
+            case physics::CharacterState::Stopping:
                 state = "Stopping";
                 break;
             default:

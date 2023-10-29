@@ -1,21 +1,21 @@
 #pragma once
 
-#include "Kinematics.hpp"
-#include "WindProperties.hpp"
+#include "Entity.hpp"
 
 namespace jp::game::physics
 {
-    class Wind final : public Kinematics
+    class Wind final : public Entity
     {
     public:
         Wind();
-        Wind(const WindProperties& windProperties);
+        Wind(float acceleration, float factor,
+            float maxVelocity, const math::Rect<float>& rect);
 
-        float getStartPosition() const;
-        float getEndPosition() const;
+        float getFactor() const;
+        float getMaxVelocity() const;
 
     private:
-        float mStartPosition = 0.f;
-        float mEndPosition = 0.f;
+        float mFactor = 0.f;
+        float mMaxVelocity = 0.f;
     };
 }

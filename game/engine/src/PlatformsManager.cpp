@@ -23,12 +23,16 @@ namespace jp::game::engine
             std::ifstream file("data/platforms.json");
             json j;
             if (!file.is_open())
+            {
                 throw std::runtime_error("Failed to open file data/plaltforms.json");
+            }
             file >> j;
             for (const auto& jsonPlatform : j["platforms"])
             {
                 if (jsonPlatform["type"] == "comment")
+                {
                     continue;
+                }
 
                 physics::PlatformSurface surface = physics::PlatformSurface::Ordinary;
                 if (jsonPlatform["surface"] == "slippery")

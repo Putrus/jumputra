@@ -1,7 +1,5 @@
 #pragma once
 
-#include "WindProperties.hpp"
-
 #include "../../math/inc/Vector2.hpp"
 
 namespace jp::game::physics
@@ -10,7 +8,7 @@ namespace jp::game::physics
     {
         PhysicsProperties();
         PhysicsProperties(float bounce, float collision, float fall,
-            float friction, float gravity, const WindProperties& windProperties);
+            float friction, float gravity);
 
         float bounceFactor = 0.f;
         float checkCollisionDistance = 0.f;
@@ -18,7 +16,5 @@ namespace jp::game::physics
         float friction = 0.f;
         float gravity = 0.f;
         math::Vector2<float> entitySize = math::Vector2<float>();
-
-        WindProperties wind;
     };
 }

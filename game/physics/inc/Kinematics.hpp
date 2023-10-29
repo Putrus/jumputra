@@ -8,7 +8,8 @@ namespace jp::game::physics
     {
     public:
         Kinematics();
-        Kinematics(const math::Vector2<float>& acceleration, const math::Vector2<float>& velocity);
+        Kinematics(const math::Vector2<float>& acceleration,
+            const math::Vector2<float>& velocity);
 
         const math::Vector2<float>& getAcceleration() const;
         const math::Vector2<float>& getVelocity() const;

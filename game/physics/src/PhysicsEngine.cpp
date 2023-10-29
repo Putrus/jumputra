@@ -2,26 +2,26 @@
 
 namespace jp::game::physics
 {
-    PhysicsEngine::PhysicsEngine(const PhysicsProperties& properties, std::vector<std::shared_ptr<Platform>>&& platforms,
-        std::shared_ptr<Wind>&& wind, std::vector<std::shared_ptr<Entity>>&& entities/* = std::vector<std::shared_ptr<Entity>>()*/)
-        : mProperties(properties), mPlatforms(platforms), mWind(wind), mEntities(entities),
-            mEntityUpdater(mProperties), mWindUpdater(mWind, mProperties.wind)
+    PhysicsEngine::PhysicsEngine(const PhysicsProperties& properties, std::vector<std::shared_ptr<Character>>&& characters,
+        std::vector<std::shared_ptr<Platform>>&& platforms, std::vector<std::shared_ptr<Wind>>&& winds)
+        : mProperties(properties), mCharacters(std::move(characters)), mPlatforms(std::move(platforms)), mWinds(std::move(winds)),
+            mCharacterUpdater(new CharacterUpdater(mProperties)), mWindUpdater(new WindUpdater())
     {}
 
-    void PhysicsEngine::addEntity(const std::shared_ptr<Entity>& entity)
+    void PhysicsEngine::addCharacter(const std::shared_ptr<Character>& entity)
     {
-        mEntities.push_back(entity);
+        mCharacters.push_back(entity);
     }
 
-    void PhysicsEngine::addEntity(std::shared_ptr<Entity>&& entity)
+    void PhysicsEngine::addCharacter(std::shared_ptr<Character>&& entity)
     {
-        mEntities.push_back(std::move(entity));
+        mCharacters.push_back(std::move(entity));
     }
     
     void PhysicsEngine::update(float dt)
     {
-        updateWind(dt);
-        updateEntities(dt);
+        updateWinds(dt);
+        updateCharacters(dt);
     }
 
     const std::vector<std::shared_ptr<Platform>>& PhysicsEngine::getPlatforms() const
@@ -29,47 +29,62 @@ namespace jp::game::physics
         return mPlatforms;
     }
 
-    const std::shared_ptr<Wind>& PhysicsEngine::getWind() const
+    const std::vector<std::shared_ptr<Wind>>& PhysicsEngine::getWinds() const
     {
-        return mWind;
+        return mWinds;
     }
 
-    void PhysicsEngine::updateEntities(float dt)
+    void PhysicsEngine::updateCharacters(float dt)
     {
-        for (auto entityIt = mEntities.begin(); entityIt != mEntities.end(); ++entityIt)
+        for (auto characterIt = mCharacters.begin(); characterIt != mCharacters.end(); ++characterIt)
         {
-            mEntityUpdater.setEntity(*entityIt);
+            mCharacterUpdater->setEntity(*characterIt);
             //remove entity if it only exists in the physics engine
-            if (entityIt->use_count() == 2)
+            if (characterIt->use_count() == 2)
             {
-                entityIt = mEntities.erase(entityIt);
-                if (entityIt == mEntities.end())
+                characterIt = mCharacters.erase(characterIt);
+                if (characterIt == mCharacters.end())
                 {
                     break;
                 }
             }
-            mEntityUpdater.updatePosition(dt, *mWind);
-            mEntityUpdater.updateVelocity(dt, *mWind);
+            for (const auto& wind : mWinds)
+            {
+                mCharacterUpdater->updatePosition(dt, *wind);
+                mCharacterUpdater->updateVelocity(dt, *wind);
+            }
             for (const auto& platform : mPlatforms)
             {
-                if (platform->getSegment().a.y > mEntityUpdater.getUpdatedEntity().getPosition().y + mProperties.checkCollisionDistance)
+                if (platform->getSegment().a.y > mCharacterUpdater->getUpdatedEntity().getPosition().y + mProperties.checkCollisionDistance)
                 {
                     continue;
                 }
 
-                if (platform->getSegment().a.y < mEntityUpdater.getUpdatedEntity().getPosition().y - mProperties.checkCollisionDistance)
+                if (platform->getSegment().a.y < mCharacterUpdater->getUpdatedEntity().getPosition().y - mProperties.checkCollisionDistance)
                 {
                     break;
                 }
-                mEntityUpdater.handlePlatformCollision(*platform);
+                mCharacterUpdater->handlePlatformCollision(*platform);
             }
-            mEntityUpdater.handleNoCollision();
-            mEntityUpdater.update();
+            mCharacterUpdater->handleNoCollision();
+            mCharacterUpdater->update();
         }
     }
 
-    void PhysicsEngine::updateWind(float dt)
+    void PhysicsEngine::updateWinds(float dt)
     {
-        mWindUpdater.update(dt);
+        for (auto windIt = mWinds.begin(); windIt != mWinds.end(); ++windIt)
+        {
+            mWindUpdater->setWind(*windIt);
+            if (windIt->use_count() == 2)
+            {
+                windIt = mWinds.erase(windIt);
+                if (windIt == mWinds.end())
+                {
+                    break;
+                }
+            }
+            mWindUpdater->update(dt);
+        }
     }
 }

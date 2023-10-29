@@ -1,18 +1,18 @@
 #pragma once
 
-#include "Entity.hpp"
+#include "Character.hpp"
 #include "Platform.hpp"
-#include "Updater.hpp"
+#include "PhysicsProperties.hpp"
 #include "Wind.hpp"
 
 #include <memory>
 
 namespace jp::game::physics
 {
-    class EntityUpdater : public Updater<PhysicsProperties>
+    class CharacterUpdater final
     {
     public:
-        EntityUpdater(const PhysicsProperties& properties);
+        CharacterUpdater(const PhysicsProperties& properties);
 
         void handlePlatformCollision(const Platform& platform);
         void handleNoCollision();
@@ -21,9 +21,9 @@ namespace jp::game::physics
         void updatePosition(float dt, const Wind& wind);
         void updateVelocity(float dt, const Wind& wind);
 
-        const Entity& getUpdatedEntity() const;
+        const Character& getUpdatedEntity() const;
 
-        void setEntity(std::shared_ptr<Entity> entity);
+        void setEntity(std::shared_ptr<Character> entity);
 
     private:
         void sideBounce();
@@ -35,10 +35,12 @@ namespace jp::game::physics
         void topPlatformCollision(float y, PlatformSurface platformSurface);
         void bottomPlatformCollision(float y, PlatformSurface platformSurface);
 
-        math::Vector2<float> getResultantAcceleration(const Entity& entity, const Wind& wind) const;
-        math::Vector2<float> getResultantVelocity(const Entity& entity) const;
+        math::Vector2<float> getResultantAcceleration(const Character& entity, const Wind& wind) const;
+        math::Vector2<float> getResultantVelocity(const Character& entity) const;
 
-        std::shared_ptr<Entity> mEntity;
-        Entity mUpdatedEntity;
+        std::shared_ptr<Character> mEntity;
+        Character mUpdatedEntity;
+
+        const PhysicsProperties& mProperties;
     };
 }

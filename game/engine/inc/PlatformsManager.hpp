@@ -6,12 +6,12 @@
 
 namespace jp::game::engine
 {
-    struct APlatformsManager
+    struct IPlatformsManager
     {
         virtual std::vector<std::shared_ptr<physics::Platform>> load() = 0;
     };
 
-    class PlatformsManager : public APlatformsManager
+    class PlatformsManager : public IPlatformsManager
     {
     public:
         PlatformsManager(const std::string& filename);

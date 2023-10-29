@@ -2,22 +2,22 @@
 
 namespace jp::game::physics
 {
-    Wind::Wind() : Kinematics()
+    Wind::Wind()
     {}
     
-    Wind::Wind(const WindProperties& windProperties)
-        : mStartPosition(windProperties.startPosition),
-        mEndPosition(windProperties.endPosition),
-        Kinematics(math::Vector2<float>(windProperties.acceleration, 0.f), 0.f)
+    Wind::Wind(float acceleration, float factor,
+        float maxVelocity, const math::Rect<float>& rect)
+        : mFactor(factor), mMaxVelocity(maxVelocity),
+        Entity(rect, math::Vector2<float>(acceleration, 0.f), math::Vector2<float>())
     {}
 
-    float Wind::getStartPosition() const
+    float Wind::getFactor() const
     {
-        return mStartPosition;
+        return mFactor;
     }
 
-    float Wind::getEndPosition() const
+    float Wind::getMaxVelocity() const
     {
-        return mEndPosition;
+        return mMaxVelocity;
     }
 }

@@ -31,12 +31,6 @@ namespace jp::game::engine
             physicsProperties.gravity = j["physics"]["gravity"];
             physicsProperties.entitySize = math::Vector2<float>(j["physics"]["entity"]["size"]["x"],
                 j["physics"]["entity"]["size"]["y"]);
-            physicsProperties.wind.acceleration = j["physics"]["wind"]["acceleration"], 0.f;
-            physicsProperties.wind.factor = j["physics"]["wind"]["factor"];
-            physicsProperties.wind.maxVelocity =  j["physics"]["wind"]["max"];
-            physicsProperties.wind.startPosition = j["physics"]["wind"]["position"]["start"];
-            physicsProperties.wind.endPosition = j["physics"]["wind"]["position"]["end"];
-
 
             //character properties
             characterProperties.jumpGain = math::Vector2<float>(j["character"]["jump"]["gain"]["x"],

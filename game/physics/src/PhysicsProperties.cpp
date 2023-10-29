@@ -6,8 +6,8 @@ namespace jp::game::physics
     {}
 
     PhysicsProperties::PhysicsProperties(float bounce, float collision, float fall,
-        float friction, float gravity, const WindProperties& windProperties)
+        float friction, float gravity)
         : bounceFactor(bounce), checkCollisionDistance(collision), fallVelocity(fall),
-            friction(friction), gravity(gravity), wind(windProperties)
+            friction(friction), gravity(gravity)
     {}
 }

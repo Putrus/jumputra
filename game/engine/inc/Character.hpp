@@ -2,7 +2,7 @@
 
 #include "CharacterProperties.hpp"
 
-#include "../../physics/inc/Entity.hpp"
+#include "../../physics/inc/Character.hpp"
 
 #include <memory>
 
@@ -18,7 +18,7 @@ namespace jp::game::engine
     class Character
     {
     public:
-        Character(const std::shared_ptr<physics::Entity>& entity, const CharacterProperties& properties);
+        Character(const std::shared_ptr<physics::Character>& entity, const CharacterProperties& properties);
         Character& operator=(const Character& other);
 
         void update(float dt);
@@ -42,7 +42,7 @@ namespace jp::game::engine
 
         void printInfo();
     private:
-        std::shared_ptr<physics::Entity> mEntity;
+        std::shared_ptr<physics::Character> mEntity;
         CharacterDirection mDirection = CharacterDirection::Up;
         math::Vector2<float> mJumpPower = math::Vector2<float>();
         const CharacterProperties& mProperties;

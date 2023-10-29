@@ -6,7 +6,7 @@
 namespace jp::game::view
 {
     Game::Game() : mWindow(sf::VideoMode(480, 360), "Jumputra"),
-        engine::GameEngine(), mWindView(mPhysicsEngine->getWind())
+        engine::GameEngine(), mWindView(mPhysicsEngine->getWinds()[0])
     {
         sf::View view(sf::FloatRect(0.f, 15120.f, 480.f, 360.f));
         mWindow.setView(view);

@@ -6,7 +6,8 @@ namespace jp::game::physics
         : mSegment(segment), mSurface(surface)
     {}
 
-    Platform::Platform(const math::Vector2<float>& a, const math::Vector2<float>& b, PlatformSurface surface)
+    Platform::Platform(const math::Vector2<float>& a,
+        const math::Vector2<float>& b, PlatformSurface surface)
         : mSegment(a, b), mSurface(surface)
     {}
 

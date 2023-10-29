@@ -2,24 +2,25 @@
 
 namespace jp::game::physics
 {
-    WindUpdater::WindUpdater(std::shared_ptr<Wind> wind, const WindProperties& properties)
-        : mWind(wind), Updater<WindProperties>(properties)
-    {}
-
     void WindUpdater::update(float dt)
     {   
         //wind update implemented only for x axis
-        if (getProperties().maxVelocity == 0.f)
+        if (mWind->getMaxVelocity() == 0.f)
         {
             return;
         }
         mWind->setVelocity(mWind->getVelocity() + mWind->getAcceleration() * dt);
         float absVelocity = std::abs(mWind->getVelocity().x);
-        if (absVelocity >= getProperties().maxVelocity)
+        if (absVelocity >= mWind->getMaxVelocity())
         {
             float velocitySign = mWind->getVelocity().x / absVelocity;
-            mWind->setVelocity(getProperties().maxVelocity * velocitySign);
-            mWind->setAcceleration(getProperties().acceleration * -velocitySign);
+            mWind->setVelocity(math::Vector2<float>(mWind->getMaxVelocity() * velocitySign, 0.f));
+            mWind->setAcceleration(math::Vector2<float>(mWind->getAcceleration().x * -velocitySign, 0.f));
         }
+    }
+
+    void WindUpdater::setWind(const std::shared_ptr<Wind>& wind)
+    {
+        mWind = wind;
     }
 }

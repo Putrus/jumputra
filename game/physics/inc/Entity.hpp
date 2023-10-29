@@ -6,32 +6,16 @@
 
 namespace jp::game::physics
 {
-    enum class EntityState : unsigned int
-    {
-        Dying = 0,
-        Falling,
-        Flying,
-        Running,
-        Sledding,
-        Sliding,
-        Squatting,
-        Standing,
-        Sticking,
-        Stopping
-    };
-
     class Entity : public Kinematics
     {
     public:
         Entity();
-        Entity(const math::Rect<float>& rect);
+        Entity(const math::Rect<float>& rect,
+            const math::Vector2<float>& acceleration = 0.f,
+            const math::Vector2<float>& velocity = 0.f);
 
-        void move(const math::Vector2<float>& vec);
-
-        float getRunVelocity() const;
         math::Vector2<float> getPosition() const;
         const math::Rect<float>& getRect() const;
-        EntityState getState() const;
 
         void setPosition(const math::Vector2<float>& position);
         void setRect(const math::Rect<float>& rect);
@@ -39,12 +23,8 @@ namespace jp::game::physics
         void setRectBottom(float y);
         void setRectLeft(float x);
         void setRectRight(float x);
-        void setRunVelocity(float runVelocity);
-        void setState(EntityState state);
 
     protected:
         math::Rect<float> mRect;
-        float mRunVelocity = 0.f;
-        EntityState mState = EntityState::Flying;
     };
 }

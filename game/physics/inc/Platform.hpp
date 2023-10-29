@@ -27,9 +27,11 @@ namespace jp::game::physics
     {
     public:
         Platform(const math::Segment<float>& segment, PlatformSurface surface);
+        Platform(const math::Vector2<float>& a,
+            const math::Vector2<float>& b, PlatformSurface surface);
+
         virtual PlatformCollision checkCollision(const math::Rect<float>& oldRect,
             const math::Rect<float>& newRect) const = 0;
-        Platform(const math::Vector2<float>& a, const math::Vector2<float>& b, PlatformSurface surface);
 
         const math::Segment<float>& getSegment() const;
         PlatformSurface getSurface() const;

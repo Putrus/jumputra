@@ -10,8 +10,8 @@
 namespace jp::game::engine
 {
     GameEngine::GameEngine() : mPlatformsManager("data/platforms.json"), mPropertiesManager("data/properties.json"),
-        mPhysicsEngine(new physics::PhysicsEngine(mPropertiesManager.physicsProperties, mPlatformsManager.load(),
-            std::make_shared<physics::Wind>(mPropertiesManager.physicsProperties.wind)))
+        mPhysicsEngine(new physics::PhysicsEngine(mPropertiesManager.physicsProperties, {}, mPlatformsManager.load(),
+            { std::make_shared<physics::Wind>() }))
     {}
 
     void GameEngine::run()
@@ -37,10 +37,10 @@ namespace jp::game::engine
 
     void GameEngine::addCharacter(const math::Vector2<float>& position)
     {
-        auto entity = std::make_shared<physics::Entity>(math::Rect<float>(position,
+        auto entity = std::make_shared<physics::Character>(math::Rect<float>(position,
             mPropertiesManager.physicsProperties.entitySize));
         mCharacters.push_back(Character(entity, mPropertiesManager.characterProperties));
-        mPhysicsEngine->addEntity(std::move(entity));
+        mPhysicsEngine->addCharacter(std::move(entity));
     }
 
     void GameEngine::removeAllCharacters()
