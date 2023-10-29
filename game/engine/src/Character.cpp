@@ -125,7 +125,7 @@ namespace jp::game::engine
         return mEntity->getRect();
     }
 
-    const math::Vector2<float>& Character::getPosition() const
+    math::Vector2<float> Character::getPosition() const
     {
         return mEntity->getPosition();
     }

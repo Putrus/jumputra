@@ -17,8 +17,8 @@ namespace jp::game::physics
         PhysicsEngine(const PhysicsProperties& properties, std::vector<std::shared_ptr<Character>>&& entities,
             std::vector<std::shared_ptr<Platform>>&& platforms, std::vector<std::shared_ptr<Wind>>&& winds);
 
-        void addCharacter(const std::shared_ptr<Character>& entity);
-        void addCharacter(std::shared_ptr<Character>&& entity);
+        void addCharacter(const std::shared_ptr<Character>& character);
+        void addCharacter(std::shared_ptr<Character>&& character);
         void update(float dt);
 
         const std::vector<std::shared_ptr<Character>>& getCharacters() const;

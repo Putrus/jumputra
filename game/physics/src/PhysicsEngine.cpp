@@ -8,14 +8,14 @@ namespace jp::game::physics
             mCharacterUpdater(new CharacterUpdater(mProperties)), mWindUpdater(new WindUpdater())
     {}
 
-    void PhysicsEngine::addCharacter(const std::shared_ptr<Character>& entity)
+    void PhysicsEngine::addCharacter(const std::shared_ptr<Character>& character)
     {
-        mCharacters.push_back(entity);
+        mCharacters.push_back(character);
     }
 
-    void PhysicsEngine::addCharacter(std::shared_ptr<Character>&& entity)
+    void PhysicsEngine::addCharacter(std::shared_ptr<Character>&& character)
     {
-        mCharacters.push_back(std::move(entity));
+        mCharacters.push_back(std::move(character));
     }
     
     void PhysicsEngine::update(float dt)
@@ -48,10 +48,20 @@ namespace jp::game::physics
                     break;
                 }
             }
-            for (const auto& wind : mWinds)
+            auto windIt = std::find_if(mWinds.begin(), mWinds.end(),
+                [characterIt](const auto& wind)
+                {
+                    return characterIt->get()->getRect().insersects(wind->getRect());
+                });
+            if (windIt != mWinds.end())
             {
-                mCharacterUpdater->updatePosition(dt, *wind);
-                mCharacterUpdater->updateVelocity(dt, *wind);
+                mCharacterUpdater->updatePosition(dt, windIt->get());
+                mCharacterUpdater->updateVelocity(dt, windIt->get());
+            }
+            else
+            {
+                mCharacterUpdater->updatePosition(dt);
+                mCharacterUpdater->updateVelocity(dt);
             }
             for (const auto& platform : mPlatforms)
             {
@@ -76,6 +86,7 @@ namespace jp::game::physics
         for (auto windIt = mWinds.begin(); windIt != mWinds.end(); ++windIt)
         {
             mWindUpdater->setWind(*windIt);
+            //remove entity if it only exists in the physics engine
             if (windIt->use_count() == 2)
             {
                 windIt = mWinds.erase(windIt);

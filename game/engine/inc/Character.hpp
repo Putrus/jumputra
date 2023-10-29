@@ -34,7 +34,7 @@ namespace jp::game::engine
         void stop();
 
         const math::Rect<float>& getRect() const;
-        const math::Vector2<float>& getPosition() const;
+        math::Vector2<float> getPosition() const;
         CharacterDirection getDirection() const;
         float getJumpPower() const;
 

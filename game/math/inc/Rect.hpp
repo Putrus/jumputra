@@ -12,6 +12,8 @@ namespace jp::game::math
         Rect(const Vector2<T>& position, const Vector2<T>& size);
         Rect(const Rect& other);
 
+        bool insersects(const Rect& other) const;
+
         Vector2<T> getPosition() const;
         Vector2<T> getSize() const;
         Vector2<T> getLeftTop() const;
@@ -45,6 +47,23 @@ namespace jp::game::math
 
     template <typename T>
     Rect<T>::Rect(const Rect& other) : left(other.left), top(other.top), width(other.width), height(other.height) {}
+
+    template <typename T>
+    bool Rect<T>::insersects(const Rect& other) const
+    {
+        Rect intersection(std::max(left, other.left),
+            std::max(top, other.top), std::min(getRight(), other.getRight()),
+            std::min(this->getBottom(), other.getBottom()));
+
+        if (intersection.left < intersection.getRight() && intersection.top < intersection.getBottom())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     template <typename T>
     Vector2<T> Rect<T>::getPosition() const

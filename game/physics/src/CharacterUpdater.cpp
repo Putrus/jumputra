@@ -109,7 +109,7 @@ namespace jp::game::physics
         *mEntity = mUpdatedEntity;
     }
 
-    void CharacterUpdater::updatePosition(float dt, const Wind& wind)
+    void CharacterUpdater::updatePosition(float dt, const Wind* wind/* = nullptr*/)
     {
         //distance/spatium = v * t + a * t^2 / 2 
         math::Vector2<float> distance = getResultantVelocity(*mEntity) * dt +
@@ -117,7 +117,7 @@ namespace jp::game::physics
         mUpdatedEntity.move(distance);
     }
 
-    void CharacterUpdater::updateVelocity(float dt, const Wind& wind)
+    void CharacterUpdater::updateVelocity(float dt, const Wind* wind/* = nullptr*/)
     {
         math::Vector2<float> updatedVelocity = mEntity->getVelocity() + getResultantAcceleration(*mEntity, wind) * dt;
         math::Vector2<float> updatedAcceleration = mEntity->getAcceleration();
@@ -249,15 +249,15 @@ namespace jp::game::physics
         topBottomCollision(false, platformSurface);
     }
 
-    math::Vector2<float> CharacterUpdater::getResultantAcceleration(const Character& entity, const Wind& wind) const
+    math::Vector2<float> CharacterUpdater::getResultantAcceleration(const Character& entity,
+        const Wind* wind/* = nullptr*/) const
     {
         //entityA + windV * factor + gravityA
         math::Vector2<float> resultantAcceleration = entity.getAcceleration() +
             math::Vector2<float>(0.f, mProperties.gravity);
-        if (mUpdatedEntity.getRect().top >= wind.getRect().top &&
-            mUpdatedEntity.getRect().top <= wind.getRect().getBottom())
+        if (wind != nullptr)
         {
-            resultantAcceleration += wind.getVelocity() * wind.getFactor();
+            resultantAcceleration += wind->getVelocity() * wind->getFactor();
         }
         return resultantAcceleration;
     }

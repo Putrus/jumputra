@@ -18,8 +18,8 @@ namespace jp::game::physics
         void handleNoCollision();
 
         void update();
-        void updatePosition(float dt, const Wind& wind);
-        void updateVelocity(float dt, const Wind& wind);
+        void updatePosition(float dt, const Wind* wind = nullptr);
+        void updateVelocity(float dt, const Wind* wind = nullptr);
 
         const Character& getUpdatedEntity() const;
 
@@ -35,7 +35,7 @@ namespace jp::game::physics
         void topPlatformCollision(float y, PlatformSurface platformSurface);
         void bottomPlatformCollision(float y, PlatformSurface platformSurface);
 
-        math::Vector2<float> getResultantAcceleration(const Character& entity, const Wind& wind) const;
+        math::Vector2<float> getResultantAcceleration(const Character& entity, const Wind* wind = nullptr) const;
         math::Vector2<float> getResultantVelocity(const Character& entity) const;
 
         std::shared_ptr<Character> mEntity;
