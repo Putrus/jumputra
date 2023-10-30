@@ -10,12 +10,11 @@ set(SOURCE_FILES
     inc/CharacterUpdater.hpp src/CharacterUpdater.cpp
     inc/DiagonalPlatform.hpp src/DiagonalPlatform.cpp
     inc/Entity.hpp src/Entity.cpp
-    inc/EntityUpdater.hpp
     inc/HorizontalPlatform.hpp src/HorizontalPlatform.cpp
     inc/Kinematics.hpp src/Kinematics.cpp
-    inc/PhysicsEngine.hpp src/PhysicsEngine.cpp
-    inc/PhysicsProperties.hpp src/PhysicsProperties.cpp
+    inc/Physics.hpp src/Physics.cpp
     inc/Platform.hpp src/Platform.cpp
+    inc/Properties.hpp src/Properties.cpp
     inc/VerticalPlatform.hpp src/VerticalPlatform.cpp
     inc/Wind.hpp src/Wind.cpp
     inc/WindUpdater.hpp src/WindUpdater.cpp

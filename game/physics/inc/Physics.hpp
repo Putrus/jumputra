@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CharacterUpdater.hpp"
-#include "PhysicsProperties.hpp"
+#include "Properties.hpp"
 #include "Platform.hpp"
 #include "WindUpdater.hpp"
 
@@ -11,10 +11,10 @@
 
 namespace jp::game::physics
 {
-    class PhysicsEngine
+    class Physics
     {
     public:
-        PhysicsEngine(const PhysicsProperties& properties, std::vector<std::shared_ptr<Character>>&& entities,
+        Physics(const Properties& properties, std::vector<std::shared_ptr<Character>>&& entities,
             std::vector<std::shared_ptr<Platform>>&& platforms, std::vector<std::shared_ptr<Wind>>&& winds);
 
         void addCharacter(const std::shared_ptr<Character>& character);
@@ -29,7 +29,7 @@ namespace jp::game::physics
         void updateCharacters(float dt);
         void updateWinds(float dt);
 
-        const PhysicsProperties& mProperties;
+        const Properties& mProperties;
 
         std::vector<std::shared_ptr<Character>> mCharacters;
         std::vector<std::shared_ptr<Platform>> mPlatforms;

@@ -8,20 +8,20 @@
 
 namespace jp::game::engine
 {
-    enum class CharacterDirection : int
-    {
-        Up = 0,
-        Left,
-        Right
-    };
-
     class Character
     {
     public:
-        Character(const std::shared_ptr<physics::Character>& entity, const CharacterProperties& properties);
+        enum class Direction : int
+        {
+            Up = 0,
+            Left,
+            Right
+        };
+        Character(const std::shared_ptr<physics::Character>& physicsCharacter,
+            const CharacterProperties& properties);
         Character& operator=(const Character& other);
 
-        void update(float dt);
+        virtual void update(float dt);
 
         bool canRun() const;
         bool canSquat() const;
@@ -29,22 +29,43 @@ namespace jp::game::engine
         bool isSquatting() const;
 
         void jump();
-        void run(CharacterDirection direction);
+        void run(Direction direction);
         void squat();
         void stop();
 
         const math::Rect<float>& getRect() const;
         math::Vector2<float> getPosition() const;
-        CharacterDirection getDirection() const;
+        Direction getDirection() const;
         float getJumpPower() const;
 
-        void setDirection(CharacterDirection direction);
+        void setDirection(Direction direction);
 
         void printInfo();
-    private:
-        std::shared_ptr<physics::Character> mEntity;
-        CharacterDirection mDirection = CharacterDirection::Up;
+    protected:
+        std::shared_ptr<physics::Character> mPhysicsCharacter;
+        Direction mDirection = Direction::Up;
         math::Vector2<float> mJumpPower = math::Vector2<float>();
-        const CharacterProperties& mProperties;
+        const CharacterProperties& mProperties = CharacterProperties();
+    };
+
+    class Bot : public Character
+    {
+    public:
+        enum class State : int
+        {
+            Ready = 0,
+            Jumping,
+            Running
+        };
+
+        virtual void update(float dt) override;
+
+        void jump(Direction direction, float percent);
+        void run(Direction direction, float time);
+
+    private:
+        float mJumpPercent = 0.f;
+        float mTime = 0.f;
+        State mState;
     };
 }

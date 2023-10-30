@@ -1,40 +1,45 @@
-#include "../inc/PhysicsEngine.hpp"
+#include "../inc/Physics.hpp"
 
 namespace jp::game::physics
 {
-    PhysicsEngine::PhysicsEngine(const PhysicsProperties& properties, std::vector<std::shared_ptr<Character>>&& characters,
+    Physics::Physics(const Properties& properties, std::vector<std::shared_ptr<Character>>&& characters,
         std::vector<std::shared_ptr<Platform>>&& platforms, std::vector<std::shared_ptr<Wind>>&& winds)
         : mProperties(properties), mCharacters(std::move(characters)), mPlatforms(std::move(platforms)), mWinds(std::move(winds)),
             mCharacterUpdater(new CharacterUpdater(mProperties)), mWindUpdater(new WindUpdater())
     {}
 
-    void PhysicsEngine::addCharacter(const std::shared_ptr<Character>& character)
+    void Physics::addCharacter(const std::shared_ptr<Character>& character)
     {
         mCharacters.push_back(character);
     }
 
-    void PhysicsEngine::addCharacter(std::shared_ptr<Character>&& character)
+    void Physics::addCharacter(std::shared_ptr<Character>&& character)
     {
         mCharacters.push_back(std::move(character));
     }
     
-    void PhysicsEngine::update(float dt)
+    void Physics::update(float dt)
     {
         updateWinds(dt);
         updateCharacters(dt);
     }
 
-    const std::vector<std::shared_ptr<Platform>>& PhysicsEngine::getPlatforms() const
+    const std::vector<std::shared_ptr<Character>>& Physics::getCharacters() const
+    {
+        return mCharacters;
+    }
+
+    const std::vector<std::shared_ptr<Platform>>& Physics::getPlatforms() const
     {
         return mPlatforms;
     }
 
-    const std::vector<std::shared_ptr<Wind>>& PhysicsEngine::getWinds() const
+    const std::vector<std::shared_ptr<Wind>>& Physics::getWinds() const
     {
         return mWinds;
     }
 
-    void PhysicsEngine::updateCharacters(float dt)
+    void Physics::updateCharacters(float dt)
     {
         for (auto characterIt = mCharacters.begin(); characterIt != mCharacters.end(); ++characterIt)
         {
@@ -47,6 +52,7 @@ namespace jp::game::physics
                 {
                     break;
                 }
+                continue;
             }
             auto windIt = std::find_if(mWinds.begin(), mWinds.end(),
                 [characterIt](const auto& wind)
@@ -81,7 +87,7 @@ namespace jp::game::physics
         }
     }
 
-    void PhysicsEngine::updateWinds(float dt)
+    void Physics::updateWinds(float dt)
     {
         for (auto windIt = mWinds.begin(); windIt != mWinds.end(); ++windIt)
         {

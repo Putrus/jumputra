@@ -1,4 +1,4 @@
-#include "../inc/GameEngine.hpp"
+#include "../inc/Engine.hpp"
 #include "../inc/PlatformsManager.hpp"
 
 #include "../../physics/inc/DiagonalPlatform.hpp"
@@ -9,12 +9,12 @@
 
 namespace jp::game::engine
 {
-    GameEngine::GameEngine() : mPlatformsManager("data/platforms.json"), mPropertiesManager("data/properties.json"),
-        mPhysicsEngine(new physics::PhysicsEngine(mPropertiesManager.physicsProperties, {}, mPlatformsManager.load(),
+    Engine::Engine() : mPlatformsManager("data/platforms.json"), mPropertiesManager("data/properties.json"),
+        mPhysics(new physics::Physics(mPropertiesManager.physicsProperties, {}, mPlatformsManager.load(),
             { std::make_shared<physics::Wind>() }))
     {}
 
-    void GameEngine::run()
+    void Engine::run()
     {
         //to do, now for testing
         auto begin = std::chrono::steady_clock::now();
@@ -35,20 +35,20 @@ namespace jp::game::engine
         }
     }
 
-    void GameEngine::addCharacter(const math::Vector2<float>& position)
+    void Engine::addCharacter(const math::Vector2<float>& position)
     {
         auto entity = std::make_shared<physics::Character>(math::Rect<float>(position,
             mPropertiesManager.physicsProperties.entitySize));
         mCharacters.push_back(Character(entity, mPropertiesManager.characterProperties));
-        mPhysicsEngine->addCharacter(std::move(entity));
+        mPhysics->addCharacter(std::move(entity));
     }
 
-    void GameEngine::removeAllCharacters()
+    void Engine::removeAllCharacters()
     {
         mCharacters.clear();
     }
 
-    void GameEngine::removeCharacter(size_t id)
+    void Engine::removeCharacter(size_t id)
     {
         if (id < mCharacters.size())
         {
@@ -56,8 +56,8 @@ namespace jp::game::engine
         }
     }
 
-    void GameEngine::update(float dt)
+    void Engine::update(float dt)
     {
-        mPhysicsEngine->update(dt);
+        mPhysics->update(dt);
     }
 }

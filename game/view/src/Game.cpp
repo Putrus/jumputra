@@ -6,17 +6,17 @@
 namespace jp::game::view
 {
     Game::Game() : mWindow(sf::VideoMode(480, 360), "Jumputra"),
-        engine::GameEngine(), mWindView(mPhysicsEngine->getWinds()[0])
+        engine::Engine(), mWindView(mPhysics->getWinds()[0])
     {
         sf::View view(sf::FloatRect(0.f, 15120.f, 480.f, 360.f));
         mWindow.setView(view);
         //mWindow.setVerticalSyncEnabled(true);
         //to do, now code is for testing
         addCharacter({ 150.f, 15300.f });
-        for (int i = 0; i < 50; ++i)
+        /*for (int i = 0; i < 50; ++i)
         {
             addCharacter({ 150.f, 15300.f });
-        }
+        }*/
     }
 
     void Game::run()
@@ -39,7 +39,7 @@ namespace jp::game::view
             {
                 time -= UPDATE_NANOSECONDS;
                 mWindView.update(UPDATE_NANOSECONDS / 1000000000.f);
-                engine::GameEngine::update(UPDATE_NANOSECONDS / 1000000000.f);
+                engine::Engine::update(UPDATE_NANOSECONDS / 1000000000.f);
                 for (auto& character : mCharacters)
                 {
                     character.update(UPDATE_NANOSECONDS / 1000000000.f);
@@ -119,7 +119,7 @@ namespace jp::game::view
     void Game::draw()
     {
         mWindow.clear();
-        for (const auto& platform : mPhysicsEngine->getPlatforms())
+        for (const auto& platform : mPhysics->getPlatforms())
         {
             sf::Color color = sf::Color::White;
             if (platform->getSurface() == physics::PlatformSurface::Slippery)
@@ -176,54 +176,42 @@ namespace jp::game::view
 
     void Game::event()
     {
-        sf::Event event;
         bool jumped = false;
-        while (mWindow.pollEvent(event))
+        while (mWindow.pollEvent(mEvent))
         {
-            if (event.type == sf::Event::Closed)
+            if (mEvent.type == sf::Event::Closed)
             {
                 mWindow.close();
             }
 
-            if (mCharacters.size() > 0 && event.type == sf::Event::KeyReleased)
+            if (mCharacters.size() > 0)
+                controller(mCharacters[0], sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Space);
+
+            if (mCharacters.size() > 0 && mEvent.type == sf::Event::KeyReleased)
             {
-                if (event.key.code == sf::Keyboard::L)
+                if (mEvent.key.code == sf::Keyboard::L)
                 {
                     mCharacters[0].printInfo();
                 }
 
-                if (event.key.code == sf::Keyboard::Space)
+                if (mEvent.key.code >= sf::Keyboard::Num0 &&
+                    mEvent.key.code <= sf::Keyboard::Num9)
                 {
-                    mCharacters[0].jump();
+                    removeCharacter(mEvent.key.code - sf::Keyboard::Num0);
                 }
 
-                if ((event.key.code == sf::Keyboard::Left &&
-                    mCharacters[0].getDirection() == engine::CharacterDirection::Left) ||
-                    (event.key.code == sf::Keyboard::Right &&
-                        mCharacters[0].getDirection() == engine::CharacterDirection::Right))
-                {
-                    mCharacters[0].setDirection(engine::CharacterDirection::Up);
-                    mCharacters[0].stop();
-                }
-
-                if (event.key.code >= sf::Keyboard::Num0 &&
-                    event.key.code <= sf::Keyboard::Num9)
-                {
-                    removeCharacter(event.key.code - sf::Keyboard::Num0);
-                }
-
-                if (event.key.code == sf::Keyboard::Q)
+                if (mEvent.key.code == sf::Keyboard::Q)
                 {
                     removeAllCharacters();
                 }
 
-                if (event.key.code == sf::Keyboard::T)
+                if (mEvent.key.code == sf::Keyboard::T)
                 {
                     float posX = std::rand() % 360 + 10;
                     addCharacter({ posX, 15200.f });
                 }
 
-                if (event.key.code == sf::Keyboard::Y)
+                if (mEvent.key.code == sf::Keyboard::Y)
                 {
                     for (auto& character : mCharacters)
                     {
@@ -232,27 +220,9 @@ namespace jp::game::view
                 }
             }
 
-            if (event.type == sf::Event::KeyPressed)
+            if (mEvent.type == sf::Event::MouseButtonPressed)
             {
-                if (event.key.code == sf::Keyboard::Space)
-                {
-                     mCharacters[0].squat();
-                }
-
-                if (event.key.code == sf::Keyboard::Left)
-                {
-                    mCharacters[0].run(engine::CharacterDirection::Left);
-                }
-
-                if (event.key.code == sf::Keyboard::Right)
-                {
-                    mCharacters[0].run(engine::CharacterDirection::Right);
-                }
-            }
-
-            if (event.type == sf::Event::MouseButtonPressed)
-            {
-                if (event.mouseButton.button == sf::Mouse::Left)
+                if (mEvent.mouseButton.button == sf::Mouse::Left)
                 {
                     auto mp = sf::Mouse::getPosition(mWindow);
                     auto pos = math::Vector2<float>(mp.x, mp.y);
@@ -263,5 +233,44 @@ namespace jp::game::view
             }
         }
         return;
+    }
+
+    void Game::controller(engine::Character& character,
+        sf::Keyboard::Key left, sf::Keyboard::Key right, sf::Keyboard::Key jump)
+    {
+        if (mEvent.type == sf::Event::KeyReleased)
+        {
+            if (mEvent.key.code == jump)
+            {
+                character.jump();
+            }
+
+            if ((mEvent.key.code == left &&
+                character.getDirection() == engine::CharacterDirection::Left) ||
+                (mEvent.key.code == right &&
+                    character.getDirection() == engine::CharacterDirection::Right))
+            {
+                character.setDirection(engine::CharacterDirection::Up);
+                character.stop();
+            }
+        }
+
+        if (mEvent.type == sf::Event::KeyPressed)
+        {
+            if (mEvent.key.code == jump)
+            {
+                character.squat();
+            }
+
+            if (mEvent.key.code == left)
+            {
+                character.run(engine::CharacterDirection::Left);
+            }
+
+            if (mEvent.key.code == right)
+            {
+                character.run(engine::CharacterDirection::Right);
+            }
+        }
     }
 }

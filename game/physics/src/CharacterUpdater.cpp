@@ -4,7 +4,7 @@
 
 namespace jp::game::physics
 {
-    CharacterUpdater::CharacterUpdater(const PhysicsProperties& properties)
+    CharacterUpdater::CharacterUpdater(const Properties& properties)
         : mProperties(properties)
     {}
 

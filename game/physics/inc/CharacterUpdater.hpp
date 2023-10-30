@@ -2,7 +2,7 @@
 
 #include "Character.hpp"
 #include "Platform.hpp"
-#include "PhysicsProperties.hpp"
+#include "Properties.hpp"
 #include "Wind.hpp"
 
 #include <memory>
@@ -12,7 +12,7 @@ namespace jp::game::physics
     class CharacterUpdater final
     {
     public:
-        CharacterUpdater(const PhysicsProperties& properties);
+        CharacterUpdater(const Properties& properties);
 
         void handlePlatformCollision(const Platform& platform);
         void handleNoCollision();
@@ -41,6 +41,6 @@ namespace jp::game::physics
         std::shared_ptr<Character> mEntity;
         Character mUpdatedEntity;
 
-        const PhysicsProperties& mProperties;
+        const Properties& mProperties;
     };
 }

@@ -4,14 +4,14 @@
 #include "PlatformsManager.hpp"
 #include "PropertiesManager.hpp"
 
-#include "../../physics/inc/PhysicsEngine.hpp"
+#include "../../physics/inc/Physics.hpp"
 
 namespace jp::game::engine
 {
-    class GameEngine
+    class Engine
     {
     public:
-        GameEngine();
+        Engine();
         virtual void run();
 
         void addCharacter(const math::Vector2<float>& position);
@@ -24,6 +24,6 @@ namespace jp::game::engine
         std::vector<Character> mCharacters;
         PlatformsManager mPlatformsManager;
         PropertiesManager mPropertiesManager;
-        std::unique_ptr<physics::PhysicsEngine> mPhysicsEngine;
+        std::unique_ptr<physics::Physics> mPhysics;
     };
 }

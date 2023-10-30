@@ -4,11 +4,11 @@
 
 namespace jp::game::physics
 {
-    struct PhysicsProperties
+    struct Properties
     {
-        PhysicsProperties();
-        PhysicsProperties(float bounce, float collision, float fall,
-            float friction, float gravity);
+        Properties();
+        Properties(float bounce, float collision,
+            float fall, float friction, float gravity);
 
         float bounceFactor = 0.f;
         float checkCollisionDistance = 0.f;

@@ -4,10 +4,8 @@
 
 namespace jp::game::engine
 {
-
-    class CharacterProperties
+    struct CharacterProperties
     {
-    public:
         CharacterProperties();
         CharacterProperties(const math::Vector2<float>& jumpGain,
             const math::Vector2<float>& jumpMax, float runVelocity);

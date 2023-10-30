@@ -5,13 +5,14 @@
 
 namespace jp::game::engine
 {
-    Character::Character(const std::shared_ptr<physics::Character>& entity, const CharacterProperties& properties)
-        : mEntity(entity), mProperties(properties)
+    Character::Character(const std::shared_ptr<physics::Character>& physicsCharacter,
+        const CharacterProperties& properties)
+        : mPhysicsCharacter(physicsCharacter), mProperties(properties)
     {}
 
     Character& Character::operator=(const Character& other)
     {
-        mEntity = other.mEntity;
+        mPhysicsCharacter = other.mPhysicsCharacter;
         mDirection = other.mDirection;
         mJumpPower = other.mJumpPower;
         return *this;
@@ -19,7 +20,7 @@ namespace jp::game::engine
 
     void Character::update(float dt)
     {
-        if (mEntity->getState() == physics::CharacterState::Squatting)
+        if (mPhysicsCharacter->getState() == physics::CharacterState::Squatting)
         {
             mJumpPower += mProperties.jumpGain * dt;
             if (mJumpPower.y >= mProperties.jumpGain.y)
@@ -31,52 +32,52 @@ namespace jp::game::engine
 
     bool Character::canRun() const
     {
-        return mEntity->getState() == physics::CharacterState::Dying ||
-            mEntity->getState() == physics::CharacterState::Running ||
-            mEntity->getState() == physics::CharacterState::Sliding ||
-            mEntity->getState() == physics::CharacterState::Standing ||
-            mEntity->getState() == physics::CharacterState::Stopping;
+        return mPhysicsCharacter->getState() == physics::CharacterState::Dying ||
+            mPhysicsCharacter->getState() == physics::CharacterState::Running ||
+            mPhysicsCharacter->getState() == physics::CharacterState::Sliding ||
+            mPhysicsCharacter->getState() == physics::CharacterState::Standing ||
+            mPhysicsCharacter->getState() == physics::CharacterState::Stopping;
     }
 
     bool Character::canSquat() const
     {
-        return canRun() || mEntity->getState() == physics::CharacterState::Sticking;
+        return canRun() || mPhysicsCharacter->getState() == physics::CharacterState::Sticking;
     }
 
     bool Character::isDying() const
     {
-        return mEntity->getState() == physics::CharacterState::Dying;
+        return mPhysicsCharacter->getState() == physics::CharacterState::Dying;
     }
 
     bool Character::isSquatting() const
     {
-        return mEntity->getState() == physics::CharacterState::Squatting;
+        return mPhysicsCharacter->getState() == physics::CharacterState::Squatting;
     }
 
     void Character::jump()
     {
-        if (mEntity->getState() == physics::CharacterState::Squatting)
+        if (mPhysicsCharacter->getState() == physics::CharacterState::Squatting)
         {
-            mEntity->setState(physics::CharacterState::Flying);
-            mEntity->setAccelerationX(0.f);
+            mPhysicsCharacter->setState(physics::CharacterState::Flying);
+            mPhysicsCharacter->setAccelerationX(0.f);
             switch(mDirection)
             {
-                case CharacterDirection::Up:
+                case Direction::Up:
                 {
-                    mEntity->setVelocity(math::Vector2<float>(mEntity->getVelocity().x,
+                    mPhysicsCharacter->setVelocity(math::Vector2<float>(mPhysicsCharacter->getVelocity().x,
                         -std::min(mProperties.jumpMax.y, mJumpPower.y)));
                     break;
                 }
-                case CharacterDirection::Left:
+                case Direction::Left:
                 {
-                    mEntity->setVelocity(math::Vector2<float>(-mProperties.jumpMax.x +
-                        mEntity->getVelocity().x, -std::min(mProperties.jumpMax.y, mJumpPower.y)));
+                    mPhysicsCharacter->setVelocity(math::Vector2<float>(-mProperties.jumpMax.x +
+                        mPhysicsCharacter->getVelocity().x, -std::min(mProperties.jumpMax.y, mJumpPower.y)));
                     break;
                 }
-                case CharacterDirection::Right:
+                case Direction::Right:
                 {
-                    mEntity->setVelocity(math::Vector2<float>(mProperties.jumpMax.x +
-                        mEntity->getVelocity().x, -std::min(mProperties.jumpMax.y, mJumpPower.y)));
+                    mPhysicsCharacter->setVelocity(math::Vector2<float>(mProperties.jumpMax.x +
+                        mPhysicsCharacter->getVelocity().x, -std::min(mProperties.jumpMax.y, mJumpPower.y)));
                     break;
                 }
                 default:
@@ -86,19 +87,20 @@ namespace jp::game::engine
         }
     }
 
-    void Character::run(CharacterDirection direction)
+    void Character::run(Direction direction)
     {
         mDirection = direction;
-        if (canRun() && direction != CharacterDirection::Up)
+        if (canRun() && direction != Direction::Up)
         {
-            mEntity->setState(physics::CharacterState::Running);
-            float directionSign = direction == CharacterDirection::Left ? -1.f : 1.f;
-            if (math::sign(mEntity->getRunVelocity()) != directionSign)
+            mPhysicsCharacter->setState(physics::CharacterState::Running);
+            float directionSign = direction == Direction::Left ? -1.f : 1.f;
+            if (math::sign(mPhysicsCharacter->getRunVelocity()) != directionSign)
             {
-                mEntity->setVelocityX(mEntity->getVelocity().x + mEntity->getRunVelocity());
+                mPhysicsCharacter->setVelocityX(mPhysicsCharacter->getVelocity().x +
+                    mPhysicsCharacter->getRunVelocity());
             }
 
-            mEntity->setRunVelocity(directionSign * mProperties.runVelocity);
+            mPhysicsCharacter->setRunVelocity(directionSign * mProperties.runVelocity);
         }
     }
 
@@ -106,31 +108,33 @@ namespace jp::game::engine
     {
         if (canSquat())
         {
-            mEntity->setState(physics::CharacterState::Squatting);
+            mPhysicsCharacter->setState(physics::CharacterState::Squatting);
         }
     }
 
     void Character::stop()
     {
-        if (mEntity->getState() == physics::CharacterState::Running)
+        if (mPhysicsCharacter->getState() == physics::CharacterState::Running)
         {
-            mEntity->setState(physics::CharacterState::Stopping);
-            mEntity->setVelocity(math::Vector2<float>(mEntity->getVelocity().x + mEntity->getRunVelocity(), 0.f));
-            mEntity->setRunVelocity(0.f);
+            mPhysicsCharacter->setState(physics::CharacterState::Stopping);
+            mPhysicsCharacter->setVelocity(
+                math::Vector2<float>(mPhysicsCharacter->getVelocity().x +
+                    mPhysicsCharacter->getRunVelocity(), 0.f));
+            mPhysicsCharacter->setRunVelocity(0.f);
         }
     }
 
     const math::Rect<float>& Character::getRect() const
     {
-        return mEntity->getRect();
+        return mPhysicsCharacter->getRect();
     }
 
     math::Vector2<float> Character::getPosition() const
     {
-        return mEntity->getPosition();
+        return mPhysicsCharacter->getPosition();
     }
 
-    CharacterDirection Character::getDirection() const
+    Character::Direction Character::getDirection() const
     {
         return mDirection;
     }
@@ -140,7 +144,7 @@ namespace jp::game::engine
         return mJumpPower.y;
     }
 
-    void Character::setDirection(CharacterDirection direction)
+    void Character::setDirection(Direction direction)
     {
         mDirection = direction;
     }
@@ -150,7 +154,7 @@ namespace jp::game::engine
     {
         std::cout << "r: " << getRect() << std::endl;
         std::string state = "Standing";
-        switch(mEntity->getState())
+        switch(mPhysicsCharacter->getState())
         {
             case physics::CharacterState::Dying:
                 state = "Dying";
@@ -187,10 +191,63 @@ namespace jp::game::engine
                 break;
         }
         std::cout << "s: " << state << std::endl;
-        std::cout << "v: " << mEntity->getVelocity() << std::endl;
-        std::cout << "rv: " << mEntity->getRunVelocity() << std::endl;
-        std::cout << "a: " << mEntity->getAcceleration() << std::endl;
+        std::cout << "v: " << mPhysicsCharacter->getVelocity() << std::endl;
+        std::cout << "rv: " << mPhysicsCharacter->getRunVelocity() << std::endl;
+        std::cout << "a: " << mPhysicsCharacter->getAcceleration() << std::endl;
         std::cout << "d: " << (int)mDirection << std::endl;
-        std::cout << "uc: " << mEntity.use_count() << std::endl << std::endl;
+        std::cout << "uc: " << mPhysicsCharacter.use_count() << std::endl << std::endl;
+    }
+
+    void Bot::update(float dt)
+    {
+        Character::update(dt);
+        mTime -= dt;
+        switch (mState)
+        {
+        case State::Jumping:
+            if (mJumpPower.y / mProperties.jumpMax.y > mJumpPercent)
+            {
+                Character::jump();
+                mJumpPercent = 0.f;
+                mState = State::Ready;
+            }
+            break;
+        case State::Running:
+            if (mTime <= 0.f)
+            {
+                Character::stop();
+                mTime = 0.f;
+                mState = State::Ready;
+            }
+            break;
+        case State::Ready:
+        default:
+            break;
+        }
+    }
+
+    void Bot::jump(Direction direction, float percent)
+    {
+        if (mState != State::Ready)
+        {
+            return;
+        }
+
+        mDirection = direction;
+        mJumpPercent = percent;
+        mState = State::Jumping;
+        squat();
+    }
+
+    void Bot::run(Direction direction, float time)
+    {
+        if (mState != State::Ready)
+        {
+            return;
+        }
+
+        mTime = time;
+        mState = State::Running;
+        Character::run(direction);
     }
 }
