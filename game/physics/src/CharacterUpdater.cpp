@@ -5,7 +5,7 @@
 namespace jp::game::physics
 {
     CharacterUpdater::CharacterUpdater(const Properties& properties)
-        : mProperties(properties)
+        : mPhysicsProperties(properties)
     {}
 
     void CharacterUpdater::handlePlatformCollision(const Platform& platform)
@@ -51,7 +51,7 @@ namespace jp::game::physics
                         mUpdatedEntity.getRect().getRight()) + slope * intercept) * slope));
                 }
 
-                if (mProperties.gravity < 0.f)
+                if (mPhysicsProperties.gravity < 0.f)
                 {
                     mUpdatedEntity.setVelocityX(slope * mUpdatedEntity.getVelocity().y);
                 }
@@ -79,7 +79,7 @@ namespace jp::game::physics
                         mUpdatedEntity.getRect().getRight()) + slope * intercept) * slope));
                 }
 
-                if (mProperties.gravity > 0.f)
+                if (mPhysicsProperties.gravity > 0.f)
                 {
                     mUpdatedEntity.setVelocityX(slope * mUpdatedEntity.getVelocity().y);
                 }
@@ -133,10 +133,10 @@ namespace jp::game::physics
             updatedVelocity.x = 0.f;
         }
 
-        if (updatedVelocity.y >= mProperties.fallVelocity)
+        if (updatedVelocity.y >= mPhysicsProperties.fallVelocity)
         {
             mUpdatedEntity.setState(CharacterState::Falling);
-            updatedVelocity.y = mProperties.fallVelocity;
+            updatedVelocity.y = mPhysicsProperties.fallVelocity;
         }
 
         mUpdatedEntity.setAcceleration(updatedAcceleration); 
@@ -158,18 +158,18 @@ namespace jp::game::physics
     void CharacterUpdater::sideBounce()
     {
         mUpdatedEntity.setAccelerationX(-mUpdatedEntity.getAcceleration().x);
-        mUpdatedEntity.setVelocityX(-mEntity->getVelocity().x * mProperties.bounceFactor);
+        mUpdatedEntity.setVelocityX(-mEntity->getVelocity().x * mPhysicsProperties.bounceFactor);
     }
 
     void CharacterUpdater::topBounce()
     {
         mUpdatedEntity.setState(CharacterState::Flying);
-        mUpdatedEntity.setVelocityX(mEntity->getVelocity().x * mProperties.bounceFactor);
+        mUpdatedEntity.setVelocityX(mEntity->getVelocity().x * mPhysicsProperties.bounceFactor);
     }
 
     void CharacterUpdater::topBottomCollision(bool top, PlatformSurface platformSurface)
     {
-        bool landing = top ? mProperties.gravity < 0.f : mProperties.gravity > 0.f;
+        bool landing = top ? mPhysicsProperties.gravity < 0.f : mPhysicsProperties.gravity > 0.f;
         mUpdatedEntity.setVelocityY(0.f);
         if (landing)
         {
@@ -179,7 +179,8 @@ namespace jp::game::physics
                 mUpdatedEntity.setVelocityX(0.f);
                 break;
             case PlatformSurface::Slippery:
-                mUpdatedEntity.setAccelerationX(-math::sign(mUpdatedEntity.getVelocity().x) * mProperties.friction);
+                mUpdatedEntity.setAccelerationX(-math::sign(mUpdatedEntity.getVelocity().x) *
+                    mPhysicsProperties.friction);
                 break;
             case PlatformSurface::Sticky:
                 mUpdatedEntity.setVelocityX(0.f);
@@ -254,7 +255,7 @@ namespace jp::game::physics
     {
         //entityA + windV * factor + gravityA
         math::Vector2<float> resultantAcceleration = entity.getAcceleration() +
-            math::Vector2<float>(0.f, mProperties.gravity);
+            math::Vector2<float>(0.f, mPhysicsProperties.gravity);
         if (wind != nullptr)
         {
             resultantAcceleration += wind->getVelocity() * wind->getFactor();

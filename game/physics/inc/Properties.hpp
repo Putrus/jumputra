@@ -1,15 +1,9 @@
 #pragma once
 
-#include "../../math/inc/Vector2.hpp"
-
 namespace jp::game::physics
 {
     struct Properties
     {
-        Properties();
-        Properties(float bounce, float collision,
-            float fall, float friction, float gravity);
-
         float bounceFactor = 0.f;
         float checkCollisionDistance = 0.f;
         float fallVelocity = 0.f;

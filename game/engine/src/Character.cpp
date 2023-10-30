@@ -6,7 +6,7 @@
 namespace jp::game::engine
 {
     Character::Character(const std::shared_ptr<physics::Character>& physicsCharacter,
-        const CharacterProperties& properties)
+        const Properties& properties)
         : mPhysicsCharacter(physicsCharacter), mProperties(properties)
     {}
 

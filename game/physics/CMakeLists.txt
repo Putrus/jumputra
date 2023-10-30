@@ -14,7 +14,6 @@ set(SOURCE_FILES
     inc/Kinematics.hpp src/Kinematics.cpp
     inc/Physics.hpp src/Physics.cpp
     inc/Platform.hpp src/Platform.cpp
-    inc/Properties.hpp src/Properties.cpp
     inc/VerticalPlatform.hpp src/VerticalPlatform.cpp
     inc/Wind.hpp src/Wind.cpp
     inc/WindUpdater.hpp src/WindUpdater.cpp

@@ -41,6 +41,6 @@ namespace jp::game::physics
         std::shared_ptr<Character> mEntity;
         Character mUpdatedEntity;
 
-        const Properties& mProperties;
+        const Properties& mPhysicsProperties;
     };
 }

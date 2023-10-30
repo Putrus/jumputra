@@ -12,7 +12,6 @@ endif()
 set(SOURCE_FILES
     src/main.cpp
     inc/Character.hpp src/Character.cpp
-    inc/CharacterProperties.hpp src/CharacterProperties.cpp
     inc/Engine.hpp src/Engine.cpp
     inc/PlatformsManager.hpp src/PlatformsManager.cpp
     inc/PropertiesManager.hpp src/PropertiesManager.cpp

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "CharacterProperties.hpp"
-
 #include "../../physics/inc/Character.hpp"
 
 #include <memory>
@@ -17,8 +15,16 @@ namespace jp::game::engine
             Left,
             Right
         };
+
+        struct Properties
+        {
+            math::Vector2<float> jumpGain = math::Vector2<float>();
+            math::Vector2<float> jumpMax = math::Vector2<float>();
+            float runVelocity = 0.f;
+        };
+
         Character(const std::shared_ptr<physics::Character>& physicsCharacter,
-            const CharacterProperties& properties);
+            const Properties& properties);
         Character& operator=(const Character& other);
 
         virtual void update(float dt);
@@ -45,7 +51,7 @@ namespace jp::game::engine
         std::shared_ptr<physics::Character> mPhysicsCharacter;
         Direction mDirection = Direction::Up;
         math::Vector2<float> mJumpPower = math::Vector2<float>();
-        const CharacterProperties& mProperties = CharacterProperties();
+        const Properties& mProperties = Properties();
     };
 
     class Bot : public Character

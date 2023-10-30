@@ -69,7 +69,7 @@ namespace jp::game::view
                 {
                     auto& character = mCharacters[i];
                     int dir = std::rand() % 2 + 1;
-                    character.setDirection((engine::CharacterDirection)dir);
+                    character.setDirection((engine::Character::Direction)dir);
                     int action = std::rand() % 1000 + 0;
 
                     if (i % 2 == 0)
@@ -84,11 +84,11 @@ namespace jp::game::view
                         }
                         else if (action >= 25)
                         {
-                            character.run(engine::CharacterDirection::Left);
+                            character.run(engine::Character::Direction::Left);
                         }
                         else
                         {
-                            character.run(engine::CharacterDirection::Right);
+                            character.run(engine::Character::Direction::Right);
                         }
                     }
                     else
@@ -103,11 +103,11 @@ namespace jp::game::view
                         }
                         else if (action >= 2)
                         {
-                            character.run(engine::CharacterDirection::Left);
+                            character.run(engine::Character::Direction::Left);
                         }
                         else
                         {
-                            character.run(engine::CharacterDirection::Right);
+                            character.run(engine::Character::Direction::Right);
                         }
                     }
                 }
@@ -246,11 +246,11 @@ namespace jp::game::view
             }
 
             if ((mEvent.key.code == left &&
-                character.getDirection() == engine::CharacterDirection::Left) ||
+                character.getDirection() == engine::Character::Direction::Left) ||
                 (mEvent.key.code == right &&
-                    character.getDirection() == engine::CharacterDirection::Right))
+                    character.getDirection() == engine::Character::Direction::Right))
             {
-                character.setDirection(engine::CharacterDirection::Up);
+                character.setDirection(engine::Character::Direction::Up);
                 character.stop();
             }
         }
@@ -264,12 +264,12 @@ namespace jp::game::view
 
             if (mEvent.key.code == left)
             {
-                character.run(engine::CharacterDirection::Left);
+                character.run(engine::Character::Direction::Left);
             }
 
             if (mEvent.key.code == right)
             {
-                character.run(engine::CharacterDirection::Right);
+                character.run(engine::Character::Direction::Right);
             }
         }
     }

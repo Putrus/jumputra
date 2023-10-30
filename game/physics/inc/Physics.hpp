@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CharacterUpdater.hpp"
-#include "Properties.hpp"
 #include "Platform.hpp"
 #include "WindUpdater.hpp"
 

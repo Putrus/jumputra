@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../engine/inc/CharacterProperties.hpp"
-#include "../../physics/inc/Properties.hpp"
+#include "../inc/Character.hpp"
+#include "../../physics/inc/Physics.hpp"
 
 namespace jp::game::engine
 {
@@ -10,7 +10,7 @@ namespace jp::game::engine
         virtual void load() = 0;
         virtual void save() = 0;
 
-        engine::CharacterProperties characterProperties;
+        engine::Character::Properties characterProperties;
         physics::Properties physicsProperties;
     };
 
