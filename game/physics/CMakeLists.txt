@@ -7,12 +7,14 @@ project(jp_game_physics
    )
 
 set(HEADERS
+   inc/Body.hpp
    inc/Entity.hpp
    inc/Physics.hpp
    inc/Properties.hpp
    inc/Segment.hpp
    )
 set(SOURCES
+   src/Body.cpp
    src/Entity.cpp
    src/Physics.cpp
    src/Segment.cpp
