@@ -2,7 +2,7 @@
 
 #include "../inc/StateMenu.hpp"
 
-namespace jp::game::states
+namespace jp::states
 {
    StateMenu::StateMenu(StateStack* stack) : State(stack) {}
 

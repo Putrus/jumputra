@@ -11,6 +11,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(cmake/UpdateSubmodules.cmake)
 
-add_subdirectory(game)
-add_subdirectory(math)
+add_subdirectory(jp)
 add_subdirectory(ut)

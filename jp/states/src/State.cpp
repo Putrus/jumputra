@@ -1,7 +1,7 @@
 #include "../inc/State.hpp"
 #include "../inc/StateStack.hpp"
 
-namespace jp::game::states
+namespace jp::states
 {
    State::State(StateStack* stack) : mStack(stack)
    {

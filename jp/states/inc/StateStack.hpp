@@ -7,7 +7,7 @@
 #include <memory>
 #include <vector>
 
-namespace jp::game::states
+namespace jp::states
 {
    class StateStack : public sf::Drawable, public Eventable, public Updatable
    {

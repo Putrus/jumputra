@@ -4,7 +4,7 @@
 
 #include "../../menu/inc/SelectableItem.hpp"
 
-namespace jp::game::states
+namespace jp::states
 {
    class StateMenu final : public State
    {

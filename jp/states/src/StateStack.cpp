@@ -1,6 +1,6 @@
 #include "../inc/StateStack.hpp"
 
-namespace jp::game::states
+namespace jp::states
 {
    StateStack::StateStack() {}
 

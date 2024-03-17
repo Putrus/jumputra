@@ -5,7 +5,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace jp::game::states
+namespace jp::states
 {
    class StateStack;
 
