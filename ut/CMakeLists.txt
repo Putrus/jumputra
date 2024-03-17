@@ -7,4 +7,5 @@ project(jp_ut
 include(CTest)
 
 add_subdirectory(external)
+add_subdirectory(game)
 add_subdirectory(math)

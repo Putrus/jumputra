@@ -2,8 +2,7 @@
 
 namespace jp::game::physics
 {
-   Entity::Entity()
-   {}
+   Entity::Entity() {}
 
    Entity::Entity(const math::Rect<float>& rect,
       const math::Vector2<float>& acceleration/* = 0.f*/,
