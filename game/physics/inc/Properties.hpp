@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../math/inc/Vector2.hpp"
+#include "../../../math/inc/Vector2.hpp"
 
 namespace jp::game::physics
 {
