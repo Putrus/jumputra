@@ -12,12 +12,14 @@ set(HEADERS
    inc/Physics.hpp
    inc/Properties.hpp
    inc/Segment.hpp
+   inc/Wind.hpp
    )
 set(SOURCES
    src/Body.cpp
    src/Entity.cpp
    src/Physics.cpp
    src/Segment.cpp
+   src/Wind.cpp
    )
 
 add_library(jp_game_physics STATIC ${HEADERS} ${SOURCES})
