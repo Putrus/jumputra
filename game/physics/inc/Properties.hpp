@@ -4,7 +4,7 @@
 
 namespace jp::game::physics
 {
-   struct PhysicsProperties
+   struct Properties
    {
       float bounceFactor = 0.f;
       float checkCollisionDistance = 0.f;

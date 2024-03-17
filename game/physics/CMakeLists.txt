@@ -8,10 +8,12 @@ project(jp_game_physics
 
 set(HEADERS
    inc/Physics.hpp
-   inc/PhysicsProperties.hpp
+   inc/Properties.hpp
+   inc/Segment.hpp
    )
 set(SOURCES
    src/Physics.cpp
+   src/Segment.cpp
    )
 
 add_library(jp_game_physics STATIC ${HEADERS} ${SOURCES})
