@@ -11,6 +11,7 @@ add_subdirectory(external)
 set(HEADERS
    inc/Context.hpp
    inc/Eventable.hpp
+   inc/Game.hpp
    inc/Updatable.hpp
    menu/inc/SelectableItem.hpp
    menu/src/SelectableItem.cpp
@@ -23,6 +24,7 @@ set(HEADERS
 
 set(SOURCES
    src/Context.cpp
+   src/Game.cpp
    src/main.cpp
    resources/src/Resources.cpp
    states/src/State.cpp

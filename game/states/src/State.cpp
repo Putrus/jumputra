@@ -16,8 +16,8 @@ namespace jp::game::states
       mStack->popState();
    }
 
-   void State::pushState(StateName state)
+   void State::pushState(StateID id)
    {
-      mStack->pushState(state);
+      mStack->pushState(id);
    }
 }

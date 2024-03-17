@@ -13,14 +13,14 @@ namespace jp::game::states
    {
    public:
       StateStack();
-      StateStack(StateName startState);
+      StateStack(StateID id);
 
       void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
       void event(const sf::Event& event) override;
       void update(float dt) override;
 
       void popState();
-      void pushState(StateName state);
+      void pushState(StateID id);
 
    private:
       void applyPendingActions();
@@ -32,7 +32,7 @@ namespace jp::game::states
             Pop = 0,
             Push
          } type;
-         StateName stateName = StateName::None;
+         StateID stateId = StateID::None;
       };
 
       std::vector<PendingAction> mPendingActions;

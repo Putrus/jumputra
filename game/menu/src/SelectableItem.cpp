@@ -6,7 +6,7 @@ namespace jp::game::menu
       const std::string& text, const sf::Font& font,
       const sf::Color& deselectColor/* = sf::Color::White*/,
       const sf::Color& selectColor/* = sf::Color::Yellow*/)
-      : mText(font, text)
+      : mText(font, text), mDeselectColor(deselectColor), mSelectColor(selectColor)
    {  
       mText.setPosition(position);
       mText.setFillColor(deselectColor);

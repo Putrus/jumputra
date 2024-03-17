@@ -9,9 +9,10 @@ namespace jp::game::states
 {
    class StateStack;
 
-   enum class StateName : int
+   enum class StateID : int
    {
-      None = 0
+      None = 0,
+      Menu
    };
 
    class State : public sf::Drawable, public Eventable, public Updatable
@@ -21,7 +22,7 @@ namespace jp::game::states
 
    protected:
       void popState();
-      void pushState(StateName name);
+      void pushState(StateID id);
 
    private:
       StateStack* mStack;

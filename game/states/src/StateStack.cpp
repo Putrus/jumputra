@@ -1,12 +1,14 @@
+#include "../inc/StateMenu.hpp"
 #include "../inc/StateStack.hpp"
+
 
 namespace jp::game::states
 {
    StateStack::StateStack() {}
 
-   StateStack::StateStack(StateName startState)
+   StateStack::StateStack(StateID id)
    {
-      pushState(startState);
+      pushState(id);
    }
 
    void StateStack::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
@@ -40,9 +42,9 @@ namespace jp::game::states
       mPendingActions.push_back({ PendingAction::Type::Pop });
    }
 
-   void StateStack::pushState(StateName state)
+   void StateStack::pushState(StateID id)
    {
-      mPendingActions.push_back({ PendingAction::Type::Push, state });
+      mPendingActions.push_back({ PendingAction::Type::Push, id });
    }
 
    void StateStack::applyPendingActions()
@@ -55,8 +57,11 @@ namespace jp::game::states
             mStack.pop_back();
             break;
          case PendingAction::Type::Push:
-            switch (pendingAction.stateName)
+            switch (pendingAction.stateId)
             {
+            case StateID::Menu:
+               mStack.push_back(std::make_shared<StateMenu>(this));
+               break;
             default:
                throw std::runtime_error("StateStack::applyPendingActions - Wrong stack id");
                break;

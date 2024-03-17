@@ -1,7 +1,18 @@
+#include "../inc/Game.hpp"
+
 #include <iostream>
 
 int main()
 {
-   std::cout << "Jumputra!" << std::endl;
+   try
+   {
+      jp::game::Game game;
+   game.run();   
+   }
+   catch(const std::exception& e)
+   {
+      std::cerr << e.what() << '\n';
+   }
+   
    return 0;
 }
