@@ -1,0 +1,23 @@
+#include "../inc/State.hpp"
+#include "../inc/StateStack.hpp"
+
+namespace jp::game::states
+{
+   State::State(StateStack* stack) : mStack(stack)
+   {
+      if (mStack == nullptr)
+      {
+         throw std::runtime_error("State::State - Stack is nullptr");
+      }
+   }
+
+   void State::popState()
+   {
+      mStack->popState();
+   }
+
+   void State::pushState(StateName state)
+   {
+      mStack->pushState(state);
+   }
+}
