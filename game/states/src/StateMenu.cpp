@@ -39,6 +39,9 @@ namespace jp::game::states
          case sf::Keyboard::Key::Enter:
             performSelected();
             break;
+         case sf::Keyboard::Key::Escape:
+            Context::get()->window.close();
+            break;
          default:
             break;
          }

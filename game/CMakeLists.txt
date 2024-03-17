@@ -51,3 +51,11 @@ target_link_directories(jp_game PUBLIC ${SFML_LIB_DIR})
 target_link_libraries(jp_game PRIVATE jp_game_physics sfml-graphics sfml-window sfml-audio sfml-system)
 
 file(COPY data DESTINATION "${CMAKE_BINARY_DIR}/bin")
+
+set(CONFIGURATION "x86")
+if(CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
+   set(CONFIGURATION "x64")
+endif()
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/external/SFML/extlibs/bin/${CONFIGURATION}/openal32.dll"
+   DESTINATION "${CMAKE_BINARY_DIR}/bin"
+   )
