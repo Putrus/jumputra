@@ -2,6 +2,8 @@
 
 #include "../inc/State.hpp"
 
+#include "../../menu/inc/SelectableItem.hpp"
+
 namespace jp::game::states
 {
    class StateMenu final : public State
@@ -14,7 +16,10 @@ namespace jp::game::states
       void update(float dt) override;
 
    private:
-      void updateSelected(int direction);
+      void changeSelected(int direction);
       void performSelected();
+
+      int mSelected = 0;
+      std::vector<std::unique_ptr<menu::SelectableItem>> mItems;
    };
 }

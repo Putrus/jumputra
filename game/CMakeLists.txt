@@ -11,9 +11,12 @@ add_subdirectory(external)
 set(HEADERS
    inc/Eventable.hpp
    inc/Updatable.hpp
+   menu/inc/SelectableItem.hpp
+   menu/src/SelectableItem.cpp
    resources/inc/ResourceManager.hpp
    resources/inc/Resources.hpp
    states/inc/State.hpp
+   states/inc/StateMenu.hpp
    states/inc/StateStack.hpp
    )
 
@@ -21,6 +24,7 @@ set(SOURCES
    src/main.cpp
    resources/src/Resources.cpp
    states/src/State.cpp
+   states/src/StateMenu.cpp
    states/src/StateStack.cpp
    )
 

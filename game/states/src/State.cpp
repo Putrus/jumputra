@@ -7,7 +7,7 @@ namespace jp::game::states
    {
       if (mStack == nullptr)
       {
-         throw std::runtime_error("State::State Stack is nullptr");
+         throw std::runtime_error("State::State - Stack is nullptr");
       }
    }
 
