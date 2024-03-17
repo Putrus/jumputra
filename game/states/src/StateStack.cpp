@@ -4,7 +4,7 @@ namespace jp::game::states
 {
    StateStack::StateStack() {}
 
-   StateStack::StateStack(StateName startState)
+   StateStack::StateStack(StateID startState)
    {
       pushState(startState);
    }
@@ -40,9 +40,9 @@ namespace jp::game::states
       mPendingActions.push_back({ PendingAction::Type::Pop });
    }
 
-   void StateStack::pushState(StateName state)
+   void StateStack::pushState(StateID id)
    {
-      mPendingActions.push_back({ PendingAction::Type::Push, state });
+      mPendingActions.push_back({ PendingAction::Type::Push, id });
    }
 
    void StateStack::applyPendingActions()
@@ -55,15 +55,15 @@ namespace jp::game::states
             mStack.pop_back();
             break;
          case PendingAction::Type::Push:
-            switch (pendingAction.stateName)
+            switch (pendingAction.StateID)
             {
             default:
-               throw std::runtime_error("StateStack::applyPendingActions Wrong stack id");
+               throw std::runtime_error("StateStack::applyPendingActions - Wrong stack id");
                break;
             }
             break;
          default:
-            throw std::runtime_error("StateStack::applyPendingActions Wrong pending action");
+            throw std::runtime_error("StateStack::applyPendingActions - Wrong pending action");
             break;
          }
       }
