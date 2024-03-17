@@ -1,3 +1,4 @@
+#include "../inc/StateGame.hpp"
 #include "../inc/StateMenu.hpp"
 #include "../inc/StateStack.hpp"
 
@@ -59,6 +60,9 @@ namespace jp::game::states
          case PendingAction::Type::Push:
             switch (pendingAction.stateId)
             {
+            case StateID::Game:
+               mStack.push_back(std::make_shared<StateGame>(this));
+               break;
             case StateID::Menu:
                mStack.push_back(std::make_shared<StateMenu>(this));
                break;

@@ -12,6 +12,7 @@ namespace jp::game::states
    enum class StateID : int
    {
       None = 0,
+      Game,
       Menu
    };
 

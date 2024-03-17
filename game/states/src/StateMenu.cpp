@@ -6,7 +6,7 @@ namespace jp::game::states
 {
    StateMenu::StateMenu(StateStack* stack) : State(stack)
    {
-      mItems.push_back(std::make_unique<menu::SelectableItem>(sf::Vector2f(160.f, 64.f), "Start",
+      mItems.push_back(std::make_unique<menu::SelectableItem>(sf::Vector2f(160.f, 64.f), "Play",
          Context::get()->resources.getFont(res::FontID::Alkhemikal)));
       
       mItems.push_back(std::make_unique<menu::SelectableItem>(sf::Vector2f(160.f, 128.f), "Quit",
@@ -65,6 +65,11 @@ namespace jp::game::states
 
    void StateMenu::performSelected()
    {
+      if (mItems[mSelected]->getTextString() == "Play")
+      {
+         pushState(StateID::Game);
+      }
+
       if (mItems[mSelected]->getTextString() == "Quit")
       {
          Context::get()->window.close();
