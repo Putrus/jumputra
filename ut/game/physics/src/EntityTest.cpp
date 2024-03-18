@@ -24,4 +24,12 @@ namespace jp::ut::game::physics
       EXPECT_EQ(math::Vector2<float>(5.f, 6.f), entity.getAcceleration());
       EXPECT_EQ(math::Vector2<float>(7.f, 8.f), entity.getVelocity());
    }
+
+   TEST(Entity, SetPosition)
+   {
+      Entity entity;
+      entity.setPosition(math::Vector2<float>(1.f, 3.f));
+      EXPECT_EQ(math::Vector2<float>(1.f, 3.f), entity.getPosition());
+      EXPECT_EQ(math::Rect<float>(1.f, 3.f, 0.f, 0.f), entity.getRect());
+   }
 }
