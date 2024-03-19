@@ -22,6 +22,37 @@ namespace jp::game::physics
       return os;
    }
 
+   std::ostream& operator<<(std::ostream& os, SegmentCollision collision)
+   {
+      switch(collision)
+      {
+         case SegmentCollision::Attic:
+         os << "Attic";
+         break;
+         case SegmentCollision::Bottom:
+         os << "Bottom";
+         break;
+         case SegmentCollision::Left:
+         os << "Left";
+         break;
+         case SegmentCollision::No:
+         os << "No";
+         break;
+         case SegmentCollision::Right:
+         os << "Right";
+         break;
+         case SegmentCollision::Roof:
+         os << "Roof";
+         break;
+         case SegmentCollision::Top:
+         os << "Top";
+         default:
+         os << "Unknown";
+         break;
+      }
+      return os;
+   }
+
    Segment::Segment(float aX, float aY, float bX, float bY,
       SegmentSurface surface/* = SegmentSurface::Ordinary*/)
       : math::Segment<float>(aX, aY, bX, bY), mSurface(surface) {}
