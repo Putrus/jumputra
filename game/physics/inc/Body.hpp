@@ -6,7 +6,7 @@
 
 namespace jp::game::physics
 {
-   enum class BodyState : unsigned int
+   enum class BodyState : int
    {
       Dying = 0,
       Falling,

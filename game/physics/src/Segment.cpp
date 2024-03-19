@@ -22,22 +22,14 @@ namespace jp::game::physics
       return os;
    }
 
-   Segment::Segment(float aX, float aY, float bX, float bY)
-      : math::Segment<float>(aX, aY, bX, bY)
-   {
-      if (aX > aY)
-      {
-         swapPoints();
-      }
-      else if (bX > bY)
-      {
-         swapPoints();
-      }
-   }
-      
-   Segment::Segment(const math::Vector2<float>& a, const math::Vector2<float>& b)
-      : Segment(a.x, a.y, b.x, b.y) {}
+   Segment::Segment(float aX, float aY, float bX, float bY,
+      SegmentSurface surface/* = SegmentSurface::Ordinary*/)
+      : math::Segment<float>(aX, aY, bX, bY), mSurface(surface) {}
 
+   Segment::Segment(const math::Vector2<float>& a, const math::Vector2<float>& b,
+      SegmentSurface surface/* = SegmentSurface::Ordinary*/)
+      : math::Segment<float>(a, b), mSurface(surface) {}
+      
    SegmentSurface Segment::getSurface() const
    {
       return mSurface;
