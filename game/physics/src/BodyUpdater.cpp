@@ -39,7 +39,40 @@ namespace jp::game::physics
       const math::Rect<float>& oldRect = body.getRect();
       for (const auto& segment : segments)
       {
-         
+         SegmentCollision segmentCollision = segment->checkCollision(oldRect, newRect);
+         switch (segmentCollision)
+         {
+            case SegmentCollision::No:
+            break;
+            case SegmentCollision::Left:
+            {
+               newRect.left = segment->b.x;
+               newVelocity.x *= -properties.bounceFactor;
+               break;
+            }
+            case SegmentCollision::Right:
+            {
+               newRect.left = segment->a.x - newRect.width;
+               newVelocity.x *= -properties.bounceFactor;
+               break;
+            }
+            case SegmentCollision::Top:
+            {
+               newRect.top = segment->a.y;
+               newVelocity.x *= properties.bounceFactor;
+               newVelocity.y = 0.f;  
+               break;
+            }
+            case SegmentCollision::Bottom:
+            {
+               newRect.top = segment->a.y - newRect.height;
+               newVelocity.x = 0.f;
+               newState = BodyState::Standing;
+               break;
+            }
+            default:
+            break;
+         }
       }
 
       body.setVelocity(newVelocity);
