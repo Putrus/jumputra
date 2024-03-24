@@ -1,0 +1,13 @@
+{
+   "winds": [
+   {
+      "acceleration": 100.0,
+      "factor": 0.4,
+      "max": 300.0,
+      "position": {
+         "start": 3960.0,
+         "end": 6479
+      }
+   }
+   ]
+}

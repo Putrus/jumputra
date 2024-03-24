@@ -43,6 +43,9 @@ set_target_properties(jp_game PROPERTIES
    OUTPUT_NAME "jumputra"
    )
 
+set(JSON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/nlohmann/single_include)
+target_include_directories(jp_game PUBLIC ${JSON_INCLUDE_DIR})
+
 set(SFML_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/SFML/include)
 target_include_directories(jp_game PUBLIC ${SFML_INCLUDE_DIR})
 

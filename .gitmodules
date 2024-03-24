@@ -4,3 +4,6 @@
 [submodule "game/external/SFML"]
    path = game/external/SFML
    url = https://github.com/SFML/SFML.git
+[submodule "game/external/nlohmann"]
+   path = game/external/nlohmann
+   url = https://github.com/nlohmann/json
