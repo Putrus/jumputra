@@ -16,6 +16,7 @@ set(HEADERS
    inc/Game.hpp
    inc/Updatable.hpp
    json/inc/PropertiesLoader.hpp
+   json/inc/SegmentsLoader.hpp
    menu/inc/SelectableItem.hpp
    menu/src/SelectableItem.cpp
    resources/inc/ResourceManager.hpp
@@ -31,6 +32,7 @@ set(SOURCES
    src/Game.cpp
    src/main.cpp
    json/src/PropertiesLoader.cpp
+   json/src/SegmentsLoader.cpp
    resources/src/Resources.cpp
    states/src/State.cpp
    states/src/StateGame.cpp

@@ -88,6 +88,9 @@
       "numbers": "cpp",
       "semaphore": "cpp",
       "cinttypes": "cpp",
-      "regex": "cpp"
+      "regex": "cpp",
+      "bitset": "cpp",
+      "ranges": "cpp",
+      "valarray": "cpp"
    }
 }
