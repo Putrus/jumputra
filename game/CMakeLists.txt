@@ -17,6 +17,7 @@ set(HEADERS
    inc/Updatable.hpp
    json/inc/PropertiesLoader.hpp
    json/inc/SegmentsLoader.hpp
+   json/inc/WindsLoader.hpp
    menu/inc/SelectableItem.hpp
    menu/src/SelectableItem.cpp
    resources/inc/ResourceManager.hpp
@@ -33,6 +34,7 @@ set(SOURCES
    src/main.cpp
    json/src/PropertiesLoader.cpp
    json/src/SegmentsLoader.cpp
+   json/src/WindsLoader.cpp
    resources/src/Resources.cpp
    states/src/State.cpp
    states/src/StateGame.cpp

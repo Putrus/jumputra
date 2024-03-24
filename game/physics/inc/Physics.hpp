@@ -12,6 +12,8 @@ namespace jp::game::physics
    {
    public:
       Physics(const Properties& properties);
+      Physics(const Properties& properties, std::vector<std::shared_ptr<Body>>&& bodies,
+         std::vector<std::shared_ptr<Segment>>&& segments, std::vector<std::shared_ptr<Wind>>&& winds);
 
       void update(float dt) override;
 

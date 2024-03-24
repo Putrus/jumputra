@@ -6,7 +6,7 @@
 
 namespace jp::game::json
 {
-   Properties PropertiesLoader::loadProperties(const std::string& filename)
+   Properties PropertiesLoader::loadProperties(const std::string& filename) const
    {
       Properties properties;
 

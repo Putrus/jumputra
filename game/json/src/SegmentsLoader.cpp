@@ -10,7 +10,7 @@
 
 namespace jp::game::json
 {
-   std::vector<std::shared_ptr<physics::Segment>> SegmentsLoader::loadSegments(const std::string& filename)
+   std::vector<std::shared_ptr<physics::Segment>> SegmentsLoader::loadSegments(const std::string& filename) const
    {
       std::vector<std::shared_ptr<physics::Segment>> segments;
 
@@ -82,7 +82,7 @@ namespace jp::game::json
    }
 
    std::shared_ptr<physics::Segment> SegmentsLoader::createSegment(const math::Vector2<float>& a,
-        const math::Vector2<float>& b, physics::SegmentSurface surface)
+        const math::Vector2<float>& b, physics::SegmentSurface surface) const
    {
       math::Segment<float> segment(a, b);
       if (segment.isVertical())

@@ -4,6 +4,10 @@ namespace jp::game::physics
 {
    Physics::Physics(const Properties& properties) : mProperties(properties) {}
 
+   Physics::Physics(const Properties& properties, std::vector<std::shared_ptr<Body>>&& bodies,
+      std::vector<std::shared_ptr<Segment>>&& segments, std::vector<std::shared_ptr<Wind>>&& winds)
+      : mProperties(properties), mBodies(std::move(bodies)), mSegments(std::move(segments)), mWinds(std::move(winds)) {}
+
    void Physics::update(float dt)
    {
       updateWinds(dt);
