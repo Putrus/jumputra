@@ -58,6 +58,6 @@ namespace jp::game::physics
 
    bool HorizontalSegment::isCollision(math::Vector2<float> a, math::Vector2<float> b) const
    {
-      return a.x >= a.x && a.x <= b.x && a.y >= a.y && a.y <= b.y;
+      return a.x >= this->a.x && a.x <= this->b.x && this->a.y >= a.y && this->a.y <= b.y;
    }
 }

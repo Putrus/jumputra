@@ -59,13 +59,13 @@ namespace jp::game::physics
       math::Vector2<float> b, float slope, float intercept) const
    {
       float commonX = (a.y - intercept) / slope;
-      return commonX >= a.x && commonX <= b.x && commonX >= a.x && commonX <= b.x;
+      return commonX >= a.x && commonX <= b.x && commonX >= this->a.x && commonX <= this->b.x;
    }
 
    bool DiagonalSegment::isVerticalCollision(math::Vector2<float> a,
       math::Vector2<float> b, float slope, float intercept) const
    {
       float commonY = a.x * slope + intercept;
-      return commonY >= a.y && commonY <= b.y && commonY >= std::min(a.y, b.y) && commonY <= std::max(a.y, b.y);
+      return commonY >= a.y && commonY <= b.y && commonY >= std::min(this->a.y, this->b.y) && commonY <= std::max(this->a.y, this->b.y);
    }
 }
