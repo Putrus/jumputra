@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../json/inc/PropertiesLoader.hpp"
 #include "../logic/inc/Logic.hpp"
 #include "../states/inc/StateStack.hpp"
 
@@ -16,6 +17,7 @@ namespace jp::game
       void update(float dt) override;
       
       Properties mProperties;
+      json::PropertiesLoader mPropertiesLoader;
 
       states::StateStack mStateStack;
    };

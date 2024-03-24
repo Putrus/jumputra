@@ -25,9 +25,9 @@ namespace jp::game::physics
       
       //flying is default state
       BodyState newState = BodyState::Flying;
-      if (newVelocity.y >= properties.fallVelocity)
+      if (newVelocity.y >= properties.fallSpeed)
       {
-         newVelocity.y = properties.fallVelocity;
+         newVelocity.y = properties.fallSpeed;
          newState = BodyState::Falling;
       }
 

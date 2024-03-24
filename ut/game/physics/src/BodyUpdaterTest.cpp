@@ -20,7 +20,7 @@ namespace jp::ut::game::physics
       mUpdater.update(1.f, mBody, mProperties, mSegments, mWinds);
 
       EXPECT_EQ(math::Vector2<float>(-100.f, 150.f), mBody.getPosition());
-      EXPECT_EQ(math::Vector2<float>(0.f, mProperties.fallVelocity), mBody.getVelocity());
+      EXPECT_EQ(math::Vector2<float>(0.f, mProperties.fallSpeed), mBody.getVelocity());
       EXPECT_EQ(BodyState::Falling, mBody.getState());
    }
 

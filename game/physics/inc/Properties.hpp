@@ -8,7 +8,7 @@ namespace jp::game::physics
    {
       float bounceFactor = 0.f;
       float checkCollisionDistance = 0.f;
-      float fallVelocity = 0.f;
+      float fallSpeed = 0.f;
       float slipperyFriction = 0.f;
       math::Vector2<float> gravity = 0.f;
    };

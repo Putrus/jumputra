@@ -13,7 +13,7 @@ namespace jp::ut::game::physics
          {
             mProperties.bounceFactor = 0.5f;
             mProperties.checkCollisionDistance = 600.f;
-            mProperties.fallVelocity = 500.f;
+            mProperties.fallSpeed = 500.f;
             mProperties.slipperyFriction = 200.f;
             mProperties.gravity = math::Vector2<float>(0.f, 800.f);
             mBody.setRect(math::Rect<float>(0.f, 0.f, 24.f, 24.f));

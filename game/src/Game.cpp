@@ -5,8 +5,7 @@ namespace jp::game
 {
    Game::Game() : mStateStack(states::StateID::Menu), logic::Logic(mProperties)
    {
-      //TODO
-      mProperties.logic.secondsPerFrame = 1.f / 60.f;
+      mProperties = mPropertiesLoader.loadProperties("data/jsons/properties.json");
    }
 
    void Game::draw() const
