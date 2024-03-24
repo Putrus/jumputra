@@ -33,3 +33,5 @@ set(SOURCES
    )
 
 add_library(jp_game_physics STATIC ${HEADERS} ${SOURCES})
+
+target_link_libraries(jp_game_physics PRIVATE jp_math)

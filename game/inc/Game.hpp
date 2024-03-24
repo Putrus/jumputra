@@ -1,21 +1,22 @@
 #pragma once
 
+#include "../logic/inc/Logic.hpp"
 #include "../states/inc/StateStack.hpp"
 
 namespace jp::game
 {
-   class Game
+   class Game : public logic::Logic
    {
    public:
       Game();
 
-      void run();
-
    private:
-      void draw();
-      void event();
-      void update();
+      void draw() const override;
+      void event() override;
+      void update(float dt) override;
       
+      Properties mProperties;
+
       states::StateStack mStateStack;
    };
 }

@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.6..3.28)
+
+project(jp_game_logic
+   VERSION 0.0.1
+   LANGUAGES CXX
+   DESCRIPTION "Game logic project"
+   )
+
+set(HEADERS
+   inc/Character.hpp
+   inc/Logic.hpp
+   inc/Properties.hpp
+   )
+set(SOURCES
+   src/Character.cpp
+   src/Logic.cpp
+   )
+
+add_library(jp_game_logic STATIC ${HEADERS} ${SOURCES})
+
+target_link_libraries(jp_game_logic PRIVATE jp_game_physics)

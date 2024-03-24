@@ -42,6 +42,9 @@ namespace jp::game::physics
 
    Body::Body() {}
 
+   Body::Body(const math::Vector2<float>& position, const math::Vector2<float>& size)
+      : Entity(math::Rect<float>(position, size)) {}
+
    Body::Body(const math::Rect<float>& rect) : Entity(rect) {}
 
    BodyState Body::getState() const

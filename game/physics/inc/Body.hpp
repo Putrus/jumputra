@@ -26,6 +26,7 @@ namespace jp::game::physics
    {
    public:
       Body();
+      Body(const math::Vector2<float>& position, const math::Vector2<float>& size);
       Body(const math::Rect<float>& rect);
 
       BodyState getState() const;

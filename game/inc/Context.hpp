@@ -16,11 +16,9 @@ namespace jp::game
 
       sf::RenderWindow window;
       res::Resources resources;
-      sf::Time timePerFrame;
 
    protected:
-      Context(const sf::VideoMode videoMode, const std::string& windowName,
-         const sf::Time& timePerFrame);
+      Context(const sf::VideoMode videoMode, const std::string& windowName);
 
       static Context* context;
    };

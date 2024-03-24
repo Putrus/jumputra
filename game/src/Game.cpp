@@ -3,28 +3,13 @@
 
 namespace jp::game
 {
-   Game::Game() : mStateStack(states::StateID::Menu)
+   Game::Game() : mStateStack(states::StateID::Menu), logic::Logic(mProperties)
    {
+      //TODO
+      mProperties.logic.secondsPerFrame = 1.f / 60.f;
    }
 
-   void Game::run()
-   {
-      sf::Clock clock;
-      sf::Time time = sf::Time::Zero;
-      while (Context::get()->window.isOpen())
-      {
-         event();
-         time += clock.restart();
-         while (time >= Context::get()->timePerFrame)
-         {
-            time -= Context::get()->timePerFrame;
-            update();
-         }
-         draw();
-      }
-   }
-
-   void Game::draw()
+   void Game::draw() const
    {
       Context::get()->window.clear();
       Context::get()->window.draw(mStateStack);
@@ -45,8 +30,8 @@ namespace jp::game
       }
    }
 
-   void Game::update()
+   void Game::update(float dt)
    {
-      mStateStack.update(16.f);
+      mStateStack.update(dt);
    }
 }

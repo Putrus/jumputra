@@ -16,9 +16,7 @@ namespace jp::ut::game::physics
             mProperties.fallVelocity = 500.f;
             mProperties.slipperyFriction = 200.f;
             mProperties.gravity = math::Vector2<float>(0.f, 800.f);
-            mProperties.bodySize = math::Vector2<float>(24.f, 24.f);
-            mBody.setRect(math::Rect<float>(0.f, 0.f,
-               mProperties.bodySize.x, mProperties.bodySize.y));
+            mBody.setRect(math::Rect<float>(0.f, 0.f, 24.f, 24.f));
          }
 
          void SetUp() override {}

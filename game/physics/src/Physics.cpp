@@ -2,6 +2,8 @@
 
 namespace jp::game::physics
 {
+   Physics::Physics(const Properties& properties) : mProperties(properties) {}
+
    void Physics::update(float dt)
    {
       updateWinds(dt);

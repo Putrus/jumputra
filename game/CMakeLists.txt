@@ -7,6 +7,7 @@ DESCRIPTION "Jumputra game"
 )
 
 add_subdirectory(external)
+add_subdirectory(logic)
 add_subdirectory(physics)
 
 set(HEADERS
@@ -48,7 +49,7 @@ target_include_directories(jp_game PUBLIC ${SFML_INCLUDE_DIR})
 set(SFML_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/SFML/lib)
 target_link_directories(jp_game PUBLIC ${SFML_LIB_DIR})
 
-target_link_libraries(jp_game PRIVATE jp_game_physics sfml-graphics sfml-window sfml-audio sfml-system)
+target_link_libraries(jp_game PRIVATE jp_game_logic sfml-graphics sfml-window sfml-audio sfml-system)
 
 file(COPY data DESTINATION "${CMAKE_BINARY_DIR}/bin")
 
