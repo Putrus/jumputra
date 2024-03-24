@@ -13,13 +13,13 @@ namespace jp::game::json
       std::ifstream file(filename);
       if (!file.is_open())
       {
-         throw std::runtime_error("PropertiesLoader::loadProperties - Failed to open file " + filename);
+         throw std::invalid_argument("PropertiesLoader::loadProperties - Failed to open file " + filename);
       }
 
-      nlohmann::json data = nlohmann::json::parse(file);
+      nlohmann::json data;
+      file >> data;
 
       properties.logic.secondsPerFrame = data["logic"]["secondsPerFrame"];
-
       properties.physics.bounceFactor = data["physics"]["bounceFactor"];
       properties.physics.checkCollisionDistance = data["physics"]["checkCollisionDistance"];
       properties.physics.fallSpeed = data["physics"]["fallSpeed"];
@@ -28,5 +28,7 @@ namespace jp::game::json
       properties.physics.gravity.y = data["physics"]["gravity"]["y"];
 
       file.close();
+
+      return properties;
    }
 }

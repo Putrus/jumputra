@@ -11,6 +11,8 @@ namespace jp::game::states
       
       mItems.push_back(std::make_unique<menu::SelectableItem>(sf::Vector2f(160.f, 128.f), "Quit",
          Context::get()->resources.getFont(res::FontID::Alkhemikal)));
+      
+      changeSelected(0);
    }
 
    void StateMenu::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
