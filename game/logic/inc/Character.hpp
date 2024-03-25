@@ -6,7 +6,7 @@ namespace jp::game::logic
 {
    typedef physics::BodyState CharacterState;
 
-   class Character : physics::Body
+   class Character : public physics::Body
    {
    public:
       Character(const math::Vector2<float>& position,
