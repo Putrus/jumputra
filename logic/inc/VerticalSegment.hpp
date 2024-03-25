@@ -1,6 +1,8 @@
+#pragma once
+
 #include "Segment.hpp"
 
-namespace jp::game::physics
+namespace jp::logic
 {
    class VerticalSegment final : public Segment
    {

@@ -1,6 +1,6 @@
 #include "../inc/Entity.hpp"
 
-namespace jp::game::physics
+namespace jp::logic
 {
    Entity::Entity() {}
 
@@ -8,6 +8,13 @@ namespace jp::game::physics
       const math::Vector2<float>& acceleration/* = 0.f*/,
       const math::Vector2<float>& velocity/* = 0.f*/)
       : mRect(rect), mAcceleration(acceleration), mVelocity(velocity) {}
+
+   void Entity::update(float dt)
+   {
+      math::Vector2<float> distance = mVelocity * dt + mAcceleration * dt * dt / 2.f;
+      mVelocity = mVelocity + mAcceleration * dt;
+      setPosition(getPosition() + distance);
+   }
 
    math::Vector2<float> Entity::getPosition() const
    {

@@ -1,6 +1,6 @@
 #include "../inc/Segment.hpp"
 
-namespace jp::game::physics
+namespace jp::logic
 {
    std::ostream& operator<<(std::ostream& os, SegmentSurface surface)
    {

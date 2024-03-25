@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../../math/inc/Segment.hpp"
-#include "../../../math/inc/Rect.hpp"
+#include "../../math/inc/Segment.hpp"
+#include "../../math/inc/Rect.hpp"
 
 #include <iostream>
 
-namespace jp::game::physics
+namespace jp::logic
 {
    enum class SegmentSurface : int
    {

@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <sstream>
 
-namespace jp::game::physics
+namespace jp::logic
 {
    DiagonalSegment::DiagonalSegment(float aX, float aY, float bX, float bY,
       SegmentSurface surface/* = SegmentSurface::Ordinary*/)

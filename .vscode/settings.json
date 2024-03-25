@@ -91,6 +91,8 @@
       "regex": "cpp",
       "bitset": "cpp",
       "ranges": "cpp",
-      "valarray": "cpp"
+      "valarray": "cpp",
+      "queue": "cpp",
+      "xstddef": "cpp"
    }
 }

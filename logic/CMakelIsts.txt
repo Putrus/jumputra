@@ -8,9 +8,30 @@ DESCRIPTION "jumputra logic"
 
 add_subdirectory(external)
 
-set(HEADERS)
+set(HEADERS
+   inc/Character.hpp
+   inc/DiagonalSegment.hpp
+   inc/Engine.hpp
+   inc/Entity.hpp
+   inc/HorizontalSegment.hpp
+   inc/Properties.hpp
+   inc/Segment.hpp
+   inc/Updatable.hpp
+   inc/VerticalSegment.hpp
+   inc/Wind.hpp
+   )
 
-set(SOURCES)
+set(SOURCES
+   src/Character.cpp
+   src/DiagonalSegment.cpp
+   src/Engine.cpp
+   src/Entity.cpp
+   src/HorizontalSegment.cpp
+   src/Properties.cpp
+   src/Segment.cpp
+   src/VerticalSegment.cpp
+   src/Wind.cpp
+   )
 
 add_library(jp_logic STATIC ${HEADERS} ${SOURCES})
 
@@ -18,5 +39,3 @@ set(JSON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/nlohmann/single_includ
 target_include_directories(jp_logic PUBLIC ${JSON_INCLUDE_DIR})
 
 target_link_libraries(jp_logic PRIVATE jp_math)
-
-file(COPY data DESTINATION "${CMAKE_BINARY_DIR}/bin")

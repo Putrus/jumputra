@@ -13,16 +13,16 @@
             }
          },
          "runSpeed": 85.0
-      }
-   },
-   "physics": {
-      "bounceFactor": 0.5,
-      "checkCollisionDistance": 600.0,
-      "fallSpeed": 500.0,
-      "slipperyFriction": 200.0,
-      "gravity": {
-         "x" : 0.0,
-         "y" : 800.0
+      },
+      "physics": {
+         "bounceFactor": 0.5,
+         "checkCollisionDistance": 600.0,
+         "fallSpeed": 500.0,
+         "slipperyFriction": 200.0,
+         "gravity": {
+            "x" : 0.0,
+            "y" : 800.0
+         }
       }
    }
 }

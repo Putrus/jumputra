@@ -7,8 +7,6 @@ DESCRIPTION "Jumputra game"
 )
 
 add_subdirectory(external)
-add_subdirectory(logic)
-add_subdirectory(physics)
 
 set(HEADERS
    inc/Context.hpp

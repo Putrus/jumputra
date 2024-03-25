@@ -1,16 +1,20 @@
 #pragma once
 
-#include "../../../math/inc/Rect.hpp"
+#include "Updatable.hpp"
 
-namespace jp::game::physics
+#include "../../math/inc/Rect.hpp"
+
+namespace jp::logic
 {
-   class Entity
+   class Entity : public Updatable
    {
    public:
       Entity();
       Entity(const math::Rect<float>& rect,
          const math::Vector2<float>& acceleration = 0.f,
          const math::Vector2<float>& velocity = 0.f);
+
+      virtual void update(float dt) override;
 
       math::Vector2<float> getPosition() const;
       const math::Rect<float>& getRect() const;

@@ -2,7 +2,7 @@
 
 #include "Entity.hpp"
 
-namespace jp::game::physics
+namespace jp::logic
 {
    class Wind final : public Entity
    {
@@ -11,6 +11,8 @@ namespace jp::game::physics
       Wind(float impact, const math::Vector2<float>& maxVelocity,
          const math::Rect<float>& rect, const math::Vector2<float>& acceleration,
          const math::Vector2<float>& velocity = 0.f);
+
+      void update(float dt) override;
 
       float getImpact() const;
       const math::Vector2<float>& getMaxVelocity() const;
