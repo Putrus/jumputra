@@ -5,6 +5,7 @@
 #include "../../logic/inc/Engine.hpp"
 
 #include "../../graphic/inc/Resources.hpp"
+#include "../../graphic/inc/Window.hpp"
 
 namespace jp::game
 {
@@ -18,7 +19,7 @@ namespace jp::game
       void event() override;
       void update(float dt) override;
 
-      sf::RenderWindow mWindow;
+      graphic::Window mWindow;
       graphic::Resources mResources;
 
       StateStack mStateStack;

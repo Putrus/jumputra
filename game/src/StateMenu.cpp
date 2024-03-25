@@ -10,15 +10,15 @@ namespace jp::game
       // mItems.push_back(std::make_unique<menu::SelectableItem>(sf::Vector2f(160.f, 128.f), "Quit",
       //    Context::get()->resources.getFont(res::FontID::Alkhemikal)));
       
-      changeSelected(0);
+      //changeSelected(0);
    }
 
    void StateMenu::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
    {
-      for (const auto& item : mItems)
-      {
-         target.draw(*item);
-      }
+      //for (const auto& item : mItems)
+      //{
+      //   target.draw(*item);
+      //}
    }
 
    void StateMenu::event(const sf::Event& event)

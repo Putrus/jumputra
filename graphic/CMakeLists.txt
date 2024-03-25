@@ -10,10 +10,12 @@ set(HEADERS
    inc/Properties.hpp
    inc/ResourceManager.hpp
    inc/Resources.hpp
+   inc/Window.hpp
    )
 
 set(SOURCES
    src/Resources.cpp
+   src/Window.cpp
    )
 
 add_library(jp_graphic STATIC ${HEADERS} ${SOURCES})
