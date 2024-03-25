@@ -2,11 +2,11 @@
 
 namespace jp::graphic
 {
-   Resources::Resources()
+   Resources::Resources(const std::string& dataPath/* = "data"*/)
    {
-      loadFonts();
-      loadTextures();
-      loadSoundBuffers();
+      loadFonts(dataPath + "/resources/fonts/");
+      loadTextures(dataPath + "/resources/textures/");
+      loadSoundBuffers(dataPath + "/resources/soundBuffers/");
    }
 
    const sf::Font& Resources::getFont(FontID id) const
@@ -24,16 +24,16 @@ namespace jp::graphic
       return mSoundBufferManager.get(id);
    }
 
-   void Resources::loadFonts()
+   void Resources::loadFonts(const std::string& dirPath)
    {
-      mFontManager.load(FontID::Alkhemikal, "data/resources/fonts/Alkhemikal.ttf");
+      mFontManager.load(FontID::Alkhemikal, dirPath + "Alkhemikal.ttf");
    }
 
-   void Resources::loadTextures()
+   void Resources::loadTextures(const std::string& dirPath)
    {
    }
 
-   void Resources::loadSoundBuffers()
+   void Resources::loadSoundBuffers(const std::string& dirPath)
    {
    }
 }

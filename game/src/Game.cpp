@@ -2,7 +2,8 @@
 
 namespace jp::game
 {
-   Game::Game() : mStateStack(StateID::Menu), logic::Engine() {}
+   Game::Game() : mWindow(sf::Vector2u(640, 480)),
+      mStateStack(StateID::Menu), logic::Engine() {}
 
    void Game::draw()
    {

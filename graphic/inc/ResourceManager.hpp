@@ -9,7 +9,7 @@ namespace jp::graphic
    class ResourceManager
    {
    public:
-      void load(Identifier id, const char* filename);
+      void load(Identifier id, const std::string& filename);
 
       const Resource& get(Identifier id) const;
 
@@ -20,7 +20,7 @@ namespace jp::graphic
    };
 
    template <typename Identifier, typename Resource>
-   void ResourceManager<Identifier, Resource>::load(Identifier id, const char* filename)
+   void ResourceManager<Identifier, Resource>::load(Identifier id, const std::string& filename)
    {
       std::unique_ptr<Resource> resource(new Resource());
       if (!resource->loadFromFile(filename))

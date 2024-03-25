@@ -7,7 +7,6 @@ DESCRIPTION "jumputra graphic"
 )
 
 set(HEADERS
-   inc/Properties.hpp
    inc/ResourceManager.hpp
    inc/Resources.hpp
    inc/Window.hpp

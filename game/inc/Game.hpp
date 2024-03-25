@@ -19,8 +19,8 @@ namespace jp::game
       void event() override;
       void update(float dt) override;
 
-      graphic::Window mWindow;
       graphic::Resources mResources;
+      graphic::Window mWindow;
 
       StateStack mStateStack;
    };
