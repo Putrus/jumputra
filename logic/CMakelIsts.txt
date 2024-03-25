@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.6..3.28)
+
+project(jp_logic
+VERSION 0.0.1
+LANGUAGES CXX
+DESCRIPTION "jumputra logic"
+)
+
+add_subdirectory(external)
+
+set(HEADERS)
+
+set(SOURCES)
+
+add_library(jp_logic STATIC ${HEADERS} ${SOURCES})
+
+set(JSON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/nlohmann/single_include)
+target_include_directories(jp_logic PUBLIC ${JSON_INCLUDE_DIR})
+
+target_link_libraries(jp_logic PRIVATE jp_math)
+
+file(COPY data DESTINATION "${CMAKE_BINARY_DIR}/bin")

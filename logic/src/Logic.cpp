@@ -7,7 +7,10 @@ constexpr float NANOSECONDS_IN_SECOND = 1000000000;
 namespace jp::game::logic
 {
    Logic::Logic(const ::jp::game::Properties& properties)
-      : mProperties(properties.logic), mPhysics(std::make_unique<physics::Physics>(properties.physics)) {}
+      : mProperties(properties.logic), mPhysics(std::make_unique<physics::Physics>(properties.physics))
+   {
+      std::vector<std::shared_ptr<physics::Segment>> segments = 
+   }
 
    void Logic::run()
    {
@@ -31,6 +34,12 @@ namespace jp::game::logic
    void Logic::update(float dt)
    {
       mPhysics->update(dt);
+   }
+
+   void Logic::addCharacter(const std::shared_ptr<Character>& character)
+   {
+      mCharacters.push_back(character);
+      mPhysics->addBody(character);
    }
 
    void Logic::draw() const {}
