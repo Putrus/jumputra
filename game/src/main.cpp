@@ -7,7 +7,7 @@ int main()
    try
    {
       jp::game::Game game;
-   game.run();   
+      game.run();   
    }
    catch(const std::exception& e)
    {

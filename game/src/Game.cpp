@@ -1,28 +1,24 @@
-#include "../inc/Context.hpp"
 #include "../inc/Game.hpp"
 
 namespace jp::game
 {
-   Game::Game() : mStateStack(states::StateID::Menu), logic::Logic(mProperties)
-   {
-      mProperties = mPropertiesLoader.loadProperties("data/jsons/properties.json");
-   }
+   Game::Game() : mStateStack(StateID::Menu), logic::Engine() {}
 
-   void Game::draw() const
+   void Game::draw()
    {
-      Context::get()->window.clear();
-      Context::get()->window.draw(mStateStack);
-      Context::get()->window.display();
+      mWindow.clear();
+      mWindow.draw(mStateStack);
+      mWindow.display();
    }
 
    void Game::event()
    {
       sf::Event event;
-      while (Context::get()->window.pollEvent(event))
+      while (mWindow.pollEvent(event))
       {
          if (event.type == sf::Event::Closed)
          {
-            Context::get()->window.close();
+            mWindow.close();
          }
 
          mStateStack.event(event);

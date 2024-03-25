@@ -63,7 +63,7 @@ namespace jp::logic
       mWinds.push_back(wind);
    }
 
-   void Engine::draw() const {}
+   void Engine::draw() {}
 
    void Engine::event() {}
 }

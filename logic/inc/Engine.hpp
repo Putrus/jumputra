@@ -22,7 +22,7 @@ namespace jp::logic
       void addWind(const std::shared_ptr<Wind>& wind);
 
    protected:
-      virtual void draw() const;
+      virtual void draw();
       virtual void event();
 
       Properties mProperties;

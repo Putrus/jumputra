@@ -6,8 +6,6 @@ LANGUAGES CXX
 DESCRIPTION "jumputra logic"
 )
 
-add_subdirectory(external)
-
 set(HEADERS
    inc/Character.hpp
    inc/DiagonalSegment.hpp
@@ -35,7 +33,4 @@ set(SOURCES
 
 add_library(jp_logic STATIC ${HEADERS} ${SOURCES})
 
-set(JSON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/nlohmann/single_include)
-target_include_directories(jp_logic PUBLIC ${JSON_INCLUDE_DIR})
-
-target_link_libraries(jp_logic PRIVATE jp_math)
+target_link_libraries(jp_logic PUBLIC jp_math)

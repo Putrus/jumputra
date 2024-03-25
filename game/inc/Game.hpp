@@ -1,24 +1,26 @@
 #pragma once
 
-#include "../json/inc/PropertiesLoader.hpp"
-#include "../logic/inc/Logic.hpp"
-#include "../states/inc/StateStack.hpp"
+#include "StateStack.hpp"
+
+#include "../../logic/inc/Engine.hpp"
+
+#include "../../graphic/inc/Resources.hpp"
 
 namespace jp::game
 {
-   class Game : public logic::Logic
+   class Game : public logic::Engine
    {
    public:
       Game();
 
    private:
-      void draw() const override;
+      void draw() override;
       void event() override;
       void update(float dt) override;
-      
-      Properties mProperties;
-      json::PropertiesLoader mPropertiesLoader;
 
-      states::StateStack mStateStack;
+      sf::RenderWindow mWindow;
+      graphic::Resources mResources;
+
+      StateStack mStateStack;
    };
 }

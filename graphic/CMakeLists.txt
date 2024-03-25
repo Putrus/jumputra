@@ -6,18 +6,16 @@ LANGUAGES CXX
 DESCRIPTION "jumputra graphic"
 )
 
-add_subdirectory(external)
+set(HEADERS
+   inc/Properties.hpp
+   inc/ResourceManager.hpp
+   inc/Resources.hpp
+   )
 
-set(HEADERS)
-
-set(SOURCES)
+set(SOURCES
+   src/Resources.cpp
+   )
 
 add_library(jp_graphic STATIC ${HEADERS} ${SOURCES})
 
-set(SFML_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/SFML/include)
-target_include_directories(jp_graphic PUBLIC ${SFML_INCLUDE_DIR})
-
-set(SFML_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/SFML/lib)
-target_link_directories(jp_graphic PUBLIC ${SFML_LIB_DIR})
-
-target_link_libraries(jp_graphic PRIVATE sfml-graphics sfml-window sfml-audio sfml-system)
+target_link_libraries(jp_graphic PUBLIC sfml-graphics sfml-window sfml-audio sfml-system)

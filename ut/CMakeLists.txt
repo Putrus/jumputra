@@ -1,11 +1,10 @@
 project(jp_ut
    VERSION 0.0.1
    LANGUAGES CXX
-   DESCRIPTION "Unit tests for the jumputra project"
+   DESCRIPTION "jumputra ut"
    )
 
 include(CTest)
 
-add_subdirectory(external)
-add_subdirectory(game)
+add_subdirectory(logic)
 add_subdirectory(math)
