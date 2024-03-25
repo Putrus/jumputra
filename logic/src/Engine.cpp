@@ -8,7 +8,10 @@ namespace jp::logic
 
    Engine::Engine(const std::string& dataPath/* = "data"*/)
    {
-      mProperties.loadFromFile(dataPath + "/jsons/properties.json");
+      if (!mProperties.loadFromFile(dataPath + "/jsons/properties.json"))
+      {
+         throw std::invalid_argument("Engine::Engine - Failed to load properties");
+      }
    }
 
    Engine::Engine(const Properties& properties) : mProperties(properties) {}
@@ -32,7 +35,33 @@ namespace jp::logic
       }
    }
 
-   void Engine::update(float dt) {}
+   void Engine::update(float dt)
+   {
+      for (auto& wind : mWinds)
+      {
+         wind->update(dt);
+      }
+      
+      for (auto& character : mCharacters)
+      {
+         character->update(dt);
+      }
+   }
+
+   void Engine::addCharacter(const std::shared_ptr<Character>& character)
+   {
+      mCharacters.push_back(character);
+   }
+
+   void Engine::addSegment(const std::shared_ptr<Segment>& segment)
+   {
+      mSegments.push_back(segment);
+   }
+
+   void Engine::addWind(const std::shared_ptr<Wind>& wind)
+   {
+      mWinds.push_back(wind);
+   }
 
    void Engine::draw() const {}
 

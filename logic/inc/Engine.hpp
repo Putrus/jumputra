@@ -17,6 +17,10 @@ namespace jp::logic
       void run();
       virtual void update(float dt) override;
 
+      void addCharacter(const std::shared_ptr<Character>& character);
+      void addSegment(const std::shared_ptr<Segment>& segment);
+      void addWind(const std::shared_ptr<Wind>& wind);
+
    protected:
       virtual void draw() const;
       virtual void event();
