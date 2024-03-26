@@ -4,7 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/logic/external/nlohmann/single_include"
+                "${workspaceFolder}/logic/external/nlohmann/single_include",
+                "${workspaceFolder}/external/json/single_include"
             ],
             "defines": [
                 "_DEBUG",
