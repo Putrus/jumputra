@@ -1,13 +1,10 @@
-#include "../inc/StateGame.hpp"
 #include "../inc/StateMenu.hpp"
 #include "../inc/StateStack.hpp"
 
 
 namespace jp::game
 {
-   StateStack::StateStack() {}
-
-   StateStack::StateStack(StateID id)
+   StateStack::StateStack(StateID id, Context& context) : mContext(context)
    {
       pushState(id);
    }
@@ -61,10 +58,9 @@ namespace jp::game
             switch (pendingAction.stateId)
             {
             case StateID::Game:
-               mStack.push_back(std::make_shared<StateGame>(this));
                break;
             case StateID::Menu:
-               mStack.push_back(std::make_shared<StateMenu>(this));
+               mStack.push_back(std::make_shared<StateMenu>(this, mContext));
                break;
             default:
                throw std::runtime_error("StateStack::applyPendingActions - Wrong stack id");

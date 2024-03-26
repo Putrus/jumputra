@@ -2,7 +2,8 @@
 
 namespace jp::game
 {
-   Jumputra::Jumputra() : Runnable(mContext.properties.logic.secondsPerUpdate) {}
+   Jumputra::Jumputra() : mStateStack(StateID::Menu, mContext),
+      Runnable(mContext.properties.logic.secondsPerUpdate) {}
 
    void Jumputra::update(float dt)
    {

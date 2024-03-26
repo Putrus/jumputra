@@ -14,6 +14,7 @@ namespace jp::game
    {
       mItems.push_back(item);
       addSelectable(item);
+      setSelected(0);
    }
 
    std::string Menu::getSelectedTextString() const

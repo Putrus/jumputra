@@ -2,15 +2,13 @@
 
 namespace jp::game
 {
-   StateMenu::StateMenu(StateStack* stack) : State(stack)
+   StateMenu::StateMenu(StateStack* stack, Context& context) : State(stack, context)
    {
-      // mItems.push_back(std::make_unique<menu::SelectableItem>(sf::Vector2f(160.f, 64.f), "Play",
-      //    Context::get()->resources.getFont(res::FontID::Alkhemikal)));
-      
-      // mItems.push_back(std::make_unique<menu::SelectableItem>(sf::Vector2f(160.f, 128.f), "Quit",
-      //    Context::get()->resources.getFont(res::FontID::Alkhemikal)));
-      
-      //changeSelected(0);
+      mMenu.addItem(std::make_unique<MenuItem>(sf::Vector2f(160.f, 64.f), "Play",
+         context.resources.getFont(graphic::FontID::Alkhemikal)));
+
+      mMenu.addItem(std::make_unique<MenuItem>(sf::Vector2f(160.f, 128.f), "Quit",
+         context.resources.getFont(graphic::FontID::Alkhemikal)));
    }
 
    void StateMenu::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
@@ -37,7 +35,7 @@ namespace jp::game
             performSelected();
             break;
          case sf::Keyboard::Key::Escape:
-            //Context::get()->window.close();
+            mContext.window.close();
             break;
          default:
             break;
@@ -51,12 +49,12 @@ namespace jp::game
    {
       if (mMenu.getSelectedTextString() == "Play")
       {
-         pushState(StateID::Game);
+         //pushState(StateID::Game);
       }
 
       if (mMenu.getSelectedTextString() == "Quit")
       {
-         //Context::get()->window.close();
+         mContext.window.close();
       }
    }
 }

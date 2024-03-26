@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../inc/Context.hpp"
 #include "../inc/Menu.hpp"
 #include "../inc/State.hpp"
 
@@ -8,7 +9,7 @@ namespace jp::game
    class StateMenu final : public State
    {
    public:
-      StateMenu(StateStack* stack);
+      StateMenu(StateStack* stack, Context& context);
 
       void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
       void event(const sf::Event& event) override;

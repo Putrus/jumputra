@@ -3,7 +3,8 @@
 
 namespace jp::game
 {
-   State::State(StateStack* stack) : mStack(stack)
+   State::State(StateStack* stack, Context& context)
+      : mStack(stack), mContext(context)
    {
       if (mStack == nullptr)
       {

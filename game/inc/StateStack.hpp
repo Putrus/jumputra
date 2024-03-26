@@ -12,8 +12,7 @@ namespace jp::game
    class StateStack : public sf::Drawable, public Eventable, public logic::Updatable
    {
    public:
-      StateStack();
-      StateStack(StateID id);
+      StateStack(StateID id, Context& context);
 
       void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
       void event(const sf::Event& event) override;
@@ -34,6 +33,8 @@ namespace jp::game
          } type;
          StateID stateId = StateID::None;
       };
+
+      Context& mContext;
 
       std::vector<PendingAction> mPendingActions;
       std::vector<std::shared_ptr<State>> mStack;
