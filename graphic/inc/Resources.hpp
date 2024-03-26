@@ -29,7 +29,7 @@ namespace jp::graphic
    class Resources final
    {
    public:
-      bool loadFromDirectory(const std::string& dirname);
+      void loadFromDirectory(const std::string& dirname);
 
       const sf::Font& getFont(FontID id) const;
       const sf::Texture& getTexture(TextureID id) const;

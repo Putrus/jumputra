@@ -4,22 +4,22 @@
 
 namespace jp::logic
 {
-   bool Properties::loadFromFile(const std::string& filename)
+   void Properties::loadFromFile(const std::string& filename)
    {
       std::ifstream file(filename);
       if (!file.is_open())
       {
-         return false;
+         throw std::runtime_error("Properties::loadFromFile - Failed to open file " + filename);
       }
 
       nlohmann::json data;
       file >> data;
       file.close();
 
-      return loadFromJson(data);
+      loadFromJson(data);
    }
 
-   bool Properties::loadFromJson(const nlohmann::json& json)
+   void Properties::loadFromJson(const nlohmann::json& json)
    {
       graphic.window.size.x = json["graphic"]["window"]["size"]["x"];
       graphic.window.size.y = json["graphic"]["window"]["size"]["y"];
@@ -38,7 +38,5 @@ namespace jp::logic
       logic.physics.slipperyFriction = json["logic"]["physics"]["slipperyFriction"];
       logic.physics.gravity.x = json["logic"]["physics"]["gravity"]["x"];
       logic.physics.gravity.y = json["logic"]["physics"]["gravity"]["y"];
-
-      return true;
    }
 }  

@@ -2,12 +2,11 @@
 
 namespace jp::graphic
 {
-   bool Resources::loadFromDirectory(const std::string& dirname)
+   void Resources::loadFromDirectory(const std::string& dirname)
    {
       loadFonts(dirname + "/fonts");
       loadTextures(dirname + "/textures");
       loadSoundBuffers(dirname + "/soundBuffers");
-      return true;
    }
 
    const sf::Font& Resources::getFont(FontID id) const

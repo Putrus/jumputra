@@ -8,8 +8,8 @@ namespace jp::logic
 {
    struct Properties
    {
-      bool loadFromFile(const std::string& filename);
-      bool loadFromJson(const nlohmann::json& json);
+      void loadFromFile(const std::string& filename);
+      void loadFromJson(const nlohmann::json& json);
 
       struct Graphic
       {
