@@ -49,7 +49,7 @@ namespace jp::game
    {
       if (mMenu.getSelectedTextString() == "Play")
       {
-         //pushState(StateID::Game);
+         pushState(StateID::Game);
       }
 
       if (mMenu.getSelectedTextString() == "Quit")
