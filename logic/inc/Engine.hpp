@@ -2,29 +2,27 @@
 
 #include "Character.hpp"
 #include "Properties.hpp"
+#include "Runnable.hpp"
 #include "Segment.hpp"
-#include "Updatable.hpp"
 #include "Wind.hpp"
 
 namespace jp::logic
 {
-   class Engine : public Updatable
+   class Engine : public Runnable
    {
    public:
-      Engine(const std::string& dataPath = "data");
       Engine(const Properties& properties);
 
-      void run();
-      virtual void update(float dt) override;
+      void update(float dt) override;
+
+      void draw() override;
+      void event() override;
 
       void addCharacter(const std::shared_ptr<Character>& character);
       void addSegment(const std::shared_ptr<Segment>& segment);
       void addWind(const std::shared_ptr<Wind>& wind);
 
    protected:
-      virtual void draw();
-      virtual void event();
-
       Properties mProperties;
 
       std::vector<std::shared_ptr<Character>> mCharacters;

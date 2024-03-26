@@ -1,4 +1,7 @@
 {
+   "cmake.generator" : "MinGW Makefiles",
+   "cmake.buildType" : "Debug",
+   
    "files.associations": {
       "algorithm": "cpp",
       "any": "cpp",

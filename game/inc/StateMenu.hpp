@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../inc/SelectableItem.hpp"
+#include "../inc/Menu.hpp"
 #include "../inc/State.hpp"
 
 namespace jp::game
@@ -15,10 +15,8 @@ namespace jp::game
       void update(float dt) override;
 
    private:
-      void changeSelected(int direction);
       void performSelected();
 
-      int mSelected = 0;
-      std::vector<std::unique_ptr<SelectableItem>> mItems;
+      Menu mMenu;
    };
 }

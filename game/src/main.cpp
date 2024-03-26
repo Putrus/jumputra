@@ -1,4 +1,4 @@
-#include "../inc/Game.hpp"
+#include "../inc/Jumputra.hpp"
 
 #include <iostream>
 
@@ -6,8 +6,8 @@ int main()
 {
    try
    {
-      jp::game::Game game;
-      game.run();   
+      jp::game::Jumputra jumputra;
+      jumputra.run();   
    }
    catch(const std::exception& e)
    {

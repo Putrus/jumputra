@@ -13,7 +13,10 @@ set(HEADERS
    inc/Entity.hpp
    inc/HorizontalSegment.hpp
    inc/Properties.hpp
+   inc/Runnable.hpp
    inc/Segment.hpp
+   inc/Selectable.hpp
+   inc/SelectionManager.hpp
    inc/Updatable.hpp
    inc/VerticalSegment.hpp
    inc/Wind.hpp
@@ -26,7 +29,10 @@ set(SOURCES
    src/Entity.cpp
    src/HorizontalSegment.cpp
    src/Properties.cpp
+   src/Runnable.cpp
    src/Segment.cpp
+   src/Selectable.cpp
+   src/SelectionManager.cpp
    src/VerticalSegment.cpp
    src/Wind.cpp
    )

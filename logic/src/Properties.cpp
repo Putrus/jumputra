@@ -21,20 +21,23 @@ namespace jp::logic
 
    bool Properties::loadFromJson(const nlohmann::json& json)
    {
-      secondsPerUpdate = json["logic"]["secondsPerUpdate"];
+      graphic.window.size.x = json["graphic"]["window"]["size"]["x"];
+      graphic.window.size.y = json["graphic"]["window"]["size"]["y"];
 
-      character.jump.gain.x = json["logic"]["character"]["jump"]["gain"]["x"];
-      character.jump.gain.y = json["logic"]["character"]["jump"]["gain"]["y"];
-      character.jump.max.x = json["logic"]["character"]["jump"]["max"]["x"];
-      character.jump.max.y = json["logic"]["character"]["jump"]["max"]["y"];
-      character.runSpeed = json["logic"]["character"]["runSpeed"];
+      logic.secondsPerUpdate = json["logic"]["secondsPerUpdate"];
 
-      physics.bounceFactor = json["logic"]["physics"]["bounceFactor"];
-      physics.checkCollisionDistance = json["logic"]["physics"]["checkCollisionDistance"];
-      physics.fallSpeed = json["logic"]["physics"]["fallSpeed"];
-      physics.slipperyFriction = json["logic"]["physics"]["slipperyFriction"];
-      physics.gravity.x = json["logic"]["physics"]["gravity"]["x"];
-      physics.gravity.y = json["logic"]["physics"]["gravity"]["y"];
+      logic.character.jump.gain.x = json["logic"]["character"]["jump"]["gain"]["x"];
+      logic.character.jump.gain.y = json["logic"]["character"]["jump"]["gain"]["y"];
+      logic.character.jump.max.x = json["logic"]["character"]["jump"]["max"]["x"];
+      logic.character.jump.max.y = json["logic"]["character"]["jump"]["max"]["y"];
+      logic.character.runSpeed = json["logic"]["character"]["runSpeed"];
+
+      logic.physics.bounceFactor = json["logic"]["physics"]["bounceFactor"];
+      logic.physics.checkCollisionDistance = json["logic"]["physics"]["checkCollisionDistance"];
+      logic.physics.fallSpeed = json["logic"]["physics"]["fallSpeed"];
+      logic.physics.slipperyFriction = json["logic"]["physics"]["slipperyFriction"];
+      logic.physics.gravity.x = json["logic"]["physics"]["gravity"]["x"];
+      logic.physics.gravity.y = json["logic"]["physics"]["gravity"]["y"];
 
       return true;
    }

@@ -1,8 +1,8 @@
-#include "../inc/SelectableItem.hpp"
+#include "../inc/MenuItem.hpp"
 
 namespace jp::game
 {
-   SelectableItem::SelectableItem(const sf::Vector2f& position,
+   MenuItem::MenuItem(const sf::Vector2f& position,
       const std::string& text, const sf::Font& font,
       const sf::Color& deselectColor/* = sf::Color::White*/,
       const sf::Color& selectColor/* = sf::Color::Yellow*/)
@@ -12,27 +12,24 @@ namespace jp::game
       mText.setFillColor(deselectColor);
    }
 
-   void SelectableItem::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
+   void MenuItem::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
    {
       target.draw(mText);
    }
 
-   void SelectableItem::deselect()
+   void MenuItem::deselect()
    {
       mText.setFillColor(mDeselectColor);
+      Selectable::deselect();
    }
 
-   void SelectableItem::select()
+   void MenuItem::select()
    {
       mText.setFillColor(mSelectColor);
+      Selectable::select();
    }
 
-   bool SelectableItem::isSelected() const
-   {
-      return mText.getFillColor() == mSelectColor;
-   }
-
-   std::string SelectableItem::getTextString() const
+   std::string MenuItem::getTextString() const
    {
       return mText.getString();
    }

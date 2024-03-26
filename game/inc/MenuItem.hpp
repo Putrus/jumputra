@@ -1,23 +1,23 @@
 #pragma once
 
+#include "../../logic/inc/Selectable.hpp"
+
 #include <SFML/Graphics.hpp>
 
 namespace jp::game
 {
-   class SelectableItem : public sf::Drawable
+   class MenuItem : public sf::Drawable, public logic::Selectable
    {
    public:
-      SelectableItem(const sf::Vector2f& position,
+      MenuItem(const sf::Vector2f& position,
          const std::string& text, const sf::Font& font,
          const sf::Color& deselectColor = sf::Color::White,
          const sf::Color& selectColor = sf::Color::Yellow);
 
       void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
-      void deselect();
-      void select();
-
-      bool isSelected() const;
+      void deselect() override;
+      void select() override;
 
       std::string getTextString() const;
 

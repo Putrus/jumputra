@@ -4,36 +4,8 @@
 
 namespace jp::logic
 {
-   constexpr float NANOSECONDS_IN_ONE_SECOND = 1000000000;
-
-   Engine::Engine(const std::string& dataPath/* = "data"*/)
-   {
-      if (!mProperties.loadFromFile(dataPath + "/jsons/properties.json"))
-      {
-         throw std::invalid_argument("Engine::Engine - Failed to load properties");
-      }
-   }
-
-   Engine::Engine(const Properties& properties) : mProperties(properties) {}
-
-   void Engine::run()
-   {
-      auto begin = std::chrono::steady_clock::now();
-      float time = 0.f;
-      while (true)
-      {
-         auto end = std::chrono::steady_clock::now();
-         time += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() / NANOSECONDS_IN_ONE_SECOND;
-         begin = std::move(end);
-         while (time >= mProperties.secondsPerUpdate)
-         {
-            time -= mProperties.secondsPerUpdate;
-            update(mProperties.secondsPerUpdate);
-         }
-         draw();
-         event();
-      }
-   }
+   Engine::Engine(const logic::Properties& properties) 
+      : mProperties(properties), Runnable(mProperties.logic.secondsPerUpdate) {}
 
    void Engine::update(float dt)
    {
@@ -47,6 +19,10 @@ namespace jp::logic
          character->update(dt);
       }
    }
+
+   void Engine::draw() {}
+
+   void Engine::event() {}
 
    void Engine::addCharacter(const std::shared_ptr<Character>& character)
    {
@@ -62,8 +38,4 @@ namespace jp::logic
    {
       mWinds.push_back(wind);
    }
-
-   void Engine::draw() {}
-
-   void Engine::event() {}
 }

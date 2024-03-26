@@ -7,9 +7,11 @@ DESCRIPTION "Jumputra game"
 )
 
 set(HEADERS
+   inc/Context.hpp
    inc/Eventable.hpp
-   inc/Game.hpp
-   inc/SelectableItem.hpp
+   inc/Jumputra.hpp
+   inc/Menu.hpp
+   inc/MenuItem.hpp
    inc/State.hpp
    inc/StateGame.hpp
    inc/StateMenu.hpp
@@ -17,9 +19,11 @@ set(HEADERS
    )
 
 set(SOURCES
-   src/Game.cpp
+   src/Context.cpp
+   src/Jumputra.cpp
    src/main.cpp
-   src/SelectableItem.cpp
+   src/Menu.cpp
+   src/MenuItem.cpp
    src/State.cpp
    src/StateGame.cpp
    src/StateMenu.cpp

@@ -15,10 +15,7 @@ namespace jp::game
 
    void StateMenu::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
    {
-      //for (const auto& item : mItems)
-      //{
-      //   target.draw(*item);
-      //}
+      target.draw(mMenu);
    }
 
    void StateMenu::event(const sf::Event& event)
@@ -29,11 +26,11 @@ namespace jp::game
          {
          case sf::Keyboard::Key::Up:
          case sf::Keyboard::Key::W:
-            changeSelected(-1);
+            mMenu.setSelected(mMenu.getSelected() - 1);
             break;
          case sf::Keyboard::Key::Down:
          case sf::Keyboard::Key::S:
-            changeSelected(1);
+            mMenu.setSelected(mMenu.getSelected() + 1);
             break;
          case sf::Keyboard::Key::Space:
          case sf::Keyboard::Key::Enter:
@@ -50,30 +47,14 @@ namespace jp::game
 
    void StateMenu::update(float dt) {}
 
-   void StateMenu::changeSelected(int direction)
-   {
-      int newSelected = mSelected + direction;
-      if (newSelected < 0)
-      {
-         newSelected = static_cast<int>(mItems.size()) - 1;
-      }
-      else if (newSelected >= mItems.size())
-      {
-         newSelected = 0;
-      }
-      mItems[mSelected]->deselect();
-      mItems[newSelected]->select();
-      mSelected = newSelected;
-   }
-
    void StateMenu::performSelected()
    {
-      if (mItems[mSelected]->getTextString() == "Play")
+      if (mMenu.getSelectedTextString() == "Play")
       {
          pushState(StateID::Game);
       }
 
-      if (mItems[mSelected]->getTextString() == "Quit")
+      if (mMenu.getSelectedTextString() == "Quit")
       {
          //Context::get()->window.close();
       }
