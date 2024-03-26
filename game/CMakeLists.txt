@@ -7,6 +7,7 @@ DESCRIPTION "Jumputra game"
 )
 
 set(HEADERS
+   inc/Character.hpp
    inc/Context.hpp
    inc/Eventable.hpp
    inc/Jumputra.hpp
@@ -19,6 +20,7 @@ set(HEADERS
    )
 
 set(SOURCES
+   src/Character.cpp
    src/Context.cpp
    src/Jumputra.cpp
    src/main.cpp

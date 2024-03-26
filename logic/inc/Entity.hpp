@@ -21,13 +21,13 @@ namespace jp::logic
       const math::Vector2<float>& getAcceleration() const;
       const math::Vector2<float>& getVelocity() const;
 
-      void setPosition(float x, float y);
-      void setPosition(const math::Vector2<float>& position);
-      void setRect(const math::Rect<float>& rect);
-      void setRectTop(float y);
-      void setRectBottom(float y);
-      void setRectLeft(float x);
-      void setRectRight(float x);
+      virtual void setPosition(float x, float y);
+      virtual void setPosition(const math::Vector2<float>& position);
+      virtual void setRect(const math::Rect<float>& rect);
+      virtual void setRectTop(float y);
+      virtual void setRectBottom(float y);
+      virtual void setRectLeft(float x);
+      virtual void setRectRight(float x);
       void setAcceleration(const math::Vector2<float>& acceleration);
       void setAccelerationX(float x);
       void setAccelerationY(float y);
