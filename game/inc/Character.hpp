@@ -1,12 +1,13 @@
 #pragma once
 
+#include "../../graphic/inc/Character.hpp"
 #include "../../logic/inc/Character.hpp"
 
 #include <SFML/Graphics.hpp>
 
 namespace jp::game
 {
-   class Character : public sf::Drawable, public logic::Character
+   class Character : public graphic::Character, public logic::Character
    {
    public:
       Character(const math::Vector2<float> &position, const math::Vector2<float> &size,
@@ -18,8 +19,6 @@ namespace jp::game
          const std::vector<std::shared_ptr<logic::Segment>>& segments,
          const std::vector<std::shared_ptr<logic::Wind>>& winds);
       
-      void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
-
       void setPosition(float x, float y) override;
       void setPosition(const math::Vector2<float>& position) override;
       void setRect(const math::Rect<float>& rect) override;
@@ -27,8 +26,5 @@ namespace jp::game
       void setRectBottom(float y) override;
       void setRectLeft(float x) override;
       void setRectRight(float x) override;
-
-   private:
-      sf::RectangleShape mShape;
    };
 }

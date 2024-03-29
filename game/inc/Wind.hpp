@@ -1,12 +1,14 @@
 #pragma once
 
+#include "../../graphic/inc/Wind.hpp"
 #include "../../logic/inc/Wind.hpp"
 
 #include <SFML/Graphics.hpp>
 
 namespace jp::game
 {
-   class Wind : public sf::Drawable, public logic::Wind
+   class Wind : public graphic::Wind, public logic::Wind
    {
+      
    };
 }

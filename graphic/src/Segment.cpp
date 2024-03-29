@@ -12,6 +12,17 @@ namespace jp::graphic
       mVertices[1].position = { bX, bY };
       mVertices[1].color = color;
    }
+
+   Segment::Segment(const math::Vector2<float>& a, const math::Vector2<float>& b,
+      const sf::Color& color/* = sf::Color::White*/) : mVertices(sf::PrimitiveType::Lines, 2)
+   {
+      mVertices[0].position.x = a.x;
+      mVertices[0].position.y = a.y;
+      mVertices[0].color = color;
+      mVertices[0].position.x = b.x;
+      mVertices[0].position.y = b.y;
+      mVertices[1].color = color;
+   }
       
    Segment::Segment(const sf::Vector2f& a, const sf::Vector2f& b,
       const sf::Color& color/* = sf::Color::White*/) : mVertices(sf::PrimitiveType::Lines, 2)

@@ -4,7 +4,7 @@
 
 namespace jp::logic
 {
-   class Wind final : public Entity
+   class Wind : public Entity
    {
    public:
       Wind();
