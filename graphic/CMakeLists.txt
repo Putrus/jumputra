@@ -9,11 +9,13 @@ DESCRIPTION "jumputra graphic"
 set(HEADERS
    inc/ResourceManager.hpp
    inc/Resources.hpp
+   inc/Segment.hpp
    inc/Window.hpp
    )
 
 set(SOURCES
    src/Resources.cpp
+   src/Segment.cpp
    src/Window.cpp
    )
 

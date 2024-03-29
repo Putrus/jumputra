@@ -14,9 +14,11 @@ set(HEADERS
    inc/Menu.hpp
    inc/MenuItem.hpp
    inc/State.hpp
+   inc/Segment.hpp
    inc/StateGame.hpp
    inc/StateMenu.hpp
    inc/StateStack.hpp
+   inc/Wind.hpp
    )
 
 set(SOURCES
@@ -27,9 +29,11 @@ set(SOURCES
    src/Menu.cpp
    src/MenuItem.cpp
    src/State.cpp
+   src/Segment.cpp
    src/StateGame.cpp
    src/StateMenu.cpp
    src/StateStack.cpp
+   src/Wind.cpp
    )
 
 add_executable(jp_game ${HEADERS} ${SOURCES})

@@ -5,7 +5,7 @@
 namespace jp::logic
 {
    Engine::Engine(const logic::Properties& properties) 
-      : mProperties(properties), Runnable(mProperties.logic.secondsPerUpdate) {}
+      : mProperties(properties) {}
 
    void Engine::update(float dt)
    {
@@ -19,10 +19,6 @@ namespace jp::logic
          character->update(dt);
       }
    }
-
-   void Engine::draw() {}
-
-   void Engine::event() {}
 
    void Engine::addCharacter(const std::shared_ptr<Character>& character)
    {

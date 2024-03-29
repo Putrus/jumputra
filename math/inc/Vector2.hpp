@@ -20,6 +20,9 @@ namespace jp::math
       Vector2 operator*(T num) const;
       Vector2 operator/(T num) const;
 
+      #ifdef SFML_GRAPHICS_API
+      Vector2& operator=(const sf::Vector2<T>& other);
+      #endif
       Vector2& operator+=(const Vector2& other);
       Vector2& operator-=(const Vector2& other);
       Vector2& operator*=(T num);
@@ -72,6 +75,16 @@ namespace jp::math
    {
       return { x / num, y / num };
    }
+
+   #ifdef SFML_GRAPHICS_API
+   template <typename T>
+   Vector2<T>& Vector2<T>::operator=(const sf::Vector2<T>& other)
+   {
+      x = other.x;
+      y = other.y;
+      return *this;
+   }
+   #endif
 
    template <typename T>
    Vector2<T>& Vector2<T>::operator+=(const Vector2& other)
