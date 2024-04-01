@@ -10,6 +10,7 @@ set(HEADERS
    inc/Character.hpp
    inc/Context.hpp
    inc/Eventable.hpp
+   inc/Game.hpp
    inc/Jumputra.hpp
    inc/Menu.hpp
    inc/MenuItem.hpp
@@ -24,6 +25,7 @@ set(HEADERS
 set(SOURCES
    src/Character.cpp
    src/Context.cpp
+   src/Game.cpp
    src/Jumputra.cpp
    src/main.cpp
    src/Menu.cpp

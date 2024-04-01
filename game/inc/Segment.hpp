@@ -10,6 +10,8 @@ namespace jp::game
    public:
       Segment(const std::shared_ptr<logic::Segment>& logicSegment);
 
+      std::shared_ptr<logic::Segment> getLogicSegment() const;
+
    private:
       std::shared_ptr<logic::Segment> mLogicSegment;
    };

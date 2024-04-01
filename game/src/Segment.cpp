@@ -21,4 +21,9 @@ namespace jp::game
          break;
       }
    }
+
+   std::shared_ptr<logic::Segment> Segment::getLogicSegment() const
+   {
+      return mLogicSegment;
+   }
 }
