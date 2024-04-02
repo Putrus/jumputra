@@ -12,7 +12,7 @@ namespace jp::logic
       if (!isVertical())
       {
          std::stringstream ss;
-         ss << "VerticalSegment::VerticalSegment - Failed to create, " << *this << " isn't vertical";
+         ss << "jp::logic::VerticalSegment::VerticalSegment - Failed to create, " << *this << " isn't vertical";
          throw std::invalid_argument(ss.str());
       }
 

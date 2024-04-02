@@ -12,7 +12,7 @@ namespace jp::logic
       if (!isHorizontal())
       {
          std::stringstream ss;
-         ss << "HorizontalSegment::HorizontalSegment - Failed to create, " << *this << " isn't horizontal";
+         ss << "jp::logic::HorizontalSegment::HorizontalSegment - Failed to create, " << *this << " isn't horizontal";
          throw std::invalid_argument(ss.str());
       }
 

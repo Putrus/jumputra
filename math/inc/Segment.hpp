@@ -64,7 +64,7 @@ namespace jp::math
       T diffX = (b.x - a.x);
       if (diffX == (T)0)
       {
-         throw std::runtime_error("Segment<T>::getSlope - Failed to get the slope of the segment, the denominator is 0");
+         throw std::runtime_error("jp::math::Segment<T>::getSlope - Failed to get the slope of the segment, the denominator is 0");
       }
       else
       {

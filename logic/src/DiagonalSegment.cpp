@@ -12,7 +12,7 @@ namespace jp::logic
       if (!isDiagonal())
       {
          std::stringstream ss;
-         ss << "DiagonalSegment::DiagonalSegment - Failed to create, " << *this << " isn't diagonal";
+         ss << "jp::logic::DiagonalSegment::DiagonalSegment - Failed to create, " << *this << " isn't diagonal";
          throw std::invalid_argument(ss.str());
       }
 

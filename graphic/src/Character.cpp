@@ -6,11 +6,13 @@ namespace jp::graphic
       : mShape(sf::Vector2f(size.x, size.y))
    {
       mShape.setPosition(sf::Vector2f(position.x, position.y));
+      mShape.setFillColor(sf::Color::Red);
    }
 
    Character::Character(const math::Rect<float>& rect) : mShape(sf::Vector2f(rect.width, rect.height))
    {
       mShape.setPosition(sf::Vector2f(rect.left, rect.top));
+      mShape.setFillColor(sf::Color::Red);
    }
 
    void Character::draw(sf::RenderTarget &target, const sf::RenderStates &states) const

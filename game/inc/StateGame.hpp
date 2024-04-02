@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../inc/Game.hpp"
 #include "../inc/State.hpp"
 
 namespace jp::game
@@ -12,5 +13,8 @@ namespace jp::game
       void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
       void event(const sf::Event& event) override;
       void update(float dt) override;
+
+   private:
+      Game mGame;
    };
 }

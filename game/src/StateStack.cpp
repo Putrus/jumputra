@@ -65,12 +65,12 @@ namespace jp::game
                mStack.push_back(std::make_shared<StateMenu>(this, mContext));
                break;
             default:
-               throw std::runtime_error("StateStack::applyPendingActions - Wrong stack id");
+               throw std::runtime_error("jp::game::StateStack::applyPendingActions - Wrong stack id");
                break;
             }
             break;
          default:
-            throw std::runtime_error("StateStack::applyPendingActions - Wrong pending action");
+            throw std::runtime_error("jp::game::StateStack::applyPendingActions - Wrong pending action");
             break;
          }
       }

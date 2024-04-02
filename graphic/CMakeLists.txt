@@ -8,6 +8,7 @@ DESCRIPTION "jumputra graphic"
 
 set(HEADERS
    inc/Character.hpp
+   inc/Properties.hpp
    inc/ResourceManager.hpp
    inc/Resources.hpp
    inc/Segment.hpp
@@ -17,6 +18,7 @@ set(HEADERS
 
 set(SOURCES
    src/Character.cpp
+   src/Properties.cpp
    src/Resources.cpp
    src/Segment.cpp
    src/Wind.cpp

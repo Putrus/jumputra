@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../inc/Character.hpp"
+#include "../inc/Properties.hpp"
 #include "../inc/Segment.hpp"
 #include "../inc/Wind.hpp"
 
@@ -13,7 +14,7 @@ namespace jp::game
    class Game : public logic::Engine, public sf::Drawable
    {
    public:
-      Game();
+      Game(const logic::Properties& properties);
       void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
       void addCharacter(const std::shared_ptr<Character>& character);

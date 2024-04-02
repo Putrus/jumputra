@@ -14,6 +14,7 @@ set(HEADERS
    inc/Jumputra.hpp
    inc/Menu.hpp
    inc/MenuItem.hpp
+   inc/Properties.hpp
    inc/State.hpp
    inc/Segment.hpp
    inc/StateGame.hpp
@@ -30,6 +31,7 @@ set(SOURCES
    src/main.cpp
    src/Menu.cpp
    src/MenuItem.cpp
+   src/Properties.cpp
    src/State.cpp
    src/Segment.cpp
    src/StateGame.cpp

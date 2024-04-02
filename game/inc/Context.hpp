@@ -1,11 +1,11 @@
 #pragma once
 
+#include "../inc/Properties.hpp"
+
 #include "../../math/inc/Vector2.hpp"
 
 #include "../../graphic/inc/Resources.hpp"
 #include "../../graphic/inc/Window.hpp"
-
-#include "../../logic/inc/Properties.hpp"
 
 namespace jp::game
 {
@@ -16,6 +16,6 @@ namespace jp::game
       graphic::Resources resources;
       graphic::Window window;
 
-      logic::Properties properties;
+      Properties properties;
    };
 }
