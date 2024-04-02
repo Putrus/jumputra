@@ -4,6 +4,7 @@
 #include "../../math/inc/Rect.hpp"
 
 #include <iostream>
+#include <memory>
 
 namespace jp::logic
 {
@@ -35,6 +36,11 @@ namespace jp::logic
       Segment(float aX, float aY, float bX, float bY,
          SegmentSurface surface = SegmentSurface::Ordinary);
       Segment(const math::Vector2<float>& a, const math::Vector2<float>& b,
+         SegmentSurface surface = SegmentSurface::Ordinary);
+
+      static std::shared_ptr<Segment> create(float aX, float aY, float bX, float bY,
+         SegmentSurface surface = SegmentSurface::Ordinary);
+      static std::shared_ptr<Segment> create(const math::Vector2<float>& a, const math::Vector2<float>& b,
          SegmentSurface surface = SegmentSurface::Ordinary);
 
       virtual SegmentCollision checkCollision(const math::Rect<float>& oldRect,

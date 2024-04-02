@@ -8,7 +8,10 @@ namespace jp::game
    class Segment : public graphic::Segment
    {
    public:
-      Segment(const std::shared_ptr<logic::Segment>& logicSegment);
+      Segment(float aX, float aY, float bX, float bY,
+         logic::SegmentSurface surface = logic::SegmentSurface::Ordinary);
+      Segment(const math::Vector2<float>& a, const math::Vector2<float>& b,
+         logic::SegmentSurface surface = logic::SegmentSurface::Ordinary);
 
       std::shared_ptr<logic::Segment> getLogicSegment() const;
 

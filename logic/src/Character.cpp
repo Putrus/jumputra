@@ -54,7 +54,77 @@ namespace jp::logic
 
    void Character::update(float dt)
    {
-      //TODO
+      //sum of winds velocities * impacts
+      math::Vector2<float> windAcceleration = 0.f;
+      for (const auto& wind : mWinds)
+      {
+         if (mRect.intersects(wind->getRect()))
+         {
+            windAcceleration += wind->getVelocity() * wind->getImpact();
+         }
+      }
+
+      math::Vector2<float> resultantAcceleration = mAcceleration +
+         mProperties.physics.gravity + windAcceleration;
+
+      math::Vector2<float> newVelocity = mVelocity +
+         resultantAcceleration * dt;
+      
+      //flying is default state
+      CharacterState newState = CharacterState::Flying;
+      if (newVelocity.y >= mProperties.physics.fallSpeed)
+      {
+         newVelocity.y = mProperties.physics.fallSpeed;
+         newState = CharacterState::Falling;
+      }
+
+      //distance/spatium traveled
+      math::Vector2<float> distance = (newVelocity + mVelocity) * dt / 2.f;
+      math::Rect<float> newRect = mRect;
+      newRect.setPosition(newRect.getPosition() + distance);
+      
+      const math::Rect<float>& oldRect = mRect;
+      for (const auto& segment : mSegments)
+      {
+         SegmentCollision segmentCollision = segment->checkCollision(oldRect, newRect);
+         switch (segmentCollision)
+         {
+            case SegmentCollision::No:
+            break;
+            case SegmentCollision::Left:
+            {
+               newRect.left = segment->b.x;
+               newVelocity.x *= -mProperties.physics.bounceFactor;
+               break;
+            }
+            case SegmentCollision::Right:
+            {
+               newRect.left = segment->a.x - newRect.width;
+               newVelocity.x *= -mProperties.physics.bounceFactor;
+               break;
+            }
+            case SegmentCollision::Top:
+            {
+               newRect.top = segment->a.y;
+               newVelocity.x *= mProperties.physics.bounceFactor;
+               newVelocity.y = 0.f;  
+               break;
+            }
+            case SegmentCollision::Bottom:
+            {
+               newRect.top = segment->a.y - newRect.height;
+               newVelocity.x = 0.f;
+               newState = CharacterState::Standing;
+               break;
+            }
+            default:
+            break;
+         }
+      }
+
+      setVelocity(newVelocity);
+      setRect(newRect);
+      setState(newState);
    }
 
    CharacterState Character::getState() const

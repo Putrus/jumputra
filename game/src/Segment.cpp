@@ -2,10 +2,12 @@
 
 namespace jp::game
 {
-   Segment::Segment(const std::shared_ptr<logic::Segment>& logicSegment) : mLogicSegment(logicSegment),
-      graphic::Segment(logicSegment->a.x, logicSegment->a.y, logicSegment->b.x, logicSegment->b.y)
+   Segment::Segment(float aX, float aY, float bX, float bY,
+      logic::SegmentSurface surface/* = logic::SegmentSurface::Ordinary*/)
+      : mLogicSegment(std::move(logic::Segment::create(aX, aY, bX, bY, surface))),
+      graphic::Segment(aX, aY, bX, bY)
    {
-      switch (logicSegment->getSurface())
+      switch (mLogicSegment->getSurface())
       {
       case logic::SegmentSurface::Ordinary:
          setFillColor(sf::Color::White);
@@ -17,10 +19,14 @@ namespace jp::game
          setFillColor(sf::Color::Blue);
          break;
       default:
-         throw std::invalid_argument("Segment::Segment - Wrong segment surface");
+         throw std::invalid_argument("jp::game::Segment::Segment - Wrong segment surface");
          break;
       }
    }
+
+   Segment::Segment(const math::Vector2<float>& a, const math::Vector2<float>& b,
+      logic::SegmentSurface surface/* = logic::SegmentSurface::Ordinary*/)
+      : Segment(a.x, a.y, b.x, b.y, surface) {}
 
    std::shared_ptr<logic::Segment> Segment::getLogicSegment() const
    {

@@ -1,5 +1,9 @@
 #include "../inc/Segment.hpp"
 
+#include "../inc/DiagonalSegment.hpp"
+#include "../inc/HorizontalSegment.hpp"
+#include "../inc/VerticalSegment.hpp"
+
 namespace jp::logic
 {
    std::ostream& operator<<(std::ostream& os, SegmentSurface surface)
@@ -60,6 +64,34 @@ namespace jp::logic
    Segment::Segment(const math::Vector2<float>& a, const math::Vector2<float>& b,
       SegmentSurface surface/* = SegmentSurface::Ordinary*/)
       : math::Segment<float>(a, b), mSurface(surface) {}
+
+   std::shared_ptr<Segment> Segment::create(float aX, float aY, float bX, float bY,
+      SegmentSurface surface/* = SegmentSurface::Ordinary*/)
+   {
+      math::Segment<float> segment(aX, aY, bX, bY);
+      if (segment.isDiagonal())
+      {
+         return std::make_shared<DiagonalSegment>(aX, aY, bX, bY, surface);
+      }
+      else if (segment.isHorizontal())
+      {
+         return std::make_shared<HorizontalSegment>(aX, aY, bX, bY, surface);
+      }
+      else if (segment.isVertical())
+      {
+         return std::make_shared<VerticalSegment>(aX, aY, bX, bY, surface);
+      }
+      else
+      {
+         throw std::invalid_argument("jp::logic::Segment::create - Failed to create segment, wrong arguments");
+      }
+   }
+
+   std::shared_ptr<Segment> Segment::create(const math::Vector2<float>& a, const math::Vector2<float>& b,
+      SegmentSurface surface/* = SegmentSurface::Ordinary*/)
+   {
+      return Segment::create(a.x, a.y, b.x, b.y);
+   }
       
    SegmentSurface Segment::getSurface() const
    {
