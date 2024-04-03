@@ -1,13 +1,15 @@
 #include "../inc/Game.hpp"
 
-#include "../../logic/inc/HorizontalSegment.hpp"
+#include "../../logic/inc/SegmentsLoader.hpp"
+#include "../../logic/inc/WindsLoader.hpp"
 
 namespace jp::game
 {
    Game::Game(const logic::Properties& properties) : logic::Engine(properties)
    {
       addCharacter(std::make_shared<Character>(math::Rect(50.f, 50.f, 24.f, 24.f), mProperties, mSegments, mWinds));
-      addSegment(std::make_shared<Segment>(std::make_shared<logic::HorizontalSegment>(math::Vector2<float>(0.f, 100.f), math::Vector2<float>(100.f, 100.f))));
+      logic::SegmentsLoader loader;
+      addSegment(std::make_shared<Segment>(0.f, 100.f, 100.f, 100.f));
    }
 
    void Game::draw(sf::RenderTarget& target, const sf::RenderStates& states) const

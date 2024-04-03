@@ -15,11 +15,13 @@ set(HEADERS
    inc/Properties.hpp
    inc/Runnable.hpp
    inc/Segment.hpp
+   inc/SegmentsLoader.hpp
    inc/Selectable.hpp
    inc/SelectionManager.hpp
    inc/Updatable.hpp
    inc/VerticalSegment.hpp
    inc/Wind.hpp
+   inc/WindsLoader.hpp
    )
 
 set(SOURCES
@@ -31,10 +33,12 @@ set(SOURCES
    src/Properties.cpp
    src/Runnable.cpp
    src/Segment.cpp
+   src/SegmentsLoader.cpp
    src/Selectable.cpp
    src/SelectionManager.cpp
    src/VerticalSegment.cpp
    src/Wind.cpp
+   src/WindsLoader.cpp
    )
 
 add_library(jp_logic STATIC ${HEADERS} ${SOURCES})

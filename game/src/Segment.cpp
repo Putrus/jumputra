@@ -4,7 +4,7 @@ namespace jp::game
 {
    Segment::Segment(float aX, float aY, float bX, float bY,
       logic::SegmentSurface surface/* = logic::SegmentSurface::Ordinary*/)
-      : mLogicSegment(std::move(logic::Segment::create(aX, aY, bX, bY, surface))),
+      : mLogicSegment(logic::Segment::create(aX, aY, bX, bY, surface)),
       graphic::Segment(aX, aY, bX, bY)
    {
       switch (mLogicSegment->getSurface())
