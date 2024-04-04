@@ -12,6 +12,9 @@ namespace jp::game
          logic::SegmentSurface surface = logic::SegmentSurface::Ordinary);
       Segment(const math::Vector2<float>& a, const math::Vector2<float>& b,
          logic::SegmentSurface surface = logic::SegmentSurface::Ordinary);
+      
+      static std::shared_ptr<Segment> create(const math::Vector2<float>& a, const math::Vector2<float>& b,
+         logic::SegmentSurface surface = logic::SegmentSurface::Ordinary);
 
       std::shared_ptr<logic::Segment> getLogicSegment() const;
 

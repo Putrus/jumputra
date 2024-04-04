@@ -2,13 +2,18 @@
 
 #include "Entity.hpp"
 
+#include <memory>
+
 namespace jp::logic
 {
    class Wind : public Entity
    {
    public:
-      Wind();
       Wind(float impact, const math::Vector2<float>& maxVelocity,
+         const math::Rect<float>& rect, const math::Vector2<float>& acceleration,
+         const math::Vector2<float>& velocity = 0.f);
+
+      static std::shared_ptr<Wind> create(float impact, const math::Vector2<float>& maxVelocity,
          const math::Rect<float>& rect, const math::Vector2<float>& acceleration,
          const math::Vector2<float>& velocity = 0.f);
 

@@ -1,36 +1,15 @@
 #pragma once
 
-#include "../inc/Segment.hpp"
-
-#include <nlohmann/json.hpp>
-
-#include <vector>
+#include "EntityLoader.hpp"
 
 namespace jp::logic
 {
    template <typename T>
-   class SegmentsLoader
+   class SegmentsLoader : public EntityLoader<T>
    {
    public:
-      std::vector<std::shared_ptr<T>> loadFromFile(const std::string &filename) const;
       std::vector<std::shared_ptr<T>> loadFromJson(const nlohmann::json& json) const;
    };
-
-   template <typename T>
-   std::vector<std::shared_ptr<T>> SegmentsLoader<T>::loadFromFile(const std::string &filename) const
-   {
-      std::ifstream file(filename);
-      if (!file.is_open())
-      {
-         throw std::runtime_error("jp::logic::SegmentsLoader::loadFromFile - Failed to open file " + filename);
-      }
-
-      nlohmann::json data;
-      file >> data;
-      file.close();
-
-      return loadFromJson(data);
-   }
 
    template <typename T>
    std::vector<std::shared_ptr<T>> SegmentsLoader<T>::loadFromJson(const nlohmann::json& json) const
@@ -58,7 +37,7 @@ namespace jp::logic
          }
          else
          {
-            throw std::runtime_error("jp::logic::SegmentsLoader::loadSegmentsFromJson - Wrong surface type, failed to load segment");
+            throw std::runtime_error("jp::logic::SegmentsLoader::loadFromJson - Wrong surface type, failed to load segment");
          }
 
          if (jsonSegment["type"] == "points")
@@ -79,10 +58,10 @@ namespace jp::logic
          {
             math::Rect<float> rect(jsonSegment["left"], jsonSegment["top"],
                jsonSegment["width"], jsonSegment["height"]);
-            segments.push_back(T::create(rect.getLeftSegmentop(), rect.getRightSegmentop(), surface));
-            segments.push_back(T::create(rect.getRightSegmentop(), rect.getRightBottom(), surface));
+            segments.push_back(T::create(rect.getLeftTop(), rect.getRightTop(), surface));
+            segments.push_back(T::create(rect.getRightTop(), rect.getRightBottom(), surface));
             segments.push_back(T::create(rect.getLeftBottom(), rect.getRightBottom(), surface));
-            segments.push_back(T::create(rect.getLeftSegmentop(), rect.getLeftBottom(), surface));
+            segments.push_back(T::create(rect.getLeftTop(), rect.getLeftBottom(), surface));
          }
          else
          {

@@ -54,6 +54,15 @@ namespace jp::logic
 
    void Character::update(float dt)
    {
+      if (mState == CharacterState::Squatting)
+      {
+         mJumpPower += mProperties.character.jump.gain * dt;
+         if (mJumpPower.y >= mProperties.character.jump.gain.y)
+         {
+            jump();
+         }
+      }
+
       //sum of winds velocities * impacts
       math::Vector2<float> windAcceleration = 0.f;
       for (const auto& wind : mWinds)
@@ -90,7 +99,7 @@ namespace jp::logic
          switch (segmentCollision)
          {
             case SegmentCollision::No:
-            break;
+               break;
             case SegmentCollision::Left:
             {
                newRect.left = segment->b.x;
@@ -118,13 +127,72 @@ namespace jp::logic
                break;
             }
             default:
-            break;
+               break;
          }
       }
 
       setVelocity(newVelocity);
       setRect(newRect);
       setState(newState);
+   }
+
+   void Character::jump()
+   {
+      if (getState() == CharacterState::Squatting)
+      {
+         setState(CharacterState::Flying);
+         setAccelerationX(0.f);
+         switch (mDirection)
+         {
+         case CharacterDirection::Up:
+         {
+            setVelocityY(-std::min(mProperties.character.jump.max.y, mJumpPower.y));
+            break;
+            }
+            case CharacterDirection::Left:
+            {
+               setVelocity(math::Vector2<float>(getVelocity().x - mProperties.character.jump.max.x,
+                  -std::min(mProperties.character.jump.max.y, mJumpPower.y)));
+               break;
+            }
+            case CharacterDirection::Right:
+            {
+               setVelocity(math::Vector2<float>(getVelocity().x + mProperties.character.jump.max.x,
+                  -std::min(mProperties.character.jump.max.y, mJumpPower.y)));
+               break;
+            }
+            default:
+               break;
+         }
+         resetJumpPower();
+      }
+   }
+
+   void Character::squat()
+   {
+      if (canSquat())
+      {
+         setState(CharacterState::Squatting);
+      }
+   }
+
+   void Character::resetJumpPower()
+   {
+      mJumpPower = 0.f;
+   }
+
+   bool Character::canRun() const
+   {
+      return getState() == CharacterState::Dying ||
+         getState() == CharacterState::Running ||
+         getState() == CharacterState::Sliding ||
+         getState() == CharacterState::Standing ||
+         getState() == CharacterState::Stopping;
+   }
+
+   bool Character::canSquat() const
+   {
+      return canRun() || getState() == CharacterState::Sticking;
    }
 
    CharacterState Character::getState() const
@@ -135,5 +203,5 @@ namespace jp::logic
    void Character::setState(CharacterState state)
    {
       mState = state;
-   }  
+   }
 }

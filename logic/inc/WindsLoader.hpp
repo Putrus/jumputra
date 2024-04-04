@@ -1,17 +1,30 @@
 #pragma once
 
-#include "Wind.hpp"
-
-#include <nlohmann/json.hpp>
-
-#include <vector>
+#include "EntityLoader.hpp"
 
 namespace jp::logic
 {
-   class WindsLoader
+   template <typename T>
+   class WindsLoader : public EntityLoader<T>
    {
    public:
-      std::vector<std::shared_ptr<Wind>> loadWindsFromFile(const std::string &filename) const;
-      std::vector<std::shared_ptr<Wind>> loadWindsFromJson(const nlohmann::json& json) const;
+      std::vector<std::shared_ptr<T>> loadFromJson(const nlohmann::json& json) const;
    };
+
+   template <typename T>
+   std::vector<std::shared_ptr<T>> WindsLoader<T>::loadFromJson(const nlohmann::json& json) const
+   {
+      std::vector<std::shared_ptr<T>> winds;
+      for (const auto& jsonWind : json["winds"])
+      {
+         float impact = jsonWind["impact"];
+         math::Vector2<float> acceleration(jsonWind["acceleration"]["x"], jsonWind["acceleration"]["y"]);
+         math::Vector2<float> maxVelocity(jsonWind["maxVelocity"]["x"], jsonWind["maxVelocity"]["y"]);
+         math::Rect<float> rect(jsonWind["rect"]["left"], jsonWind["rect"]["top"],
+               jsonWind["rect"]["width"], jsonWind["rect"]["height"]);
+         winds.push_back(T::create(impact, maxVelocity, rect, acceleration));
+      }
+
+      return winds;
+   }
 }

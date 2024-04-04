@@ -23,6 +23,13 @@ namespace jp::logic
       Stopping
    };
 
+   enum class CharacterDirection : int
+   {
+      Up = 0,
+      Left,
+      Right
+   };
+
    std::ostream& operator<<(std::ostream& os, CharacterState state);
 
    class Character : public Entity
@@ -38,13 +45,22 @@ namespace jp::logic
          const std::vector<std::shared_ptr<Wind>>& winds);
 
       void update(float dt) override;
+      void jump();
+      void squat();
+
+   private:
+      void resetJumpPower();
+
+      bool canRun() const;
+      bool canSquat() const;
 
       CharacterState getState() const;
 
       void setState(CharacterState state);
 
-   protected:
       CharacterState mState = CharacterState::Flying;
+      CharacterDirection mDirection = CharacterDirection::Up;
+      math::Vector2<float> mJumpPower = math::Vector2<float>();
 
       const Properties& mProperties;
       const std::vector<std::shared_ptr<Segment>>& mSegments;
