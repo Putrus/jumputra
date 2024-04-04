@@ -8,7 +8,6 @@ namespace jp::game
    Game::Game(const logic::Properties& properties) : logic::Engine(properties)
    {
       addCharacter(std::make_shared<Character>(math::Rect(50.f, 50.f, 24.f, 24.f), mProperties, mSegments, mWinds));
-      logic::SegmentsLoader loader;
       addSegment(std::make_shared<Segment>(0.f, 100.f, 100.f, 100.f));
    }
 
