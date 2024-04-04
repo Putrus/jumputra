@@ -7,7 +7,7 @@ namespace jp::game
 {
    Game::Game(Context& context) : mContext(context), logic::Engine(context.properties.logic)
    {
-      addCharacter(std::make_shared<Character>(math::Rect(50.f, 13300.f, 24.f, 24.f), mProperties, mSegments, mWinds));
+      addCharacter(std::make_shared<Character>(math::Rect(50.f, 15100.f, 24.f, 24.f), mProperties, mSegments, mWinds));
       logic::SegmentsLoader<Segment> segmentsLoader;
       std::vector<std::shared_ptr<Segment>> segments = segmentsLoader.loadFromFile("data/jsons/segments.json");
       logic::WindsLoader<Wind> windsLoader;
@@ -115,12 +115,12 @@ namespace jp::game
             if (followedCharacter.getPosition().y < mContext.window.getView().getCenter().y -
                halfWindowHeight - followedCharacter.getRect().height)
             {
-               view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y - static_cast<float>(mContext.properties.graphic.window.size.y)));
+               view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y - mContext.properties.graphic.window.size.y));
                mContext.window.setView(view);
             }
             else if (followedCharacter.getPosition().y > mContext.window.getView().getCenter().y + halfWindowHeight)
             {
-               view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y + 360.f));
+               view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y + mContext.properties.graphic.window.size.y));
                mContext.window.setView(view);
             }
             else

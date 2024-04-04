@@ -123,7 +123,14 @@ namespace jp::logic
             {
                newRect.top = segment->a.y - newRect.height;
                newVelocity.x = 0.f;
-               newState = CharacterState::Standing;
+               if (getState() == CharacterState::Squatting)
+               {
+                  newState = getState();
+               }
+               else
+               {
+                  newState = CharacterState::Standing;
+               }
                break;
             }
             default:
