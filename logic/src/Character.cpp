@@ -105,33 +105,42 @@ namespace jp::logic
             case SegmentCollision::Left:
             {
                newRect.left = segment->b.x;
-               newVelocity.x *= -mProperties.physics.bounceFactor;
+               newVelocity.x = getVelocity().x * -mProperties.physics.bounceFactor;
                break;
             }
             case SegmentCollision::Right:
             {
                newRect.left = segment->a.x - newRect.width;
-               newVelocity.x *= -mProperties.physics.bounceFactor;
+               newVelocity.x = getVelocity().x * -mProperties.physics.bounceFactor;
                break;
             }
             case SegmentCollision::Top:
             {
-               newRect.top = segment->a.y;
-               newVelocity.x *= mProperties.physics.bounceFactor;
-               newVelocity.y = 0.f;  
+               newRect.top = segment->b.y;
+               newVelocity.x = getVelocity().x * mProperties.physics.bounceFactor;
+               newVelocity.y = 0.f;
                break;
             }
             case SegmentCollision::Bottom:
             {
                newRect.top = segment->a.y - newRect.height;
-               newVelocity.x = 0.f;
-               if (getState() == CharacterState::Squatting)
+               if (getState() != CharacterState::Running)
                {
-                  newState = getState();
+                  newVelocity.x = 0.f;
                }
-               else
+               switch (getState())
                {
-                  newState = CharacterState::Standing;
+                  case CharacterState::Running:
+                  case CharacterState::Squatting:
+                  case CharacterState::Dying:
+                     newState = getState();
+                     break;
+                  case CharacterState::Falling:
+                     newState = CharacterState::Dying;
+                     break;
+                  default:
+                     newState = CharacterState::Standing;
+                     break;
                }
                break;
             }
@@ -186,10 +195,9 @@ namespace jp::logic
          float directionSign = direction == CharacterDirection::Left ? -1.f : 1.f;
          if (math::sign(getRunSpeed()) != directionSign)
          {
+            setRunSpeed(directionSign * mProperties.character.runSpeed);
             setVelocityX(getVelocity().x + getRunSpeed());
          }
-
-         setRunSpeed(directionSign * mProperties.character.runSpeed);
       }
     }
 
@@ -199,6 +207,13 @@ namespace jp::logic
       {
          setState(CharacterState::Squatting);
       }
+   }
+
+   void Character::stop()
+   {
+      setDirection(CharacterDirection::Up);
+      setState(CharacterState::Flying);
+      setRunSpeed(0.f);
    }
 
    void Character::resetJumpPower()

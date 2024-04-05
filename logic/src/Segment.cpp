@@ -50,6 +50,7 @@ namespace jp::logic
          break;
          case SegmentCollision::Top:
          os << "Top";
+         break;
          default:
          os << "Unknown";
          break;

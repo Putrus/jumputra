@@ -48,6 +48,7 @@ namespace jp::logic
       void jump();
       void run(CharacterDirection direction);
       void squat();
+      void stop();
 
       virtual void setState(CharacterState state);
       CharacterState getState() const;
