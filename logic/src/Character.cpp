@@ -96,7 +96,9 @@ namespace jp::logic
       {
          newVelocity.x = 0.f;
       }
-      
+
+      float newRunSpeed = 0.f;
+
       //flying is default state
       CharacterState newState = CharacterState::Flying;
       if (newVelocity.y >= mProperties.physics.fallSpeed)
@@ -123,12 +125,20 @@ namespace jp::logic
             {
                newRect.left = segment->b.x;
                newVelocity.x = getVelocity().x * -mProperties.physics.bounceFactor;
+               if (math::sign(newVelocity.x) == math::sign(getRunSpeed()))
+               {
+                  newVelocity.x = 0.f;
+               }
                break;
             }
             case SegmentCollision::Right:
             {
                newRect.left = segment->a.x - newRect.width;
                newVelocity.x = getVelocity().x * -mProperties.physics.bounceFactor;
+               if (math::sign(newVelocity.x) == math::sign(getRunSpeed()))
+               {
+                  newVelocity.x = 0.f;
+               }
                break;
             }
             case SegmentCollision::Top:
@@ -147,6 +157,10 @@ namespace jp::logic
                   if (getState() != CharacterState::Running)
                   {
                      newVelocity.x = 0;
+                  }
+                  else
+                  {
+                     newRunSpeed = getRunSpeed();
                   }
 
                   switch (getState())
@@ -189,7 +203,7 @@ namespace jp::logic
                else 
                {
                   newAcceleration.x = mProperties.physics.slipperyFriction * -math::sign(getVelocity().x);
-                  
+
                   if (getVelocity().x == 0.f)
                   {
                      newAcceleration.x = 0.f;
@@ -203,6 +217,7 @@ namespace jp::logic
                            newState = CharacterState::Sliding;
                            break;
                         }
+                        newRunSpeed = getRunSpeed();
                      case CharacterState::Dying:
                      case CharacterState::Squatting:
                         newState = getState();
@@ -222,8 +237,15 @@ namespace jp::logic
          }
       }
 
+      if (getState() == CharacterState::Running &&
+         newState == CharacterState::Flying)
+      {
+         newVelocity.x += getRunSpeed();
+      }
+
       setAcceleration(newAcceleration);
       setVelocity(newVelocity);
+      setRunSpeed(newRunSpeed);
       setRect(newRect);
       setState(newState);
    }
@@ -269,6 +291,17 @@ namespace jp::logic
          float directionSign = direction == CharacterDirection::Left ? -1.f : 1.f;
          if (math::sign(getRunSpeed()) != directionSign)
          {
+            setVelocityX(getVelocity().x + getRunSpeed());
+            setRunSpeed(directionSign * mProperties.character.runSpeed);
+            if (math::sign(getVelocity().x) == math::sign(getRunSpeed()))
+            {
+               setAccelerationX(0.f);
+               setVelocityX(0.f);
+            }
+         }
+         else
+         {
+            setVelocityX(0.f);
             setRunSpeed(directionSign * mProperties.character.runSpeed);
          }
       }
