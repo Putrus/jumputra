@@ -5,4 +5,6 @@
 namespace jp::math
 {
    Vector2<float> abs(const Vector2<float>& vec);
+
+   float sign(float value);
 }

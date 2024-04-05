@@ -55,4 +55,21 @@ namespace jp::game
       graphic::Character::setRectRight(x);
       logic::Character::setRectRight(x);
    }
+
+   void Character::setState(logic::CharacterState state)
+   {
+      switch (state)
+      {
+         case logic::CharacterState::Squatting:
+            graphic::Character::setFlattening(mRect.height * 1.f / 3.f);
+            break;
+         case logic::CharacterState::Dying:
+            graphic::Character::setFlattening(mRect.height * 2.f / 3.f);
+            break;
+         default:
+            graphic::Character::setFlattening(0.f);
+            break;
+      }
+      logic::Character::setState(state);
+   }
 }

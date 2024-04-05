@@ -26,5 +26,6 @@ namespace jp::game
       void setRectBottom(float y) override;
       void setRectLeft(float x) override;
       void setRectRight(float x) override;
+      void setState(logic::CharacterState state) override;
    };
 }

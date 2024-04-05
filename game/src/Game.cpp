@@ -51,6 +51,12 @@ namespace jp::game
       {
          switch (event.key.code)
          {
+         case sf::Keyboard::Key::Left:
+            controlledCharacter.run(logic::CharacterDirection::Left);
+            break;
+         case sf::Keyboard::Key::Right:
+            controlledCharacter.run(logic::CharacterDirection::Right);
+            break;
          case sf::Keyboard::Key::Space:
             controlledCharacter.squat();
             break;
@@ -66,6 +72,8 @@ namespace jp::game
          case sf::Keyboard::Key::Space:
             controlledCharacter.jump();
             break;
+         case sf::Keyboard::Key::L:
+            std::cout << controlledCharacter.getState() << std::endl;
          default:
             break;
          }

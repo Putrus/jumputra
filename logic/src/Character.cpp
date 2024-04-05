@@ -1,5 +1,7 @@
 #include "../inc/Character.hpp"
 
+#include "../../math/inc/Math.hpp"
+
 namespace jp::logic
 {
    std::ostream& operator<<(std::ostream& os, CharacterState state)
@@ -92,7 +94,7 @@ namespace jp::logic
       math::Rect<float> newRect = mRect;
       newRect.setPosition(newRect.getPosition() + distance);
       
-      const math::Rect<float>& oldRect = mRect;
+      math::Rect<float> oldRect = mRect;
       for (const auto& segment : mSegments)
       {
          SegmentCollision segmentCollision = segment->checkCollision(oldRect, newRect);
@@ -137,7 +139,7 @@ namespace jp::logic
                break;
          }
       }
-
+      
       setVelocity(newVelocity);
       setRect(newRect);
       setState(newState);
@@ -175,6 +177,22 @@ namespace jp::logic
       }
    }
 
+   void Character::run(CharacterDirection direction)
+    {
+      setDirection(direction);
+      if (canRun() && direction != CharacterDirection::Up)
+      {
+         setState(CharacterState::Running);
+         float directionSign = direction == CharacterDirection::Left ? -1.f : 1.f;
+         if (math::sign(getRunSpeed()) != directionSign)
+         {
+            setVelocityX(getVelocity().x + getRunSpeed());
+         }
+
+         setRunSpeed(directionSign * mProperties.character.runSpeed);
+      }
+    }
+
    void Character::squat()
    {
       if (canSquat())
@@ -202,9 +220,29 @@ namespace jp::logic
       return canRun() || getState() == CharacterState::Sticking;
    }
 
+   CharacterDirection Character::getDirection() const
+   {
+      return mDirection;
+   }
+
+   float Character::getRunSpeed() const
+   {
+      return mRunSpeed;
+   }
+
    CharacterState Character::getState() const
    {
       return mState;
+   }
+
+   void Character::setDirection(CharacterDirection direction)
+   {
+      mDirection = direction;
+   }
+
+   void Character::setRunSpeed(float speed)
+   {
+      mRunSpeed = speed;
    }
 
    void Character::setState(CharacterState state)

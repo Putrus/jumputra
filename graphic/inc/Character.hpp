@@ -15,6 +15,8 @@ namespace jp::graphic
 
       void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
 
+   protected:
+      void setFlattening(float flattening);
       void setPosition(float x, float y);
       void setPosition(const math::Vector2<float>& position);
       void setRect(const math::Rect<float>& rect);
@@ -25,5 +27,6 @@ namespace jp::graphic
 
    private:
       sf::RectangleShape mShape;
+      float mFlattening = 0.f;
    };
 }

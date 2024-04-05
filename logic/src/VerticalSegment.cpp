@@ -58,6 +58,6 @@ namespace jp::logic
 
    bool VerticalSegment::isCollision(math::Vector2<float> a, math::Vector2<float> b) const
    {
-      return a.y > this->a.y && a.y < this->b.y && this->a.x > a.x && this->a.x < b.x;
+      return a.y >= this->a.y && a.y <= this->b.y && this->a.x >= a.x && this->a.x <= b.x;
    }
 }

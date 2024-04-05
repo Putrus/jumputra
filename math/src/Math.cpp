@@ -6,4 +6,14 @@ namespace jp::math
    {
       return math::Vector2<float>(std::abs(vec.x), std::abs(vec.y));
    }
+
+   float sign(float value)
+   {
+      if (value == 0)
+      {
+         return 0.f;
+      }
+
+      return value / std::abs(value);
+   }
 }

@@ -46,7 +46,11 @@ namespace jp::logic
 
       void update(float dt) override;
       void jump();
+      void run(CharacterDirection direction);
       void squat();
+
+      virtual void setState(CharacterState state);
+      CharacterState getState() const;
 
    private:
       void resetJumpPower();
@@ -54,13 +58,16 @@ namespace jp::logic
       bool canRun() const;
       bool canSquat() const;
 
-      CharacterState getState() const;
-
-      void setState(CharacterState state);
+      CharacterDirection getDirection() const;
+      float getRunSpeed() const;
+      
+      void setDirection(CharacterDirection direction);
+      void setRunSpeed(float speed);
 
       CharacterState mState = CharacterState::Flying;
       CharacterDirection mDirection = CharacterDirection::Up;
       math::Vector2<float> mJumpPower = math::Vector2<float>();
+      float mRunSpeed = 0.f;
 
       const Properties& mProperties;
       const std::vector<std::shared_ptr<Segment>>& mSegments;
