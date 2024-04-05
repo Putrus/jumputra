@@ -232,6 +232,35 @@ namespace jp::logic
                } 
                break;
             }
+            case SegmentCollision::Attic:
+            {
+               newVelocity = 0.f;
+               float slope = segment->getSlope();
+               float intercept = segment->getIntercept();
+               if (slope < 0)
+               {
+                  if (newRect.left < segment->a.x)
+                  {
+                     newRect.top = segment->a.y;
+                  }
+                  else
+                  {
+                     newRect.top = newRect.left * slope + intercept;
+                  }
+               }
+               else
+               {
+                  if (newRect.getRight() > segment->b.x)
+                  {
+                     newRect.top = segment->b.y;
+                  }
+                  else
+                  {
+                     newRect.top = newRect.getRight() * slope + intercept;
+                  }
+               }
+               break;
+            }
             default:
                break;
          }

@@ -31,28 +31,26 @@ namespace jp::logic
    {
       float slope = getSlope();
       float intercept = b.y - slope * b.x;
-      if (isHorizontalCollision(newRect.getLeftTop(), newRect.getRightTop(), slope, intercept) ||
-         isHorizontalCollision(newRect.getLeftBottom(), newRect.getRightBottom(), slope, intercept))
+      if (isHorizontalCollision(newRect.getLeftTop(), newRect.getRightTop(), slope, intercept))
       {
-         return newRect.getCenter().y > oldRect.getCenter().y ? SegmentCollision::Roof : SegmentCollision::Attic;
+         return SegmentCollision::Attic;
       }
-      else if (isVerticalCollision(newRect.getLeftTop(), newRect.getLeftBottom(), slope, intercept) ||
-         isVerticalCollision(newRect.getRightTop(), newRect.getRightBottom(), slope, intercept))
+      else if (isHorizontalCollision(newRect.getLeftBottom(), newRect.getRightBottom(), slope, intercept))
       {
-         if (oldRect.left >= b.x)
-         {
-            return SegmentCollision::Left;
-         }
-         else if (oldRect.getRight() <= a.x)
-         {
-            return SegmentCollision::Right;
-         }
-         else
-         {
-            return SegmentCollision::No;
-         }
+         return SegmentCollision::Roof;
       }
-      return SegmentCollision::No;
+      else if (isVerticalCollision(newRect.getLeftTop(), newRect.getLeftBottom(), slope, intercept))
+      {
+         return SegmentCollision::Left;
+      }
+      else if (isVerticalCollision(newRect.getRightTop(), newRect.getRightBottom(), slope, intercept))
+      {
+         return SegmentCollision::Right;
+      }
+      else
+      {
+         return SegmentCollision::No;
+      }
    }
 
    bool DiagonalSegment::isHorizontalCollision(math::Vector2<float> a,
