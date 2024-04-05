@@ -8,6 +8,9 @@ namespace jp::logic
    {
       switch (state)
       {
+         case CharacterState::Burying:
+         os << "Burying";
+         break;
          case CharacterState::Dying:
          os << "Dying";
          break;
@@ -17,11 +20,17 @@ namespace jp::logic
          case CharacterState::Flying:
          os << "Flying";
          break;
+         case CharacterState::Lying:
+         os << "Lying";
+         break;
          case CharacterState::Running:
          os << "Running";
          break;
          case CharacterState::Sledding:
          os << "Sledding";
+         break;
+         case CharacterState::Sliding:
+         os << "Sliding";
          break;
          case CharacterState::Squatting:
          os << "Squatting";
@@ -78,8 +87,15 @@ namespace jp::logic
       math::Vector2<float> resultantAcceleration = mAcceleration +
          mProperties.physics.gravity + windAcceleration;
 
+      math::Vector2<float> newAcceleration = 0.f;
+
       math::Vector2<float> newVelocity = mVelocity +
          resultantAcceleration * dt;
+      
+      if (newVelocity.x < 5.f && newVelocity.x > -5.f)
+      {
+         newVelocity.x = 0.f;
+      }
       
       //flying is default state
       CharacterState newState = CharacterState::Flying;
@@ -90,7 +106,8 @@ namespace jp::logic
       }
 
       //distance/spatium traveled
-      math::Vector2<float> distance = (newVelocity + mVelocity) * dt / 2.f;
+      math::Vector2<float> distance = (newVelocity + mVelocity +
+         math::Vector2<float>(2 * mRunSpeed, 0.f)) * dt / 2.f;
       math::Rect<float> newRect = mRect;
       newRect.setPosition(newRect.getPosition() + distance);
       
@@ -124,31 +141,88 @@ namespace jp::logic
             case SegmentCollision::Bottom:
             {
                newRect.top = segment->a.y - newRect.height;
-               if (getState() != CharacterState::Running)
+               newVelocity.y = 0.f;
+               if (segment->getSurface() == SegmentSurface::Ordinary)
+               {
+                  if (getState() != CharacterState::Running)
+                  {
+                     newVelocity.x = 0;
+                  }
+
+                  switch (getState())
+                  {
+                     case CharacterState::Running:
+                        if (getDirection() == CharacterDirection::Up)
+                        {
+                           newState = CharacterState::Standing;
+                           break;
+                        }
+                     case CharacterState::Lying:
+                     case CharacterState::Squatting:
+                        newState = getState();
+                        break;
+                     case CharacterState::Falling:
+                        newState = CharacterState::Lying;
+                        break;
+                     default:
+                        newState = CharacterState::Standing;
+                        break;
+                  }
+               }
+               else if (segment->getSurface() == SegmentSurface::Sticky)
                {
                   newVelocity.x = 0.f;
+                  switch (getState())
+                  {
+                     case CharacterState::Burying:
+                     case CharacterState::Squatting:
+                        newState = getState();
+                        break;
+                     case CharacterState::Falling:
+                        newState = CharacterState::Burying;
+                        break;
+                     default:
+                        newState = CharacterState::Sticking;
+                        break;
+                  }
                }
-               switch (getState())
+               else 
                {
-                  case CharacterState::Running:
-                  case CharacterState::Squatting:
-                  case CharacterState::Dying:
-                     newState = getState();
-                     break;
-                  case CharacterState::Falling:
-                     newState = CharacterState::Dying;
-                     break;
-                  default:
-                     newState = CharacterState::Standing;
-                     break;
-               }
+                  newAcceleration.x = mProperties.physics.slipperyFriction * -math::sign(getVelocity().x);
+                  
+                  if (getVelocity().x == 0.f)
+                  {
+                     newAcceleration.x = 0.f;
+                  }
+
+                  switch (getState())
+                  {
+                     case CharacterState::Running:
+                        if (getDirection() == CharacterDirection::Up)
+                        {
+                           newState = CharacterState::Sliding;
+                           break;
+                        }
+                     case CharacterState::Dying:
+                     case CharacterState::Squatting:
+                        newState = getState();
+                        break;
+                     case CharacterState::Falling:
+                        newState = CharacterState::Dying;
+                        break;
+                     default:
+                        newState = CharacterState::Sliding;
+                        break;
+                  }
+               } 
                break;
             }
             default:
                break;
          }
       }
-      
+
+      setAcceleration(newAcceleration);
       setVelocity(newVelocity);
       setRect(newRect);
       setState(newState);
@@ -196,7 +270,6 @@ namespace jp::logic
          if (math::sign(getRunSpeed()) != directionSign)
          {
             setRunSpeed(directionSign * mProperties.character.runSpeed);
-            setVelocityX(getVelocity().x + getRunSpeed());
          }
       }
     }
@@ -205,6 +278,11 @@ namespace jp::logic
    {
       if (canSquat())
       {
+         if (getState() == CharacterState::Running)
+         {
+            setVelocityX(getVelocity().x + mRunSpeed);
+            setRunSpeed(0.f);
+         }
          setState(CharacterState::Squatting);
       }
    }
@@ -212,8 +290,11 @@ namespace jp::logic
    void Character::stop()
    {
       setDirection(CharacterDirection::Up);
-      setState(CharacterState::Flying);
-      setRunSpeed(0.f);
+      if (getState() == CharacterState::Running)
+      {
+         setVelocityX(getVelocity().x + mRunSpeed);
+         setRunSpeed(0.f);
+      }
    }
 
    void Character::resetJumpPower()
@@ -224,6 +305,7 @@ namespace jp::logic
    bool Character::canRun() const
    {
       return getState() == CharacterState::Dying ||
+         getState() == CharacterState::Lying ||
          getState() == CharacterState::Running ||
          getState() == CharacterState::Sliding ||
          getState() == CharacterState::Standing ||
@@ -232,7 +314,9 @@ namespace jp::logic
 
    bool Character::canSquat() const
    {
-      return canRun() || getState() == CharacterState::Sticking;
+      return canRun() ||
+         getState() == CharacterState::Burying ||
+         getState() == CharacterState::Sticking;
    }
 
    CharacterDirection Character::getDirection() const
@@ -262,6 +346,10 @@ namespace jp::logic
 
    void Character::setState(CharacterState state)
    {
+      if (state != getState())
+      {
+         std::cout << getState() << " -> " << state << std::endl;
+      }
       mState = state;
    }
 }

@@ -63,7 +63,9 @@ namespace jp::game
          case logic::CharacterState::Squatting:
             graphic::Character::setFlattening(mRect.height * 1.f / 3.f);
             break;
+         case logic::CharacterState::Burying:
          case logic::CharacterState::Dying:
+         case logic::CharacterState::Lying:
             graphic::Character::setFlattening(mRect.height * 2.f / 3.f);
             break;
          default:

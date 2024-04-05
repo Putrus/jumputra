@@ -11,9 +11,11 @@ namespace jp::logic
 {
    enum class CharacterState : int
    {
-      Dying = 0,
+      Burying = 0,
+      Dying,
       Falling,
       Flying,
+      Lying,
       Running,
       Sledding,
       Sliding,
@@ -52,6 +54,7 @@ namespace jp::logic
 
       virtual void setState(CharacterState state);
       CharacterState getState() const;
+      float getRunSpeed() const;
 
    private:
       void resetJumpPower();
@@ -60,7 +63,6 @@ namespace jp::logic
       bool canSquat() const;
 
       CharacterDirection getDirection() const;
-      float getRunSpeed() const;
       
       void setDirection(CharacterDirection direction);
       void setRunSpeed(float speed);
