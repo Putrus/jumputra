@@ -38,10 +38,12 @@ namespace jp::logic
       {
          if (oldRect.left >= b.x)
          {
+            std::cout << "horizontal::Left" << std::endl;
             return SegmentCollision::Left;
          }
          else if (oldRect.getRight() <= a.x)
          {
+            std::cout << "horizontal::Right" << std::endl;
             return SegmentCollision::Right;
          }
          else if (oldRect.getCenter().y > b.y)
@@ -58,6 +60,6 @@ namespace jp::logic
 
    bool HorizontalSegment::isCollision(math::Vector2<float> a, math::Vector2<float> b) const
    {
-      return a.x >= this->a.x && a.x <= this->b.x && this->a.y >= a.y && this->a.y <= b.y;
+      return a.x > this->a.x && a.x < this->b.x && this->a.y > a.y && this->a.y < b.y;
    }
 }

@@ -65,7 +65,12 @@ namespace jp::logic
 
    void Character::update(float dt)
    {
-      if (mState == CharacterState::Squatting)
+      if (getState() != CharacterState::Sledding)
+      {
+         mGravity = mProperties.physics.gravity;
+      }
+
+      if (getState() == CharacterState::Squatting)
       {
          mJumpPower += mProperties.character.jump.gain * dt;
          if (mJumpPower.y >= mProperties.character.jump.gain.y)
@@ -85,7 +90,7 @@ namespace jp::logic
       }
 
       math::Vector2<float> resultantAcceleration = mAcceleration +
-         mProperties.physics.gravity + windAcceleration;
+         mGravity + windAcceleration;
 
       math::Vector2<float> newAcceleration = 0.f;
 
@@ -123,6 +128,10 @@ namespace jp::logic
                break;
             case SegmentCollision::Left:
             {
+               if (getState() == CharacterState::Sledding)
+               {
+                  break;
+               }
                newRect.left = segment->b.x;
                newVelocity.x = getVelocity().x * -mProperties.physics.bounceFactor;
                if (math::sign(newVelocity.x) == math::sign(getRunSpeed()))
@@ -133,6 +142,10 @@ namespace jp::logic
             }
             case SegmentCollision::Right:
             {
+               if (getState() == CharacterState::Sledding)
+               {
+                  break;
+               }
                newRect.left = segment->a.x - newRect.width;
                newVelocity.x = getVelocity().x * -mProperties.physics.bounceFactor;
                if (math::sign(newVelocity.x) == math::sign(getRunSpeed()))
@@ -150,7 +163,7 @@ namespace jp::logic
             }
             case SegmentCollision::Bottom:
             {
-               newRect.top = segment->a.y - newRect.height;
+               newRect.top = std::min(segment->a.y, segment->b.y) - newRect.height;
                newVelocity.y = 0.f;
                if (segment->getSurface() == SegmentSurface::Ordinary)
                {
@@ -259,6 +272,44 @@ namespace jp::logic
                      newRect.top = newRect.getRight() * slope + intercept;
                   }
                }
+               break;
+            }
+            case SegmentCollision::Roof:
+            {
+               float slope = segment->getSlope();
+               float intercept = segment->getIntercept();
+               if (slope < 0)
+               {
+                  if (newRect.getRight() > segment->b.x)
+                  {
+                     newRect.top = segment->b.y;
+                  }
+                  else
+                  {
+                     newRect.top = newRect.getRight() * slope + intercept;
+                  }
+               }
+               else
+               {
+                  if (newRect.left < segment->a.x)
+                  {
+                     newRect.top = segment->a.y;
+                  }
+                  else
+                  {
+                     newRect.top = newRect.left * slope + intercept;
+                  }
+               }
+               
+               if (getState() != CharacterState::Sledding)
+               {
+                  mGravity.x = mProperties.physics.gravity.y * slope / 1.41f; 
+                  mGravity.y = mProperties.physics.gravity.y / 1.41f;
+                  newVelocity.x /= 1.41f;
+                  newVelocity.y /= 1.41f;
+               }
+               newRect.top -= newRect.height;
+               newState = CharacterState::Sledding;
                break;
             }
             default:

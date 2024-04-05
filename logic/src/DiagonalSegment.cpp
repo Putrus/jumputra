@@ -37,14 +37,21 @@ namespace jp::logic
       }
       else if (isHorizontalCollision(newRect.getLeftBottom(), newRect.getRightBottom(), slope, intercept))
       {
+         if ((slope < 0 && newRect.getRight() > b.x) ||
+            (slope > 0 && newRect.left < a.x))
+         {
+            return SegmentCollision::Bottom;
+         }
          return SegmentCollision::Roof;
       }
       else if (isVerticalCollision(newRect.getLeftTop(), newRect.getLeftBottom(), slope, intercept))
       {
+         std::cout << "Diagonal::Left" << std::endl;
          return SegmentCollision::Left;
       }
       else if (isVerticalCollision(newRect.getRightTop(), newRect.getRightBottom(), slope, intercept))
       {
+         std::cout << "Diagonal::Right" << std::endl;
          return SegmentCollision::Right;
       }
       else
@@ -57,13 +64,13 @@ namespace jp::logic
       math::Vector2<float> b, float slope, float intercept) const
    {
       float commonX = (a.y - intercept) / slope;
-      return commonX >= a.x && commonX <= b.x && commonX >= this->a.x && commonX <= this->b.x;
+      return commonX > a.x && commonX < b.x && commonX > this->a.x && commonX < this->b.x;
    }
 
    bool DiagonalSegment::isVerticalCollision(math::Vector2<float> a,
       math::Vector2<float> b, float slope, float intercept) const
    {
       float commonY = a.x * slope + intercept;
-      return commonY >= a.y && commonY <= b.y && commonY >= std::min(this->a.y, this->b.y) && commonY <= std::max(this->a.y, this->b.y);
+      return commonY > a.y && commonY < b.y && commonY > std::min(this->a.y, this->b.y) && commonY < std::max(this->a.y, this->b.y);
    }
 }

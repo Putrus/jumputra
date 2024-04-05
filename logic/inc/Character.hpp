@@ -70,6 +70,7 @@ namespace jp::logic
       CharacterState mState = CharacterState::Flying;
       CharacterDirection mDirection = CharacterDirection::Up;
       math::Vector2<float> mJumpPower = math::Vector2<float>();
+      math::Vector2<float> mGravity = math::Vector2<float>();
       float mRunSpeed = 0.f;
 
       const Properties& mProperties;
