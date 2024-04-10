@@ -73,8 +73,16 @@ namespace jp::game
             controlledCharacter.jump();
             break;
          case sf::Keyboard::Key::Left:
+            if (controlledCharacter.getDirection() == logic::CharacterDirection::Left)
+            {
+               controlledCharacter.stop();
+            }
+            break;
          case sf::Keyboard::Key::Right:
-            controlledCharacter.stop();
+            if (controlledCharacter.getDirection() == logic::CharacterDirection::Right)
+            {
+               controlledCharacter.stop();
+            }
             break;
          case sf::Keyboard::Key::L:
             std::cout << "Log: " << std::endl;
