@@ -97,7 +97,7 @@ namespace jp::logic
       math::Vector2<float> newVelocity = mVelocity +
          resultantAcceleration * dt;
       
-      if (newVelocity.x < 5.f && newVelocity.x > -5.f)
+      if (newVelocity.x < 0.1f && newVelocity.x > -0.1f)
       {
          newVelocity.x = 0.f;
       }
@@ -167,14 +167,8 @@ namespace jp::logic
                newVelocity.y = 0.f;
                if (segment->getSurface() == SegmentSurface::Ordinary)
                {
-                  if (getState() != CharacterState::Running)
-                  {
-                     newVelocity.x = 0;
-                  }
-                  else
-                  {
-                     newRunSpeed = getRunSpeed();
-                  }
+                  newRunSpeed = getRunSpeed();
+                  newVelocity.x = 0.f;
 
                   switch (getState())
                   {

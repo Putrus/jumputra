@@ -7,6 +7,13 @@ namespace jp::graphic
    class Wind : public sf::Drawable
    {
    public:
+      Wind(const sf::FloatRect& rect);
       void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+
+   protected:
+      void move(const sf::Vector2f& offset);
+
+      std::unique_ptr<sf::Texture> mTexture = std::make_unique<sf::Texture>();
+      sf::Sprite mSprite;
    };
 }

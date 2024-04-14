@@ -17,7 +17,7 @@ namespace jp::logic
          const math::Rect<float>& rect, const math::Vector2<float>& acceleration,
          const math::Vector2<float>& velocity = 0.f);
 
-      void update(float dt) override;
+      virtual void update(float dt) override;
 
       float getImpact() const;
       const math::Vector2<float>& getMaxVelocity() const;

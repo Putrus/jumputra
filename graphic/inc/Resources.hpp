@@ -14,7 +14,6 @@ namespace jp::graphic
 
    enum class TextureID : int
    {
-
    };
 
    enum class SoundBufferID : int

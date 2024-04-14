@@ -29,11 +29,7 @@ namespace jp::graphic
       mFontManager.load(FontID::Alkhemikal, dirname + "/Alkhemikal.ttf");
    }
 
-   void Resources::loadTextures(const std::string& dirname)
-   {
-   }
+   void Resources::loadTextures(const std::string& dirname) {}
 
-   void Resources::loadSoundBuffers(const std::string& dirname)
-   {
-   }
+   void Resources::loadSoundBuffers(const std::string& dirname) {}
 }
