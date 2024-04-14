@@ -426,14 +426,14 @@ namespace jp::logic
          getState() == CharacterState::Sticking;
    }
 
-   CharacterDirection Character::getDirection() const
-   {
-      return mDirection;
-   }
-
    float Character::getRunSpeed() const
    {
       return mRunSpeed;
+   }
+
+   CharacterDirection Character::getDirection() const
+   {
+      return mDirection;
    }
 
    CharacterState Character::getState() const

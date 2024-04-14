@@ -18,6 +18,7 @@ set(HEADERS
    inc/SegmentsLoader.hpp
    inc/Selectable.hpp
    inc/SelectionManager.hpp
+   inc/Statistics.hpp
    inc/Updatable.hpp
    inc/VerticalSegment.hpp
    inc/Wind.hpp
@@ -35,6 +36,7 @@ set(SOURCES
    src/Segment.cpp
    src/Selectable.cpp
    src/SelectionManager.cpp
+   src/Statistics.cpp
    src/VerticalSegment.cpp
    src/Wind.cpp
    )

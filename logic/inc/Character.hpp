@@ -53,6 +53,7 @@ namespace jp::logic
       void stop();
 
       virtual void setState(CharacterState state);
+      CharacterDirection getDirection() const;
       CharacterState getState() const;
       float getRunSpeed() const;
 
@@ -62,8 +63,6 @@ namespace jp::logic
       bool canRun() const;
       bool canSquat() const;
 
-      CharacterDirection getDirection() const;
-      
       void setDirection(CharacterDirection direction);
       void setRunSpeed(float speed);
 
