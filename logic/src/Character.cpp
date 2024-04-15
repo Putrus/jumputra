@@ -97,11 +97,6 @@ namespace jp::logic
       math::Vector2<float> newVelocity = mVelocity +
          resultantAcceleration * dt;
       
-      if (newVelocity.x < 0.1f && newVelocity.x > -0.1f)
-      {
-         newVelocity.x = 0.f;
-      }
-
       float newRunSpeed = 0.f;
 
       //flying is default state
@@ -211,9 +206,10 @@ namespace jp::logic
                {
                   newAcceleration.x = mProperties.physics.slipperyFriction * -math::sign(getVelocity().x);
 
-                  if (getVelocity().x == 0.f)
+                  if (getVelocity().x < 5.f && getVelocity().x > -5.f)
                   {
                      newAcceleration.x = 0.f;
+                     newVelocity.x = 0.f;
                   }
 
                   switch (getState())
