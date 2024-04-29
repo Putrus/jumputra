@@ -1,15 +1,14 @@
 #pragma once
 
-#include "../../math/inc/Vector2.hpp"
+#include "Loadable.hpp"
 
-#include <nlohmann/json.hpp>
+#include "../../math/inc/Vector2.hpp"
 
 namespace jp::logic
 {
-   struct Properties
+   struct Properties : public Loadable
    {
-      void loadFromFile(const std::string& filename);
-      void loadFromJson(const nlohmann::json& json);
+      void loadFromJson(const nlohmann::json& json) override;
 
       float secondsPerUpdate = 0.f;
 

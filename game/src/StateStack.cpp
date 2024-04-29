@@ -2,7 +2,6 @@
 #include "../inc/StateMenu.hpp"
 #include "../inc/StateStack.hpp"
 
-
 namespace jp::game
 {
    StateStack::StateStack(StateID id, Context& context) : mContext(context)

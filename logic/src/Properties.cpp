@@ -4,21 +4,6 @@
 
 namespace jp::logic
 {
-   void Properties::loadFromFile(const std::string& filename)
-   {
-      std::ifstream file(filename);
-      if (!file.is_open())
-      {
-         throw std::runtime_error("jp::logic::Properties::loadFromFile - Failed to open file " + filename);
-      }
-
-      nlohmann::json data;
-      file >> data;
-      file.close();
-
-      loadFromJson(data);
-   }
-
    void Properties::loadFromJson(const nlohmann::json& json)
    {
       secondsPerUpdate = json["logic"]["secondsPerUpdate"];
