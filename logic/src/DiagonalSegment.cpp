@@ -46,12 +46,10 @@ namespace jp::logic
       }
       else if (isVerticalCollision(newRect.getLeftTop(), newRect.getLeftBottom(), slope, intercept))
       {
-         std::cout << "Diagonal::Left" << std::endl;
          return SegmentCollision::Left;
       }
       else if (isVerticalCollision(newRect.getRightTop(), newRect.getRightBottom(), slope, intercept))
       {
-         std::cout << "Diagonal::Right" << std::endl;
          return SegmentCollision::Right;
       }
       else

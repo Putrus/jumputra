@@ -17,8 +17,6 @@ namespace jp::graphic
          for (unsigned int x = xStart; x < img->getSize().x; x += xInterspace)
          {
             img->setPixel(sf::Vector2u(x, y), sf::Color::White);
-            std::cout << x << " " << y << std::endl;
-
          }
       }
       if (!mTexture->loadFromImage(*img))

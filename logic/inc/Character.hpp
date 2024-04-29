@@ -3,6 +3,7 @@
 #include "Entity.hpp"
 #include "Properties.hpp"
 #include "Segment.hpp"
+#include "Statistics.hpp"
 #include "Wind.hpp"
 
 #include <vector>
@@ -56,6 +57,7 @@ namespace jp::logic
       CharacterDirection getDirection() const;
       CharacterState getState() const;
       float getRunSpeed() const;
+      Statistics getStatistics() const;
 
    private:
       void resetJumpPower();
@@ -71,6 +73,7 @@ namespace jp::logic
       math::Vector2<float> mJumpPower = math::Vector2<float>();
       math::Vector2<float> mGravity = math::Vector2<float>();
       float mRunSpeed = 0.f;
+      Statistics mStatistics;
 
       const Properties& mProperties;
       const std::vector<std::shared_ptr<Segment>>& mSegments;

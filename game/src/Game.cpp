@@ -87,9 +87,10 @@ namespace jp::game
          case sf::Keyboard::Key::L:
             std::cout << "Log: " << std::endl;
             std::cout << "state: " << controlledCharacter.getState() << std::endl;
-            std::cout << "a: " << controlledCharacter.getAcceleration() << std::endl;
-            std::cout << "v: " << controlledCharacter.getVelocity() << std::endl;
-            std::cout << "r: " << controlledCharacter.getRunSpeed() << std::endl;
+            std::cout << "acceleration: " << controlledCharacter.getAcceleration() << std::endl;
+            std::cout << "velocity: " << controlledCharacter.getVelocity() << std::endl;
+            std::cout << "runSpeed: " << controlledCharacter.getRunSpeed() << std::endl;
+            std::cout << "statistics: " << controlledCharacter.getStatistics() << std::endl;
             std::cout << std::endl;
          default:
             break;

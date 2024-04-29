@@ -313,6 +313,13 @@ namespace jp::logic
          newVelocity.x += getRunSpeed();
       }
 
+      if (getState() == CharacterState::Falling && newState != getState())
+      {
+         ++mStatistics.falls;
+      }
+
+      mStatistics.time += dt;
+
       setAcceleration(newAcceleration);
       setVelocity(newVelocity);
       setRunSpeed(newRunSpeed);
@@ -324,6 +331,7 @@ namespace jp::logic
    {
       if (getState() == CharacterState::Squatting)
       {
+         ++mStatistics.jumps;
          setState(CharacterState::Flying);
          setAccelerationX(0.f);
          switch (mDirection)
@@ -437,6 +445,11 @@ namespace jp::logic
       return mState;
    }
 
+   Statistics Character::getStatistics() const
+   {
+      return mStatistics;
+   }
+
    void Character::setDirection(CharacterDirection direction)
    {
       mDirection = direction;
@@ -449,10 +462,6 @@ namespace jp::logic
 
    void Character::setState(CharacterState state)
    {
-      if (state != getState())
-      {
-         std::cout << getState() << " -> " << state << std::endl;
-      }
       mState = state;
    }
 }
