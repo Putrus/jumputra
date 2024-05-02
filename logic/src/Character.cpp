@@ -188,6 +188,7 @@ namespace jp::logic
                else if (segment->getSurface() == SegmentSurface::Sticky)
                {
                   newVelocity.x = 0.f;
+                  newRect.left = oldRect.left;
                   switch (getState())
                   {
                      case CharacterState::Burying:
