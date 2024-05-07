@@ -1,8 +1,9 @@
 {
+   "language": "polski",
    "graphic": {
       "window" : {
          "size" : {
-            "x" : 640,
+            "x" : 480,
             "y" : 360
          }
       }

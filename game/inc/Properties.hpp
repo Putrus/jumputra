@@ -5,10 +5,11 @@
 
 namespace jp::game
 {
-   struct Properties
+   struct Properties : public logic::Loadable
    {
-      void loadFromFile(const std::string& filename);
-      void loadFromJson(const nlohmann::json& json);
+      void loadFromJson(const nlohmann::json& json) override;
+
+      std::string language;
 
       graphic::Properties graphic;
       logic::Properties logic;

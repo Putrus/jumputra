@@ -1,0 +1,10 @@
+{
+   "english": {
+      "play": "PLAY",
+      "quit": "QUIT"
+   },
+   "polski": {
+      "play": "GRAJ",
+      "quit": "WYJDZ"
+   }
+}

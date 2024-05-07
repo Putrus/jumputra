@@ -9,7 +9,7 @@ namespace jp::graphic
 {
    enum class FontID : int
    {
-      Alkhemikal = 0
+      Pixeled = 0
    };
 
    enum class TextureID : int

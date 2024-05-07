@@ -26,7 +26,7 @@ namespace jp::graphic
 
    void Resources::loadFonts(const std::string& dirname)
    {
-      mFontManager.load(FontID::Alkhemikal, dirname + "/Alkhemikal.ttf");
+      mFontManager.load(FontID::Pixeled, dirname + "/Pixeled.ttf");
    }
 
    void Resources::loadTextures(const std::string& dirname) {}

@@ -3,12 +3,12 @@
 namespace jp::game
 {
    StateMenu::StateMenu(StateStack* stack, Context& context) : State(stack, context)
-   {
-      mMenu.addItem(std::make_unique<MenuItem>(sf::Vector2f(160.f, 64.f), "Play",
-         context.resources.getFont(graphic::FontID::Alkhemikal)));
+   { 
+      mMenu.addItem(std::make_unique<MenuItem>(sf::Vector2f(160.f, 64.f), context.language.getString("play"),
+         context.resources.getFont(graphic::FontID::Pixeled)));
 
-      mMenu.addItem(std::make_unique<MenuItem>(sf::Vector2f(160.f, 128.f), "Quit",
-         context.resources.getFont(graphic::FontID::Alkhemikal)));
+      mMenu.addItem(std::make_unique<MenuItem>(sf::Vector2f(160.f, 128.f), context.language.getString("quit"),
+         context.resources.getFont(graphic::FontID::Pixeled)));
    }
 
    void StateMenu::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
@@ -47,12 +47,12 @@ namespace jp::game
 
    void StateMenu::performSelected()
    {
-      if (mMenu.getSelectedTextString() == "Play")
+      if (mMenu.getSelectedTextString() == mContext.language.getString("play"))
       {
          pushState(StateID::Game);
       }
 
-      if (mMenu.getSelectedTextString() == "Quit")
+      if (mMenu.getSelectedTextString() == mContext.language.getString("quit"))
       {
          mContext.window.close();
       }

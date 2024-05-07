@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../inc/Language.hpp"
 #include "../inc/Properties.hpp"
 
 #include "../../math/inc/Vector2.hpp"
@@ -16,6 +17,7 @@ namespace jp::game
       graphic::Resources resources;
       graphic::Window window;
 
+      Language language;
       Properties properties;
    };
 }

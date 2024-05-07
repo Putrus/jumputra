@@ -12,6 +12,7 @@ set(HEADERS
    inc/Eventable.hpp
    inc/Game.hpp
    inc/Jumputra.hpp
+   inc/Language.hpp
    inc/Menu.hpp
    inc/MenuItem.hpp
    inc/Properties.hpp
@@ -28,6 +29,7 @@ set(SOURCES
    src/Context.cpp
    src/Game.cpp
    src/Jumputra.cpp
+   src/Language.cpp
    src/main.cpp
    src/Menu.cpp
    src/MenuItem.cpp

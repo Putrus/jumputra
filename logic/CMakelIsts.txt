@@ -12,6 +12,7 @@ set(HEADERS
    inc/Engine.hpp
    inc/Entity.hpp
    inc/HorizontalSegment.hpp
+   inc/Loadable.hpp
    inc/Properties.hpp
    inc/Runnable.hpp
    inc/Segment.hpp
@@ -31,6 +32,7 @@ set(SOURCES
    src/Engine.cpp
    src/Entity.cpp
    src/HorizontalSegment.cpp
+   src/Loadable.cpp
    src/Properties.cpp
    src/Runnable.cpp
    src/Segment.cpp
