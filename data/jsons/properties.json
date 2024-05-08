@@ -21,7 +21,11 @@
                "y": 500.0
             }
          },
-         "runSpeed": 85.0
+         "runSpeed": 85.0,
+         "size": {
+            "x": 24.0,
+            "y": 24.0
+         }
       },
       "physics": {
          "bounceFactor": 0.5,

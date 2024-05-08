@@ -7,7 +7,8 @@ namespace jp::game
 {
    Game::Game(Context& context) : mContext(context), logic::Engine(context.properties.logic)
    {
-      addCharacter(std::make_shared<Character>(math::Rect(10.f, 15100.f, 24.f, 24.f), mProperties, mSegments, mWinds));
+      addCharacter(std::make_shared<Character>(math::Rect(10.f, 15100.f, context.properties.logic.character.size.x,
+         context.properties.logic.character.size.y), mProperties, mSegments, mWinds));
       logic::SegmentsLoader<Segment> segmentsLoader;
       std::vector<std::shared_ptr<Segment>> segments = segmentsLoader.loadFromFile("data/jsons/segments.json");
       logic::WindsLoader<Wind> windsLoader;

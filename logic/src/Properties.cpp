@@ -13,6 +13,8 @@ namespace jp::logic
       character.jump.max.x = json["logic"]["character"]["jump"]["max"]["x"];
       character.jump.max.y = json["logic"]["character"]["jump"]["max"]["y"];
       character.runSpeed = json["logic"]["character"]["runSpeed"];
+      character.size.x = json["logic"]["character"]["size"]["x"];
+      character.size.y = json["logic"]["character"]["size"]["y"];
 
       physics.bounceFactor = json["logic"]["physics"]["bounceFactor"];
       physics.checkCollisionDistance = json["logic"]["physics"]["checkCollisionDistance"];

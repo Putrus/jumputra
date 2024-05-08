@@ -20,6 +20,7 @@ namespace jp::logic
             math::Vector2<float> max = 0.f;
          } jump;
          float runSpeed = 0.f;
+         math::Vector2<float> size = 0.f;
       } character;
 
       struct Physics
