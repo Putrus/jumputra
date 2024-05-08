@@ -1,0 +1,82 @@
+{
+   "statistics": {
+      "jumps": 0,
+      "falls": 0,
+      "time": 0.0
+   },
+   "segments": [
+   {
+      "type" : "comment",
+      "text" : "RW 1"
+   },
+   {
+      "type" : "points",
+      "surface" : "ordinary",
+      "points" : [
+      {
+         "x" : 7,
+         "y" : 15120
+      },
+      {
+         "x" : 7,
+         "y" : 15304
+      },
+      {
+         "x": 127,
+         "y": 15304
+      },
+      {
+         "x": 127,
+         "y": 15448
+      },
+      {
+         "x": 352,
+         "y": 15448
+      },
+      {
+         "x": 352,
+         "y": 15304
+      },
+      {
+         "x": 472,
+         "y": 15304
+      },
+      {
+         "x": 472,
+         "y": 15120
+      }
+      ]
+   },
+   {
+      "type" : "rectangle",
+      "surface" : "ordinary",
+      "left" : 184.0,
+      "top" : 15160.0,
+      "width" : 112.0,
+      "height" : 48.0
+   }
+   ],
+   "winds": [
+   {
+      "acceleration": {
+         "x" : 100.0,
+         "y" : 0.0
+      },
+      "impact" : 1.0,
+      "maxVelocity" : {
+         "x" : 500.0,
+         "y" : 0.0
+      },
+      "rect": {
+         "left" : 0.0,
+         "top" : 15120.0,
+         "width" : 480.0,
+         "height" : 360.0
+      },
+      "velocity": {
+         "x": 0.0,
+         "y": 0.0
+      }
+   }
+   ]
+}
