@@ -22,7 +22,8 @@ namespace jp::logic
          math::Vector2<float> maxVelocity(jsonWind["maxVelocity"]["x"], jsonWind["maxVelocity"]["y"]);
          math::Rect<float> rect(jsonWind["rect"]["left"], jsonWind["rect"]["top"],
                jsonWind["rect"]["width"], jsonWind["rect"]["height"]);
-         winds.push_back(T::create(impact, maxVelocity, rect, acceleration));
+         math::Vector2<float> velocity(jsonWind["velocity"]["x"], jsonWind["velocity"]["y"]);
+         winds.push_back(T::create(impact, maxVelocity, rect, acceleration, velocity));
       }
 
       return winds;
