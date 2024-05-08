@@ -11,6 +11,7 @@ set(HEADERS
    inc/DiagonalSegment.hpp
    inc/Engine.hpp
    inc/Entity.hpp
+   inc/EntityLoader.hpp
    inc/HorizontalSegment.hpp
    inc/Loadable.hpp
    inc/Properties.hpp
