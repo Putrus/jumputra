@@ -1,9 +1,38 @@
 {
-   "statistics": {
-      "jumps": 0,
-      "falls": 0,
-      "time": 0.0
-   },
+   "characters": [
+   {
+      "rect": {
+         "left": 10.0,
+         "top": 15100.0,
+         "width": 24.0,
+         "height": 24.0
+      },
+      "acceleration": {
+         "x": 0.0,
+         "y": 0.0
+      },
+      "velocity": {
+         "x": 0.0,
+         "y": 0.0
+      },
+      "state": 3,
+      "direction": 0,
+      "jumpPower": {
+         "x": 0.0,
+         "y": 0.0
+      },
+      "gravity": {
+         "x": 0.0,
+         "y": 0.0
+      },
+      "runSpeed": 0.0,
+      "statistics": {
+         "jumps": 0,
+         "falls": 0,
+         "time": 0.0
+      }
+   }
+   ],
    "segments": [
    {
       "type" : "comment",
