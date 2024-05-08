@@ -11,6 +11,7 @@ set(HEADERS
    inc/Context.hpp
    inc/Eventable.hpp
    inc/Game.hpp
+   inc/Goal.hpp
    inc/Jumputra.hpp
    inc/Language.hpp
    inc/Menu.hpp
@@ -28,6 +29,7 @@ set(SOURCES
    src/Character.cpp
    src/Context.cpp
    src/Game.cpp
+   src/Goal.cpp
    src/Jumputra.cpp
    src/Language.cpp
    src/main.cpp

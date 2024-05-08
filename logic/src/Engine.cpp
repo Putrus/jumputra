@@ -20,6 +20,11 @@ namespace jp::logic
       }
    }
 
+   void Engine::setGoal(const std::shared_ptr<Goal>& goal)
+   {
+      mGoal = goal;
+   }
+
    void Engine::addCharacter(const std::shared_ptr<Character>& character)
    {
       mCharacters.push_back(character);

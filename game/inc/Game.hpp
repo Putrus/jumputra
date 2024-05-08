@@ -2,6 +2,7 @@
 
 #include "Character.hpp"
 #include "Context.hpp"
+#include "Goal.hpp"
 #include "Eventable.hpp"
 #include "Properties.hpp"
 #include "Segment.hpp"
@@ -23,6 +24,7 @@ namespace jp::game
       void event(const sf::Event& event) override;
       void update(float dt) override;
 
+      void setGoal(const std::shared_ptr<Goal>& goal);
       void addCharacter(const std::shared_ptr<Character>& character);
       void addSegment(const std::shared_ptr<Segment>& segment);
       void addWind(const std::shared_ptr<Wind>& wind);

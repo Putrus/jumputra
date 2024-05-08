@@ -7,12 +7,13 @@ namespace jp::game
 {
    Game::Game(Context& context) : mContext(context), logic::Engine(context.properties.logic)
    {
-      addCharacter(std::make_shared<Character>(math::Rect(10.f, 15100.f, context.properties.logic.character.size.x,
-         context.properties.logic.character.size.y), mProperties, mSegments, mWinds));
       logic::SegmentsLoader<Segment> segmentsLoader;
       std::vector<std::shared_ptr<Segment>> segments = segmentsLoader.loadFromFile("data/jsons/segments.json");
       logic::WindsLoader<Wind> windsLoader;
       std::vector<std::shared_ptr<Wind>> winds = windsLoader.loadFromFile("data/jsons/winds.json");
+      setGoal(std::make_shared<Goal>(math::Rect<float>(100.f, 15100.f, 40.f, 40.f)));
+      addCharacter(std::make_shared<Character>(math::Rect(10.f, 15100.f, context.properties.logic.character.size.x,
+         context.properties.logic.character.size.y), mProperties, mSegments, mWinds));
       for (const auto& segment : segments)
       {
          addSegment(segment);
@@ -103,6 +104,12 @@ namespace jp::game
    {
       updateView();
       logic::Engine::update(dt);
+   }
+
+   void Game::setGoal(const std::shared_ptr<Goal>& goal)
+   {
+      mDrawables.push_back(goal);
+      Engine::setGoal(goal);
    }
 
    void Game::addCharacter(const std::shared_ptr<Character>& character)
