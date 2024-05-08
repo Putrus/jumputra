@@ -8,6 +8,7 @@ DESCRIPTION "jumputra logic"
 
 set(HEADERS
    inc/Character.hpp
+   inc/CharactersLoader.hpp
    inc/DiagonalSegment.hpp
    inc/Engine.hpp
    inc/Entity.hpp
