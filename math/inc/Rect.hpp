@@ -177,10 +177,10 @@ namespace jp::math
    template <typename T>
    Rect<T>& Rect<T>::operator=(const nlohmann::json& json)
    {
-      left = json["left"];
-      top = json["top"];
-      width = json["width"];
-      height = json["height"];
+      left = json.at("left");
+      top = json.at("top");
+      width = json.at("width");
+      height = json.at("height");
       return *this;
    }
 

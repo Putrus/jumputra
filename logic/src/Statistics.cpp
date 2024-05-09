@@ -11,17 +11,17 @@ namespace jp::logic
 
    void Statistics::fromJson(const nlohmann::json& json)
    {
-      jumps = json["jumps"];
-      falls = json["falls"];
-      time = json["time"];
+      jumps = json.at("jumps");
+      falls = json.at("falls");
+      time = json.at("time");
    }
 
    nlohmann::json Statistics::toJson() const
    {
       nlohmann::json json;
-      json["jumps"] = jumps;
-      json["falls"] = falls;
-      json["time"] = time;
+      json.at("jumps") = jumps;
+      json.at("falls") = falls;
+      json.at("time") = time;
 
       return json;
    }

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../../core/inc/Jsonable.hpp"
 #include "../../math/inc/Vector2.hpp"
 
 namespace jp::logic

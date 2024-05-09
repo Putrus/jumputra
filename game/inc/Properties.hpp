@@ -1,7 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-
+#include "../../graphic/inc/Properties.hpp"
 #include "../../logic/inc/Properties.hpp"
 
 namespace jp::game
@@ -11,16 +10,7 @@ namespace jp::game
       void fromJson(const nlohmann::json& json) override;
       nlohmann::json toJson() const override;
 
-      std::string language;
-
-      struct Graphic
-      {
-         struct Window
-         {
-            sf::Vector2u size;
-         } window;
-      } graphic;
-
+      graphic::Properties graphic;
       logic::Properties logic;
    };
 }

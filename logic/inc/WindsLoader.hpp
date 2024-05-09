@@ -15,13 +15,13 @@ namespace jp::logic
    std::vector<std::shared_ptr<T>> WindsLoader<T>::loadFromJson(const nlohmann::json& json) const
    {
       std::vector<std::shared_ptr<T>> winds;
-      for (const auto& jsonWind : json["winds"])
+      for (const auto& jsonWind : json.at("winds"))
       {
-         float impact = jsonWind["impact"];
-         math::Vector2<float> acceleration(jsonWind["acceleration"]);
-         math::Vector2<float> maxVelocity(jsonWind["maxVelocity"]);
-         math::Rect<float> rect(jsonWind["rect"]);
-         math::Vector2<float> velocity(jsonWind["velocity"]);
+         float impact = jsonWind.at("impact");
+         math::Vector2<float> acceleration(jsonWind.at("acceleration"));
+         math::Vector2<float> maxVelocity(jsonWind.at("maxVelocity"));
+         math::Rect<float> rect(jsonWind.at("rect"));
+         math::Vector2<float> velocity(jsonWind.at("velocity"));
          winds.push_back(T::create(impact, maxVelocity, rect, acceleration, velocity));
       }
 

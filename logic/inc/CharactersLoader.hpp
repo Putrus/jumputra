@@ -30,17 +30,17 @@ namespace jp::logic
    std::vector<std::shared_ptr<T>> CharactersLoader<T>::loadFromJson(const nlohmann::json& json) const
    {
       std::vector<std::shared_ptr<T>> characters;
-      for (const auto& jsonCharacter : json["characters"])
+      for (const auto& jsonCharacter : json.at("characters"))
       {
-         math::Rect<float> rect(jsonCharacter["rect"]);
-         math::Vector2<float> acceleration(jsonCharacter["acceleration"]);
-         math::Vector2<float> velocity(jsonCharacter["velocity"]);
-         CharacterState state = static_cast<CharacterState>(jsonCharacter["state"]);
-         CharacterDirection direction = static_cast<CharacterDirection>(jsonCharacter["direction"]);
-         math::Vector2<float> jumpPower(jsonCharacter["jumpPower"]);
-         math::Vector2<float> gravity(jsonCharacter["gravity"]);
-         float runSpeed = jsonCharacter["runSpeed"];
-         Statistics statistics(jsonCharacter["statistics"]);
+         math::Rect<float> rect(jsonCharacter.at("rect"));
+         math::Vector2<float> acceleration(jsonCharacter.at("acceleration"));
+         math::Vector2<float> velocity(jsonCharacter.at("velocity"));
+         CharacterState state = static_cast<CharacterState>(jsonCharacter.at("state"));
+         CharacterDirection direction = static_cast<CharacterDirection>(jsonCharacter.at("direction"));
+         math::Vector2<float> jumpPower(jsonCharacter.at("jumpPower"));
+         math::Vector2<float> gravity(jsonCharacter.at("gravity"));
+         float runSpeed = jsonCharacter.at("runSpeed");
+         Statistics statistics(jsonCharacter.at("statistics"));
          characters.push_back(T::create(rect, acceleration, velocity, state, direction,
             jumpPower, gravity, runSpeed, statistics, mProperties, mSegments, mWinds));
       }

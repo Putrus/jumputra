@@ -9,6 +9,7 @@ DESCRIPTION "jumputra graphic"
 set(HEADERS
    inc/Character.hpp
    inc/Goal.hpp
+   inc/Properties.hpp
    inc/ResourceManager.hpp
    inc/Resources.hpp
    inc/Segment.hpp
@@ -19,6 +20,7 @@ set(HEADERS
 set(SOURCES
    src/Character.cpp
    src/Goal.cpp
+   src/Properties.cpp
    src/Resources.cpp
    src/Segment.cpp
    src/Wind.cpp
@@ -27,4 +29,4 @@ set(SOURCES
 
 add_library(jp_graphic STATIC ${HEADERS} ${SOURCES})
 
-target_link_libraries(jp_graphic PUBLIC sfml-graphics sfml-window sfml-audio sfml-system)
+target_link_libraries(jp_graphic PUBLIC jp_core sfml-graphics sfml-window sfml-audio sfml-system)

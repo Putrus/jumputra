@@ -6,7 +6,7 @@ namespace jp::game
    {
       resources.loadFromDirectory("data/resources");
       properties.loadFromJsonFile("data/jsons/properties.json");
-      language.setLanguage(properties.language);
+      language.setLanguage(properties.graphic.language);
 
       window.setSize(sf::Vector2u(properties.graphic.window.size.x, properties.graphic.window.size.y));
       window.setVerticalSyncEnabled(true);

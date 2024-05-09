@@ -18,15 +18,15 @@ namespace jp::logic
 
    void Entity::fromJson(const nlohmann::json& json)
    {
-      mRect = json["rect"];
-      mAcceleration = json["acceleration"];
-      mVelocity = json["velocity"];
+      mRect = json.at("rect");
+      mAcceleration = json.at("acceleration");
+      mVelocity = json.at("velocity");
    }
 
    nlohmann::json Entity::toJson() const
    {
       nlohmann::json json;
-      json["rect"] = mRect.toJson();
+      json.at("rect") = mRect.toJson();
 
       return json;
    }

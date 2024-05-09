@@ -113,8 +113,8 @@ namespace jp::math
    template <typename T>
    Vector2<T>& Vector2<T>::operator=(const nlohmann::json& json)
    {
-      x = json["x"];
-      y = json["y"];
+      x = json.at("x");
+      y = json.at("y");
       return *this;
    }
 

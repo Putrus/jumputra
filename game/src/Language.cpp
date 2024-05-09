@@ -27,7 +27,7 @@ namespace jp::game
       nlohmann::json json;
       for (auto& text : mTexts)
       {
-         json[mLanguage][text.first] = text.second;
+         json.at(mLanguage).at(text.first) = text.second;
       }
 
       return json;

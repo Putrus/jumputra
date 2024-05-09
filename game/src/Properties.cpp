@@ -6,23 +6,15 @@ namespace jp::game
 {
    void Properties::fromJson(const nlohmann::json& json)
    {
-      language = json["language"];
-      
-      graphic.window.size.x = json["graphic"]["window"]["size"]["x"];
-      graphic.window.size.y = json["graphic"]["window"]["size"]["y"];
-      logic.fromJson(json["logic"]);
+      graphic.fromJson(json.at("graphic"));
+      logic.fromJson(json.at("logic"));
    }
 
    nlohmann::json Properties::toJson() const
    {
       nlohmann::json json;
-      json["language"] = language;
-      
-      json["graphic"]["window"]["size"]["x"] = graphic.window.size.x;
-      json["graphic"]["window"]["size"]["y"] = graphic.window.size.y;
-
-      json["logic"] = logic.toJson();
-
+      json.at("graphic") = graphic.toJson();
+      json.at("logic") = logic.toJson();
       return json;
    }
 }
