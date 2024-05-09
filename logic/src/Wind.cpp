@@ -56,7 +56,6 @@ namespace jp::logic
       nlohmann::json json = Entity::toJson();
       json.at("impact") = mImpact;
       json.at("maxVelocity") = mMaxVelocity.toJson();
-
       return json;
    }
 

@@ -26,6 +26,12 @@ namespace jp::logic
       return json;
    }
 
+   Statistics& Statistics::operator=(const nlohmann::json& json)
+   {
+      fromJson(json);
+      return *this;
+   }
+
    std::ostream& operator<<(std::ostream& os, const Statistics& statistics)
    {
       os << "jumps: " << statistics.jumps << " falls: " << statistics.falls << " time: " << statistics.time;

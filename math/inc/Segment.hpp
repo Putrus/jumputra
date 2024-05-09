@@ -28,6 +28,8 @@ namespace jp::math
 
       void swapPoints();
 
+      Segment& operator=(const nlohmann::json& json);
+
       Vector2<T> a;
       Vector2<T> b;
    };
@@ -108,6 +110,13 @@ namespace jp::math
    void Segment<T>::swapPoints()
    {
       std::swap(a, b);
+   }
+
+   template <typename T>
+   Segment<T>& Segment<T>::operator=(const nlohmann::json& json)
+   {
+      fromJson(json);
+      return *this;
    }
 
    template <typename T>

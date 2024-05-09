@@ -7,16 +7,16 @@
 
 namespace jp::graphic
 {
-   enum class FontID : int
+   enum class FontID : unsigned long long
    {
       Pixeled = 0
    };
 
-   enum class TextureID : int
+   enum class TextureID : unsigned long long
    {
    };
 
-   enum class SoundBufferID : int
+   enum class SoundBufferID : unsigned long long
    {
 
    };

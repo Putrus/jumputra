@@ -10,7 +10,7 @@
 
 namespace jp::logic
 {
-   enum class CharacterState : int
+   enum class CharacterState : unsigned long long
    {
       Burying = 0,
       Dying,
@@ -26,7 +26,7 @@ namespace jp::logic
       Stopping
    };
 
-   enum class CharacterDirection : int
+   enum class CharacterDirection : unsigned long long
    {
       Up = 0,
       Left,
@@ -65,6 +65,9 @@ namespace jp::logic
          const std::vector<std::shared_ptr<Wind>>& winds);
 
       void update(float dt) override;
+      virtual void fromJson(const nlohmann::json& json) override;
+      virtual nlohmann::json toJson() const override;
+      
       void jump();
       void run(CharacterDirection direction);
       void squat();

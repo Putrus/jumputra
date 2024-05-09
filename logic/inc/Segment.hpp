@@ -8,7 +8,7 @@
 
 namespace jp::logic
 {
-   enum class SegmentSurface : int
+   enum class SegmentSurface : unsigned long long
    {
       Ordinary = 0,
       Slippery,
@@ -17,7 +17,7 @@ namespace jp::logic
 
    std::ostream& operator<<(std::ostream& os, SegmentSurface surface);
 
-   enum class SegmentCollision : int
+   enum class SegmentCollision : unsigned long long
    {
       No = 0,
       Top,
@@ -37,6 +37,9 @@ namespace jp::logic
          SegmentSurface surface = SegmentSurface::Ordinary);
       Segment(const math::Vector2<float>& a, const math::Vector2<float>& b,
          SegmentSurface surface = SegmentSurface::Ordinary);
+
+      virtual void fromJson(const nlohmann::json& json) override;
+      virtual nlohmann::json toJson() const override;
 
       static std::shared_ptr<Segment> create(float aX, float aY, float bX, float bY,
          SegmentSurface surface = SegmentSurface::Ordinary);

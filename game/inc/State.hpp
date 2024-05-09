@@ -11,7 +11,7 @@ namespace jp::game
 {
    class StateStack;
 
-   enum class StateID : int
+   enum class StateID : unsigned long long
    {
       None = 0,
       Game,

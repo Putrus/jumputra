@@ -354,6 +354,29 @@ namespace jp::logic
       setState(newState);
    }
 
+   void Character::fromJson(const nlohmann::json& json)
+   {
+      mState = static_cast<CharacterState>(json.at("state"));
+      mDirection = static_cast<CharacterDirection>(json.at("direction"));
+      mJumpPower = json.at("jumpPower");
+      mGravity = json.at("gravity");
+      mRunSpeed = json.at("runSpeed");
+      mStatistics = json.at("statistics");
+      Entity::fromJson(json);
+   }
+
+   nlohmann::json Character::toJson() const
+   {
+      nlohmann::json json = Entity::toJson();
+      json.at("state") = static_cast<unsigned long long>(mState);
+      json.at("direction") = static_cast<unsigned long long>(mDirection);
+      json.at("jumpPower") = mJumpPower.toJson();
+      json.at("gravity") = mGravity.toJson();
+      json.at("runSpeed") = mRunSpeed;
+      json.at("statistics") = mStatistics.toJson();
+      return json;
+   }
+
    void Character::jump()
    {
       if (getState() == CharacterState::Squatting)

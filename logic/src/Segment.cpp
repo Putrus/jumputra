@@ -66,6 +66,19 @@ namespace jp::logic
       SegmentSurface surface/* = SegmentSurface::Ordinary*/)
       : math::Segment<float>(a, b), mSurface(surface) {}
 
+   void Segment::fromJson(const nlohmann::json& json)
+   {
+      mSurface = static_cast<SegmentSurface>(json.at("surface"));
+      math::Segment<float>::fromJson(json);
+   }
+
+   nlohmann::json Segment::toJson() const
+   {
+      nlohmann::json json = math::Segment<float>::toJson();
+      json.at("surface") = static_cast<unsigned long long>(mSurface);
+      return json;
+   }
+
    std::shared_ptr<Segment> Segment::create(float aX, float aY, float bX, float bY,
       SegmentSurface surface/* = SegmentSurface::Ordinary*/)
    {

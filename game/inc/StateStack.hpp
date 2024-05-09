@@ -26,7 +26,7 @@ namespace jp::game
 
       struct PendingAction
       {
-         enum class Type : int
+         enum class Type : unsigned long long
          {
             Pop = 0,
             Push
