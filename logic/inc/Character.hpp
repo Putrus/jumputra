@@ -46,18 +46,37 @@ namespace jp::logic
          const Properties &properties,
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);
+      Character(const math::Rect<float>& rect,
+         const math::Vector2<float>& acceleration, const math::Vector2<float>& velocity,
+         CharacterState state, CharacterDirection direction,
+         const math::Vector2<float>& jumpPower, const math::Vector2<float>& gravity,
+         float runSpeed, const Statistics& statistics,
+         const Properties &properties,
+         const std::vector<std::shared_ptr<Segment>>& segments,
+         const std::vector<std::shared_ptr<Wind>>& winds);
+
+      static std::shared_ptr<Character> create(const math::Rect<float>& rect,
+         const math::Vector2<float>& acceleration, const math::Vector2<float>& velocity,
+         CharacterState state, CharacterDirection direction,
+         const math::Vector2<float>& jumpPower, const math::Vector2<float>& gravity,
+         float runSpeed, const Statistics& statistics,
+         const Properties &properties,
+         const std::vector<std::shared_ptr<Segment>>& segments,
+         const std::vector<std::shared_ptr<Wind>>& winds);
 
       void update(float dt) override;
       void jump();
       void run(CharacterDirection direction);
       void squat();
       void stop();
-
-      virtual void setState(CharacterState state);
+      
       CharacterDirection getDirection() const;
       CharacterState getState() const;
       float getRunSpeed() const;
       Statistics getStatistics() const;
+
+   protected:
+      virtual void setState(CharacterState state);
 
    private:
       void resetJumpPower();

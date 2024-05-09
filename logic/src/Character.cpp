@@ -63,6 +63,32 @@ namespace jp::logic
       const std::vector<std::shared_ptr<Wind>>& winds)
       : mProperties(properties), mSegments(segments), mWinds(winds), Entity(rect) {}
 
+   Character::Character(const math::Rect<float>& rect,
+      const math::Vector2<float>& acceleration, const math::Vector2<float>& velocity,
+      CharacterState state, CharacterDirection direction,
+      const math::Vector2<float>& jumpPower, const math::Vector2<float>& gravity,
+      float runSpeed, const Statistics& statistics,
+      const Properties& properties,
+      const std::vector<std::shared_ptr<Segment>>& segments,
+      const std::vector<std::shared_ptr<Wind>>& winds)
+         : mState(state), mDirection(direction), mJumpPower(jumpPower),
+         mGravity(gravity), mRunSpeed(runSpeed), mStatistics(statistics),
+         mProperties(properties), mSegments(segments), mWinds(winds),
+         Entity(rect, acceleration, velocity) {}
+   
+   std::shared_ptr<Character> create(const math::Rect<float>& rect,
+      const math::Vector2<float>& acceleration, const math::Vector2<float>& velocity,
+      CharacterState state, CharacterDirection direction,
+      const math::Vector2<float>& jumpPower, const math::Vector2<float>& gravity,
+      float runSpeed, const Statistics& statistics,
+      const Properties& properties,
+      const std::vector<std::shared_ptr<Segment>>& segments,
+      const std::vector<std::shared_ptr<Wind>>& winds)
+   {
+      return std::make_shared<Character>(rect, acceleration, velocity, state, direction,
+         jumpPower, gravity, runSpeed, statistics, properties, segments, winds);
+   }
+
    void Character::update(float dt)
    {
       if (getState() != CharacterState::Sledding)
@@ -409,6 +435,31 @@ namespace jp::logic
       }
    }
 
+   float Character::getRunSpeed() const
+   {
+      return mRunSpeed;
+   }
+
+   CharacterDirection Character::getDirection() const
+   {
+      return mDirection;
+   }
+
+   CharacterState Character::getState() const
+   {
+      return mState;
+   }
+
+   Statistics Character::getStatistics() const
+   {
+      return mStatistics;
+   }
+
+   void Character::setState(CharacterState state)
+   {
+      mState = state;
+   }
+
    void Character::resetJumpPower()
    {
       mJumpPower = 0.f;
@@ -431,26 +482,6 @@ namespace jp::logic
          getState() == CharacterState::Sticking;
    }
 
-   float Character::getRunSpeed() const
-   {
-      return mRunSpeed;
-   }
-
-   CharacterDirection Character::getDirection() const
-   {
-      return mDirection;
-   }
-
-   CharacterState Character::getState() const
-   {
-      return mState;
-   }
-
-   Statistics Character::getStatistics() const
-   {
-      return mStatistics;
-   }
-
    void Character::setDirection(CharacterDirection direction)
    {
       mDirection = direction;
@@ -459,10 +490,5 @@ namespace jp::logic
    void Character::setRunSpeed(float speed)
    {
       mRunSpeed = speed;
-   }
-
-   void Character::setState(CharacterState state)
-   {
-      mState = state;
    }
 }

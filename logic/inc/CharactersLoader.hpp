@@ -8,8 +8,22 @@ namespace jp::logic
    class CharactersLoader : public EntityLoader<T>
    {
    public:
+      CharactersLoader(const Properties &properties,
+         const std::vector<std::shared_ptr<Segment>>& segments,
+         const std::vector<std::shared_ptr<Wind>>& winds);
       std::vector<std::shared_ptr<T>> loadFromJson(const nlohmann::json& json) const;
+
+   private:
+      const Properties& mProperties;
+      const std::vector<std::shared_ptr<Segment>>& mSegments;
+      const std::vector<std::shared_ptr<Wind>>& mWinds;
    };
+
+   template <typename T>
+   CharactersLoader<T>::CharactersLoader(const Properties &properties,
+      const std::vector<std::shared_ptr<Segment>>& segments,
+      const std::vector<std::shared_ptr<Wind>>& winds)
+      : mProperties(properties), mSegments(segments), mWinds(winds) {}
 
    template <typename T>
    std::vector<std::shared_ptr<T>> CharactersLoader<T>::loadFromJson(const nlohmann::json& json) const
@@ -26,6 +40,8 @@ namespace jp::logic
          math::Vector2<float> gravity(jsonCharacter["gravity"]);
          float runSpeed = jsonCharacter["runSpeed"];
          Statistics statistics(jsonCharacter["statistics"]);
+         characters.push_back(T::create(rect, acceleration, velocity, state, direction,
+            jumpPower, gravity, runSpeed, statistics, mProperties, mSegments, mWinds));
       }
 
       return characters;
