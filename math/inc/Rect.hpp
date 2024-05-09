@@ -32,6 +32,7 @@ namespace jp::math
 
       Rect operator+(const Vector2<T>& vec) const;
 
+      Rect& operator=(const nlohmann::json& json);
       Rect& operator+=(const Vector2<T>& vec);
 
       T left;
@@ -145,6 +146,16 @@ namespace jp::math
    Rect<T> Rect<T>::operator+(const Vector2<T>& vec) const
    {
       return { left + vec.x, top + vec.y, width, height };
+   }
+
+   template <typename T>
+   Rect<T>& Rect<T>::operator=(const nlohmann::json& json)
+   {
+      left = json["left"];
+      top = json["top"];
+      width = json["width"];
+      height = json["height"];
+      return *this;
    }
 
    template <typename T>

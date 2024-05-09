@@ -23,6 +23,8 @@ namespace jp::math
       Vector2 operator*(T num) const;
       Vector2 operator/(T num) const;
 
+      Vector2& operator=(T value);
+      Vector2& operator=(const nlohmann::json& json);
       #ifdef SFML_GRAPHICS_API
       Vector2& operator=(const sf::Vector2<T>& other);
       #endif
@@ -80,6 +82,22 @@ namespace jp::math
    Vector2<T> Vector2<T>::operator/(T num) const
    {
       return { x / num, y / num };
+   }
+
+   template <typename T>
+   Vector2<T>& Vector2<T>::operator=(T value)
+   {
+      x = value;
+      y = value;
+      return *this;
+   }
+
+   template <typename T>
+   Vector2<T>& Vector2<T>::operator=(const nlohmann::json& json)
+   {
+      x = json["x"];
+      y = json["y"];
+      return *this;
    }
 
    #ifdef SFML_GRAPHICS_API

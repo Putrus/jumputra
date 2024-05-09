@@ -1,23 +1,28 @@
 #pragma once
 
 #include "Entity.hpp"
+#include "Jsonable.hpp"
 
 #include <memory>
 
 namespace jp::logic
 {
-   class Wind : public Entity
+   class Wind : public Entity, public Jsonable
    {
    public:
       Wind(float impact, const math::Vector2<float>& maxVelocity,
          const math::Rect<float>& rect, const math::Vector2<float>& acceleration,
          const math::Vector2<float>& velocity = 0.f);
 
+      Wind(const nlohmann::json& json);
+
       static std::shared_ptr<Wind> create(float impact, const math::Vector2<float>& maxVelocity,
          const math::Rect<float>& rect, const math::Vector2<float>& acceleration,
          const math::Vector2<float>& velocity = 0.f);
 
       virtual void update(float dt) override;
+      virtual void fromJson(const nlohmann::json& json) override;
+      virtual nlohmann::json toJson() const override;
 
       float getImpact() const;
       const math::Vector2<float>& getMaxVelocity() const;

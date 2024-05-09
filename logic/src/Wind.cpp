@@ -42,6 +42,19 @@ namespace jp::logic
       }
    }
 
+   void Wind::fromJson(const nlohmann::json& json)
+   {
+
+   }
+
+   nlohmann::json Wind::toJson() const
+   {
+      nlohmann::json json;
+
+
+      return json;
+   }
+
    float Wind::getImpact() const
    {
       return mImpact;
