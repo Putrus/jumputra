@@ -9,12 +9,14 @@
 
 namespace jp::logic
 {
-   class Engine : public logic::Updatable
+   class Engine : public Updatable, public core::Jsonable
    {
    public:
       Engine(const Properties& properties);
 
       virtual void update(float dt) override;
+      virtual void fromJson(const nlohmann::json& json) override;
+      virtual nlohmann::json toJson() const override;
 
       void setGoal(const std::shared_ptr<Goal>& goal);
       void addCharacter(const std::shared_ptr<Character>& character);
@@ -22,6 +24,15 @@ namespace jp::logic
       void addWind(const std::shared_ptr<Wind>& wind);
 
    protected:
+      void charactersFromJson(const nlohmann::json& json);
+      void segmentsFromJson(const nlohmann::json& json);
+      void windsFromJson(const nlohmann::json& json);
+
+      virtual std::shared_ptr<Character> createCharacter(const nlohmann::json& json) const;
+      virtual std::shared_ptr<Segment> createSegment(const math::Vector2<float>& a,
+         const math::Vector2<float>& b, SegmentSurface surface) const;
+      virtual std::shared_ptr<Wind> createWind(const nlohmann::json& json) const;
+
       Properties mProperties;
 
       std::shared_ptr<Goal> mGoal;

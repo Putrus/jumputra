@@ -4,10 +4,13 @@
 
 namespace jp::logic
 {
-   class Goal
+   class Goal : public core::Jsonable
    {
    public:
       Goal(const math::Rect<float>& rect);
+
+      virtual void fromJson(const nlohmann::json& json) override;
+      virtual nlohmann::json toJson() const override;
       
       bool checkWin(const math::Rect<float>& rect) const;
 

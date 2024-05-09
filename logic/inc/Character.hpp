@@ -46,6 +46,10 @@ namespace jp::logic
          const Properties& properties,
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);
+      Character(const nlohmann::json& json,
+         const Properties& properties,
+         const std::vector<std::shared_ptr<Segment>>& segments,
+         const std::vector<std::shared_ptr<Wind>>& winds);
       Character(const math::Rect<float>& rect,
          const math::Vector2<float>& acceleration, const math::Vector2<float>& velocity,
          CharacterState state, CharacterDirection direction,
