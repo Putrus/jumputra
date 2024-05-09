@@ -1,5 +1,7 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
+
 #include "Vector2.hpp"
 
 namespace jp::math
@@ -10,6 +12,7 @@ namespace jp::math
       Rect();
       Rect(T left, T top, T width, T height);
       Rect(const Vector2<T>& position, const Vector2<T>& size);
+      Rect(const nlohmann::json& json);
       Rect(const Rect& other);
 
       bool intersects(const Rect& other) const;
@@ -45,6 +48,9 @@ namespace jp::math
 
    template <typename T>
    Rect<T>::Rect(const Vector2<T>& position, const Vector2<T>& size) : Rect(position.x, position.y, size.x, size.y) {}
+
+   template <typename T>
+   Rect<T>::Rect(const nlohmann::json& json) : left(json["left"]), top(json["top"]), width(json["width"]), height(json["height"]) {}
 
    template <typename T>
    Rect<T>::Rect(const Rect& other) : left(other.left), top(other.top), width(other.width), height(other.height) {}

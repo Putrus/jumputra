@@ -18,11 +18,10 @@ namespace jp::logic
       for (const auto& jsonWind : json["winds"])
       {
          float impact = jsonWind["impact"];
-         math::Vector2<float> acceleration(jsonWind["acceleration"]["x"], jsonWind["acceleration"]["y"]);
-         math::Vector2<float> maxVelocity(jsonWind["maxVelocity"]["x"], jsonWind["maxVelocity"]["y"]);
-         math::Rect<float> rect(jsonWind["rect"]["left"], jsonWind["rect"]["top"],
-               jsonWind["rect"]["width"], jsonWind["rect"]["height"]);
-         math::Vector2<float> velocity(jsonWind["velocity"]["x"], jsonWind["velocity"]["y"]);
+         math::Vector2<float> acceleration(jsonWind["acceleration"]);
+         math::Vector2<float> maxVelocity(jsonWind["maxVelocity"]);
+         math::Rect<float> rect(jsonWind["rect"]);
+         math::Vector2<float> velocity(jsonWind["velocity"]);
          winds.push_back(T::create(impact, maxVelocity, rect, acceleration, velocity));
       }
 

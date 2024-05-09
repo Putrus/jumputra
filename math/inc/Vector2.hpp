@@ -1,5 +1,7 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
+
 #include <iostream>
 
 namespace jp::math
@@ -10,6 +12,7 @@ namespace jp::math
       Vector2();
       Vector2(T value);
       Vector2(T x, T y);
+      Vector2(const nlohmann::json& json);
       Vector2(const Vector2& other);
       virtual ~Vector2();
 
@@ -39,6 +42,9 @@ namespace jp::math
 
    template <typename T>
    Vector2<T>::Vector2(T x, T y) : x(x), y(y) {}
+
+   template <typename T>
+   Vector2<T>::Vector2(const nlohmann::json& json) : x(json["x"]), y(json["y"]) {}
 
    template <typename T>
    Vector2<T>::Vector2(const Vector2& other) : x(other.x), y(other.y) {}

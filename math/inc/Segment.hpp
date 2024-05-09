@@ -1,5 +1,7 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
+
 #include "Vector2.hpp"
 
 namespace jp::math
@@ -11,6 +13,8 @@ namespace jp::math
       Segment();
       Segment(T aX, T aY, T bX, T bY);
       Segment(const Vector2<T>& a, const Vector2<T>& b);
+      Segment(const nlohmann::json& json);
+      Segment(const Segment& other);
 
       bool isDiagonal() const;
       bool isHorizontal() const;
@@ -33,6 +37,12 @@ namespace jp::math
 
    template <typename T>
    Segment<T>::Segment(const Vector2<T>& a, const Vector2<T>& b) : a(a), b(b) {}
+
+   template <typename T>
+   Segment<T>::Segment(const nlohmann::json& json) : a(json["a"]), b(json["b"]) {}
+
+   template <typename T>
+   Segment<T>::Segment(const Segment& other) : a(other.a), b(other.b) {}
 
    template <typename T>
    bool Segment<T>::isDiagonal() const

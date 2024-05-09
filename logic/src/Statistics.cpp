@@ -2,6 +2,13 @@
 
 namespace jp::logic
 {
+   Statistics::Statistics() {}
+
+   Statistics::Statistics(const nlohmann::json& json)
+   {
+      loadFromJson(json);
+   }
+
    void Statistics::loadFromJson(const nlohmann::json& json)
    {
       jumps = json["jumps"];

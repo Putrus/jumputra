@@ -8,6 +8,8 @@ namespace jp::logic
 {
    struct Statistics : public Loadable
    {
+      Statistics();
+      Statistics(const nlohmann::json& json);
       void loadFromJson(const nlohmann::json& json) override;
 
       int jumps = 0;
