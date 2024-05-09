@@ -76,7 +76,7 @@ namespace jp::logic
          mProperties(properties), mSegments(segments), mWinds(winds),
          Entity(rect, acceleration, velocity) {}
    
-   std::shared_ptr<Character> create(const math::Rect<float>& rect,
+   std::shared_ptr<Character> Character::create(const math::Rect<float>& rect,
       const math::Vector2<float>& acceleration, const math::Vector2<float>& velocity,
       CharacterState state, CharacterDirection direction,
       const math::Vector2<float>& jumpPower, const math::Vector2<float>& gravity,

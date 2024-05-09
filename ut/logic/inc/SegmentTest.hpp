@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../../../logic/inc/Segment.hpp"
 
 #include <gtest/gtest.h>

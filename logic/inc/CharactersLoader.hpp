@@ -11,6 +11,7 @@ namespace jp::logic
       CharactersLoader(const Properties &properties,
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);
+
       std::vector<std::shared_ptr<T>> loadFromJson(const nlohmann::json& json) const;
 
    private:
