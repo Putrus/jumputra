@@ -1,13 +1,14 @@
 #pragma once
 
 #include "Entity.hpp"
-#include "Jsonable.hpp"
+
+#include "../../core/inc/Jsonable.hpp"
 
 #include <memory>
 
 namespace jp::logic
 {
-   class Wind : public Entity, public Jsonable
+   class Wind : public Entity
    {
    public:
       Wind(float impact, const math::Vector2<float>& maxVelocity,

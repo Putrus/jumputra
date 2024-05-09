@@ -2,19 +2,15 @@
 
 #include <nlohmann/json.hpp>
 
-namespace jp::logic
+namespace jp::core
 {
    class Jsonable
    {
    public:
-      Jsonable();
-      Jsonable(const std::string& filename);
-      Jsonable(const nlohmann::json& json);
-
       void loadFromJsonFile(const std::string& filename);
       void saveToJsonFile(const std::string& filename);
 
-      virtual void fromJson(const nlohmann::json& json);
+      virtual void fromJson(const nlohmann::json& json) = 0;
       virtual nlohmann::json toJson() const = 0;
    };
 }

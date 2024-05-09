@@ -6,7 +6,7 @@
 
 namespace jp::game
 {
-   struct Properties : public logic::Jsonable
+   struct Properties : public core::Jsonable
    {
       void fromJson(const nlohmann::json& json) override;
       nlohmann::json toJson() const override;

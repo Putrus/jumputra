@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../../logic/inc/Jsonable.hpp"
+#include "../../core/inc/Jsonable.hpp"
 
 #include <string>
 
 namespace jp::game
 {
-   class Language : public logic::Jsonable
+   class Language : public core::Jsonable
    {
    public:
       Language(const std::string& language, const std::string& filename);

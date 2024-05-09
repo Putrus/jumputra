@@ -9,6 +9,8 @@ namespace jp::logic
       const math::Vector2<float>& velocity/* = 0.f*/)
       : mImpact(impact), mMaxVelocity(maxVelocity),
       Entity(rect, acceleration, velocity) {}
+
+   Wind::Wind(const nlohmann::json& json) : Entity(json) {}
    
    std::shared_ptr<Wind> Wind::create(float impact, const math::Vector2<float>& maxVelocity,
       const math::Rect<float>& rect, const math::Vector2<float>& acceleration,
@@ -44,7 +46,9 @@ namespace jp::logic
 
    void Wind::fromJson(const nlohmann::json& json)
    {
-
+      mImpact = json["impact"];
+      mMaxVelocity = json["maxVelocity"];
+      Entity::fromJson(json);
    }
 
    nlohmann::json Wind::toJson() const

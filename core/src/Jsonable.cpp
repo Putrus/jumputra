@@ -2,26 +2,14 @@
 
 #include <fstream>
 
-namespace jp::logic
+namespace jp::core
 {
-   Jsonable::Jsonable() {}
-
-   Jsonable::Jsonable(const std::string& filename)
-   {
-      loadFromJsonFile(filename);
-   }
-
-   Jsonable::Jsonable(const nlohmann::json& json)
-   {
-      fromJson(json);
-   }
-
    void Jsonable::loadFromJsonFile(const std::string& filename)
    {
       std::ifstream file(filename);
       if (!file.is_open())
       {
-         throw std::runtime_error("jp::logic::Jsonable::fromJsonFile - Failed to open file " + filename);
+         throw std::runtime_error("jp::logic::Jsonable::loadFromJsonFile - Failed to open file " + filename);
       }
 
       nlohmann::json data;
@@ -42,6 +30,4 @@ namespace jp::logic
       file << toJson();
       file.close();
    }
-
-   void Jsonable::fromJson(const nlohmann::json& json) {}
 }

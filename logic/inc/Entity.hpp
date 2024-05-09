@@ -6,7 +6,7 @@
 
 namespace jp::logic
 {
-   class Entity : public Updatable
+   class Entity : public Updatable, public core::Jsonable
    {
    public:
       Entity();
@@ -15,6 +15,8 @@ namespace jp::logic
          const math::Vector2<float>& velocity = 0.f);
 
       virtual void update(float dt) override;
+      virtual void fromJson(const nlohmann::json& json) override;
+      virtual nlohmann::json toJson() const override;
 
       math::Vector2<float> getPosition() const;
       const math::Rect<float>& getRect() const;

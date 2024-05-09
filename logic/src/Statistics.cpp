@@ -4,7 +4,10 @@ namespace jp::logic
 {
    Statistics::Statistics() {}
 
-   Statistics::Statistics(const nlohmann::json& json) : Jsonable(json) {}
+   Statistics::Statistics(const nlohmann::json& json)
+   {
+      fromJson(json);
+   }
 
    void Statistics::fromJson(const nlohmann::json& json)
    {

@@ -1,20 +1,22 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "../../core/inc/Jsonable.hpp"
 
 #include <iostream>
 
 namespace jp::math
 {
    template <typename T>
-   struct Vector2
+   struct Vector2 : public core::Jsonable
    {
       Vector2();
       Vector2(T value);
       Vector2(T x, T y);
       Vector2(const nlohmann::json& json);
       Vector2(const Vector2& other);
-      virtual ~Vector2();
+
+      virtual void fromJson(const nlohmann::json& json) override;
+      virtual nlohmann::json toJson() const override;
 
       T cross(const Vector2& other) const;
 
@@ -46,13 +48,29 @@ namespace jp::math
    Vector2<T>::Vector2(T x, T y) : x(x), y(y) {}
 
    template <typename T>
-   Vector2<T>::Vector2(const nlohmann::json& json) : x(json["x"]), y(json["y"]) {}
+   Vector2<T>::Vector2(const nlohmann::json& json) 
+   {
+      fromJson(json);
+   }
 
    template <typename T>
    Vector2<T>::Vector2(const Vector2& other) : x(other.x), y(other.y) {}
 
    template <typename T>
-   Vector2<T>::~Vector2() {}
+   void Vector2<T>::fromJson(const nlohmann::json& json)
+   {
+      x = json.at("x");
+      y = json.at("y");
+   }
+
+   template <typename T>
+   nlohmann::json Vector2<T>::toJson() const
+   {
+      nlohmann::json json;
+      json.at("x") = x;
+      json.at("y") = y;
+      return json;
+   }
 
    template <typename T>
    T Vector2<T>::cross(const Vector2& other) const

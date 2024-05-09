@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Jsonable.hpp"
+#include "../../core/inc/Jsonable.hpp"
 
 #include <iostream>
 
 namespace jp::logic
 {
-   struct Statistics : public Jsonable
+   struct Statistics : public core::Jsonable
    {
       Statistics();
       Statistics(const nlohmann::json& json);
-      
+
       void fromJson(const nlohmann::json& json) override;
       nlohmann::json toJson() const override;
 

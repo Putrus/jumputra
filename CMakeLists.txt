@@ -20,6 +20,7 @@ include_directories(${SFML_INCLUDE_DIR})
 set(SFML_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/SFML/lib)
 link_directories(${SFML_LIB_DIR})
 
+add_subdirectory(core)
 add_subdirectory(external)
 add_subdirectory(game)
 add_subdirectory(graphic)

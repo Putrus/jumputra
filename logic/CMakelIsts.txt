@@ -15,7 +15,6 @@ set(HEADERS
    inc/EntityLoader.hpp
    inc/Goal.hpp
    inc/HorizontalSegment.hpp
-   inc/Jsonable.hpp
    inc/Properties.hpp
    inc/Runnable.hpp
    inc/Segment.hpp
@@ -36,7 +35,6 @@ set(SOURCES
    src/Entity.cpp
    src/Goal.cpp
    src/HorizontalSegment.cpp
-   src/Jsonable.cpp
    src/Properties.cpp
    src/Runnable.cpp
    src/Segment.cpp

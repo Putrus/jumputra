@@ -16,6 +16,21 @@ namespace jp::logic
       setPosition(getPosition() + distance);
    }
 
+   void Entity::fromJson(const nlohmann::json& json)
+   {
+      mRect = json["rect"];
+      mAcceleration = json["acceleration"];
+      mVelocity = json["velocity"];
+   }
+
+   nlohmann::json Entity::toJson() const
+   {
+      nlohmann::json json;
+      json["rect"] = mRect.toJson();
+
+      return json;
+   }
+
    math::Vector2<float> Entity::getPosition() const
    {
       return mRect.getPosition();

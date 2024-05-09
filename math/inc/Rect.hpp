@@ -1,19 +1,22 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "../../core/inc/Jsonable.hpp"
 
 #include "Vector2.hpp"
 
 namespace jp::math
 {
    template <typename T>
-   struct Rect
+   struct Rect : public core::Jsonable
    {
       Rect();
       Rect(T left, T top, T width, T height);
       Rect(const Vector2<T>& position, const Vector2<T>& size);
       Rect(const nlohmann::json& json);
       Rect(const Rect& other);
+
+      virtual void fromJson(const nlohmann::json& json) override;
+      virtual nlohmann::json toJson() const override;
 
       bool intersects(const Rect& other) const;
 
@@ -51,10 +54,33 @@ namespace jp::math
    Rect<T>::Rect(const Vector2<T>& position, const Vector2<T>& size) : Rect(position.x, position.y, size.x, size.y) {}
 
    template <typename T>
-   Rect<T>::Rect(const nlohmann::json& json) : left(json["left"]), top(json["top"]), width(json["width"]), height(json["height"]) {}
+   Rect<T>::Rect(const nlohmann::json& json)
+   {
+      fromJson(json);
+   }
 
    template <typename T>
    Rect<T>::Rect(const Rect& other) : left(other.left), top(other.top), width(other.width), height(other.height) {}
+
+   template <typename T>
+   void Rect<T>::fromJson(const nlohmann::json& json)
+   {
+      left = json.at("left");
+      top = json.at("top");
+      width = json.at("width");
+      height = json.at("height");
+   }
+
+   template <typename T>
+   nlohmann::json Rect<T>::toJson() const
+   {
+      nlohmann::json json;
+      json.at("left") = left;
+      json.at("top") = top;
+      json.at("width") = width;
+      json.at("height") = height;
+      return json;
+   }
 
    template <typename T>
    bool Rect<T>::intersects(const Rect& other) const

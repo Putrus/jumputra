@@ -1,13 +1,13 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "../../core/inc/Jsonable.hpp"
 
 #include "Vector2.hpp"
 
 namespace jp::math
 {
    template <typename T>
-   class Segment
+   class Segment : public core::Jsonable
    {
    public:
       Segment();
@@ -15,6 +15,9 @@ namespace jp::math
       Segment(const Vector2<T>& a, const Vector2<T>& b);
       Segment(const nlohmann::json& json);
       Segment(const Segment& other);
+
+      virtual void fromJson(const nlohmann::json& json) override;
+      virtual nlohmann::json toJson() const override;
 
       bool isDiagonal() const;
       bool isHorizontal() const;
@@ -39,10 +42,29 @@ namespace jp::math
    Segment<T>::Segment(const Vector2<T>& a, const Vector2<T>& b) : a(a), b(b) {}
 
    template <typename T>
-   Segment<T>::Segment(const nlohmann::json& json) : a(json["a"]), b(json["b"]) {}
+   Segment<T>::Segment(const nlohmann::json& json)
+   {
+      fromJson(json);
+   }
 
    template <typename T>
    Segment<T>::Segment(const Segment& other) : a(other.a), b(other.b) {}
+
+   template <typename T>
+   void Segment<T>::fromJson(const nlohmann::json& json)
+   {
+      a = json.at("a");
+      b = json.at("b");
+   }
+
+   template <typename T>
+   nlohmann::json Segment<T>::toJson() const
+   {
+      nlohmann::json json;
+      json.at("a") = a.toJson();
+      json.at("b") = b.toJson();
+      return json;
+   }
 
    template <typename T>
    bool Segment<T>::isDiagonal() const
