@@ -11,15 +11,26 @@ namespace jp::game
    {
       mTexts.insert({ "play", "" });
       mTexts.insert({ "quit", "" });
-      loadFromFile(filename);
+      loadFromJsonFile(filename);
    }
 
-   void Language::loadFromJson(const nlohmann::json& json)
+   void Language::fromJson(const nlohmann::json& json)
    {
       for (auto& text : mTexts)
       {
          text.second = json.at(mLanguage).at(text.first);
       }
+   }
+
+   nlohmann::json Language::toJson() const
+   {
+      nlohmann::json json;
+      for (auto& text : mTexts)
+      {
+         json[mLanguage][text.first] = text.second;
+      }
+
+      return json;
    }
 
    const std::string& Language::getString(const std::string& text)
@@ -30,6 +41,6 @@ namespace jp::game
    void Language::setLanguage(const std::string& language)
    {
       mLanguage = language;
-      loadFromFile(mFilename);
+      loadFromJsonFile(mFilename);
    }
 }

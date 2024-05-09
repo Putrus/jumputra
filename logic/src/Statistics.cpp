@@ -4,16 +4,23 @@ namespace jp::logic
 {
    Statistics::Statistics() {}
 
-   Statistics::Statistics(const nlohmann::json& json)
-   {
-      loadFromJson(json);
-   }
+   Statistics::Statistics(const nlohmann::json& json) : Jsonable(json) {}
 
-   void Statistics::loadFromJson(const nlohmann::json& json)
+   void Statistics::fromJson(const nlohmann::json& json)
    {
       jumps = json["jumps"];
       falls = json["falls"];
       time = json["time"];
+   }
+
+   nlohmann::json Statistics::toJson() const
+   {
+      nlohmann::json json;
+      json["jumps"] = jumps;
+      json["falls"] = falls;
+      json["time"] = time;
+
+      return json;
    }
 
    std::ostream& operator<<(std::ostream& os, const Statistics& statistics)

@@ -94,6 +94,7 @@ namespace jp::game
             std::cout << "runSpeed: " << controlledCharacter.getRunSpeed() << std::endl;
             std::cout << "statistics: " << controlledCharacter.getStatistics() << std::endl;
             std::cout << std::endl;
+            break;
          default:
             break;
          }

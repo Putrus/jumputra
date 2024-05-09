@@ -39,11 +39,11 @@ namespace jp::logic
    {
    public:
       Character(const math::Vector2<float> &position, const math::Vector2<float> &size,
-         const Properties &properties,
+         const Properties& properties,
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);
       Character(const math::Rect<float>& rect,
-         const Properties &properties,
+         const Properties& properties,
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);
       Character(const math::Rect<float>& rect,
@@ -51,7 +51,7 @@ namespace jp::logic
          CharacterState state, CharacterDirection direction,
          const math::Vector2<float>& jumpPower, const math::Vector2<float>& gravity,
          float runSpeed, const Statistics& statistics,
-         const Properties &properties,
+         const Properties& properties,
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);
 
@@ -60,7 +60,7 @@ namespace jp::logic
          CharacterState state, CharacterDirection direction,
          const math::Vector2<float>& jumpPower, const math::Vector2<float>& gravity,
          float runSpeed, const Statistics& statistics,
-         const Properties &properties,
+         const Properties& properties,
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);
 

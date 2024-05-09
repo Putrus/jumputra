@@ -5,7 +5,7 @@ namespace jp::game
    Context::Context() : language("english", "data/jsons/languages.json")
    {
       resources.loadFromDirectory("data/resources");
-      properties.loadFromFile("data/jsons/properties.json");
+      properties.loadFromJsonFile("data/jsons/properties.json");
       language.setLanguage(properties.language);
 
       window.setSize(sf::Vector2u(properties.graphic.window.size.x, properties.graphic.window.size.y));

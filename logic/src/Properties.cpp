@@ -4,23 +4,46 @@
 
 namespace jp::logic
 {
-   void Properties::loadFromJson(const nlohmann::json& json)
+   void Properties::fromJson(const nlohmann::json& json)
    {
-      secondsPerUpdate = json["logic"]["secondsPerUpdate"];
+      secondsPerUpdate = json["secondsPerUpdate"];
 
-      character.jump.gain.x = json["logic"]["character"]["jump"]["gain"]["x"];
-      character.jump.gain.y = json["logic"]["character"]["jump"]["gain"]["y"];
-      character.jump.max.x = json["logic"]["character"]["jump"]["max"]["x"];
-      character.jump.max.y = json["logic"]["character"]["jump"]["max"]["y"];
-      character.runSpeed = json["logic"]["character"]["runSpeed"];
-      character.size.x = json["logic"]["character"]["size"]["x"];
-      character.size.y = json["logic"]["character"]["size"]["y"];
+      character.jump.gain.x = json["character"]["jump"]["gain"]["x"];
+      character.jump.gain.y = json["character"]["jump"]["gain"]["y"];
+      character.jump.max.x = json["character"]["jump"]["max"]["x"];
+      character.jump.max.y = json["character"]["jump"]["max"]["y"];
+      character.runSpeed = json["character"]["runSpeed"];
+      character.size.x = json["character"]["size"]["x"];
+      character.size.y = json["character"]["size"]["y"];
 
-      physics.bounceFactor = json["logic"]["physics"]["bounceFactor"];
-      physics.checkCollisionDistance = json["logic"]["physics"]["checkCollisionDistance"];
-      physics.fallSpeed = json["logic"]["physics"]["fallSpeed"];
-      physics.slipperyFriction = json["logic"]["physics"]["slipperyFriction"];
-      physics.gravity.x = json["logic"]["physics"]["gravity"]["x"];
-      physics.gravity.y = json["logic"]["physics"]["gravity"]["y"];
+      physics.bounceFactor = json["physics"]["bounceFactor"];
+      physics.checkCollisionDistance = json["physics"]["checkCollisionDistance"];
+      physics.fallSpeed = json["physics"]["fallSpeed"];
+      physics.slipperyFriction = json["physics"]["slipperyFriction"];
+      physics.gravity.x = json["physics"]["gravity"]["x"];
+      physics.gravity.y = json["physics"]["gravity"]["y"];
+   }
+
+   nlohmann::json Properties::toJson() const
+   {
+      nlohmann::json json;
+      json["secondsPerUpdate"] = secondsPerUpdate;
+
+      json["character"]["jump"]["gain"]["x"] = character.jump.gain.x;
+      json["character"]["jump"]["gain"]["y"] = character.jump.gain.y;
+      json["character"]["jump"]["max"]["x"] = character.jump.max.x;
+      json["character"]["jump"]["max"]["y"] = character.jump.max.y;
+      json["character"]["runSpeed"] = character.runSpeed;
+      json["character"]["size"]["x"] = character.size.x;
+      json["character"]["size"]["y"] = character.size.y;
+
+      json["physics"]["bounceFactor"] = physics.bounceFactor;
+      json["physics"]["checkCollisionDistance"] = physics.checkCollisionDistance;
+      json["physics"]["fallSpeed"] = physics.fallSpeed;
+      json["physics"]["slipperyFriction"] = physics.slipperyFriction;
+      json["physics"]["gravity"]["x"] = physics.gravity.x;
+      json["physics"]["gravity"]["y"] = physics.gravity.y;
+
+      return json;
    }
 }  
