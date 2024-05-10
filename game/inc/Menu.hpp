@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../inc/Eventable.hpp"
 #include "../inc/MenuItem.hpp"
 
 #include "../../logic/inc/SelectionManager.hpp"
@@ -14,7 +15,7 @@ namespace jp::game
       void addItem(const std::shared_ptr<MenuItem>& item);
 
       std::string getSelectedTextString() const;
-
+   
    private:
       std::vector<std::shared_ptr<MenuItem>> mItems;
    };

@@ -9,16 +9,14 @@ namespace jp::game
    Language::Language(const std::string& language, const std::string& filename)
       : mLanguage(language), mFilename(filename)
    {
-      mTexts.insert({ "play", "" });
-      mTexts.insert({ "quit", "" });
       loadFromJsonFile(filename);
    }
 
    void Language::fromJson(const nlohmann::json& json)
    {
-      for (auto& text : mTexts)
+      for (const auto& item : json.at(mLanguage).items())
       {
-         text.second = json.at(mLanguage).at(text.first);
+         mTexts[item.key()] = item.value();
       }
    }
 

@@ -15,7 +15,8 @@ namespace jp::game
    {
       None = 0,
       Game,
-      Menu
+      MainMenu,
+      WorldChoice
    };
 
    class State : public sf::Drawable, public Eventable, public logic::Updatable

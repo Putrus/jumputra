@@ -4,7 +4,7 @@ namespace jp::game
 {
    Game::Game(Context& context) : mContext(context), logic::Engine(context.properties.logic)
    {
-      loadFromJsonFile("data/jsons/world.json");
+      loadFromJsonFile("data/jsons/save.json");
       updateView();
    }
 
@@ -77,7 +77,7 @@ namespace jp::game
             std::cout << std::endl;
             break;
          case sf::Keyboard::Key::S:
-            saveToJsonFile("data/jsons/dupa.json");
+            saveToJsonFile("data/jsons/save.json");
             break;
          default:
             break;

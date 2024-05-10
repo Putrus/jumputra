@@ -20,8 +20,10 @@ set(HEADERS
    inc/State.hpp
    inc/Segment.hpp
    inc/StateGame.hpp
+   inc/StateMainMenu.hpp
    inc/StateMenu.hpp
    inc/StateStack.hpp
+   inc/StateWorldChoice.hpp
    inc/Wind.hpp
    )
 
@@ -39,8 +41,10 @@ set(SOURCES
    src/State.cpp
    src/Segment.cpp
    src/StateGame.cpp
+   src/StateMainMenu.cpp
    src/StateMenu.cpp
    src/StateStack.cpp
+   src/StateWorldChoice.cpp
    src/Wind.cpp
    )
 

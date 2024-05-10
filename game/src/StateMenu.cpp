@@ -2,14 +2,7 @@
 
 namespace jp::game
 {
-   StateMenu::StateMenu(StateStack* stack, Context& context) : State(stack, context)
-   { 
-      mMenu.addItem(std::make_unique<MenuItem>(sf::Vector2f(160.f, 64.f), context.language.getString("play"),
-         context.resources.getFont(graphic::FontID::Pixeled)));
-
-      mMenu.addItem(std::make_unique<MenuItem>(sf::Vector2f(160.f, 128.f), context.language.getString("quit"),
-         context.resources.getFont(graphic::FontID::Pixeled)));
-   }
+   StateMenu::StateMenu(StateStack* stack, Context& context) : State(stack, context) {}
 
    void StateMenu::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
    {
@@ -35,6 +28,7 @@ namespace jp::game
             performSelected();
             break;
          case sf::Keyboard::Key::Escape:
+            close();
             mContext.window.close();
             break;
          default:
@@ -44,17 +38,4 @@ namespace jp::game
    }
 
    void StateMenu::update(float dt) {}
-
-   void StateMenu::performSelected()
-   {
-      if (mMenu.getSelectedTextString() == mContext.language.getString("play"))
-      {
-         pushState(StateID::Game);
-      }
-
-      if (mMenu.getSelectedTextString() == mContext.language.getString("quit"))
-      {
-         mContext.window.close();
-      }
-   }
 }

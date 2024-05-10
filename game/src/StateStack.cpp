@@ -1,6 +1,7 @@
 #include "../inc/StateGame.hpp"
-#include "../inc/StateMenu.hpp"
+#include "../inc/StateMainMenu.hpp"
 #include "../inc/StateStack.hpp"
+#include "../inc/StateWorldChoice.hpp"
 
 namespace jp::game
 {
@@ -60,8 +61,11 @@ namespace jp::game
             case StateID::Game:
                mStack.push_back(std::make_shared<StateGame>(this, mContext));
                break;
-            case StateID::Menu:
-               mStack.push_back(std::make_shared<StateMenu>(this, mContext));
+            case StateID::MainMenu:
+               mStack.push_back(std::make_shared<StateMainMenu>(this, mContext));
+               break;
+            case StateID::WorldChoice:
+               mStack.push_back(std::make_shared<StateWorldChoice>(this, mContext));
                break;
             default:
                throw std::runtime_error("jp::game::StateStack::applyPendingActions - Wrong stack id");

@@ -5,7 +5,7 @@
 
 namespace jp::game
 {
-   class StateMenu final : public State
+   class StateMenu : public State
    {
    public:
       StateMenu(StateStack* stack, Context& context);
@@ -14,9 +14,12 @@ namespace jp::game
       void event(const sf::Event& event) override;
       void update(float dt) override;
 
-   private:
-      void performSelected();
-
+   protected:
       Menu mMenu;
+
+   private:
+      virtual void performSelected() = 0;
+      virtual void close() = 0;
+      
    };
 }

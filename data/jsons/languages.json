@@ -1,10 +1,18 @@
 {
    "english": {
+      "babiac": "BABIAC",
+      "back": "BACK",
       "play": "PLAY",
-      "quit": "QUIT"
+      "quit": "QUIT",
+      "sudovia": "SUDOVIA",
+      "tarnovia": "TARNOVIA"
    },
    "polski": {
+      "babiac": "BABIAK",
+      "back": "WROC",
       "play": "GRAJ",
-      "quit": "WYJDZ"
+      "quit": "WYJDZ",
+      "sudovia": "SUDOWIA",
+      "tarnovia": "TARNOWIA"
    }
 }

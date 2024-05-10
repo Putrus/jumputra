@@ -2,7 +2,7 @@
 
 namespace jp::game
 {
-   Jumputra::Jumputra() : mStateStack(StateID::Menu, mContext),
+   Jumputra::Jumputra() : mStateStack(StateID::MainMenu, mContext),
       Runnable(mContext.properties.logic.secondsPerUpdate) {}
 
    void Jumputra::update(float dt)
@@ -22,12 +22,12 @@ namespace jp::game
       sf::Event event;
       while (mContext.window.pollEvent(event))
       {
+         mStateStack.event(event);
+
          if (event.type == sf::Event::Closed)
          {
             mContext.window.close();
          }
-
-         mStateStack.event(event);
       }
    }
 }

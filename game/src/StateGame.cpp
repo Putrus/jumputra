@@ -11,11 +11,17 @@ namespace jp::game
 
    void StateGame::event(const sf::Event& event)
    {
+      if (event.type == sf::Event::Closed)
+      {
+         mGame.saveToJsonFile("data/jsons/save.json");
+      }
+
       if (event.type == sf::Event::KeyReleased)
       {
          switch (event.key.code)
          {
          case sf::Keyboard::Key::Escape:
+            mGame.saveToJsonFile("data/jsons/save.json");
             popState();
             break;
          default:
