@@ -55,8 +55,8 @@ namespace jp::logic
    nlohmann::json Wind::toJson() const
    {
       nlohmann::json json = Entity::toJson();
-      json.at("impact") = mImpact;
-      json.at("maxVelocity") = mMaxVelocity.toJson();
+      json["impact"] = mImpact;
+      json["maxVelocity"] = mMaxVelocity.toJson();
       return json;
    }
 

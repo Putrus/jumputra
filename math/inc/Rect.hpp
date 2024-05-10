@@ -75,10 +75,10 @@ namespace jp::math
    nlohmann::json Rect<T>::toJson() const
    {
       nlohmann::json json;
-      json.at("left") = left;
-      json.at("top") = top;
-      json.at("width") = width;
-      json.at("height") = height;
+      json["left"] = left;
+      json["top"] = top;
+      json["width"] = width;
+      json["height"] = height;
       return json;
    }
 

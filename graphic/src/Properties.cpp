@@ -12,10 +12,10 @@ namespace jp::graphic
    nlohmann::json Properties::toJson() const
    {
       nlohmann::json json;
-      json.at("language") = language;  
+      json["language"] = language;  
       
-      json.at("window").at("size").at("x") = window.size.x;
-      json.at("window").at("size").at("y") = window.size.y;
+      json["window"]["size"]["x"] = window.size.x;
+      json["window"]["size"]["y"] = window.size.y;
 
       return json;
    }

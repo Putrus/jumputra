@@ -13,8 +13,8 @@ namespace jp::game
    nlohmann::json Properties::toJson() const
    {
       nlohmann::json json;
-      json.at("graphic") = graphic.toJson();
-      json.at("logic") = logic.toJson();
+      json["graphic"] = graphic.toJson();
+      json["logic"] = logic.toJson();
       return json;
    }
 }

@@ -67,8 +67,8 @@ namespace jp::math
    nlohmann::json Vector2<T>::toJson() const
    {
       nlohmann::json json;
-      json.at("x") = x;
-      json.at("y") = y;
+      json["x"] = x;
+      json["y"] = y;
       return json;
    }
 

@@ -33,7 +33,22 @@ namespace jp::logic
    nlohmann::json Engine::toJson() const
    {
       nlohmann::json json;
-      
+      for (const auto& character : mCharacters)
+      {
+         json["characters"].push_back(character->toJson());
+      }
+
+      for (const auto& segment : mSegments)
+      {
+         nlohmann::json jsonSegment = segment->toJson();
+         jsonSegment["type"] = "segment";
+         json["segments"].push_back(jsonSegment);
+      }
+
+      for (const auto& wind : mWinds)
+      {
+         json["winds"].push_back(wind->toJson());
+      }
       return json;
    }
 
@@ -75,15 +90,15 @@ namespace jp::logic
          }
 
          SegmentSurface surface = SegmentSurface::Ordinary;
-         if (jsonSegment.at("surface") == "ordinary")
+         if (jsonSegment.at("surface") == "ordinary" || jsonSegment.at("surface") == SegmentSurface::Ordinary)
          {
             surface = SegmentSurface::Ordinary;
          }
-         else if (jsonSegment.at("surface") == "slippery")
+         else if (jsonSegment.at("surface") == "slippery" || jsonSegment.at("surface") == SegmentSurface::Slippery)
          {
             surface = SegmentSurface::Slippery;
          }
-         else if (jsonSegment.at("surface") == "sticky")
+         else if (jsonSegment.at("surface") == "sticky" || jsonSegment.at("surface") == SegmentSurface::Slippery)
          {
             surface = SegmentSurface::Sticky;
          }

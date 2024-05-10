@@ -26,7 +26,9 @@ namespace jp::logic
    nlohmann::json Entity::toJson() const
    {
       nlohmann::json json;
-      json.at("rect") = mRect.toJson();
+      json["rect"] = mRect.toJson();
+      json["acceleration"] = mAcceleration.toJson();
+      json["velocity"] = mVelocity.toJson();
 
       return json;
    }

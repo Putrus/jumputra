@@ -75,7 +75,7 @@ namespace jp::logic
    nlohmann::json Segment::toJson() const
    {
       nlohmann::json json = math::Segment<float>::toJson();
-      json.at("surface") = static_cast<unsigned long long>(mSurface);
+      json["surface"] = static_cast<unsigned long long>(mSurface);
       return json;
    }
 

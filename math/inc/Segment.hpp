@@ -63,8 +63,8 @@ namespace jp::math
    nlohmann::json Segment<T>::toJson() const
    {
       nlohmann::json json;
-      json.at("a") = a.toJson();
-      json.at("b") = b.toJson();
+      json["a"] = a.toJson();
+      json["b"] = b.toJson();
       return json;
    }
 

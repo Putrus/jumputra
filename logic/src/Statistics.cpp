@@ -19,9 +19,9 @@ namespace jp::logic
    nlohmann::json Statistics::toJson() const
    {
       nlohmann::json json;
-      json.at("jumps") = jumps;
-      json.at("falls") = falls;
-      json.at("time") = time;
+      json["jumps"] = jumps;
+      json["falls"] = falls;
+      json["time"] = time;
 
       return json;
    }

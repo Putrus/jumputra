@@ -359,12 +359,12 @@ namespace jp::logic
    nlohmann::json Character::toJson() const
    {
       nlohmann::json json = Entity::toJson();
-      json.at("state") = static_cast<unsigned long long>(mState);
-      json.at("direction") = static_cast<unsigned long long>(mDirection);
-      json.at("jumpPower") = mJumpPower.toJson();
-      json.at("gravity") = mGravity.toJson();
-      json.at("runSpeed") = mRunSpeed;
-      json.at("statistics") = mStatistics.toJson();
+      json["state"] = static_cast<unsigned long long>(mState);
+      json["direction"] = static_cast<unsigned long long>(mDirection);
+      json["jumpPower"] = mJumpPower.toJson();
+      json["gravity"] = mGravity.toJson();
+      json["runSpeed"] = mRunSpeed;
+      json["statistics"] = mStatistics.toJson();
       return json;
    }
 

@@ -76,6 +76,9 @@ namespace jp::game
             std::cout << "statistics: " << controlledCharacter.getStatistics() << std::endl;
             std::cout << std::endl;
             break;
+         case sf::Keyboard::Key::S:
+            saveToJsonFile("data/jsons/dupa.json");
+            break;
          default:
             break;
          }
