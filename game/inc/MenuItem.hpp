@@ -20,6 +20,7 @@ namespace jp::game
       void select() override;
 
       std::string getTextString() const;
+      unsigned int getCharacterSize() const;
 
    private:
       sf::Text mText;

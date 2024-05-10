@@ -29,7 +29,6 @@ namespace jp::game
             break;
          case sf::Keyboard::Key::Escape:
             close();
-            mContext.window.close();
             break;
          default:
             break;

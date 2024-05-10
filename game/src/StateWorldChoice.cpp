@@ -4,17 +4,13 @@ namespace jp::game
 {
    StateWorldChoice::StateWorldChoice(StateStack* stack, Context& context) : StateMenu(stack, context)
    { 
-      mMenu.addItem(std::make_unique<MenuItem>(sf::Vector2f(160.f, 64.f), context.language.getString("babiac"),
-         context.resources.getFont(graphic::FontID::Pixeled)));
+      mMenu.addItem(context.language.getString("babiac"), context.resources.getFont(graphic::FontID::Pixeled));
       
-      mMenu.addItem(std::make_unique<MenuItem>(sf::Vector2f(160.f, 128.f), context.language.getString("sudovia"),
-         context.resources.getFont(graphic::FontID::Pixeled)));
+      mMenu.addItem(context.language.getString("sudovia"), context.resources.getFont(graphic::FontID::Pixeled));
       
-      mMenu.addItem(std::make_unique<MenuItem>(sf::Vector2f(160.f, 192.f), context.language.getString("tarnovia"),
-         context.resources.getFont(graphic::FontID::Pixeled)));
+      mMenu.addItem(context.language.getString("tarnovia"), context.resources.getFont(graphic::FontID::Pixeled));
 
-      mMenu.addItem(std::make_unique<MenuItem>(sf::Vector2f(160.f, 256.f), context.language.getString("back"),
-         context.resources.getFont(graphic::FontID::Pixeled)));
+      mMenu.addItem(context.language.getString("back"), context.resources.getFont(graphic::FontID::Pixeled));
    }
 
    void StateWorldChoice::performSelected()

@@ -13,7 +13,7 @@ namespace jp::logic
    {
       auto begin = std::chrono::steady_clock::now();
       float time = 0.f;
-      while (true)
+      while (mIsRunning)
       {
          auto end = std::chrono::steady_clock::now();
          time += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() / NANOSECONDS_IN_ONE_SECOND;
@@ -26,5 +26,10 @@ namespace jp::logic
          draw();
          event();
       }
+   }
+
+   void Runnable::terminate()
+   {
+      mIsRunning = false;
    }
 }

@@ -2,11 +2,12 @@
 
 namespace jp::game
 {
-   Context::Context() : language("english", "data/jsons/languages.json")
+   Context::Context()
    {
       resources.loadFromDirectory("data/resources");
       properties.loadFromJsonFile("data/jsons/properties.json");
       language.setLanguage(properties.graphic.language);
+      language.loadFromJsonFile("data/jsons/languages.json");
 
       window.setSize(sf::Vector2u(properties.graphic.window.size.x, properties.graphic.window.size.y));
       window.setVerticalSyncEnabled(true);

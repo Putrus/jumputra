@@ -1,18 +1,26 @@
-{
-   "english": {
-      "babiac": "BABIAC",
-      "back": "BACK",
-      "play": "PLAY",
-      "quit": "QUIT",
-      "sudovia": "SUDOVIA",
-      "tarnovia": "TARNOVIA"
+[
+   {
+      "name": "english",
+      "texts": {
+         "babiac": "BABIAC",
+         "back": "BACK",
+         "language": "LANGUAGE",
+         "play": "PLAY",
+         "quit": "QUIT",
+         "sudovia": "SUDOVIA",
+         "tarnovia": "TARNOVIA"
+      }
    },
-   "polski": {
-      "babiac": "BABIAK",
-      "back": "WROC",
-      "play": "GRAJ",
-      "quit": "WYJDZ",
-      "sudovia": "SUDOWIA",
-      "tarnovia": "TARNOWIA"
+   {
+      "name": "polski",
+      "texts": {
+         "babiac": "BABIAK",
+         "back": "WROC",
+         "language": "JEZYK",
+         "play": "GRAJ",
+         "quit": "WYJDZ",
+         "sudovia": "SUDOWIA",
+         "tarnovia": "TARNOWIA"
+      }
    }
-}
+]

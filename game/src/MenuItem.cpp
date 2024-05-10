@@ -1,5 +1,5 @@
 #include "../inc/MenuItem.hpp"
-
+#include <iostream>
 namespace jp::game
 {
    MenuItem::MenuItem(const sf::Vector2f& position,
@@ -32,5 +32,10 @@ namespace jp::game
    std::string MenuItem::getTextString() const
    {
       return mText.getString();
+   }
+
+   unsigned int MenuItem::getCharacterSize() const
+   {
+      return mText.getCharacterSize();
    }
 }

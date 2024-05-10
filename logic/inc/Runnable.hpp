@@ -16,7 +16,11 @@ namespace jp::logic
       virtual void draw() = 0;
       virtual void event() = 0;
 
+   protected:
+      void terminate();
+
    private:
       const float &mSecondsPerUpdate;
+      bool mIsRunning = true;
    };
 }

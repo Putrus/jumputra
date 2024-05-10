@@ -4,11 +4,11 @@ namespace jp::game
 {
    StateMainMenu::StateMainMenu(StateStack* stack, Context& context) : StateMenu(stack, context)
    { 
-      mMenu.addItem(std::make_unique<MenuItem>(sf::Vector2f(160.f, 64.f), context.language.getString("play"),
-         context.resources.getFont(graphic::FontID::Pixeled)));
+      mMenu.addItem(context.language.getString("play"), context.resources.getFont(graphic::FontID::Pixeled));
 
-      mMenu.addItem(std::make_unique<MenuItem>(sf::Vector2f(160.f, 128.f), context.language.getString("quit"),
-         context.resources.getFont(graphic::FontID::Pixeled)));
+      mMenu.addItem(context.language.getString("language"), context.resources.getFont(graphic::FontID::Pixeled));
+
+      mMenu.addItem(context.language.getString("quit"), context.resources.getFont(graphic::FontID::Pixeled));
    }
 
    void StateMainMenu::update(float dt) {}

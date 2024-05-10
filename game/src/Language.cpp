@@ -6,17 +6,19 @@
 
 namespace jp::game
 {
-   Language::Language(const std::string& language, const std::string& filename)
-      : mLanguage(language), mFilename(filename)
-   {
-      loadFromJsonFile(filename);
-   }
-
    void Language::fromJson(const nlohmann::json& json)
    {
-      for (const auto& item : json.at(mLanguage).items())
+      mAvailableLanguages.clear();
+      for (const auto& language : json)
       {
-         mTexts[item.key()] = item.value();
+         mAvailableLanguages.push_back(language.at("name"));
+         if (language.at("name") == mLanguage)
+         {
+            for (const auto& item : language.at("texts").items())
+            {
+               mTexts[item.key()] = item.value();
+            }
+         }
       }
    }
 
@@ -33,12 +35,15 @@ namespace jp::game
 
    const std::string& Language::getString(const std::string& text)
    {
+      if (mTexts.find(text) == mTexts.end())
+      {
+         throw std::runtime_error("jp::game::Language::getString - Translation for text \"" + text + "\" doesn't exist");
+      }
       return mTexts.at(text);
    }
 
    void Language::setLanguage(const std::string& language)
    {
       mLanguage = language;
-      loadFromJsonFile(mFilename);
    }
 }

@@ -8,6 +8,11 @@ namespace jp::game
    void Jumputra::update(float dt)
    {
       mStateStack.update(dt);
+
+      if (!mContext.window.isOpen())
+      {
+         terminate();
+      }
    }
 
    void Jumputra::draw()
