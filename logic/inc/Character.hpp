@@ -50,20 +50,8 @@ namespace jp::logic
          const Properties& properties,
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);
-      Character(const math::Rect<float>& rect,
-         const math::Vector2<float>& acceleration, const math::Vector2<float>& velocity,
-         CharacterState state, CharacterDirection direction,
-         const math::Vector2<float>& jumpPower, const math::Vector2<float>& gravity,
-         float runSpeed, const Statistics& statistics,
-         const Properties& properties,
-         const std::vector<std::shared_ptr<Segment>>& segments,
-         const std::vector<std::shared_ptr<Wind>>& winds);
 
-      static std::shared_ptr<Character> create(const math::Rect<float>& rect,
-         const math::Vector2<float>& acceleration, const math::Vector2<float>& velocity,
-         CharacterState state, CharacterDirection direction,
-         const math::Vector2<float>& jumpPower, const math::Vector2<float>& gravity,
-         float runSpeed, const Statistics& statistics,
+      static std::shared_ptr<Character> create(const nlohmann::json& json,
          const Properties& properties,
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);

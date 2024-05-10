@@ -15,6 +15,9 @@ namespace jp::graphic
       mShape.setFillColor(sf::Color::Red);
    }
 
+   Character::Character(const nlohmann::json& json)
+      : Character(math::Rect<float>(json["rect"]["left"], json["rect"]["top"], json["rect"]["width"], json["rect"]["height"])) {}
+
    void Character::draw(sf::RenderTarget &target, const sf::RenderStates &states) const
    {
       target.draw(mShape);

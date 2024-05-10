@@ -1,30 +1,11 @@
 #include "../inc/Game.hpp"
 
-#include "../../logic/inc/SegmentsLoader.hpp"
-#include "../../logic/inc/WindsLoader.hpp"
-
 namespace jp::game
 {
    Game::Game(Context& context) : mContext(context), logic::Engine(context.properties.logic)
    {
-      logic::SegmentsLoader<Segment> segmentsLoader;
-      std::vector<std::shared_ptr<Segment>> segments = segmentsLoader.loadFromFile("data/jsons/segments.json");
-      logic::WindsLoader<Wind> windsLoader;
-      std::vector<std::shared_ptr<Wind>> winds = windsLoader.loadFromFile("data/jsons/winds.json");
-      setGoal(std::make_shared<Goal>(math::Rect<float>(100.f, 15100.f, 40.f, 40.f)));
-      addCharacter(std::make_shared<Character>(math::Rect(10.f, 15100.f, context.properties.logic.character.size.x,
-         context.properties.logic.character.size.y), mProperties, mSegments, mWinds));
-      for (const auto& segment : segments)
-      {
-         addSegment(segment);
-      }
-
+      loadFromJsonFile("data/jsons/world.json");
       updateView();
-
-      for (const auto& wind : winds)
-      {
-         addWind(wind);
-      }
    }
 
    Game::~Game()
@@ -164,5 +145,27 @@ namespace jp::game
             }
          }
       }
+   }
+
+   void Game::addCharacter(const nlohmann::json& json)
+   {
+      std::shared_ptr<Character> character = Character::create(json, mProperties, mSegments, mWinds);
+      mDrawables.push_back(character);
+      mCharacters.push_back(character);
+   }
+
+   void Game::addSegment(const math::Vector2<float>& a, const math::Vector2<float>& b,
+      logic::SegmentSurface surface/* = SegmentSurface::Ordinary*/)
+   {
+      std::shared_ptr<Segment> segment = Segment::create(a, b, surface);
+      mDrawables.push_back(segment);
+      mSegments.push_back(segment->getLogicSegment());
+   }
+
+   void Game::addWind(const nlohmann::json& json)
+   {
+      std::shared_ptr<Wind> wind = Wind::create(json);
+      mDrawables.push_back(wind);
+      mWinds.push_back(wind);
    }
 }

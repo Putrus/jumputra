@@ -8,24 +8,20 @@ DESCRIPTION "jumputra logic"
 
 set(HEADERS
    inc/Character.hpp
-   inc/CharactersLoader.hpp
    inc/DiagonalSegment.hpp
    inc/Engine.hpp
    inc/Entity.hpp
-   inc/EntityLoader.hpp
    inc/Goal.hpp
    inc/HorizontalSegment.hpp
    inc/Properties.hpp
    inc/Runnable.hpp
    inc/Segment.hpp
-   inc/SegmentsLoader.hpp
    inc/Selectable.hpp
    inc/SelectionManager.hpp
    inc/Statistics.hpp
    inc/Updatable.hpp
    inc/VerticalSegment.hpp
    inc/Wind.hpp
-   inc/WindsLoader.hpp
    )
 
 set(SOURCES

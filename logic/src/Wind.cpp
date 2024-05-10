@@ -15,11 +15,9 @@ namespace jp::logic
       fromJson(json);
    }
    
-   std::shared_ptr<Wind> Wind::create(float impact, const math::Vector2<float>& maxVelocity,
-      const math::Rect<float>& rect, const math::Vector2<float>& acceleration,
-      const math::Vector2<float>& velocity/* = 0.f*/)
+   std::shared_ptr<Wind> Wind::create(const nlohmann::json& json)
    {
-      return std::make_shared<Wind>(impact, maxVelocity, rect, acceleration, velocity);
+      return std::make_shared<Wind>(json);
    }
    
    void Wind::update(float dt)

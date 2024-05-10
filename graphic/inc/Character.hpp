@@ -12,6 +12,7 @@ namespace jp::graphic
    public:
       Character(const math::Vector2<float> &position, const math::Vector2<float> &size);
       Character(const math::Rect<float>& rect);
+      Character(const nlohmann::json& json);
 
       void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
 

@@ -28,10 +28,10 @@ namespace jp::logic
       void segmentsFromJson(const nlohmann::json& json);
       void windsFromJson(const nlohmann::json& json);
 
-      virtual std::shared_ptr<Character> createCharacter(const nlohmann::json& json) const;
-      virtual std::shared_ptr<Segment> createSegment(const math::Vector2<float>& a,
-         const math::Vector2<float>& b, SegmentSurface surface) const;
-      virtual std::shared_ptr<Wind> createWind(const nlohmann::json& json) const;
+      virtual void addCharacter(const nlohmann::json& json);
+      virtual void addSegment(const math::Vector2<float>& a, const math::Vector2<float>& b,
+         SegmentSurface surface = SegmentSurface::Ordinary);
+      virtual void addWind(const nlohmann::json& json);
 
       Properties mProperties;
 

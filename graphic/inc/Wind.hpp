@@ -2,12 +2,16 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <nlohmann/json.hpp>
+
 namespace jp::graphic
 {
    class Wind : public sf::Drawable
    {
    public:
       Wind(const sf::FloatRect& rect);
+      Wind(const nlohmann::json& json);
+
       void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
    protected:

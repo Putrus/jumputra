@@ -14,12 +14,9 @@ namespace jp::logic
       Wind(float impact, const math::Vector2<float>& maxVelocity,
          const math::Rect<float>& rect, const math::Vector2<float>& acceleration,
          const math::Vector2<float>& velocity = 0.f);
-
       Wind(const nlohmann::json& json);
 
-      static std::shared_ptr<Wind> create(float impact, const math::Vector2<float>& maxVelocity,
-         const math::Rect<float>& rect, const math::Vector2<float>& acceleration,
-         const math::Vector2<float>& velocity = 0.f);
+      static std::shared_ptr<Wind> create(const nlohmann::json& json);
 
       virtual void update(float dt) override;
       virtual void fromJson(const nlohmann::json& json) override;

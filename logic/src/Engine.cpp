@@ -55,13 +55,13 @@ namespace jp::logic
    void Engine::addWind(const std::shared_ptr<Wind>& wind)
    {
       mWinds.push_back(wind);
-   }
+   }  
 
    void Engine::charactersFromJson(const nlohmann::json& json)
    {
       for (const auto& jsonCharacter : json.at("characters"))
       {
-         addCharacter(createCharacter(jsonCharacter));
+         addCharacter(jsonCharacter);
       }
    }
 
@@ -99,22 +99,22 @@ namespace jp::logic
             {
                math::Vector2<float> a(jsonPoints.at(i - 1));
                math::Vector2<float> b(jsonPoints.at(i));
-               addSegment(createSegment(a, b, surface));
+               addSegment(a, b, surface);
             }
          }
          else if (jsonSegment.at("type") == "segment")
          {
             math::Vector2<float> a(jsonSegment.at("a"));
             math::Vector2<float> b(jsonSegment.at("b"));
-            addSegment(createSegment(a, b, surface));
+            addSegment(a, b, surface);
          }
          else if (jsonSegment.at("type") == "rectangle")
          {
             math::Rect<float> rect(jsonSegment);
-            addSegment(createSegment(rect.getLeftTop(), rect.getRightTop(), surface));
-            addSegment(createSegment(rect.getRightTop(), rect.getRightBottom(), surface));
-            addSegment(createSegment(rect.getLeftBottom(), rect.getRightBottom(), surface));
-            addSegment(createSegment(rect.getLeftTop(), rect.getLeftBottom(), surface));
+            addSegment(rect.getLeftTop(), rect.getRightTop(), surface);
+            addSegment(rect.getRightTop(), rect.getRightBottom(), surface);
+            addSegment(rect.getLeftBottom(), rect.getRightBottom(), surface);
+            addSegment(rect.getLeftTop(), rect.getLeftBottom(), surface);
          }
          else
          {
@@ -127,39 +127,23 @@ namespace jp::logic
    {
       for (const auto& jsonWind : json.at("winds"))
       {
-         addWind(createWind(jsonWind));
+         addWind(jsonWind);
       }
    }
 
-   std::shared_ptr<Character> Engine::createCharacter(const nlohmann::json& json) const
+   void Engine::addCharacter(const nlohmann::json& json)
    {
-      return std::make_shared<Character>(json, mProperties, mSegments, mWinds);
+      mCharacters.push_back(Character::create(json, mProperties, mSegments, mWinds));
    }
 
-   std::shared_ptr<Segment> Engine::createSegment(const math::Vector2<float>& a,
-      const math::Vector2<float>& b, SegmentSurface surface) const
+   void Engine::addSegment(const math::Vector2<float>& a, const math::Vector2<float>& b,
+      SegmentSurface surface/* = SegmentSurface::Ordinary*/)
    {
-      math::Segment<float> segment(a.x, a.y, b.x, b.y);
-      if (segment.isDiagonal())
-      {
-         return std::make_shared<DiagonalSegment>(a.x, a.y, b.x, b.y, surface);
-      }
-      else if (segment.isHorizontal())
-      {
-         return std::make_shared<HorizontalSegment>(a.x, a.y, b.x, b.y, surface);
-      }
-      else if (segment.isVertical())
-      {
-         return std::make_shared<VerticalSegment>(a.x, a.y, b.x, b.y, surface);
-      }
-      else
-      {
-         throw std::invalid_argument("jp::logic::Engine::createSegment - Failed to create segment, wrong arguments");
-      }
+      mSegments.push_back(Segment::create(a, b, surface));
    }
 
-   std::shared_ptr<Wind> Engine::createWind(const nlohmann::json& json) const
+   void Engine::addWind(const nlohmann::json& json)
    {
-      return std::make_shared<Wind>(json);
+      mWinds.push_back(Wind::create(json));
    }
 }

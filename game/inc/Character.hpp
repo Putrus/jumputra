@@ -15,7 +15,16 @@ namespace jp::game
          const std::vector<std::shared_ptr<logic::Segment>>& segments,
          const std::vector<std::shared_ptr<logic::Wind>>& winds);
       Character(const math::Rect<float>& rect,
-         const logic::Properties &properties,
+         const logic::Properties& properties,
+         const std::vector<std::shared_ptr<logic::Segment>>& segments,
+         const std::vector<std::shared_ptr<logic::Wind>>& winds);
+      Character(const nlohmann::json& json,
+         const logic::Properties& properties,
+         const std::vector<std::shared_ptr<logic::Segment>>& segments,
+         const std::vector<std::shared_ptr<logic::Wind>>& winds);
+
+      static std::shared_ptr<Character> create(const nlohmann::json& json,
+         const logic::Properties& properties,
          const std::vector<std::shared_ptr<logic::Segment>>& segments,
          const std::vector<std::shared_ptr<logic::Wind>>& winds);
       

@@ -71,30 +71,13 @@ namespace jp::logic
    {
       fromJson(json);
    }
-   Character::Character(const math::Rect<float>& rect,
-      const math::Vector2<float>& acceleration, const math::Vector2<float>& velocity,
-      CharacterState state, CharacterDirection direction,
-      const math::Vector2<float>& jumpPower, const math::Vector2<float>& gravity,
-      float runSpeed, const Statistics& statistics,
-      const Properties& properties,
-      const std::vector<std::shared_ptr<Segment>>& segments,
-      const std::vector<std::shared_ptr<Wind>>& winds)
-         : mState(state), mDirection(direction), mJumpPower(jumpPower),
-         mGravity(gravity), mRunSpeed(runSpeed), mStatistics(statistics),
-         mProperties(properties), mSegments(segments), mWinds(winds),
-         Entity(rect, acceleration, velocity) {}
    
-   std::shared_ptr<Character> Character::create(const math::Rect<float>& rect,
-      const math::Vector2<float>& acceleration, const math::Vector2<float>& velocity,
-      CharacterState state, CharacterDirection direction,
-      const math::Vector2<float>& jumpPower, const math::Vector2<float>& gravity,
-      float runSpeed, const Statistics& statistics,
+   std::shared_ptr<Character> Character::create(const nlohmann::json& json,
       const Properties& properties,
       const std::vector<std::shared_ptr<Segment>>& segments,
       const std::vector<std::shared_ptr<Wind>>& winds)
    {
-      return std::make_shared<Character>(rect, acceleration, velocity, state, direction,
-         jumpPower, gravity, runSpeed, statistics, properties, segments, winds);
+      return std::make_shared<Character>(json, properties, segments, winds);
    }
 
    void Character::update(float dt)

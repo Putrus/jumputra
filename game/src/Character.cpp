@@ -14,6 +14,20 @@ namespace jp::game
       const std::vector<std::shared_ptr<logic::Wind>>& winds)
       : graphic::Character(rect), logic::Character(rect, properties, segments, winds) {}
 
+   Character::Character(const nlohmann::json& json,
+      const logic::Properties &properties,
+      const std::vector<std::shared_ptr<logic::Segment>>& segments,
+      const std::vector<std::shared_ptr<logic::Wind>>& winds)
+      : graphic::Character(json), logic::Character(json, properties, segments, winds) {}
+   
+   std::shared_ptr<Character> Character::create(const nlohmann::json& json,
+      const logic::Properties &properties,
+      const std::vector<std::shared_ptr<logic::Segment>>& segments,
+      const std::vector<std::shared_ptr<logic::Wind>>& winds)
+   {
+      return std::make_shared<Character>(json, properties, segments, winds);
+   }
+
    void Character::setPosition(float x, float y)
    {
       graphic::Character::setPosition(x, y);

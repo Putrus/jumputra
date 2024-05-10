@@ -28,6 +28,9 @@ namespace jp::graphic
       mSprite.setPosition(sf::Vector2f(rect.left - mTexture->getSize().x, rect.top));
    }
 
+   Wind::Wind(const nlohmann::json& json)
+      : Wind(sf::FloatRect(sf::Vector2f(json["rect"]["left"], json["rect"]["top"]), sf::Vector2f(json["rect"]["width"], json["rect"]["height"]))) {}
+
    void Wind::draw(sf::RenderTarget &target, const sf::RenderStates &states) const
    {
       target.draw(mSprite);

@@ -33,6 +33,11 @@ namespace jp::game
       void resetView();
       void updateView();
 
+      void addCharacter(const nlohmann::json& json) override;
+      void addSegment(const math::Vector2<float>& a, const math::Vector2<float>& b,
+         logic::SegmentSurface surface = logic::SegmentSurface::Ordinary) override;
+      void addWind(const nlohmann::json& json) override;
+
       Context& mContext;
       std::vector<std::shared_ptr<sf::Drawable>> mDrawables;
       size_t mControlledCharacterId = 0;

@@ -1,10 +1,8 @@
 if(BUILD_TESTING)
    set(HEADERS
-      inc/CharactersLoaderTest.hpp
       inc/SegmentTest.hpp
       )
    set(SOURCES
-      src/CharactersLoaderTest.cpp
       src/DiagonalSegmentTest.cpp
       src/EntityTest.cpp
       src/HorizontalSegmentTest.cpp
