@@ -42,6 +42,11 @@ namespace jp::game
       return mTexts.at(text);
    }
 
+   const std::vector<std::string>& Language::getAvailableLanguages() const
+   {
+      return mAvailableLanguages;
+   }
+
    void Language::setLanguage(const std::string& language)
    {
       mLanguage = language;

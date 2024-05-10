@@ -11,13 +11,16 @@ namespace jp::game
       mMenu.addItem(context.language.getString("quit"), context.resources.getFont(graphic::FontID::Pixeled));
    }
 
-   void StateMainMenu::update(float dt) {}
-
    void StateMainMenu::performSelected()
    {
       if (mMenu.getSelectedTextString() == mContext.language.getString("play"))
       {
          pushState(StateID::WorldChoice);
+      }
+
+      if (mMenu.getSelectedTextString() == mContext.language.getString("language"))
+      {
+         pushState(StateID::Language);
       }
 
       if (mMenu.getSelectedTextString() == mContext.language.getString("quit"))

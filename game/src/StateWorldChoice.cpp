@@ -5,11 +5,8 @@ namespace jp::game
    StateWorldChoice::StateWorldChoice(StateStack* stack, Context& context) : StateMenu(stack, context)
    { 
       mMenu.addItem(context.language.getString("babiac"), context.resources.getFont(graphic::FontID::Pixeled));
-      
-      mMenu.addItem(context.language.getString("sudovia"), context.resources.getFont(graphic::FontID::Pixeled));
-      
+      mMenu.addItem(context.language.getString("sudovia"), context.resources.getFont(graphic::FontID::Pixeled));     
       mMenu.addItem(context.language.getString("tarnovia"), context.resources.getFont(graphic::FontID::Pixeled));
-
       mMenu.addItem(context.language.getString("back"), context.resources.getFont(graphic::FontID::Pixeled));
    }
 

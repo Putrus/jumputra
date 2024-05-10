@@ -20,6 +20,7 @@ set(HEADERS
    inc/State.hpp
    inc/Segment.hpp
    inc/StateGame.hpp
+   inc/StateLanguage.hpp
    inc/StateMainMenu.hpp
    inc/StateMenu.hpp
    inc/StateStack.hpp
@@ -41,6 +42,7 @@ set(SOURCES
    src/State.cpp
    src/Segment.cpp
    src/StateGame.cpp
+   src/StateLanguage.cpp
    src/StateMainMenu.cpp
    src/StateMenu.cpp
    src/StateStack.cpp

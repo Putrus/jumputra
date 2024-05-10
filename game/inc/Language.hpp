@@ -18,8 +18,7 @@ namespace jp::game
       void setLanguage(const std::string& language);
 
    private:
-      std::string mLanguage;
-      std::string mFilename;
+      std::string mLanguage = "english";
 
       std::map<std::string, std::string> mTexts;
       std::vector<std::string> mAvailableLanguages;

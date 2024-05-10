@@ -1,4 +1,5 @@
 #include "../inc/StateGame.hpp"
+#include "../inc/StateLanguage.hpp"
 #include "../inc/StateMainMenu.hpp"
 #include "../inc/StateStack.hpp"
 #include "../inc/StateWorldChoice.hpp"
@@ -60,6 +61,9 @@ namespace jp::game
             {
             case StateID::Game:
                mStack.push_back(std::make_shared<StateGame>(this, mContext));
+               break;
+            case StateID::Language:
+               mStack.push_back(std::make_shared<StateLanguage>(this, mContext));
                break;
             case StateID::MainMenu:
                mStack.push_back(std::make_shared<StateMainMenu>(this, mContext));

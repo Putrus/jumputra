@@ -4,10 +4,10 @@
 
 namespace jp::game
 {
-   class StateMainMenu final : public StateMenu
+   class StateLanguage final : public StateMenu
    {
    public:
-      StateMainMenu(StateStack* stack, Context& context);
+      StateLanguage(StateStack* stack, Context& context);
 
    private:
       void performSelected();

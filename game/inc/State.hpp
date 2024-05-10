@@ -15,6 +15,7 @@ namespace jp::game
    {
       None = 0,
       Game,
+      Language,
       MainMenu,
       WorldChoice
    };
