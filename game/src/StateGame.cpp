@@ -13,7 +13,7 @@ namespace jp::game
    {
       if (event.type == sf::Event::Closed)
       {
-         mGame.saveToJsonFile("data/jsons/save.json");
+         mGame.save();
       }
 
       if (event.type == sf::Event::KeyReleased)
@@ -21,7 +21,7 @@ namespace jp::game
          switch (event.key.code)
          {
          case sf::Keyboard::Key::Escape:
-            mGame.saveToJsonFile("data/jsons/save.json");
+            mGame.save();
             popState();
             break;
          default:

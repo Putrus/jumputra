@@ -19,7 +19,7 @@ namespace jp::core
       fromJson(data);
    }
 
-   void Jsonable::saveToJsonFile(const std::string& filename)
+   void Jsonable::saveToJsonFile(const std::string& filename) const
    {
       std::ofstream file(filename);
       if (!file.is_open())

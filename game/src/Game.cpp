@@ -1,10 +1,13 @@
 #include "../inc/Game.hpp"
 
+#include <filesystem>
+
 namespace jp::game
 {
-   Game::Game(Context& context) : mContext(context), logic::Engine(context.properties.logic)
+   Game::Game(Context& context)
+      : mContext(context), logic::Engine(context.properties.logic)
    {
-      loadFromJsonFile("data/jsons/save.json");
+      load();
       updateView();
    }
 
@@ -77,7 +80,7 @@ namespace jp::game
             std::cout << std::endl;
             break;
          case sf::Keyboard::Key::S:
-            saveToJsonFile("data/jsons/save.json");
+            save();
             break;
          default:
             break;
@@ -89,6 +92,22 @@ namespace jp::game
    {
       updateView();
       logic::Engine::update(dt);
+   }
+
+   void Game::load()
+   {
+      std::string filename = std::string(SAVES_DIR) + mContext.world + ".json";
+      if (!std::filesystem::exists(filename))
+      {
+         filename = std::string(WORLDS_DIR) + mContext.world + ".json";
+      }
+      loadFromJsonFile(filename);
+   }
+
+   void Game::save() const
+   {
+      std::string filename = std::string(SAVES_DIR) + mContext.world + ".json";
+      saveToJsonFile(filename);
    }
 
    void Game::setGoal(const std::shared_ptr<Goal>& goal)

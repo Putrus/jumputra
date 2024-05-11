@@ -4,8 +4,8 @@ namespace jp::game
 {
    Context::Context()
    {
-      resources.loadFromDirectory("data/resources");
-      properties.loadFromJsonFile("data/jsons/properties.json");
+      resources.loadFromDirectory(RESOURCES_DIR);
+      properties.loadFromJsonFile(std::string(OPTIONS_DIR) + "properties.json");
       setLanguage(properties.graphic.language);
 
       window.setSize(sf::Vector2u(properties.graphic.window.size.x, properties.graphic.window.size.y));
@@ -20,6 +20,6 @@ namespace jp::game
    {
       properties.graphic.language = language;
       this->language.setLanguage(language);
-      this->language.loadFromJsonFile("data/jsons/languages.json");
+      this->language.loadFromJsonFile(std::string(OPTIONS_DIR) + "languages.json");
    }
 }

@@ -34,6 +34,7 @@ namespace jp::logic
    nlohmann::json Engine::toJson() const
    {
       nlohmann::json json;
+      json["goal"] = mGoal->toJson();
       for (const auto& character : mCharacters)
       {
          json["characters"].push_back(character->toJson());

@@ -24,6 +24,9 @@ namespace jp::game
       void event(const sf::Event& event) override;
       void update(float dt) override;
 
+      void load();
+      void save() const;
+
       void setGoal(const std::shared_ptr<Goal>& goal);
       void addCharacter(const std::shared_ptr<Character>& character);
       void addSegment(const std::shared_ptr<Segment>& segment);

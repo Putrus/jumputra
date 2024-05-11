@@ -10,6 +10,11 @@
 
 namespace jp::game
 {
+   constexpr char OPTIONS_DIR[] = "data/options/";
+   constexpr char RESOURCES_DIR[] = "data/resources/";
+   constexpr char SAVES_DIR[] = "data/saves/";
+   constexpr char WORLDS_DIR[] = "data/worlds/";
+
    struct Context
    {
       Context();
@@ -19,6 +24,8 @@ namespace jp::game
 
       Language language;
       Properties properties;
+
+      std::string world = "babiac";
       
       void setLanguage(const std::string& language);
    };
