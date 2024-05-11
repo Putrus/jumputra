@@ -13,6 +13,7 @@ namespace jp::game
    constexpr char OPTIONS_DIR[] = "data/options/";
    constexpr char RESOURCES_DIR[] = "data/resources/";
    constexpr char SAVES_DIR[] = "data/saves/";
+   constexpr char STATISTICS_DIR[] = "data/statistics/";
    constexpr char WORLDS_DIR[] = "data/worlds/";
 
    struct Context

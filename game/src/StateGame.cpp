@@ -1,5 +1,8 @@
 #include "../inc/StateGame.hpp"
 
+#include <chrono>
+#include <format>
+
 namespace jp::game
 {
    StateGame::StateGame(StateStack* stack, Context& context) : State(stack, context), mGame(context) {}
@@ -35,5 +38,13 @@ namespace jp::game
    void StateGame::update(float dt)
    {
       mGame.update(dt);
+      if (mGame.hasGoalBeenAchieved())
+      {
+         const auto now = std::chrono::system_clock::now();
+         std::string time = std::format("{:%d-%m-%Y_%H-%M}", now);
+         std::filesystem::remove(std::string(SAVES_DIR) + mContext.world + ".json");
+         mGame.saveStatistics(std::string(STATISTICS_DIR) + mContext.world + "_" + time + ".json");
+         popState();
+      }
    }
 }

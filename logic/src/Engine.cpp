@@ -4,6 +4,7 @@
 #include "../inc/VerticalSegment.hpp"
 
 #include <chrono>
+#include <fstream>
 
 namespace jp::logic
 {
@@ -20,6 +21,10 @@ namespace jp::logic
       for (auto& character : mCharacters)
       {
          character->update(dt);
+         if (mGoal->checkWin(character->getRect()))
+         {
+            mGoalHasBeenAchieved = true;
+         }
       }
    }
 
@@ -72,6 +77,28 @@ namespace jp::logic
    void Engine::addWind(const std::shared_ptr<Wind>& wind)
    {
       mWinds.push_back(wind);
+   }
+
+   void Engine::saveStatistics(const std::string& filename) const
+   {
+      nlohmann::json json;
+      Statistics totalStatistics;
+      for (auto& character : mCharacters)
+      {
+         json["statistics"].push_back(character->getStatistics().toJson());
+         totalStatistics.jumps += character->getStatistics().jumps;
+         totalStatistics.falls += character->getStatistics().falls;
+         totalStatistics.time += character->getStatistics().time;
+      }
+      json["totalStatistics"] = totalStatistics.toJson();
+      std::ofstream file(filename);
+      file << json;
+      file.close();
+   }
+
+   bool Engine::hasGoalBeenAchieved() const
+   {
+      return mGoalHasBeenAchieved;
    }
 
    void Engine::goalFromJson(const nlohmann::json& json)

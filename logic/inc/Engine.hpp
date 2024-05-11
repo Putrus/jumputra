@@ -23,6 +23,10 @@ namespace jp::logic
       void addSegment(const std::shared_ptr<Segment>& segment);
       void addWind(const std::shared_ptr<Wind>& wind);
 
+      void saveStatistics(const std::string& filename) const;
+      
+      bool hasGoalBeenAchieved() const;
+
    protected:
       void goalFromJson(const nlohmann::json& json);
       void charactersFromJson(const nlohmann::json& json);
@@ -41,5 +45,7 @@ namespace jp::logic
       std::vector<std::shared_ptr<Character>> mCharacters;
       std::vector<std::shared_ptr<Segment>> mSegments;
       std::vector<std::shared_ptr<Wind>> mWinds;
+
+      bool mGoalHasBeenAchieved = false;
    };
 }
