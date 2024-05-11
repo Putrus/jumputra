@@ -4,6 +4,16 @@ namespace jp::logic
 {
    Goal::Goal(const math::Rect<float>& rect) : mRect(rect) {}
 
+   Goal::Goal(const nlohmann::json& json)
+   {
+      fromJson(json);
+   }
+
+   std::shared_ptr<Goal> Goal::create(const nlohmann::json& json)
+   {
+      return std::make_shared<Goal>(json);
+   }
+
    void Goal::fromJson(const nlohmann::json& json)
    {
       mRect = json["rect"];

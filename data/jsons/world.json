@@ -1,4 +1,12 @@
 {
+   "goal": {
+      "rect": {
+         "left": 100.0,
+         "top": 15200.0,
+         "width": 24.0,
+         "height": 24.0
+      }
+   },
    "characters": [
    {
       "rect": {

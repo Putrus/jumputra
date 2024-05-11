@@ -32,7 +32,8 @@ namespace jp::game
    private:
       void resetView();
       void updateView();
-
+      
+      void setGoal(const nlohmann::json& json) override;
       void addCharacter(const nlohmann::json& json) override;
       void addSegment(const math::Vector2<float>& a, const math::Vector2<float>& b,
          logic::SegmentSurface surface = logic::SegmentSurface::Ordinary) override;

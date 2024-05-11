@@ -11,7 +11,8 @@ namespace jp::graphic
    {
    public:
       Goal(const math::Rect<float>& rect);
-
+      Goal(const nlohmann::json& json);
+      
       void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
 
    private:

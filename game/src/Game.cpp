@@ -150,6 +150,13 @@ namespace jp::game
       }
    }
 
+   void Game::setGoal(const nlohmann::json& json)
+   {
+      std::shared_ptr<Goal> goal = Goal::create(json);
+      mDrawables.push_back(goal);
+      mGoal = goal;
+   }
+
    void Game::addCharacter(const nlohmann::json& json)
    {
       std::shared_ptr<Character> character = Character::create(json, mProperties, mSegments, mWinds);

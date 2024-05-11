@@ -24,10 +24,12 @@ namespace jp::logic
       void addWind(const std::shared_ptr<Wind>& wind);
 
    protected:
+      void goalFromJson(const nlohmann::json& json);
       void charactersFromJson(const nlohmann::json& json);
       void segmentsFromJson(const nlohmann::json& json);
       void windsFromJson(const nlohmann::json& json);
 
+      virtual void setGoal(const nlohmann::json& json);
       virtual void addCharacter(const nlohmann::json& json);
       virtual void addSegment(const math::Vector2<float>& a, const math::Vector2<float>& b,
          SegmentSurface surface = SegmentSurface::Ordinary);

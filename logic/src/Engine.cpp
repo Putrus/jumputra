@@ -25,6 +25,7 @@ namespace jp::logic
 
    void Engine::fromJson(const nlohmann::json& json)
    {
+      goalFromJson(json);
       charactersFromJson(json);
       segmentsFromJson(json);
       windsFromJson(json);
@@ -70,7 +71,12 @@ namespace jp::logic
    void Engine::addWind(const std::shared_ptr<Wind>& wind)
    {
       mWinds.push_back(wind);
-   }  
+   }
+
+   void Engine::goalFromJson(const nlohmann::json& json)
+   {
+      setGoal(json["goal"]);
+   }
 
    void Engine::charactersFromJson(const nlohmann::json& json)
    {
@@ -144,6 +150,11 @@ namespace jp::logic
       {
          addWind(jsonWind);
       }
+   }
+
+   void Engine::setGoal(const nlohmann::json& json)
+   {
+      mGoal = Goal::create(json);
    }
 
    void Engine::addCharacter(const nlohmann::json& json)

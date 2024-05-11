@@ -8,6 +8,9 @@ namespace jp::logic
    {
    public:
       Goal(const math::Rect<float>& rect);
+      Goal(const nlohmann::json& json);
+
+      static std::shared_ptr<Goal> create(const nlohmann::json& json);
 
       virtual void fromJson(const nlohmann::json& json) override;
       virtual nlohmann::json toJson() const override;
