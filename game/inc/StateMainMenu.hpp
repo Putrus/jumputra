@@ -8,6 +8,7 @@ namespace jp::game
    {
    public:
       StateMainMenu(StateStack* stack, Context& context);
+      virtual void update(float dt) override;
 
    private:
       void performSelected();

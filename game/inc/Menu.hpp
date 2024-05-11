@@ -13,9 +13,11 @@ namespace jp::game
       void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
       void addItem(const std::string& text, const sf::Font& font);
+      void setItemText(int id, const std::string& text);
 
       std::string getSelectedTextString() const;
-   
+      const std::vector<std::shared_ptr<MenuItem>>& getItems() const;
+
    private:
       std::vector<std::shared_ptr<MenuItem>> mItems;
       sf::Vector2f position = { 10.f, 10.f };

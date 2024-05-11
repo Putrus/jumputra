@@ -8,9 +8,10 @@ namespace jp::game
    {
    public:
       StateLanguage(StateStack* stack, Context& context);
-
+      virtual void update(float dt) override;
+      
    private:
-      void performSelected();
-      void close();
+      void performSelected() override;
+      void close() override;
    };
 }

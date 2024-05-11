@@ -20,6 +20,7 @@ namespace jp::game
 
       void popState();
       void pushState(StateID id);
+      void updateLanguage();
 
    private:
       void applyPendingActions();

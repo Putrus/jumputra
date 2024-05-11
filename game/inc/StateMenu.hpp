@@ -12,7 +12,6 @@ namespace jp::game
 
       void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
       void event(const sf::Event& event) override;
-      void update(float dt) override;
 
    protected:
       Menu mMenu;

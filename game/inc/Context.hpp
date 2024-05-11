@@ -19,5 +19,7 @@ namespace jp::game
 
       Language language;
       Properties properties;
+      
+      void setLanguage(const std::string& language);
    };
 }

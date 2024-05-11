@@ -19,6 +19,11 @@ namespace jp::game
       setSelected(0);
    }
 
+   void Menu::setItemText(int id, const std::string& text)
+   {
+      mItems.at(id)->setTextString(text);
+   }
+
    std::string Menu::getSelectedTextString() const
    {
       if (getSelected() < mItems.size())
@@ -26,5 +31,10 @@ namespace jp::game
          return mItems[getSelected()]->getTextString();
       }
       return "";
+   }
+
+   const std::vector<std::shared_ptr<MenuItem>>& Menu::getItems() const
+   {
+      return mItems;
    }
 }

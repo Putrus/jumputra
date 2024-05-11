@@ -29,6 +29,11 @@ namespace jp::game
       Selectable::select();
    }
 
+   void MenuItem::setTextString(const std::string& text)
+   {
+      mText.setString(text);
+   }
+
    std::string MenuItem::getTextString() const
    {
       return mText.getString();

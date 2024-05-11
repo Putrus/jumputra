@@ -8,7 +8,8 @@ namespace jp::game
    {
    public:
       StateWorldChoice(StateStack* stack, Context& context);
-
+      virtual void update(float dt) override;
+      
    protected:
       void performSelected() override;
       void close() override;

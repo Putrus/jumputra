@@ -35,6 +35,4 @@ namespace jp::game
          }
       }
    }
-
-   void StateMenu::update(float dt) {}
 }

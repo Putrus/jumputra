@@ -22,6 +22,8 @@ namespace jp::game
       std::string getTextString() const;
       unsigned int getCharacterSize() const;
 
+      void setTextString(const std::string& text);
+
    private:
       sf::Text mText;
       sf::Color mSelectColor;

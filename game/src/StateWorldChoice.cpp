@@ -10,6 +10,17 @@ namespace jp::game
       mMenu.addItem(context.language.getString("back"), context.resources.getFont(graphic::FontID::Pixeled));
    }
 
+   void StateWorldChoice::update(float dt)
+   {
+      if (mMenu.getItems().at(0)->getTextString() != mContext.language.getString("babiac"))
+      {
+         mMenu.setItemText(0, mContext.language.getString("babiac"));
+         mMenu.setItemText(1, mContext.language.getString("sudovia"));
+         mMenu.setItemText(2, mContext.language.getString("tarnovia"));
+         mMenu.setItemText(3, mContext.language.getString("back"));
+      }
+   }
+
    void StateWorldChoice::performSelected()
    {
       if (mMenu.getSelectedTextString() == mContext.language.getString("babiac"))
