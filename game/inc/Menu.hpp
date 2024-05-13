@@ -12,7 +12,9 @@ namespace jp::game
    public:
       void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 
-      void addItem(const std::string& text, const sf::Font& font);
+      void addItem(const std::string& text, const sf::Font& font,
+         const sf::Color& deselectColor = sf::Color::White,
+         const sf::Color& selectColor = sf::Color::Yellow);
       void setItemText(int id, const std::string& text);
 
       std::string getSelectedTextString() const;

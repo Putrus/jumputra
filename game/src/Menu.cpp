@@ -10,9 +10,11 @@ namespace jp::game
       }
    }
 
-   void Menu::addItem(const std::string& text, const sf::Font& font)
+   void Menu::addItem(const std::string& text, const sf::Font& font,
+      const sf::Color& deselectColor/* = sf::Color::White*/,
+      const sf::Color& selectColor/* = sf::Color::Yellow*/)
    {
-      std::shared_ptr<MenuItem> newItem = std::make_shared<MenuItem>(position, text, font);
+      std::shared_ptr<MenuItem> newItem = std::make_shared<MenuItem>(position, text, font, deselectColor, selectColor);
       position.y += newItem->getCharacterSize() + offset;
       mItems.push_back(newItem);
       addSelectable(newItem);

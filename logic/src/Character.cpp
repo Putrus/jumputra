@@ -145,7 +145,10 @@ namespace jp::logic
                   break;
                }
                newRect.left = segment->b.x;
-               newVelocity.x = getVelocity().x * -mProperties.physics.bounceFactor;
+               if (newVelocity.x < 0.f)
+               {
+                  newVelocity.x = getVelocity().x * -mProperties.physics.bounceFactor;
+               }
                if (math::sign(newVelocity.x) == math::sign(getRunSpeed()))
                {
                   newVelocity.x = 0.f;
@@ -159,7 +162,10 @@ namespace jp::logic
                   break;
                }
                newRect.left = segment->a.x - newRect.width;
-               newVelocity.x = getVelocity().x * -mProperties.physics.bounceFactor;
+               if (newVelocity.x > 0.f)
+               {
+                  newVelocity.x = getVelocity().x * -mProperties.physics.bounceFactor;
+               }
                if (math::sign(newVelocity.x) == math::sign(getRunSpeed()))
                {
                   newVelocity.x = 0.f;
@@ -175,6 +181,10 @@ namespace jp::logic
             }
             case SegmentCollision::Bottom:
             {
+               if (getState() == CharacterState::Sledding)
+               {
+                  break;
+               }
                newRect.top = std::min(segment->a.y, segment->b.y) - newRect.height;
                newVelocity.y = 0.f;
                if (segment->getSurface() == SegmentSurface::Ordinary)

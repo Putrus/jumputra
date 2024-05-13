@@ -103,11 +103,21 @@ namespace jp::logic
 
    void Engine::goalFromJson(const nlohmann::json& json)
    {
+      if (json.find("goal") == json.end())
+      {
+         return;
+      }
+
       setGoal(json["goal"]);
    }
 
    void Engine::charactersFromJson(const nlohmann::json& json)
    {
+      if (json.find("characters") == json.end())
+      {
+         return;
+      }
+
       for (const auto& jsonCharacter : json.at("characters"))
       {
          addCharacter(jsonCharacter);
@@ -116,6 +126,11 @@ namespace jp::logic
 
    void Engine::segmentsFromJson(const nlohmann::json& json)
    {
+      if (json.find("segments") == json.end())
+      {
+         return;
+      }
+
       for (const auto& jsonSegment : json.at("segments"))
       {
          if (jsonSegment.at("type") == "comment")
@@ -174,6 +189,11 @@ namespace jp::logic
    
    void Engine::windsFromJson(const nlohmann::json& json)
    {
+      if (json.find("winds") == json.end())
+      {
+         return;
+      }
+
       for (const auto& jsonWind : json.at("winds"))
       {
          addWind(jsonWind);
