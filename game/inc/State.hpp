@@ -17,6 +17,7 @@ namespace jp::game
       Game,
       Language,
       MainMenu,
+      Win,
       WorldChoice
    };
 

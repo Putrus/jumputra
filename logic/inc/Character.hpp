@@ -40,19 +40,23 @@ namespace jp::logic
    public:
       Character(const math::Vector2<float> &position, const math::Vector2<float> &size,
          const Properties& properties,
+         Statistics& totalStatistics,
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);
       Character(const math::Rect<float>& rect,
          const Properties& properties,
+         Statistics& totalStatistics,
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);
       Character(const nlohmann::json& json,
          const Properties& properties,
+         Statistics& totalStatistics,
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);
 
       static std::shared_ptr<Character> create(const nlohmann::json& json,
          const Properties& properties,
+         Statistics& totalStatistics,
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);
 
@@ -90,6 +94,7 @@ namespace jp::logic
       Statistics mStatistics;
 
       const Properties& mProperties;
+      Statistics& mTotalStatistics;
       const std::vector<std::shared_ptr<Segment>>& mSegments;
       const std::vector<std::shared_ptr<Wind>>& mWinds;
    };

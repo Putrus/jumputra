@@ -4,11 +4,12 @@
 
 namespace jp::game
 {
-   class StateMainMenu final : public StateMenu
+   class StateWin final : public StateMenu
    {
    public:
-      StateMainMenu(StateStack* stack, Context& context);
-      virtual void update(float dt) override;
+      StateWin(StateStack* stack, Context& context);
+
+      void update(float dt) override;
 
    private:
       void performSelected() override;

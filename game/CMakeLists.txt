@@ -24,6 +24,7 @@ set(HEADERS
    inc/StateMainMenu.hpp
    inc/StateMenu.hpp
    inc/StateStack.hpp
+   inc/StateWin.hpp
    inc/StateWorldChoice.hpp
    inc/Wind.hpp
    )
@@ -46,6 +47,7 @@ set(SOURCES
    src/StateMainMenu.cpp
    src/StateMenu.cpp
    src/StateStack.cpp
+   src/StateWin.cpp
    src/StateWorldChoice.cpp
    src/Wind.cpp
    )

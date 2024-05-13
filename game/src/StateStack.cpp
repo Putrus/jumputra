@@ -2,6 +2,7 @@
 #include "../inc/StateLanguage.hpp"
 #include "../inc/StateMainMenu.hpp"
 #include "../inc/StateStack.hpp"
+#include "../inc/StateWin.hpp"
 #include "../inc/StateWorldChoice.hpp"
 
 namespace jp::game
@@ -67,6 +68,9 @@ namespace jp::game
                break;
             case StateID::MainMenu:
                mStack.push_back(std::make_shared<StateMainMenu>(this, mContext));
+               break;
+            case StateID::Win:
+               mStack.push_back(std::make_shared<StateWin>(this, mContext));
                break;
             case StateID::WorldChoice:
                mStack.push_back(std::make_shared<StateWorldChoice>(this, mContext));

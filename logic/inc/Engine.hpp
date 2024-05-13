@@ -27,6 +27,8 @@ namespace jp::logic
       
       bool hasGoalBeenAchieved() const;
 
+      const Statistics& getStatistics() const;
+
    protected:
       void goalFromJson(const nlohmann::json& json);
       void charactersFromJson(const nlohmann::json& json);
@@ -40,6 +42,7 @@ namespace jp::logic
       virtual void addWind(const nlohmann::json& json);
 
       Properties mProperties;
+      Statistics mStatistics;
 
       std::shared_ptr<Goal> mGoal;
       std::vector<std::shared_ptr<Character>> mCharacters;

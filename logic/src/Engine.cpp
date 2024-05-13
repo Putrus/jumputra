@@ -82,15 +82,7 @@ namespace jp::logic
    void Engine::saveStatistics(const std::string& filename) const
    {
       nlohmann::json json;
-      Statistics totalStatistics;
-      for (auto& character : mCharacters)
-      {
-         json["statistics"].push_back(character->getStatistics().toJson());
-         totalStatistics.jumps += character->getStatistics().jumps;
-         totalStatistics.falls += character->getStatistics().falls;
-         totalStatistics.time += character->getStatistics().time;
-      }
-      json["totalStatistics"] = totalStatistics.toJson();
+      json["totalStatistics"] = mStatistics.toJson();
       std::ofstream file(filename);
       file << json;
       file.close();
@@ -99,6 +91,11 @@ namespace jp::logic
    bool Engine::hasGoalBeenAchieved() const
    {
       return mGoalHasBeenAchieved;
+   }
+
+   const Statistics& Engine::getStatistics() const
+   {
+      return mStatistics;
    }
 
    void Engine::goalFromJson(const nlohmann::json& json)
@@ -207,7 +204,7 @@ namespace jp::logic
 
    void Engine::addCharacter(const nlohmann::json& json)
    {
-      mCharacters.push_back(Character::create(json, mProperties, mSegments, mWinds));
+      mCharacters.push_back(Character::create(json, mProperties, mStatistics, mSegments, mWinds));
    }
 
    void Engine::addSegment(const math::Vector2<float>& a, const math::Vector2<float>& b,

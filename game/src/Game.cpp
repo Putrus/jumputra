@@ -38,9 +38,11 @@ namespace jp::game
          switch (event.key.code)
          {
          case sf::Keyboard::Key::Left:
+         case sf::Keyboard::Key::A:
             controlledCharacter.run(logic::CharacterDirection::Left);
             break;
          case sf::Keyboard::Key::Right:
+         case sf::Keyboard::Key::D:
             controlledCharacter.run(logic::CharacterDirection::Right);
             break;
          case sf::Keyboard::Key::Space:
@@ -59,12 +61,14 @@ namespace jp::game
             controlledCharacter.jump();
             break;
          case sf::Keyboard::Key::Left:
+         case sf::Keyboard::Key::A:
             if (controlledCharacter.getDirection() == logic::CharacterDirection::Left)
             {
                controlledCharacter.stop();
             }
             break;
          case sf::Keyboard::Key::Right:
+         case sf::Keyboard::Key::D:
             if (controlledCharacter.getDirection() == logic::CharacterDirection::Right)
             {
                controlledCharacter.stop();
@@ -76,7 +80,7 @@ namespace jp::game
             std::cout << "acceleration: " << controlledCharacter.getAcceleration() << std::endl;
             std::cout << "velocity: " << controlledCharacter.getVelocity() << std::endl;
             std::cout << "runSpeed: " << controlledCharacter.getRunSpeed() << std::endl;
-            std::cout << "statistics: " << controlledCharacter.getStatistics() << std::endl;
+            std::cout << "statistics: " << mContext.statistics << std::endl;
             std::cout << std::endl;
             break;
          case sf::Keyboard::Key::S:
@@ -178,7 +182,7 @@ namespace jp::game
 
    void Game::addCharacter(const nlohmann::json& json)
    {
-      std::shared_ptr<Character> character = Character::create(json, mProperties, mSegments, mWinds);
+      std::shared_ptr<Character> character = Character::create(json, mProperties, mStatistics, mSegments, mWinds);
       mDrawables.push_back(character);
       mCharacters.push_back(character);
    }

@@ -44,7 +44,9 @@ namespace jp::game
          std::string time = std::format("{:%d-%m-%Y_%H-%M}", now);
          std::filesystem::remove(std::string(SAVES_DIR) + mContext.world + ".json");
          mGame.saveStatistics(std::string(STATISTICS_DIR) + mContext.world + "_" + time + ".json");
+         mContext.statistics = mGame.getStatistics();
          popState();
+         pushState(StateID::Win);
       }
    }
 }

@@ -8,6 +8,8 @@
 #include "../../graphic/inc/Resources.hpp"
 #include "../../graphic/inc/Window.hpp"
 
+#include "../../logic/inc/Statistics.hpp"
+
 namespace jp::game
 {
    constexpr char OPTIONS_DIR[] = "data/options/";
@@ -27,6 +29,7 @@ namespace jp::game
       Properties properties;
 
       std::string world = "babiac";
+      logic::Statistics statistics;
       
       void setLanguage(const std::string& language);
    };

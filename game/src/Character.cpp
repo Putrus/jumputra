@@ -4,28 +4,32 @@ namespace jp::game
 {
    Character::Character(const math::Vector2<float> &position, const math::Vector2<float> &size,
       const logic::Properties &properties,
+      logic::Statistics& totalStatistics,
       const std::vector<std::shared_ptr<logic::Segment>>& segments,
       const std::vector<std::shared_ptr<logic::Wind>>& winds)
-      : graphic::Character(position, size), logic::Character(position, size, properties, segments, winds) {}
+      : graphic::Character(position, size), logic::Character(position, size, properties, totalStatistics, segments, winds) {}
 
    Character::Character(const math::Rect<float>& rect,
       const logic::Properties &properties,
+      logic::Statistics& totalStatistics,
       const std::vector<std::shared_ptr<logic::Segment>>& segments,
       const std::vector<std::shared_ptr<logic::Wind>>& winds)
-      : graphic::Character(rect), logic::Character(rect, properties, segments, winds) {}
+      : graphic::Character(rect), logic::Character(rect, properties, totalStatistics, segments, winds) {}
 
    Character::Character(const nlohmann::json& json,
       const logic::Properties &properties,
+      logic::Statistics& totalStatistics,
       const std::vector<std::shared_ptr<logic::Segment>>& segments,
       const std::vector<std::shared_ptr<logic::Wind>>& winds)
-      : graphic::Character(json), logic::Character(json, properties, segments, winds) {}
+      : graphic::Character(json), logic::Character(json, properties, totalStatistics, segments, winds) {}
    
    std::shared_ptr<Character> Character::create(const nlohmann::json& json,
       const logic::Properties &properties,
+      logic::Statistics& totalStatistics,
       const std::vector<std::shared_ptr<logic::Segment>>& segments,
       const std::vector<std::shared_ptr<logic::Wind>>& winds)
    {
-      return std::make_shared<Character>(json, properties, segments, winds);
+      return std::make_shared<Character>(json, properties, totalStatistics, segments, winds);
    }
 
    void Character::setPosition(float x, float y)

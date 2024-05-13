@@ -53,31 +53,36 @@ namespace jp::logic
 
    Character::Character(const math::Vector2<float> &position, const math::Vector2<float> &size,
       const Properties &properties,
+      Statistics& totalStatistics,
       const std::vector<std::shared_ptr<Segment>>& segments,
       const std::vector<std::shared_ptr<Wind>>& winds)
-      : mProperties(properties), mSegments(segments), mWinds(winds), Entity(math::Rect<float>(position, size)) {}
+      : mProperties(properties), mTotalStatistics(totalStatistics), mSegments(segments),
+      mWinds(winds), Entity(math::Rect<float>(position, size)) {}
 
    Character::Character(const math::Rect<float>& rect,
       const Properties &properties,
+      Statistics& totalStatistics,
       const std::vector<std::shared_ptr<Segment>>& segments,
       const std::vector<std::shared_ptr<Wind>>& winds)
-      : mProperties(properties), mSegments(segments), mWinds(winds), Entity(rect) {}
+      : mProperties(properties), mTotalStatistics(totalStatistics), mSegments(segments), mWinds(winds), Entity(rect) {}
 
    Character::Character(const nlohmann::json& json,
       const Properties& properties,
+      Statistics& totalStatistics,
       const std::vector<std::shared_ptr<Segment>>& segments,
       const std::vector<std::shared_ptr<Wind>>& winds)
-      : mProperties(properties), mSegments(segments), mWinds(winds)
+      : mProperties(properties), mTotalStatistics(totalStatistics), mSegments(segments), mWinds(winds)
    {
       fromJson(json);
    }
    
    std::shared_ptr<Character> Character::create(const nlohmann::json& json,
       const Properties& properties,
+      Statistics& totalStatistics,
       const std::vector<std::shared_ptr<Segment>>& segments,
       const std::vector<std::shared_ptr<Wind>>& winds)
    {
-      return std::make_shared<Character>(json, properties, segments, winds);
+      return std::make_shared<Character>(json, properties, totalStatistics, segments, winds);
    }
 
    void Character::update(float dt)
@@ -344,9 +349,11 @@ namespace jp::logic
       if (getState() == CharacterState::Falling && newState != getState())
       {
          ++mStatistics.falls;
+         ++mTotalStatistics.falls;
       }
 
       mStatistics.time += dt;
+      mTotalStatistics.time += dt;
 
       setAcceleration(newAcceleration);
       setVelocity(newVelocity);
@@ -383,6 +390,7 @@ namespace jp::logic
       if (getState() == CharacterState::Squatting)
       {
          ++mStatistics.jumps;
+         ++mTotalStatistics.jumps;
          setState(CharacterState::Flying);
          setAccelerationX(0.f);
          switch (mDirection)
