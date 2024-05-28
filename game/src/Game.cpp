@@ -101,7 +101,7 @@ namespace jp::game
    void Game::load()
    {
       std::string filename = std::string(SAVES_DIR) + mContext.world + ".json";
-      if (!std::filesystem::exists(filename))
+      if (!std::filesystem::exists(filename) || mContext.newGame)
       {
          filename = std::string(WORLDS_DIR) + mContext.world + ".json";
       }

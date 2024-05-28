@@ -29,7 +29,10 @@ namespace jp::game
       Properties properties;
 
       std::string world = "babiac";
+      bool newGame = false;
+      
       logic::Statistics statistics;
+
       
       void setLanguage(const std::string& language);
    };

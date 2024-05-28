@@ -26,18 +26,21 @@ namespace jp::game
       if (mMenu.getSelectedTextString() == mContext.language.getString("babiac"))
       {
          mContext.world = "babiac";
+         popState();
          pushState(StateID::Game);
       }
 
       if (mMenu.getSelectedTextString() == mContext.language.getString("sudovia"))
       {
          mContext.world = "sudovia";
+         popState();
          pushState(StateID::Game);
       }
 
       if (mMenu.getSelectedTextString() == mContext.language.getString("tarnovia"))
       {
          mContext.world = "tarnovia";
+         popState();
          pushState(StateID::Game);
       }
 

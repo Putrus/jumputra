@@ -4,11 +4,17 @@
       "texts": {
          "babiac": "BABIAC",
          "back": "BACK",
+         "continue": "CONTINUE",
+         "falls": "FALLS",
+         "isReached": "IS REACHED",
+         "jumps": "JUMPS",
          "language": "LANGUAGE",
-         "play": "PLAY",
+         "newGame": "NEW GAME",
          "quit": "QUIT",
+         "statistics": "STATISTICS",
          "sudovia": "SUDOVIA",
-         "tarnovia": "TARNOVIA"
+         "tarnovia": "TARNOVIA",
+         "time": "TIME"
       }
    },
    {
@@ -16,11 +22,17 @@
       "texts": {
          "babiac": "BABIAK",
          "back": "WROC",
+         "continue": "KONTYNUUJ",
+         "falls": "UPADKI",
+         "isReached": "ZDOBYTY",
+         "jumps": "SKOKI",
          "language": "JEZYK",
-         "play": "GRAJ",
+         "newGame": "NOWA GRA",
          "quit": "WYJDZ",
+         "statistics": "STATYSTYKI",
          "sudovia": "SUDOWIA",
-         "tarnovia": "TARNOWIA"
+         "tarnovia": "TARNOWIA",
+         "time": "CZAS"
       }
    }
 ]
