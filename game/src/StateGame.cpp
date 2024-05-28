@@ -25,7 +25,9 @@ namespace jp::game
          {
          case sf::Keyboard::Key::Escape:
             mGame.save();
+            mContext.statistics = mGame.getStatistics();
             popState();
+            pushState(StateID::Pause);
             break;
          default:
             break;

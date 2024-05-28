@@ -1,6 +1,7 @@
 #include "../inc/StateGame.hpp"
 #include "../inc/StateLanguage.hpp"
 #include "../inc/StateMainMenu.hpp"
+#include "../inc/StatePause.hpp"
 #include "../inc/StateStack.hpp"
 #include "../inc/StateWin.hpp"
 #include "../inc/StateWorldChoice.hpp"
@@ -68,6 +69,9 @@ namespace jp::game
                break;
             case StateID::MainMenu:
                mStack.push_back(std::make_shared<StateMainMenu>(this, mContext));
+               break;
+            case StateID::Pause:
+               mStack.push_back(std::make_shared<StatePause>(this, mContext));
                break;
             case StateID::Win:
                mStack.push_back(std::make_shared<StateWin>(this, mContext));

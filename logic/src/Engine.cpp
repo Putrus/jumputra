@@ -30,6 +30,11 @@ namespace jp::logic
 
    void Engine::fromJson(const nlohmann::json& json)
    {
+      if (json.find("totalStatistics") != json.end())
+      {
+         mStatistics.fromJson(json["totalStatistics"]);
+      }
+      
       goalFromJson(json);
       charactersFromJson(json);
       segmentsFromJson(json);
@@ -39,6 +44,7 @@ namespace jp::logic
    nlohmann::json Engine::toJson() const
    {
       nlohmann::json json;
+      json["totalStatistics"] = mStatistics.toJson();
       json["goal"] = mGoal->toJson();
       for (const auto& character : mCharacters)
       {

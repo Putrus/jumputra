@@ -23,6 +23,7 @@ set(HEADERS
    inc/StateLanguage.hpp
    inc/StateMainMenu.hpp
    inc/StateMenu.hpp
+   inc/StatePause.hpp
    inc/StateStack.hpp
    inc/StateWin.hpp
    inc/StateWorldChoice.hpp
@@ -46,6 +47,7 @@ set(SOURCES
    src/StateLanguage.cpp
    src/StateMainMenu.cpp
    src/StateMenu.cpp
+   src/StatePause.cpp
    src/StateStack.cpp
    src/StateWin.cpp
    src/StateWorldChoice.cpp
