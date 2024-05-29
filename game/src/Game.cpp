@@ -141,7 +141,8 @@ namespace jp::game
    void Game::resetView()
    {
       sf::View view = mContext.window.getView();
-      view.setCenter(sf::Vector2f(mContext.properties.graphic.window.size.x / 2, mContext.properties.graphic.window.size.y / 2));
+      view.setCenter(sf::Vector2f(static_cast<float>(mContext.properties.graphic.window.size.x / 2),
+         static_cast<float>(mContext.properties.graphic.window.size.y / 2)));
       mContext.window.setView(view);
    }
 

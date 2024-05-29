@@ -21,7 +21,7 @@ namespace jp::logic
       
       if (selected < 0)
       {
-         selected = mSelectables.size() - 1;
+         selected = static_cast<int>(mSelectables.size()) - 1;
       }
       else
       {

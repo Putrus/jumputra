@@ -8,7 +8,7 @@ namespace jp::graphic
    {
       //temporary, sf::Sprite default constructor is deleted...
       std::unique_ptr<sf::Image> img = std::make_unique<sf::Image>();
-      img->create(sf::Vector2u(rect.width * 2, rect.height), sf::Color::Transparent);
+      img->create(sf::Vector2u(static_cast<unsigned int>(rect.width * 2), static_cast<unsigned int>(rect.height)), sf::Color::Transparent);
       unsigned int yInterspace = 32;
       unsigned int xInterspace = yInterspace * 2;
       for (unsigned int y = 0; y < img->getSize().y; y += yInterspace)
@@ -44,7 +44,7 @@ namespace jp::graphic
       {
          newPosition.x -= mTexture->getSize().x;
       }
-      else if (newPosition.x < -mTexture->getSize().x)
+      else if (newPosition.x < -static_cast<float>(mTexture->getSize().x))
       {
          newPosition.x += mTexture->getSize().x;
       }
