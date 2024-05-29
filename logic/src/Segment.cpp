@@ -97,7 +97,9 @@ namespace jp::logic
       }
       else
       {
-         throw std::invalid_argument("jp::logic::Segment::create - Failed to create segment, wrong arguments");
+         std::stringstream ss;
+         ss << "jp::logic::Segment::create - Failed to create segment, wrong arguments a = (" << aX << ", " << aY << "), b = (" << bX << ", " << bY << ")";
+         throw std::invalid_argument(ss.str());
       }
    }
 

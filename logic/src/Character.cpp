@@ -295,6 +295,7 @@ namespace jp::logic
                      newRect.top = newRect.getRight() * slope + intercept;
                   }
                }
+               newRect.left = getRect().left;
                break;
             }
             case SegmentCollision::Roof:
