@@ -44,7 +44,7 @@ namespace jp::graphic
       {
          newPosition.x -= mTexture->getSize().x;
       }
-      else if (newPosition.x < -static_cast<float>(mTexture->getSize().x))
+      else if (newPosition.x < -mTexture->getSize().x)
       {
          newPosition.x += mTexture->getSize().x;
       }
