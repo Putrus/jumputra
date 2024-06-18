@@ -150,7 +150,7 @@ namespace jp::logic
          {
             surface = SegmentSurface::Slippery;
          }
-         else if (jsonSegment.at("surface") == "sticky" || jsonSegment.at("surface") == SegmentSurface::Slippery)
+         else if (jsonSegment.at("surface") == "sticky" || jsonSegment.at("surface") == SegmentSurface::Sticky)
          {
             surface = SegmentSurface::Sticky;
          }
