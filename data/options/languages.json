@@ -2,10 +2,12 @@
    {
       "name": "english",
       "texts": {
+         "algorithms": "ALGORITHMS",
          "babiac": "BABIAC",
          "back": "BACK",
          "continue": "CONTINUE",
          "falls": "FALLS",
+         "greedy": "GREEDY",
          "isReached": "IS REACHED",
          "jumps": "JUMPS",
          "language": "LANGUAGE",
@@ -21,10 +23,12 @@
    {
       "name": "polski",
       "texts": {
+         "algorithms": "ALGORYTMY",
          "babiac": "BABIAK",
          "back": "WROC",
          "continue": "KONTYNUUJ",
          "falls": "UPADKI",
+         "greedy": "ZACHLANNY",
          "isReached": "ZDOBYTY",
          "jumps": "SKOKI",
          "language": "JEZYK",

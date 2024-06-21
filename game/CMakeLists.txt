@@ -17,8 +17,9 @@ set(HEADERS
    inc/Menu.hpp
    inc/MenuItem.hpp
    inc/Properties.hpp
-   inc/State.hpp
    inc/Segment.hpp
+   inc/State.hpp
+   inc/StateAlgorithmChoice.hpp
    inc/StateGame.hpp
    inc/StateLanguage.hpp
    inc/StateMainMenu.hpp
@@ -41,8 +42,9 @@ set(SOURCES
    src/Menu.cpp
    src/MenuItem.cpp
    src/Properties.cpp
-   src/State.cpp
    src/Segment.cpp
+   src/State.cpp
+   src/StateAlgorithmChoice.cpp
    src/StateGame.cpp
    src/StateLanguage.cpp
    src/StateMainMenu.cpp
