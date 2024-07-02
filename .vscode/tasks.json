@@ -19,6 +19,18 @@
                 "owner": "cpp",
                 "fileLocation": ["relative", "${workspaceRoot}/build"]
             }
+        },
+        {
+            "label": "run tests",
+            "type": "shell",
+            "command": "ctest",
+            "args": [
+                "--test-dir",
+                "build/ut",
+                "--output-on-failure",
+                "-j",
+                "12"
+            ]
         }
     ]
 }
