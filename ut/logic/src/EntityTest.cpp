@@ -6,7 +6,7 @@ namespace jp::ut::logic
 {
    using namespace jp::logic;
 
-   TEST(Entity, DefaultConstructor)
+   TEST(EntityTest, DefaultConstructor)
    {
       Entity entity;
       EXPECT_EQ(math::Vector2<float>(), entity.getPosition());
@@ -15,7 +15,7 @@ namespace jp::ut::logic
       EXPECT_EQ(math::Vector2<float>(), entity.getVelocity());
    }
 
-   TEST(Entity, ArgumentsConstructor)
+   TEST(EntityTest, ArgumentsConstructor)
    {
       Entity entity(math::Rect<float>(1.f, 2.f, 3.f, 4.f),
          math::Vector2<float>(5.f, 6.f), math::Vector2<float>(7.f, 8.f));
@@ -25,7 +25,7 @@ namespace jp::ut::logic
       EXPECT_EQ(math::Vector2<float>(7.f, 8.f), entity.getVelocity());
    }
 
-   TEST(Entity, SetPosition)
+   TEST(EntityTest, SetPosition)
    {
       Entity entity;
       entity.setPosition(math::Vector2<float>(1.f, 3.f));

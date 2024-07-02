@@ -6,7 +6,7 @@ namespace jp::ut::math
 {
    using namespace jp::math;
 
-   TEST(RectFloat, DefaultConstructor)
+   TEST(RectFloatTest, DefaultConstructor)
    {
       Rect<float> rect;
       EXPECT_EQ(0.f, rect.left);
@@ -15,7 +15,7 @@ namespace jp::ut::math
       EXPECT_EQ(0.f, rect.height);
    }
 
-   TEST(RectFloat, FourArgumentsConstructor)
+   TEST(RectFloatTest, FourArgumentsConstructor)
    {
       Rect<float> rect(1.f, 2.f, 3.f, 4.f);
       EXPECT_EQ(1.f, rect.left);
@@ -24,7 +24,7 @@ namespace jp::ut::math
       EXPECT_EQ(4.f, rect.height);
    }
 
-   TEST(RectFloat, TwoArgumentsConstructor)
+   TEST(RectFloatTest, TwoArgumentsConstructor)
    {
       Rect<float> rect(Vector2<float>(1.f, 2.f), Vector2<float>(3.f, 4.f));
       EXPECT_EQ(1.f, rect.left);
@@ -33,7 +33,7 @@ namespace jp::ut::math
       EXPECT_EQ(4.f, rect.height);
    }
 
-   TEST(RectFloat, CopyConstructor)
+   TEST(RectFloatTest, CopyConstructor)
    {
       Rect<float> other(1.f, 2.f, 3.f, 4.f);
       Rect<float> rect(other);
@@ -43,82 +43,82 @@ namespace jp::ut::math
       EXPECT_EQ(4.f, rect.height);
    }
 
-   TEST(RectFloat, IntersectsTrue)
+   TEST(RectFloatTest, IntersectsTrue)
    {
       Rect<float> other(10.f, 10.f, 20.f, 20.f);
       Rect<float> rect(15.f, 15.f, 20.f, 20.f);
       EXPECT_TRUE(rect.intersects(other));
    }
 
-   TEST(RectFloat, IntersectsFalse)
+   TEST(RectFloatTest, IntersectsFalse)
    {
       Rect<float> other(10.f, 10.f, 20.f, 20.f);
       Rect<float> rect(50.f, 50.f, 20.f, 20.f);
       EXPECT_FALSE(rect.intersects(other));
    }
 
-   TEST(RectFloat, IntersectsEdge)
+   TEST(RectFloatTest, IntersectsEdge)
    {
       Rect<float> other(10.f, 10.f, 20.f, 20.f);
       Rect<float> rect(30.f, 30.f, 20.f, 20.f);
       EXPECT_TRUE(rect.intersects(other));
    }
 
-   TEST(RectFloat, GetPosition)
+   TEST(RectFloatTest, GetPosition)
    {
       Rect<float> rect(30.f, 30.f, 20.f, 20.f);
       EXPECT_EQ(Vector2<float>(30.f, 30.f), rect.getPosition());
    }
 
-   TEST(RectFloat, GetSize)
+   TEST(RectFloatTest, GetSize)
    {
       Rect<float> rect(30.f, 30.f, 20.f, 20.f);
       EXPECT_EQ(Vector2<float>(20.f, 20.f), rect.getSize());
    }
 
-   TEST(RectFloat, GetLeftTop)
+   TEST(RectFloatTest, GetLeftTop)
    {
       Rect<float> rect(30.f, 30.f, 20.f, 20.f);
       EXPECT_EQ(Vector2<float>(30.f, 30.f), rect.getLeftTop());
    }
 
-   TEST(RectFloat, GetLeftBottom)
+   TEST(RectFloatTest, GetLeftBottom)
    {
       Rect<float> rect(30.f, 30.f, 20.f, 20.f);
       EXPECT_EQ(Vector2<float>(30.f, 50.f), rect.getLeftBottom());
    }
 
-   TEST(RectFloat, GetRightTop)
+   TEST(RectFloatTest, GetRightTop)
    {
       Rect<float> rect(30.f, 30.f, 20.f, 20.f);
       EXPECT_EQ(Vector2<float>(50.f, 30.f), rect.getRightTop());
    }
 
-   TEST(RectFloat, GetRightBottom)
+   TEST(RectFloatTest, GetRightBottom)
    {
       Rect<float> rect(30.f, 30.f, 20.f, 20.f);
       EXPECT_EQ(Vector2<float>(50.f, 50.f), rect.getRightBottom());
    }
 
-   TEST(RectFloat, GetCenter)
+   TEST(RectFloatTest, GetCenter)
    {
       Rect<float> rect(30.f, 30.f, 20.f, 20.f);
       EXPECT_EQ(Vector2<float>(40.f, 40.f), rect.getCenter());
    }
 
-   TEST(RectFloat, GetRight)
+   TEST(RectFloatTest, GetRight)
    {
       Rect<float> rect(30.f, 30.f, 20.f, 20.f);
       EXPECT_EQ(50.f, rect.getRight());
    }
 
-   TEST(RectFloat, GetBottom)
+   TEST(RectFloatTest, GetBottom)
    {
       Rect<float> rect(30.f, 30.f, 20.f, 20.f);
       EXPECT_EQ(50.f, rect.getBottom());
    }
 
-   TEST(RectFloat, SetPositionTwoArguments)
+   TEST(RectFloatTest, SetPositionTwoArguments)
    {
       Rect<float> rect(30.f, 30.f, 20.f, 20.f);
       rect.setPosition(10.f, 10.f);
@@ -128,7 +128,7 @@ namespace jp::ut::math
       EXPECT_EQ(20.f, rect.height);
    }
 
-   TEST(RectFloat, SetPositionOneArgument)
+   TEST(RectFloatTest, SetPositionOneArgument)
    {
       Rect<float> rect(30.f, 30.f, 20.f, 20.f);
       rect.setPosition(Vector2<float>(10.f, 10.f));
@@ -138,7 +138,7 @@ namespace jp::ut::math
       EXPECT_EQ(20.f, rect.height);
    }
 
-   TEST(RectFloat, PlusOperator)
+   TEST(RectFloatTest, PlusOperator)
    {
       Rect<float> rect(30.f, 30.f, 20.f, 20.f);
       rect = rect + Vector2<float>(10.f, 10.f);
@@ -148,7 +148,7 @@ namespace jp::ut::math
       EXPECT_EQ(20.f, rect.height);
    }
 
-   TEST(RectFloat, PlusEqualOperator)
+   TEST(RectFloatTest, PlusEqualOperator)
    {
       Rect<float> rect(30.f, 30.f, 20.f, 20.f);
       rect += Vector2<float>(10.f, 10.f);
@@ -158,7 +158,7 @@ namespace jp::ut::math
       EXPECT_EQ(20.f, rect.height);
    }
 
-   TEST(RectFloat, StreamExtraction)
+   TEST(RectFloatTest, StreamExtraction)
    {
       Rect<float> rect(3.4f, 3.4f, 20.f, 20.f);
       std::stringstream ss;
@@ -166,7 +166,7 @@ namespace jp::ut::math
       EXPECT_EQ("3.4 3.4 20 20", ss.str());
    }
 
-   TEST(RectFloat, EqualEqualOperator)
+   TEST(RectFloatTest, EqualEqualOperator)
    {
       Rect<float> rect1(69.f, 69.f, 42.f, 42.f);
       Rect<float> rect2(69.f, 69.f, 42.f, 42.f);

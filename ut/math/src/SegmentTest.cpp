@@ -6,28 +6,28 @@ namespace jp::ut::math
 {
    using namespace jp::math;
 
-   TEST(SegmentFloat, DefaultConstructor)
+   TEST(SegmentFloatTest, DefaultConstructor)
    {
       Segment<float> segment;
       EXPECT_EQ(Vector2<float>(), segment.a);
       EXPECT_EQ(Vector2<float>(), segment.b);
    }
 
-   TEST(SegmentFloat, FourArgumentsConstructor)
+   TEST(SegmentFloatTest, FourArgumentsConstructor)
    {
       Segment<float> segment(10.f, 10.f, 100.f, 100.f);
       EXPECT_EQ(Vector2<float>(10.f, 10.f), segment.a);
       EXPECT_EQ(Vector2<float>(100.f, 100.f), segment.b);
    }
 
-   TEST(SegmentFloat, TwoArgumentsConstructor)
+   TEST(SegmentFloatTest, TwoArgumentsConstructor)
    {
       Segment<float> segment(Vector2<float>(10.f, 10.f), Vector2<float>(100.f, 100.f));
       EXPECT_EQ(Vector2<float>(10.f, 10.f), segment.a);
       EXPECT_EQ(Vector2<float>(100.f, 100.f), segment.b);
    }
 
-   TEST(SegmentFloat, Diagonal)
+   TEST(SegmentFloatTest, Diagonal)
    {
       Segment<float> segment(10.f, 10.f, 100.f, 100.f);
       EXPECT_TRUE(segment.isDiagonal());
@@ -35,7 +35,7 @@ namespace jp::ut::math
       EXPECT_FALSE(segment.isVertical());
    }
 
-   TEST(SegmentFloat, Horizontal)
+   TEST(SegmentFloatTest, Horizontal)
    {
       Segment<float> segment(10.f, 10.f, 100.f, 10.f);
       EXPECT_FALSE(segment.isDiagonal());
@@ -43,7 +43,7 @@ namespace jp::ut::math
       EXPECT_FALSE(segment.isVertical());
    }
 
-   TEST(SegmentFloat, Vertical)
+   TEST(SegmentFloatTest, Vertical)
    {
       Segment<float> segment(10.f, 10.f, 10.f, 100.f);
       EXPECT_FALSE(segment.isDiagonal());
@@ -51,7 +51,7 @@ namespace jp::ut::math
       EXPECT_TRUE(segment.isVertical());
    }
 
-   TEST(SegmentFloat, Unknown)
+   TEST(SegmentFloatTest, Unknown)
    {
       Segment<float> segment(43.f, 22.f, 1.f, 8.f);
       EXPECT_FALSE(segment.isDiagonal());
@@ -59,7 +59,7 @@ namespace jp::ut::math
       EXPECT_FALSE(segment.isVertical());
    }
 
-   TEST(SegmentFloat, GetIntercept)
+   TEST(SegmentFloatTest, GetIntercept)
    {
       Segment<float> segment(50.f, 70.f, 200.f, 220.f);
       float intercept = 0.f;
@@ -67,7 +67,7 @@ namespace jp::ut::math
       EXPECT_EQ(20.f, intercept);
    }
 
-   TEST(SegmentFloat, GetSlope)
+   TEST(SegmentFloatTest, GetSlope)
    {
       Segment<float> segment(10.f, 10.f, 100.f, 100.f);
       float slope = 0.f;
@@ -75,14 +75,14 @@ namespace jp::ut::math
       EXPECT_EQ(1.f, slope);
    }
 
-   TEST(SegmentFloat, GetSlopeThrowException)
+   TEST(SegmentFloatTest, GetSlopeThrowException)
    {
       Segment<float> segment(10.f, 10.f, 10.f, 100.f);
       float slope = 0.f;
       ASSERT_THROW({ slope = segment.getSlope(); }, std::runtime_error);
    }
 
-   TEST(SegmentFloat, SwapPoints)
+   TEST(SegmentFloatTest, SwapPoints)
    {
       Segment<float> segment(69.f, 69.f, 42.f, 42.f);
       segment.swapPoints();
@@ -90,7 +90,7 @@ namespace jp::ut::math
       EXPECT_EQ(Vector2<float>(69.f, 69.f), segment.b);
    }
 
-   TEST(SegmentFloat, StreamExtraction)
+   TEST(SegmentFloatTest, StreamExtraction)
    {
       Segment<float> segment(6.9f, 6.9f, 42.f, 42.f);
       std::stringstream ss;
@@ -98,7 +98,7 @@ namespace jp::ut::math
       EXPECT_EQ("6.9 6.9 -> 42 42", ss.str());
    }
 
-   TEST(SegmentFloat, EqualEqualOperator)
+   TEST(SegmentFloatTest, EqualEqualOperator)
    {
       Segment<float> segment1(69.f, 69.f, 42.f, 42.f);
       Segment<float> segment2(69.f, 69.f, 42.f, 42.f);
