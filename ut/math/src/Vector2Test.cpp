@@ -131,4 +131,86 @@ namespace jp::ut::math
       EXPECT_FALSE(v1 != v2);
       EXPECT_TRUE(v1 != v3);
    }
+
+   TEST(Vector2FloatTest, EqualOperatorValue)
+   {
+      Vector2<float> v = 5.f;
+
+      EXPECT_EQ(5.f, v.x);
+      EXPECT_EQ(5.f, v.y);
+   }
+
+   TEST(Vector2FloatTest, EqualOperatorJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "x": 3.5,
+            "y": 4.5
+         }
+         )");
+
+      Vector2<float> v;
+      ASSERT_NO_THROW(v = json);
+
+      EXPECT_EQ(3.5f, v.x);
+      EXPECT_EQ(4.5f, v.y);
+   }
+
+   TEST(Vector2FloatTest, EqualOperatorWrongJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "w": 3.5,
+            "d": 4.5
+         }
+         )");
+
+      Vector2<float> v;
+      ASSERT_ANY_THROW(v = json);
+   }
+
+   TEST(Vector2FloatTest, FromJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "x": 3.5,
+            "y": 4.5
+         }
+         )");
+
+      Vector2<float> v;
+      ASSERT_NO_THROW(v.fromJson(json));
+
+      EXPECT_EQ(3.5f, v.x);
+      EXPECT_EQ(4.5f, v.y);
+   }
+
+   TEST(Vector2FloatTest, FromJsonWrongJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "k": 3.5,
+            "s": 4.5
+         }
+         )");
+
+      Vector2<float> v;
+      ASSERT_ANY_THROW(v.fromJson(json));
+   }
+
+   TEST(Vector2FloatTest, ToJson)
+   {
+      nlohmann::json expectedJson = nlohmann::json::parse(R"(
+         {
+            "x": 3.5,
+            "y": 4.5
+         }
+         )");
+
+      Vector2<float> v(3.5f, 4.5f);
+      nlohmann::json actualJson;
+      ASSERT_NO_THROW(actualJson = v.toJson());
+
+      EXPECT_EQ(expectedJson, actualJson);
+   }
 }

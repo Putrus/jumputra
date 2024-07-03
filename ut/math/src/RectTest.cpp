@@ -175,4 +175,90 @@ namespace jp::ut::math
       EXPECT_FALSE(rect1 == rect3);
    }
 
+   TEST(RectFloatTest, EqualOperatorJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "left": 1.5,
+            "top": 2.5,
+            "width": 4.5,
+            "height": 5.5
+         }
+         )");
+
+      Rect<float> rect;
+      ASSERT_NO_THROW(rect = json);
+
+      EXPECT_EQ(1.5f, rect.left);
+      EXPECT_EQ(2.5f, rect.top);
+      EXPECT_EQ(4.5f, rect.width);
+      EXPECT_EQ(5.5f, rect.height);
+   }
+
+   TEST(RectFloatTest, EqualOperatorWrongJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "left": 1.5,
+            "top": 2.5,
+            "sidth": 4.5,
+            "height": 5.5
+         }
+         )");
+
+      Rect<float> rect;
+      ASSERT_ANY_THROW(rect = json);
+   }
+
+   TEST(RectFloatTest, FromJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "left": 1.5,
+            "top": 2.5,
+            "width": 4.5,
+            "height": 5.5
+         }
+         )");
+
+      Rect<float> rect;
+      ASSERT_NO_THROW(rect.fromJson(json));
+
+      EXPECT_EQ(1.5f, rect.left);
+      EXPECT_EQ(2.5f, rect.top);
+      EXPECT_EQ(4.5f, rect.width);
+      EXPECT_EQ(5.5f, rect.height);
+   }
+
+   TEST(RectFloatTest, FromJsonWrongJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "left": 1.5,
+            "top": 2.5,
+            "sidth": 4.5,
+            "height": 5.5
+         }
+         )");
+
+      Rect<float> rect;
+      ASSERT_ANY_THROW(rect = json);
+   }
+
+   TEST(RectFloatTest, ToJson)
+   {
+      nlohmann::json expectedJson = nlohmann::json::parse(R"(
+         {
+            "left": 1.5,
+            "top": 2.5,
+            "width": 4.5,
+            "height": 5.5
+         }
+         )");
+
+      Rect<float> rect(1.5f, 2.5f, 4.5f, 5.5f);
+      nlohmann::json actualJson = rect.toJson();
+
+      EXPECT_EQ(expectedJson, actualJson);
+   }
 }

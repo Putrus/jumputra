@@ -138,4 +138,107 @@ namespace jp::ut::math
 
       EXPECT_FALSE(first.intersects(second));
    }
+
+   TEST(SegmentFloatTest, EqualOperatorJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "a": {
+               "x": 3.5,
+               "y": 4.5
+            },
+            "b": {
+               "x": 5.5,
+               "y": 6.5
+            }
+         }
+         )");
+
+      Segment<float> segment;
+      ASSERT_NO_THROW(segment = json);
+
+      EXPECT_EQ(math::Vector2<float>(3.5f, 4.5f), segment.a);
+      EXPECT_EQ(math::Vector2<float>(5.5f, 6.5f), segment.b);
+   }
+
+   TEST(SegmentFloatTest, EqualOperatorWrongJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "k": {
+               "x": 3.5,
+               "y": 4.5
+            },
+            "o": {
+               "x": 5.5,
+               "y": 6.5
+            }
+         }
+         )");
+
+      Segment<float> segment;
+      ASSERT_ANY_THROW(segment = json);
+   }
+
+   TEST(SegmentFloatTest, FromJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "a": {
+               "x": 3.5,
+               "y": 4.5
+            },
+            "b": {
+               "x": 5.5,
+               "y": 6.5
+            }
+         }
+         )");
+
+      Segment<float> segment;
+      ASSERT_NO_THROW(segment.fromJson(json));
+
+      EXPECT_EQ(math::Vector2<float>(3.5f, 4.5f), segment.a);
+      EXPECT_EQ(math::Vector2<float>(5.5f, 6.5f), segment.b);
+   }
+
+   TEST(SegmentFloatTest, FromJsonWrongJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "k": {
+               "x": 3.5,
+               "y": 4.5
+            },
+            "w": {
+               "x": 5.5,
+               "y": 6.5
+            }
+         }
+         )");
+
+      Segment<float> segment;
+      ASSERT_ANY_THROW(segment.fromJson(json));
+   }
+
+   TEST(SegmentFloatTest, ToJson)
+   {
+      nlohmann::json expectedJson = nlohmann::json::parse(R"(
+         {
+            "a": {
+               "x": 1.5,
+               "y": 2.5
+            },
+            "b": {
+               "x": 3.5,
+               "y": 4.5
+            }
+         }
+         )");
+
+      Segment<float> segment(1.5f, 2.5f, 3.5f, 4.5f);
+      nlohmann::json actualJson = segment.toJson();
+      
+      EXPECT_EQ(expectedJson, actualJson);
+   }
 }
