@@ -22,6 +22,11 @@ namespace jp::logic
          {
             time -= mSecondsPerUpdate;
             update(mSecondsPerUpdate);
+            
+            if (mSecondsPerUpdate <= 0)
+            {
+               break;
+            }
          }
          draw();
          event();

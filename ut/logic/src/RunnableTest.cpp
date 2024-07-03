@@ -11,26 +11,52 @@ namespace jp::ut::logic
    {
    public:
       MockRunnable(const float& secondsPerUpdate) : jp::logic::Runnable(secondsPerUpdate) {}
-
-      void terminate()
-      {
-         Runnable::terminate();
-      }
-
+      
       MOCK_METHOD(void, update, (float dt), (override));
       MOCK_METHOD(void, draw, (), (override));
-      MOCK_METHOD(void, event, (), (override));
+      
+      void event() override
+      {
+         terminate();
+      }
    };
 
-   TEST(RunnableTest, InitCorrect)
+   TEST(RunnableTest, RunOneSecondPerUpdate)
    {
-      // MockRunnable mockRunnable(1.f);
-      // EXPECT_CALL(mockRunnable, update(1.f))
-      //   .Times(3);
+      MockRunnable mockRunnable(1.f);
+
+      EXPECT_CALL(mockRunnable, update(1.f))
+         .Times(0);
       
-      // std::thread t(&Runnable::run, &mockRunnable);
-      // t.join();
-      // std::this_thread::sleep_for(std::chrono::milliseconds(3500));
-      // mockRunnable.terminate();
+      EXPECT_CALL(mockRunnable, draw())
+         .Times(1);
+
+      mockRunnable.run();
+   }
+
+   TEST(RunnableTest, RunZeroSecondsPerUpdate)
+   {
+      MockRunnable mockRunnable(0.f);
+
+      EXPECT_CALL(mockRunnable, update(0.f))
+         .Times(1);
+      
+      EXPECT_CALL(mockRunnable, draw())
+         .Times(1);
+
+      mockRunnable.run();
+   }
+
+   TEST(RunnableTest, RunMinusOneSecondPerUpdate)
+   {
+      MockRunnable mockRunnable(-1.f);
+
+      EXPECT_CALL(mockRunnable, update(-1.f))
+         .Times(1);
+      
+      EXPECT_CALL(mockRunnable, draw())
+         .Times(1);
+
+      mockRunnable.run();
    }
 }
