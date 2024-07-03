@@ -12,9 +12,7 @@ set(HEADERS
    inc/Segment.hpp
    inc/Vector2.hpp
    )
-set(SOURCES
-   src/Math.cpp
-   )
+set(SOURCES)
 
 add_library(jp_math STATIC ${HEADERS} ${SOURCES})
 

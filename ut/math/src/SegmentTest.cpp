@@ -106,4 +106,36 @@ namespace jp::ut::math
       EXPECT_TRUE(segment1 == segment2);
       EXPECT_FALSE(segment1 == segment3);
    }
+
+   TEST(SegmentFloatTest, IntersectsNoIntersection)
+   {
+      Segment<float> first(1.f, 1.f, 6.f, 4.f);
+      Segment<float> second(7.f, 5.f, 9.f, 2.f);
+
+      EXPECT_FALSE(first.intersects(second));
+   }
+
+   TEST(SegmentFloatTest, IntersectsSimpleIntersection)
+   {
+      Segment<float> first(1.f, 1.f, 6.f, 4.f);
+      Segment<float> second(3.f, 4.f, 5.f, 1.f);
+
+      EXPECT_TRUE(first.intersects(second));
+   }
+
+   TEST(SegmentFloatTest, IntersectsCollinearity)
+   {
+      Segment<float> first(1.f, 1.f, 3.f, 2.f);
+      Segment<float> second(3.f, 2.f, 5.f, 3.f);
+
+      EXPECT_TRUE(first.intersects(second));
+   }
+
+   TEST(SegmentFloatTest, IntersectsCollinearityNoIntersection)
+   {
+      Segment<float> first(1.f, 1.f, 3.f, 2.f);
+      Segment<float> second(4.f, 2.5f, 6.f, 3.5f);
+
+      EXPECT_FALSE(first.intersects(second));
+   }
 }

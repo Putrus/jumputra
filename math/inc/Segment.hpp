@@ -2,7 +2,7 @@
 
 #include "../../core/inc/Jsonable.hpp"
 
-#include "Vector2.hpp"
+#include "Math.hpp"
 
 namespace jp::math
 {
@@ -19,10 +19,12 @@ namespace jp::math
       virtual void fromJson(const nlohmann::json& json) override;
       virtual nlohmann::json toJson() const override;
 
+      bool intersects(const Segment& other) const;
+
       bool isDiagonal() const;
       bool isHorizontal() const;
       bool isVertical() const;
-      
+
       T getIntercept() const;
       T getSlope() const;
 
@@ -66,6 +68,50 @@ namespace jp::math
       json["a"] = a.toJson();
       json["b"] = b.toJson();
       return json;
+   }
+
+   template <typename T>
+   bool Segment<T>::intersects(const Segment& other) const
+   {
+      const Vector2<T>& c = other.a;
+      const Vector2<T>& d = other.b;
+
+      Vector2<T> ab = Vector2<T>(b.x - a.x, b.y - a.y);
+      Vector2<T> ac = Vector2<T>(c.x - a.x, c.y - a.y);
+      Vector2<T> ad = Vector2<T>(d.x - a.x, d.y - a.y);
+
+      Vector2<T> cd = Vector2<T>(d.x - c.x, d.y - c.y);
+      Vector2<T> ca = Vector2<T>(a.x - c.x, a.y - c.y);
+      Vector2<T> cb = Vector2<T>(b.x - c.x, b.y - c.y);
+
+      T abacCrossProduct = crossProduct(ab, ac);
+      T abadCrossProduct = crossProduct(ab, ad);
+      T cdcaCrossProduct = crossProduct(cd, ca);
+      T cdcbCrossProduct = crossProduct(cd, cb);
+
+      if (((abacCrossProduct < static_cast<T>(0) && abadCrossProduct > static_cast<T>(0)) ||
+         (abacCrossProduct > static_cast<T>(0) && abadCrossProduct < static_cast<T>(0))) &&
+         ((cdcaCrossProduct < static_cast<T>(0) && cdcbCrossProduct > static_cast<T>(0)) ||
+         (cdcaCrossProduct > static_cast<T>(0) && cdcbCrossProduct < static_cast<T>(0))))
+      {
+         return true;
+      }
+
+      auto checkOverlapping = [](const Vector2<T> &a, const Vector2<T> &b, const Vector2<T> &c) -> bool
+         {
+            return std::min(a.x, b.x) <= c.x && c.x <= std::max(a.x, b.x) &&
+               std::min(a.y, b.y) <= c.y && c.y <= std::max(a.y, b.y);
+         };
+
+      if ((abacCrossProduct == static_cast<T>(0) && checkOverlapping(a, b, c)) ||
+         (abadCrossProduct == static_cast<T>(0) && checkOverlapping(a, b, d)) ||
+         (cdcaCrossProduct == static_cast<T>(0) && checkOverlapping(c, d, a)) ||
+         (cdcbCrossProduct == static_cast<T>(0) && checkOverlapping(c, d, b)))
+      {
+         return true;
+      }
+
+      return false;
    }
 
    template <typename T>
