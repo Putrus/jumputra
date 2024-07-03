@@ -6,7 +6,9 @@ if(BUILD_TESTING)
       src/DiagonalSegmentTest.cpp
       src/EntityTest.cpp
       src/HorizontalSegmentTest.cpp
+      src/PropertiesTest.cpp
       src/RunnableTest.cpp
+      src/SelectableTest.cpp
       src/VerticalSegmentTest.cpp
       )
    
