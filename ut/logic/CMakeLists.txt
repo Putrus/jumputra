@@ -10,6 +10,7 @@ if(BUILD_TESTING)
       src/RunnableTest.cpp
       src/SelectableTest.cpp
       src/VerticalSegmentTest.cpp
+      src/WindTest.cpp
       )
    
    add_executable(jp_ut_logic ${HEADERS} ${SOURCES})
