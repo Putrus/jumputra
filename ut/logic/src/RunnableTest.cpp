@@ -7,10 +7,10 @@ namespace jp::ut::logic
 {
    using namespace jp::logic;
 
-   class MockRunnable final : public jp::logic::Runnable
+   class MockRunnable final : public Runnable
    {
    public:
-      MockRunnable(const float& secondsPerUpdate) : jp::logic::Runnable(secondsPerUpdate) {}
+      MockRunnable(const float& secondsPerUpdate) : Runnable(secondsPerUpdate) {}
       
       MOCK_METHOD(void, update, (float dt), (override));
       MOCK_METHOD(void, draw, (), (override));

@@ -8,6 +8,7 @@ if(BUILD_TESTING)
       src/HorizontalSegmentTest.cpp
       src/PropertiesTest.cpp
       src/RunnableTest.cpp
+      src/SegmentTest.cpp
       src/SelectableTest.cpp
       src/VerticalSegmentTest.cpp
       src/WindTest.cpp
