@@ -11,12 +11,8 @@ namespace jp::ut::logic
    protected:
       void SetUp() override {}
 
-      void TearDown() override
-      {
-         delete mSegment;
-         mSegment = nullptr;
-      }
+      void TearDown() override {}
 
-      jp::logic::Segment* mSegment = nullptr;
+      std::shared_ptr<jp::logic::Segment> mSegment = nullptr;
    };
 }

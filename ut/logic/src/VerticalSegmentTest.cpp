@@ -12,7 +12,7 @@ namespace jp::ut::logic
    {
       math::Vector2<float> a = { 0.f, 0.f };
       math::Vector2<float> b = { 0.f, 5.f };
-      ASSERT_NO_THROW({ mSegment = new VerticalSegment(a, b); });
+      ASSERT_NO_THROW({ mSegment = std::make_shared<VerticalSegment>(a, b); });
       EXPECT_EQ(a, mSegment->a);
       EXPECT_EQ(b, mSegment->b);
       EXPECT_EQ(SegmentSurface::Ordinary, mSegment->getSurface());
@@ -22,7 +22,7 @@ namespace jp::ut::logic
    {
       math::Vector2<float> a = { 0.f, 5.f };
       math::Vector2<float> b = { 0.f, 0.f };
-      ASSERT_NO_THROW({ mSegment = new VerticalSegment(a, b); });
+      ASSERT_NO_THROW({ mSegment = std::make_shared<VerticalSegment>(a, b); });
       EXPECT_EQ(b, mSegment->a);
       EXPECT_EQ(a, mSegment->b);
       EXPECT_EQ(SegmentSurface::Ordinary, mSegment->getSurface());
@@ -32,7 +32,7 @@ namespace jp::ut::logic
    {
       math::Vector2<float> a = { 0.f, 0.f };
       math::Vector2<float> b = { 0.f, 5.f };
-      ASSERT_NO_THROW({ mSegment = new VerticalSegment(a, b, SegmentSurface::Slippery); });
+      ASSERT_NO_THROW({ mSegment = std::make_shared<VerticalSegment>(a, b, SegmentSurface::Slippery); });
       EXPECT_EQ(SegmentSurface::Slippery, mSegment->getSurface());
    }
 
@@ -40,18 +40,18 @@ namespace jp::ut::logic
    {
       math::Vector2<float> a = { 0.f, 0.f };
       math::Vector2<float> b = { 0.f, 5.f };
-      ASSERT_NO_THROW({ mSegment = new VerticalSegment(a, b, SegmentSurface::Sticky); });
+      ASSERT_NO_THROW({ mSegment = std::make_shared<VerticalSegment>(a, b, SegmentSurface::Sticky); });
       EXPECT_EQ(SegmentSurface::Sticky, mSegment->getSurface());
    }
 
    TEST_F(VerticalSegmentTest, InitInvalidArgument)
    {
-      ASSERT_THROW({ mSegment = new VerticalSegment({ 0.f, 0.f }, { 5.f, 5.f }, SegmentSurface::Ordinary); }, std::invalid_argument);
+      ASSERT_THROW({ mSegment = std::make_shared<VerticalSegment>(math::Vector2<float>(0.f, 0.f), math::Vector2<float>(5.f, 5.f), SegmentSurface::Ordinary); }, std::invalid_argument);
    }
 
    TEST_F(VerticalSegmentTest, CheckCollisionSimpleLeft)
    {
-      ASSERT_NO_THROW({ mSegment = new VerticalSegment({ 100.f, 100.f }, { 100.f, 200.f }, SegmentSurface::Ordinary); });
+      ASSERT_NO_THROW({ mSegment = std::make_shared<VerticalSegment>(math::Vector2<float>(100.f, 100.f), math::Vector2<float>(100.f, 200.f), SegmentSurface::Ordinary); });
 
       math::Rect<float> oldRect = { 110.f, 150.f, 20.f, 20.f };
       math::Rect<float> newRect = { 90.f, 150.f, 20.f, 20.f };
@@ -61,7 +61,7 @@ namespace jp::ut::logic
 
    TEST_F(VerticalSegmentTest, CheckCollisionSimpleRight)
    {
-      ASSERT_NO_THROW({ mSegment = new VerticalSegment({ 100.f, 100.f }, { 100.f, 200.f }, SegmentSurface::Ordinary); });
+      ASSERT_NO_THROW({ mSegment = std::make_shared<VerticalSegment>(math::Vector2<float>(100.f, 100.f), math::Vector2<float>(100.f, 200.f), SegmentSurface::Ordinary); });
 
       math::Rect<float> oldRect = { 50.f, 150.f, 20.f, 20.f };
       math::Rect<float> newRect = { 90.f, 150.f, 20.f, 20.f };
@@ -71,7 +71,7 @@ namespace jp::ut::logic
 
    TEST_F(VerticalSegmentTest, CheckCollisionSimpleTop)
    {
-      ASSERT_NO_THROW({ mSegment = new VerticalSegment({ 100.f, 100.f }, { 100.f, 200.f }, SegmentSurface::Ordinary); });
+      ASSERT_NO_THROW({ mSegment = std::make_shared<VerticalSegment>(math::Vector2<float>(100.f, 100.f), math::Vector2<float>(100.f, 200.f), SegmentSurface::Ordinary); });
 
       math::Rect<float> oldRect = { 90.f, 240.f, 20.f, 20.f };
       math::Rect<float> newRect = { 90.f, 190.f, 20.f, 20.f };
@@ -81,7 +81,7 @@ namespace jp::ut::logic
 
    TEST_F(VerticalSegmentTest, CheckCollisionSimpleBottom)
    {
-      ASSERT_NO_THROW({ mSegment = new VerticalSegment({ 100.f, 100.f }, { 100.f, 200.f }, SegmentSurface::Ordinary); });
+      ASSERT_NO_THROW({ mSegment = std::make_shared<VerticalSegment>(math::Vector2<float>(100.f, 100.f), math::Vector2<float>(100.f, 200.f), SegmentSurface::Ordinary); });
 
       math::Rect<float> oldRect = { 90.f, 50.f, 20.f, 20.f };
       math::Rect<float> newRect = { 90.f, 90.f, 20.f, 20.f };
@@ -91,7 +91,7 @@ namespace jp::ut::logic
 
    TEST_F(VerticalSegmentTest, CheckCollisionDiagonalMovementLeft)
    {
-      ASSERT_NO_THROW({ mSegment = new VerticalSegment({ 100.f, 100.f }, { 100.f, 200.f }, SegmentSurface::Ordinary); });
+      ASSERT_NO_THROW({ mSegment = std::make_shared<VerticalSegment>(math::Vector2<float>(100.f, 100.f), math::Vector2<float>(100.f, 200.f), SegmentSurface::Ordinary); });
 
       math::Rect<float> oldRect = { 150.f, 90.f, 20.f, 20.f };
       math::Rect<float> newRect = { 90.f, 110.f, 20.f, 20.f };
@@ -101,7 +101,7 @@ namespace jp::ut::logic
 
    TEST_F(VerticalSegmentTest, CheckCollisionDiagonalMovementRight)
    {
-      ASSERT_NO_THROW({ mSegment = new VerticalSegment({ 100.f, 100.f }, { 100.f, 200.f }, SegmentSurface::Ordinary); });
+      ASSERT_NO_THROW({ mSegment = std::make_shared<VerticalSegment>(math::Vector2<float>(100.f, 100.f), math::Vector2<float>(100.f, 200.f), SegmentSurface::Ordinary); });
 
       math::Rect<float> oldRect = { 50.f, 90.f, 20.f, 20.f };
       math::Rect<float> newRect = { 90.f, 110.f, 20.f, 20.f };
@@ -111,7 +111,7 @@ namespace jp::ut::logic
 
    TEST_F(VerticalSegmentTest, CheckCollisionDiagonalMovementTop)
    {
-      ASSERT_NO_THROW({ mSegment = new VerticalSegment({ 100.f, 100.f }, { 100.f, 200.f }, SegmentSurface::Ordinary); });
+      ASSERT_NO_THROW({ mSegment = std::make_shared<VerticalSegment>(math::Vector2<float>(100.f, 100.f), math::Vector2<float>(100.f, 200.f), SegmentSurface::Ordinary); });
 
       math::Rect<float> oldRect = { 150.f, 210.f, 20.f, 20.f };
       math::Rect<float> newRect = { 90.f, 110.f, 20.f, 20.f };
@@ -121,7 +121,7 @@ namespace jp::ut::logic
 
    TEST_F(VerticalSegmentTest, CheckCollisionDiagonalMovementBottom)
    {
-      ASSERT_NO_THROW({ mSegment = new VerticalSegment({ 100.f, 100.f }, { 100.f, 200.f }, SegmentSurface::Ordinary); });
+      ASSERT_NO_THROW({ mSegment = std::make_shared<VerticalSegment>(math::Vector2<float>(100.f, 100.f), math::Vector2<float>(100.f, 200.f), SegmentSurface::Ordinary); });
 
       math::Rect<float> oldRect = { 150.f, 50.f, 20.f, 20.f };
       math::Rect<float> newRect = { 90.f, 110.f, 20.f, 20.f };
