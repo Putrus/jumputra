@@ -214,4 +214,20 @@ namespace jp::ut::logic
       EXPECT_EQ(math::Vector2<float>(-100.f, 0.f), wind.getAcceleration());
       EXPECT_EQ(math::Vector2<float>(500.f, 0.f), wind.getVelocity());
    }
+
+   TEST(WindTest, SetMaxVelocity)
+   {
+      Wind wind(25.f, math::Vector2<float>(500.f, 0.f),
+         math::Rect<float>(0.f, 0.f, 20.f, 20.f),
+         math::Vector2<float>(100.f, 0.f),
+         math::Vector2<float>(450.f, 0.f));
+
+      wind.setMaxVelocity(math::Vector2<float>(600.f, 700.f));
+
+      EXPECT_EQ(25.f, wind.getImpact());
+      EXPECT_EQ(math::Vector2<float>(600.f, 700.f), wind.getMaxVelocity());
+      EXPECT_EQ(math::Rect<float>(0.f, 0.f, 20.f, 20.f), wind.getRect());
+      EXPECT_EQ(math::Vector2<float>(100.f, 0.f), wind.getAcceleration());
+      EXPECT_EQ(math::Vector2<float>(450.f, 0.f), wind.getVelocity());
+   }
 }
