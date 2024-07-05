@@ -205,6 +205,20 @@ namespace jp::ut::logic
       EXPECT_EQ(SegmentSurface::Slippery, mSegment->getSurface());
    }
 
+   TEST_F(SegmentTest, SetSurfaceSlippery)
+   {
+      mSegment = std::make_shared<MockSegment>();
+      mSegment->setSurface(SegmentSurface::Slippery);
+      EXPECT_EQ(SegmentSurface::Slippery, mSegment->getSurface());
+   }
+
+   TEST_F(SegmentTest, SetSurfaceSticky)
+   {
+      mSegment = std::make_shared<MockSegment>();
+      mSegment->setSurface(SegmentSurface::Sticky);
+      EXPECT_EQ(SegmentSurface::Sticky, mSegment->getSurface());
+   }
+
    TEST(SegmentSurfaceTest, OstreamOperatorOrdinary)
    {
       SegmentSurface surface = SegmentSurface::Ordinary;

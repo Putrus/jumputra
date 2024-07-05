@@ -5,6 +5,7 @@ if(BUILD_TESTING)
    set(SOURCES
       src/DiagonalSegmentTest.cpp
       src/EntityTest.cpp
+      src/GoalTest.cpp
       src/HorizontalSegmentTest.cpp
       src/PropertiesTest.cpp
       src/RunnableTest.cpp

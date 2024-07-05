@@ -16,7 +16,7 @@ namespace jp::logic
 
    void Goal::fromJson(const nlohmann::json& json)
    {
-      mRect = json["rect"];
+      mRect = json.at("rect");
    }
 
    nlohmann::json Goal::toJson() const
