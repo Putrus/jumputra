@@ -36,6 +36,38 @@ namespace jp::ut::logic
       ASSERT_NO_THROW(Goal goal(json));
    }
 
+   TEST(GoalTest, Create)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "rect": {
+               "left": 1.5,
+               "top": 2.5,
+               "width": 4.5,
+               "height": 5.5
+            }
+         }
+         )");
+
+      ASSERT_NO_THROW(Goal::create(json));
+   }
+
+   TEST(GoalTest, CreateWrongJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "rect": {
+               "dgeft": 1.5,
+               "top": 2.5,
+               "width": 4.5,
+               "height": 5.5
+            }
+         }
+         )");
+
+      ASSERT_ANY_THROW(Goal::create(json));
+   }
+
    TEST(GoalTest, ConstructorJsonWrongJson)
    {
       nlohmann::json json = nlohmann::json::parse(R"(
