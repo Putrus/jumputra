@@ -11,6 +11,7 @@ if(BUILD_TESTING)
       src/RunnableTest.cpp
       src/SegmentTest.cpp
       src/SelectableTest.cpp
+      src/StatisticsTest.cpp
       src/VerticalSegmentTest.cpp
       src/WindTest.cpp
       )

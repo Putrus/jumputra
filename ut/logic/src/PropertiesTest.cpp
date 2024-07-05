@@ -6,7 +6,7 @@ namespace jp::ut::logic
 {
    using namespace jp::logic;
 
-   TEST(PropertiesTest, fromJson)
+   TEST(PropertiesTest, FromJson)
    {
       Properties properties;
 
@@ -63,7 +63,7 @@ namespace jp::ut::logic
       EXPECT_EQ(800.f, properties.physics.gravity.y);
    }
 
-   TEST(PropertiesTest, fromJsonWrongJson)
+   TEST(PropertiesTest, FromJsonWrongJson)
    {
       Properties properties;
 
@@ -103,7 +103,7 @@ namespace jp::ut::logic
       ASSERT_ANY_THROW(properties.fromJson(json));
    }
 
-   TEST(PropertiesTest, toJson)
+   TEST(PropertiesTest, ToJson)
    {
       Properties properties;
 
