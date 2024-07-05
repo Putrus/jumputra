@@ -83,4 +83,135 @@ namespace jp::ut::logic
 
       ASSERT_ANY_THROW({ Wind wind(json); });
    }
+
+   TEST(WindTest, FromJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "acceleration": {
+               "x" : 100.0,
+               "y" : 5.5
+            },
+            "impact" : 1.0,
+            "maxVelocity" : {
+               "x" : 500.0,
+               "y" : 0.0
+            },
+            "rect": {
+               "left" : 0.0,
+               "top" : 4320.0,
+               "width" : 480.0,
+               "height" : 2160.0
+            },
+            "velocity": {
+               "x": 4.5,
+               "y": 5.5
+            }
+         }
+         )");
+
+      Wind wind(0.f, {}, {}, 0.f);
+      ASSERT_NO_THROW(wind.fromJson(json));
+      EXPECT_EQ(1.f, wind.getImpact());
+      EXPECT_EQ(math::Vector2<float>(500.f, 0.f), wind.getMaxVelocity());
+      EXPECT_EQ(math::Rect<float>(0.f, 4320.f, 480.f, 2160.f), wind.getRect());
+      EXPECT_EQ(math::Vector2<float>(100.f, 5.5f), wind.getAcceleration());
+      EXPECT_EQ(math::Vector2<float>(4.5f, 5.5f), wind.getVelocity());
+   }
+
+   TEST(WindTest, FromJsonWrongJson)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "dicceleration": {
+               "x" : 100.0,
+               "y" : 5.5
+            },
+            "impact" : 1.0,
+            "maxVelocity" : {
+               "x" : 500.0,
+               "y" : 0.0
+            },
+            "rect": {
+               "left" : 0.0,
+               "top" : 4320.0,
+               "width" : 480.0,
+               "height" : 2160.0
+            },
+            "velocity": {
+               "x": 4.5,
+               "y": 5.5
+            }
+         }
+         )");
+
+      Wind wind(0.f, {}, {}, 0.f);
+      ASSERT_ANY_THROW(wind.fromJson(json));
+   }
+
+   TEST(WindTest, Create)
+   {
+      nlohmann::json json = nlohmann::json::parse(R"(
+         {
+            "acceleration": {
+               "x" : 6.5,
+               "y" : 5.5
+            },
+            "impact" : 1.0,
+            "maxVelocity" : {
+               "x" : 500.0,
+               "y" : 0.0
+            },
+            "rect": {
+               "left" : 0.0,
+               "top" : 4320.0,
+               "width" : 480.0,
+               "height" : 2160.0
+            },
+            "velocity": {
+               "x": 4.5,
+               "y": 5.5
+            }
+         }
+         )");
+
+      std::shared_ptr<Wind> wind = Wind::create(json);
+      ASSERT_NO_THROW(wind->fromJson(json));
+      EXPECT_EQ(1.f, wind->getImpact());
+      EXPECT_EQ(math::Vector2<float>(500.f, 0.f), wind->getMaxVelocity());
+      EXPECT_EQ(math::Rect<float>(0.f, 4320.f, 480.f, 2160.f), wind->getRect());
+      EXPECT_EQ(math::Vector2<float>(6.5f, 5.5f), wind->getAcceleration());
+      EXPECT_EQ(math::Vector2<float>(4.5f, 5.5f), wind->getVelocity());
+   }
+
+   TEST(WindTest, UpdateSimpleHorizontalVelocity)
+   {
+      Wind wind(15.f, math::Vector2<float>(500.f, 0.f),
+         math::Rect<float>(0.f, 0.f, 20.f, 20.f),
+         math::Vector2<float>(100.f, 0.f));
+
+      wind.update(1.f);
+
+      EXPECT_EQ(15.f, wind.getImpact());
+      EXPECT_EQ(math::Vector2<float>(500.f, 0.f), wind.getMaxVelocity());
+      EXPECT_EQ(math::Rect<float>(0.f, 0.f, 20.f, 20.f), wind.getRect());
+      EXPECT_EQ(math::Vector2<float>(100.f, 0.f), wind.getAcceleration());
+      EXPECT_EQ(math::Vector2<float>(100.f, 0.f), wind.getVelocity());
+   }
+
+   TEST(WindTest, UpdateMaxHorizontalVelocity)
+   {
+      Wind wind(15.f, math::Vector2<float>(500.f, 0.f),
+         math::Rect<float>(0.f, 0.f, 20.f, 20.f),
+         math::Vector2<float>(100.f, 0.f),
+         math::Vector2<float>(450.f, 0.f));
+
+      wind.update(1.f);
+
+      EXPECT_EQ(15.f, wind.getImpact());
+      EXPECT_EQ(math::Vector2<float>(-500.f, 0.f), wind.getMaxVelocity());
+      EXPECT_EQ(math::Rect<float>(0.f, 0.f, 20.f, 20.f), wind.getRect());
+      EXPECT_EQ(math::Vector2<float>(-100.f, 0.f), wind.getAcceleration());
+      EXPECT_EQ(math::Vector2<float>(500.f, 0.f), wind.getVelocity());
+   }
 }

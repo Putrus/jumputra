@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "Build",
             "type": "shell",
             "command": "cmake",
             "args": [
@@ -21,7 +21,7 @@
             }
         },
         {
-            "label": "run unit tests",
+            "label": "Run All Unit Tests",
             "type": "shell",
             "command": "ctest",
             "args": [
