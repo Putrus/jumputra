@@ -3,6 +3,7 @@ if(BUILD_TESTING)
       inc/SegmentTest.hpp
       )
    set(SOURCES
+      src/CharacterTest.cpp
       src/DiagonalSegmentTest.cpp
       src/EntityTest.cpp
       src/GoalTest.cpp
