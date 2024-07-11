@@ -2,6 +2,7 @@ if(BUILD_TESTING)
    set(HEADERS
       inc/EntityTest.hpp
       inc/SegmentTest.hpp
+      inc/SelectionManagerTest.hpp
       )
    set(SOURCES
       src/CharacterTest.cpp
