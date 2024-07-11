@@ -41,9 +41,6 @@ namespace jp::logic
          case CharacterState::Sticking:
          os << "Sticking";
          break;
-         case CharacterState::Stopping:
-         os << "Stopping";
-         break;
          default:
          os << "Unknown";
          break;
@@ -504,8 +501,7 @@ namespace jp::logic
          getState() == CharacterState::Lying ||
          getState() == CharacterState::Running ||
          getState() == CharacterState::Sliding ||
-         getState() == CharacterState::Standing ||
-         getState() == CharacterState::Stopping;
+         getState() == CharacterState::Standing;
    }
 
    bool Character::canSquat() const

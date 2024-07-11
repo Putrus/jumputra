@@ -22,8 +22,7 @@ namespace jp::logic
       Sliding,
       Squatting,
       Standing,
-      Sticking,
-      Stopping
+      Sticking
    };
 
    enum class CharacterDirection : unsigned long long
