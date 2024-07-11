@@ -1,5 +1,6 @@
 if(BUILD_TESTING)
    set(HEADERS
+      inc/EntityTest.hpp
       inc/SegmentTest.hpp
       )
    set(SOURCES

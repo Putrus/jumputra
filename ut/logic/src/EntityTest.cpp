@@ -1,43 +1,40 @@
-#include "../../../logic/inc/Entity.hpp"
-
-#include <gtest/gtest.h>
+#include "../inc/EntityTest.hpp"
 
 namespace jp::ut::logic
 {
    using namespace jp::logic;
 
-   TEST(EntityTest, DefaultConstructor)
+   TEST_F(EntityTest, DefaultConstructor)
    {
-      Entity entity;
-      EXPECT_EQ(math::Vector2<float>(), entity.getPosition());
-      EXPECT_EQ(math::Rect<float>(), entity.getRect());
-      EXPECT_EQ(math::Vector2<float>(), entity.getAcceleration());
-      EXPECT_EQ(math::Vector2<float>(), entity.getVelocity());
+      EXPECT_EQ(math::Vector2<float>(), mEntity.getPosition());
+      EXPECT_EQ(math::Rect<float>(), mEntity.getRect());
+      EXPECT_EQ(math::Vector2<float>(), mEntity.getAcceleration());
+      EXPECT_EQ(math::Vector2<float>(), mEntity.getVelocity());
    }
 
-   TEST(EntityTest, ArgumentsConstructor)
+   TEST_F(EntityTest, ArgumentsConstructor)
    {
-      Entity entity(math::Rect<float>(1.f, 2.f, 3.f, 4.f),
+      mEntity = Entity(math::Rect<float>(1.f, 2.f, 3.f, 4.f),
          math::Vector2<float>(5.f, 6.f), math::Vector2<float>(7.f, 8.f));
-      EXPECT_EQ(math::Vector2<float>(1.f, 2.f), entity.getPosition());
-      EXPECT_EQ(math::Rect<float>(1.f, 2.f, 3.f, 4.f), entity.getRect());
-      EXPECT_EQ(math::Vector2<float>(5.f, 6.f), entity.getAcceleration());
-      EXPECT_EQ(math::Vector2<float>(7.f, 8.f), entity.getVelocity());
+      EXPECT_EQ(math::Vector2<float>(1.f, 2.f), mEntity.getPosition());
+      EXPECT_EQ(math::Rect<float>(1.f, 2.f, 3.f, 4.f), mEntity.getRect());
+      EXPECT_EQ(math::Vector2<float>(5.f, 6.f), mEntity.getAcceleration());
+      EXPECT_EQ(math::Vector2<float>(7.f, 8.f), mEntity.getVelocity());
    }
 
-   TEST(EntityTest, Update)
+   TEST_F(EntityTest, Update)
    {
-      Entity entity(math::Rect<float>(5.f, 10.f, 24.f, 24.f),
+      mEntity = Entity(math::Rect<float>(5.f, 10.f, 24.f, 24.f),
          math::Vector2<float>(5.f, 10.f), math::Vector2<float>(5.f, 10.f));
 
-      entity.update(1.f);
-      EXPECT_EQ(math::Vector2<float>(12.5f, 25.f), entity.getPosition());
-      EXPECT_EQ(math::Rect<float>(12.5f, 25.f, 24.f, 24.f), entity.getRect());
-      EXPECT_EQ(math::Vector2<float>(5.f, 10.f), entity.getAcceleration());
-      EXPECT_EQ(math::Vector2<float>(10.f, 20.f), entity.getVelocity());
+      mEntity.update(1.f);
+      EXPECT_EQ(math::Vector2<float>(12.5f, 25.f), mEntity.getPosition());
+      EXPECT_EQ(math::Rect<float>(12.5f, 25.f, 24.f, 24.f), mEntity.getRect());
+      EXPECT_EQ(math::Vector2<float>(5.f, 10.f), mEntity.getAcceleration());
+      EXPECT_EQ(math::Vector2<float>(10.f, 20.f), mEntity.getVelocity());
    }
 
-   TEST(EntityTest, FromJson)
+   TEST_F(EntityTest, FromJson)
    {
       nlohmann::json json = nlohmann::json::parse(R"(
          {
@@ -58,15 +55,14 @@ namespace jp::ut::logic
          }
          )");
 
-      Entity entity;
-      ASSERT_NO_THROW(entity.fromJson(json));
-      EXPECT_EQ(math::Vector2<float>(1.5f, 2.5f), entity.getPosition());
-      EXPECT_EQ(math::Rect<float>(1.5f, 2.5f, 4.5f, 5.5f), entity.getRect());
-      EXPECT_EQ(math::Vector2<float>(6.5f, 12.5f), entity.getAcceleration());
-      EXPECT_EQ(math::Vector2<float>(13.5f, 25.125f), entity.getVelocity());
+      ASSERT_NO_THROW(mEntity.fromJson(json));
+      EXPECT_EQ(math::Vector2<float>(1.5f, 2.5f), mEntity.getPosition());
+      EXPECT_EQ(math::Rect<float>(1.5f, 2.5f, 4.5f, 5.5f), mEntity.getRect());
+      EXPECT_EQ(math::Vector2<float>(6.5f, 12.5f), mEntity.getAcceleration());
+      EXPECT_EQ(math::Vector2<float>(13.5f, 25.125f), mEntity.getVelocity());
    }
 
-   TEST(EntityTest, FromJsonWrongJson)
+   TEST_F(EntityTest, FromJsonWrongJson)
    {
       nlohmann::json json = nlohmann::json::parse(R"(
          {
@@ -87,11 +83,10 @@ namespace jp::ut::logic
          }
          )");
 
-      Entity entity;
-      ASSERT_ANY_THROW(entity.fromJson(json));
+      ASSERT_ANY_THROW(mEntity.fromJson(json));
    }
 
-   TEST(EntityTest, ToJson)
+   TEST_F(EntityTest, ToJson)
    {
       nlohmann::json expectedJson = nlohmann::json::parse(R"(
          {
@@ -112,108 +107,98 @@ namespace jp::ut::logic
          }
          )");
 
-      Entity entity(math::Rect<float>(5.f, 10.f, 24.f, 24.f),
+      mEntity = Entity(math::Rect<float>(5.f, 10.f, 24.f, 24.f),
          math::Vector2<float>(5.5f, 10.5f), math::Vector2<float>(5.f, 10.f));
 
-      nlohmann::json actualJson = entity.toJson();
+      nlohmann::json actualJson = mEntity.toJson();
       EXPECT_EQ(expectedJson, actualJson);
    }
 
-   TEST(EntityTest, SetPositionTwoArguments)
+   TEST_F(EntityTest, SetPositionTwoArguments)
    {
-      Entity entity;
-      entity.setPosition(1.f, 3.f);
-      EXPECT_EQ(math::Vector2<float>(1.f, 3.f), entity.getPosition());
-      EXPECT_EQ(math::Rect<float>(1.f, 3.f, 0.f, 0.f), entity.getRect());
+      mEntity.setPosition(1.f, 3.f);
+      EXPECT_EQ(math::Vector2<float>(1.f, 3.f), mEntity.getPosition());
+      EXPECT_EQ(math::Rect<float>(1.f, 3.f, 0.f, 0.f), mEntity.getRect());
    }
 
-   TEST(EntityTest, SetPositionOneArgument)
+   TEST_F(EntityTest, SetPositionOneArgument)
    {
-      Entity entity;
-      entity.setPosition(math::Vector2<float>(1.f, 3.f));
-      EXPECT_EQ(math::Vector2<float>(1.f, 3.f), entity.getPosition());
-      EXPECT_EQ(math::Rect<float>(1.f, 3.f, 0.f, 0.f), entity.getRect());
+      mEntity.setPosition(math::Vector2<float>(1.f, 3.f));
+      EXPECT_EQ(math::Vector2<float>(1.f, 3.f), mEntity.getPosition());
+      EXPECT_EQ(math::Rect<float>(1.f, 3.f, 0.f, 0.f), mEntity.getRect());
    }
 
-   TEST(EntityTest, SetRect)
+   TEST_F(EntityTest, SetRect)
    {
-      Entity entity;
-      entity.setRect(math::Rect<float>(2.f, 4.f, 12.f, 24.f));
-      EXPECT_EQ(math::Vector2<float>(2.f, 4.f), entity.getPosition());
-      EXPECT_EQ(math::Rect<float>(2.f, 4.f, 12.f, 24.f), entity.getRect());
+      mEntity.setRect(math::Rect<float>(2.f, 4.f, 12.f, 24.f));
+      EXPECT_EQ(math::Vector2<float>(2.f, 4.f), mEntity.getPosition());
+      EXPECT_EQ(math::Rect<float>(2.f, 4.f, 12.f, 24.f), mEntity.getRect());
    }
 
-   TEST(EntityTest, SetRectTop)
+   TEST_F(EntityTest, SetRectTop)
    {
-      Entity entity;
-      entity.setRectTop(15.5f);
-      EXPECT_EQ(math::Vector2<float>(0.f, 15.5f), entity.getPosition());
-      EXPECT_EQ(math::Rect<float>(0.f, 15.5f, 0.f, 0.f), entity.getRect());
+      mEntity.setRectTop(15.5f);
+      EXPECT_EQ(math::Vector2<float>(0.f, 15.5f), mEntity.getPosition());
+      EXPECT_EQ(math::Rect<float>(0.f, 15.5f, 0.f, 0.f), mEntity.getRect());
    }
 
-   TEST(EntityTest, SetRectBottom)
+   TEST_F(EntityTest, SetRectBottom)
    {
-      Entity entity(math::Rect<float>(5.f, 10.f, 24.f, 24.f));
-      entity.setRectBottom(25.5f);
-      EXPECT_EQ(math::Vector2<float>(5.f, 1.5f), entity.getPosition());
-      EXPECT_EQ(math::Rect<float>(5.f, 1.5f, 24.f, 24.f), entity.getRect());
+      mEntity = Entity(math::Rect<float>(5.f, 10.f, 24.f, 24.f));
+      mEntity.setRectBottom(25.5f);
+      EXPECT_EQ(math::Vector2<float>(5.f, 1.5f), mEntity.getPosition());
+      EXPECT_EQ(math::Rect<float>(5.f, 1.5f, 24.f, 24.f), mEntity.getRect());
    }
 
-   TEST(EntityTest, SetRectLeft)
+   TEST_F(EntityTest, SetRectLeft)
    {
-      Entity entity(math::Rect<float>(5.f, 10.f, 24.f, 24.f));
-      entity.setRectLeft(3.5f);
-      EXPECT_EQ(math::Vector2<float>(3.5f, 10.f), entity.getPosition());
-      EXPECT_EQ(math::Rect<float>(3.5f, 10.f, 24.f, 24.f), entity.getRect());
+      mEntity = Entity(math::Rect<float>(5.f, 10.f, 24.f, 24.f));
+      mEntity.setRectLeft(3.5f);
+      EXPECT_EQ(math::Vector2<float>(3.5f, 10.f), mEntity.getPosition());
+      EXPECT_EQ(math::Rect<float>(3.5f, 10.f, 24.f, 24.f), mEntity.getRect());
    }
 
-   TEST(EntityTest, SetRectRight)
+   TEST_F(EntityTest, SetRectRight)
    {
-      Entity entity(math::Rect<float>(5.f, 10.f, 24.f, 24.f));
-      entity.setRectRight(26.5f);
-      EXPECT_EQ(math::Vector2<float>(2.5f, 10.f), entity.getPosition());
-      EXPECT_EQ(math::Rect<float>(2.5f, 10.f, 24.f, 24.f), entity.getRect());
+      mEntity = Entity(math::Rect<float>(5.f, 10.f, 24.f, 24.f));
+      mEntity.setRectRight(26.5f);
+      EXPECT_EQ(math::Vector2<float>(2.5f, 10.f), mEntity.getPosition());
+      EXPECT_EQ(math::Rect<float>(2.5f, 10.f, 24.f, 24.f), mEntity.getRect());
    }
 
-   TEST(EntityTest, SetAcceleration)
+   TEST_F(EntityTest, SetAcceleration)
    {
-      Entity entity;
-      entity.setAcceleration(math::Vector2<float>(1.5f, 2.5f));
-      EXPECT_EQ(math::Vector2<float>(1.5f, 2.5f), entity.getAcceleration());
+      mEntity.setAcceleration(math::Vector2<float>(1.5f, 2.5f));
+      EXPECT_EQ(math::Vector2<float>(1.5f, 2.5f), mEntity.getAcceleration());
    }
 
-   TEST(EntityTest, SetAccelerationX)
+   TEST_F(EntityTest, SetAccelerationX)
    {
-      Entity entity;
-      entity.setAccelerationX(3.5f);
-      EXPECT_EQ(math::Vector2<float>(3.5f, 0.f), entity.getAcceleration());
+      mEntity.setAccelerationX(3.5f);
+      EXPECT_EQ(math::Vector2<float>(3.5f, 0.f), mEntity.getAcceleration());
    }
 
-   TEST(EntityTest, SetAccelerationY)
+   TEST_F(EntityTest, SetAccelerationY)
    {
-      Entity entity;
-      entity.setAccelerationY(4.5f);
-      EXPECT_EQ(math::Vector2<float>(0.f, 4.5f), entity.getAcceleration());
+      mEntity.setAccelerationY(4.5f);
+      EXPECT_EQ(math::Vector2<float>(0.f, 4.5f), mEntity.getAcceleration());
    }
 
-   TEST(EntityTest, SetVelocity)
+   TEST_F(EntityTest, SetVelocity)
    {
-      Entity entity;
-      entity.setVelocity(math::Vector2<float>(1.5f, 2.5f));
-      EXPECT_EQ(math::Vector2<float>(1.5f, 2.5f), entity.getVelocity());
+      mEntity.setVelocity(math::Vector2<float>(1.5f, 2.5f));
+      EXPECT_EQ(math::Vector2<float>(1.5f, 2.5f), mEntity.getVelocity());
    }
 
-   TEST(EntityTest, SetVelocityX)
+   TEST_F(EntityTest, SetVelocityX)
    {
-      Entity entity;
-      entity.setVelocityX(3.5f);
-      EXPECT_EQ(math::Vector2<float>(3.5f, 0.f), entity.getVelocity());
+      mEntity.setVelocityX(3.5f);
+      EXPECT_EQ(math::Vector2<float>(3.5f, 0.f), mEntity.getVelocity());
    }
 
-   TEST(EntityTest, SetVelocityY)
+   TEST_F(EntityTest, SetVelocityY)
    {
-      Entity entity;
-      entity.setVelocityY(4.5f);
-      EXPECT_EQ(math::Vector2<float>(0.f, 4.5f), entity.getVelocity());
+      mEntity.setVelocityY(4.5f);
+      EXPECT_EQ(math::Vector2<float>(0.f, 4.5f), mEntity.getVelocity());
    }
 }
