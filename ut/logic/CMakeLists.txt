@@ -1,5 +1,6 @@
 if(BUILD_TESTING)
    set(HEADERS
+      inc/CharacterTest.hpp
       inc/EntityTest.hpp
       inc/SegmentTest.hpp
       inc/SelectionManagerTest.hpp
