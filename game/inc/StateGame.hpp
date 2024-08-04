@@ -3,6 +3,8 @@
 #include "../inc/Game.hpp"
 #include "../inc/State.hpp"
 
+#include "../../agents/inc/Agent.hpp"
+
 namespace jp::game
 {
    class StateGame final : public State
@@ -15,6 +17,7 @@ namespace jp::game
       void update(float dt) override;
 
    private:
-      Game mGame;
+      std::shared_ptr<Game> mGame;
+      std::unique_ptr<agents::Agent> mAgent;
    };
 }

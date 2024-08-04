@@ -26,7 +26,8 @@ namespace jp::game
 
    void Game::event(const sf::Event& event)
    {
-      if (mControlledCharacterId >= mCharacters.size())
+      if (mControlledCharacterId >= mCharacters.size() ||
+         mContext.agent != agents::AgentName::Human)
       {
          return;
       }
@@ -98,20 +99,39 @@ namespace jp::game
       logic::Engine::update(dt);
    }
 
+   void Game::removeCharacter(size_t id)
+   {
+      if (id >= mCharacters.size())
+      {
+         return;
+      }
+
+      auto characterToRemoveIt = mCharacters.begin() + id;
+      mCharacters.erase(characterToRemoveIt);
+
+      auto drawableToRemoveIt = std::remove_if(mDrawables.begin(), mDrawables.end(),
+         [](const std::shared_ptr<sf::Drawable>& drawable)
+         {
+            return drawable.use_count() <= 1 && dynamic_cast<Character*>(drawable.get()) != nullptr;
+         });
+
+      mDrawables.erase(drawableToRemoveIt, mDrawables.end());
+   }
+
    void Game::load()
    {
-      std::string filename = std::string(SAVES_DIR) + mContext.world + ".json";
+      std::string filename = makeSavePath();
       if (!std::filesystem::exists(filename) || mContext.newGame)
       {
          filename = std::string(WORLDS_DIR) + mContext.world + ".json";
       }
+      
       loadFromJsonFile(filename);
    }
 
    void Game::save() const
    {
-      std::string filename = std::string(SAVES_DIR) + mContext.world + ".json";
-      saveToJsonFile(filename);
+      saveToJsonFile(makeSavePath());
    }
 
    void Game::setGoal(const std::shared_ptr<Goal>& goal)
@@ -201,5 +221,12 @@ namespace jp::game
       std::shared_ptr<Wind> wind = Wind::create(json);
       mDrawables.push_back(wind);
       mWinds.push_back(wind);
+   }
+
+   std::string Game::makeSavePath() const
+   {
+      std::stringstream ss;
+      ss << SAVES_DIR << mContext.world << mContext.agent << ".json";
+      return ss.str();
    }
 }

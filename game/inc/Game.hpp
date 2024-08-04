@@ -23,6 +23,7 @@ namespace jp::game
       void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
       void event(const sf::Event& event) override;
       void update(float dt) override;
+      void removeCharacter(size_t id) override;
 
       void load();
       void save() const;
@@ -41,6 +42,8 @@ namespace jp::game
       void addSegment(const math::Vector2<float>& a, const math::Vector2<float>& b,
          logic::SegmentSurface surface = logic::SegmentSurface::Ordinary) override;
       void addWind(const nlohmann::json& json) override;
+
+      std::string makeSavePath() const;
 
       Context& mContext;
       std::vector<std::shared_ptr<sf::Drawable>> mDrawables;

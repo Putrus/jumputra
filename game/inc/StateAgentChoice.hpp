@@ -4,10 +4,10 @@
 
 namespace jp::game
 {
-   class StateAlgorithmChoice final : public StateMenu
+   class StateAgentChoice final : public StateMenu
    {
    public:
-      StateAlgorithmChoice(StateStack* stack, Context& context);
+      StateAgentChoice(StateStack* stack, Context& context);
       virtual void update(float dt) override;
 
    protected:

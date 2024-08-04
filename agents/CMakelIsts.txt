@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.6..3.28)
+
+project(jp_agents
+VERSION 0.0.1
+LANGUAGES CXX
+DESCRIPTION "jumputra agents"
+)
+
+set(HEADERS
+   inc/Agent.hpp
+   inc/Greedy.hpp
+   inc/Human.hpp
+   )
+
+set(SOURCES
+   src/Agent.cpp
+   src/Greedy.cpp
+   src/Human.cpp
+   )
+
+add_library(jp_agents STATIC ${HEADERS} ${SOURCES})
+
+target_link_libraries(jp_agents PUBLIC jp_logic)

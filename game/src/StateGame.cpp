@@ -5,18 +5,19 @@
 
 namespace jp::game
 {
-   StateGame::StateGame(StateStack* stack, Context& context) : State(stack, context), mGame(context) {}
+   StateGame::StateGame(StateStack* stack, Context& context)
+      : mGame(std::make_shared<Game>(context)), mAgent(agents::Agent::create(context.agent)), State(stack, context) {}
 
    void StateGame::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
    {
-      target.draw(mGame);
+      target.draw(*mGame);
    }
 
    void StateGame::event(const sf::Event& event)
    {
       if (event.type == sf::Event::Closed)
       {
-         mGame.save();
+         mGame->save();
       }
 
       if (event.type == sf::Event::KeyReleased)
@@ -24,8 +25,8 @@ namespace jp::game
          switch (event.key.code)
          {
          case sf::Keyboard::Key::Escape:
-            mGame.save();
-            mContext.statistics = mGame.getStatistics();
+            mGame->save();
+            mContext.statistics = mGame->getStatistics();
             popState();
             pushState(StateID::Pause);
             break;
@@ -34,21 +35,25 @@ namespace jp::game
          }
       }
 
-      mGame.event(event);
+      mGame->event(event);
    }
 
    void StateGame::update(float dt)
    {
-      mGame.update(dt);
-      if (mGame.hasGoalBeenAchieved())
+      mGame->update(dt);
+      if (mGame->hasGoalBeenAchieved())
       {
          const auto now = std::chrono::system_clock::now();
          std::string time = std::format("{:%d-%m-%Y_%H-%M}", now);
-         std::filesystem::remove(std::string(SAVES_DIR) + mContext.world + ".json");
-         mGame.saveStatistics(std::string(STATISTICS_DIR) + mContext.world + "_" + time + ".json");
-         mContext.statistics = mGame.getStatistics();
+         std::stringstream filenameSS;
+         filenameSS << mContext.world << mContext.agent;
+         std::string filename = filenameSS.str();
+         std::filesystem::remove(std::string(SAVES_DIR) + filename + ".json");
+         mGame->saveStatistics(std::string(STATISTICS_DIR) + filename + "_" + time + ".json");
+         mContext.statistics = mGame->getStatistics();
          popState();
          pushState(StateID::Win);
       }
+      mAgent->control(mGame);
    }
 }

@@ -19,7 +19,7 @@ set(HEADERS
    inc/Properties.hpp
    inc/Segment.hpp
    inc/State.hpp
-   inc/StateAlgorithmChoice.hpp
+   inc/StateAgentChoice.hpp
    inc/StateGame.hpp
    inc/StateLanguage.hpp
    inc/StateMainMenu.hpp
@@ -44,7 +44,7 @@ set(SOURCES
    src/Properties.cpp
    src/Segment.cpp
    src/State.cpp
-   src/StateAlgorithmChoice.cpp
+   src/StateAgentChoice.cpp
    src/StateGame.cpp
    src/StateLanguage.cpp
    src/StateMainMenu.cpp
@@ -63,4 +63,4 @@ set_target_properties(jp_game PROPERTIES
    OUTPUT_NAME "jumputra"
    )
 
-target_link_libraries(jp_game PUBLIC jp_graphic jp_logic)
+target_link_libraries(jp_game PUBLIC jp_graphic jp_agents)

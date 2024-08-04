@@ -65,6 +65,15 @@ namespace jp::logic
       return json;
    }
 
+   void Engine::removeCharacter(size_t id)
+   {
+      if (id >= mCharacters.size())
+      {
+         return;
+      }
+      mCharacters.erase(mCharacters.begin() + id);
+   }
+
    void Engine::setGoal(const std::shared_ptr<Goal>& goal)
    {
       mGoal = goal;
@@ -102,6 +111,11 @@ namespace jp::logic
    const Statistics& Engine::getStatistics() const
    {
       return mStatistics;
+   }
+
+   const std::vector<std::shared_ptr<Character>>& Engine::getCharacters() const
+   {
+      return mCharacters;
    }
 
    void Engine::goalFromJson(const nlohmann::json& json)

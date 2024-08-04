@@ -10,6 +10,8 @@
 
 #include "../../logic/inc/Statistics.hpp"
 
+#include "../../agents/inc/Agent.hpp"
+
 namespace jp::game
 {
    constexpr char OPTIONS_DIR[] = "data/options/";
@@ -33,7 +35,8 @@ namespace jp::game
       
       logic::Statistics statistics;
 
-      
+      agents::AgentName agent = agents::AgentName::Human;
+
       void setLanguage(const std::string& language);
    };
 }

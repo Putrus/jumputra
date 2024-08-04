@@ -17,6 +17,7 @@ namespace jp::logic
       virtual void update(float dt) override;
       virtual void fromJson(const nlohmann::json& json) override;
       virtual nlohmann::json toJson() const override;
+      virtual void removeCharacter(size_t id);
 
       void setGoal(const std::shared_ptr<Goal>& goal);
       void addCharacter(const std::shared_ptr<Character>& character);
@@ -27,6 +28,7 @@ namespace jp::logic
       
       bool hasGoalBeenAchieved() const;
 
+      const std::vector<std::shared_ptr<Character>>& getCharacters() const;
       const Statistics& getStatistics() const;
 
    protected:
