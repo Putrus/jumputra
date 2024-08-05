@@ -54,7 +54,7 @@ namespace jp::logic
          const std::vector<std::shared_ptr<Wind>>& winds);
       Character(const Character& other);
 
-      Character& operator=(Character& other);
+      Character& operator=(const Character& other);
 
       static std::shared_ptr<Character> create(const nlohmann::json& json,
          const Properties& properties,

@@ -76,6 +76,23 @@ namespace jp::logic
    Character::Character(const Character& other) : mProperties(other.mProperties), mTotalStatistics(other.mTotalStatistics),
       mSegments(other.mSegments), mWinds(other.mWinds), mRunSpeed(other.getRunSpeed()), mGravity(other.mGravity), Entity(other) {}
    
+   Character& Character::operator=(const Character& other)
+   {
+      if (this != &other)
+      {
+         mState = other.mState;
+         mDirection = other.mDirection;
+         mJumpPower = other.mJumpPower;
+         mGravity = other.mGravity;
+         mRunSpeed = other.mRunSpeed;
+         mStatistics = other.mStatistics;
+         mRect = other.mRect;
+         mAcceleration = other.mAcceleration;
+         mVelocity = other.mVelocity;
+      }
+      return *this;
+   }
+
    std::shared_ptr<Character> Character::create(const nlohmann::json& json,
       const Properties& properties,
       Statistics& totalStatistics,
