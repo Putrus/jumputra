@@ -2,5 +2,7 @@
 
 namespace jp::agents
 {
-   void Human::control(const std::shared_ptr<logic::Engine>& engine) {}
+   Human::Human(const std::shared_ptr<logic::Engine>& engine) : Agent(engine) {}
+
+   void Human::update(float dt) {}
 }

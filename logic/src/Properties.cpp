@@ -1,7 +1,5 @@
 #include "../inc/Properties.hpp"
 
-#include <fstream>
-
 namespace jp::logic
 {
    void Properties::fromJson(const nlohmann::json& json)

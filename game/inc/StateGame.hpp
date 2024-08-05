@@ -18,6 +18,6 @@ namespace jp::game
 
    private:
       std::shared_ptr<Game> mGame;
-      std::unique_ptr<agents::Agent> mAgent;
+      std::shared_ptr<agents::Agent> mAgent;
    };
 }

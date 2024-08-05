@@ -131,7 +131,7 @@ namespace jp::game
       mCharacters.push_back(character);
    }
 
-   void Game::addCharacterCopy(const std::shared_ptr<logic::Character>& character)
+   void Game::addCharacterCopy(const logic::Character& character)
    {
       std::shared_ptr<Character> newCharacter = std::make_shared<Character>(character);
       mDrawables.push_back(newCharacter);

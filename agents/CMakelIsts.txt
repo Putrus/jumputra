@@ -10,12 +10,18 @@ set(HEADERS
    inc/Agent.hpp
    inc/Greedy.hpp
    inc/Human.hpp
+   inc/Move.hpp
+   inc/Properties.hpp
+   inc/Sequence.hpp
    )
 
 set(SOURCES
    src/Agent.cpp
    src/Greedy.cpp
    src/Human.cpp
+   src/Move.cpp
+   src/Properties.cpp
+   src/Sequence.cpp
    )
 
 add_library(jp_agents STATIC ${HEADERS} ${SOURCES})

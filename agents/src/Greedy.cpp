@@ -4,17 +4,16 @@
 
 namespace jp::agents
 {
-   Greedy::Greedy(size_t bots/* = 100*/) : mBotsSize(bots) {}
-
-   void Greedy::control(const std::shared_ptr<logic::Engine>& engine)
+   Greedy::Greedy(const std::shared_ptr<logic::Engine>& mEngine, size_t bots/* = 100*/)
+      : mBotsSize(bots), Agent(mEngine)
    {
-      auto& characters = engine->characters();
+      logic::Character character = *mEngine->getCharacters()[0];
+      nextIteration(character);
+   }
 
-      if (characters.size() == 1)
-      {
-         mLastY = characters.at(0)->getPosition().y;
-      }
-
+   void Greedy::update(float dt)
+   {
+      auto& characters = mEngine->characters();
       if (mSquatMustBeDone)
       {
          mSquatMustBeDone = false;
@@ -25,59 +24,75 @@ namespace jp::agents
          return;
       }
 
-      auto findIt = std::find_if(characters.begin(), characters.end(),
-         [](const auto& character)
-         {
-            return !character->canSquat() || character->getState() == logic::CharacterState::Squatting;
-         });
-
-      if (findIt == characters.end())
+      for (size_t i = 0; i < characters.size(); ++i)
       {
-         auto bestJumperIt = std::min_element(characters.begin(), characters.end(),
+         logic::Character &character = *characters[i];
+         if (mCharactersThatLanded.find(i) == mCharactersThatLanded.end() && character.canSquat() &&
+            character.getState() != logic::CharacterState::Squatting)
+         {
+            mCharactersThatLanded.insert({ i, logic::Character(character) });
+         }
+      }
+
+      if (mCharactersThatLanded.size() == mBotsSize)
+      {
+         auto bestJumperIt = std::min_element(mCharactersThatLanded.begin(), mCharactersThatLanded.end(),
          [](const auto& lhs, const auto& rhs)
          {
-            return lhs->getPosition().y < rhs->getPosition().y;
+            return lhs.second.getPosition().y < rhs.second.getPosition().y;
          });
 
-         std::shared_ptr<logic::Character> bestJumper = *bestJumperIt;
-         if (bestJumper->getPosition().y == mLastY)
+         if (bestJumperIt == mCharactersThatLanded.end())
+         {
+            throw std::runtime_error("Greedy::update - Failed to find best jumper in this group");
+         }
+
+         logic::Character bestJumper = bestJumperIt->second;
+         Move bestMove = mTargetMoves.at(bestJumperIt->first);
+         if (bestJumper.getPosition().y == mLastY)
          {
             int random = randomInRange(1, 5);
             if (random == 1)
             {
-               bestJumper = characters.at(randomInRange(0, characters.size() - 1));
+               int randomId = randomInRange(0, mCharactersThatLanded.size() - 1);
+               bestJumper = mCharactersThatLanded.at(randomId);
+               bestMove = mTargetMoves.at(randomId);
             }
             else
             {
-               std::vector<std::shared_ptr<logic::Character>> filteredCharacters;
-               std::copy_if(characters.begin(), characters.end(), std::back_inserter(filteredCharacters),
-               [this](const std::shared_ptr<logic::Character>& character)
+               std::map<size_t, logic::Character> filteredCharacters;
+               for (const auto& character : mCharactersThatLanded)
                {
-                  return character->getPosition().y == mLastY;
-               });
+                  if (character.second.getPosition().y == mLastY)
+                  {
+                     filteredCharacters.insert(character);
+                  }
+               }
 
-               bestJumper = filteredCharacters.at(randomInRange(0, filteredCharacters.size() - 1));
+               int randomId = randomInRange(0, filteredCharacters.size() - 1);
+
+               int id = 0;
+               for (const auto& character : filteredCharacters)
+               {
+                  if (id == randomId)
+                  {
+                     bestJumper = character.second;
+                     bestMove = mTargetMoves.at(character.first);
+                     break;
+                  }
+                  ++id;
+               }
             }
          }
 
-         mLastY = bestJumper->getPosition().y;
-         engine->removeAllCharacters();
-
-         mTargetJumpPowers.clear();
-         for (int i = 0; i < mBotsSize; ++i)
-         {
-            engine->addCharacterCopy(bestJumper);
-            mTargetJumpPowers.push_back(randomInRange(0, engine->getProperties().character.jump.max.y));
-            characters.at(i)->setDirection(static_cast<logic::CharacterDirection>(randomInRange(1, 2)));
-            characters.at(i)->squat();
-         }
-         mSquatMustBeDone = true;
+         mMoves.push_back(bestMove);
+         nextIteration(bestJumper);
       }
       else
       {
-         for (size_t i = 0; i < mTargetJumpPowers.size(); ++i)
+         for (size_t i = 0; i < mTargetMoves.size(); ++i)
          {
-            if (characters.at(i)->getJumpPower().y >= mTargetJumpPowers[i])
+            if (characters.at(i)->getJumpPower().y >= mTargetMoves[i].value)
             {
                characters.at(i)->jump();
             }
@@ -93,5 +108,27 @@ namespace jp::agents
       std::uniform_int_distribution<std::mt19937::result_type> distrib(min, max);
 
       return distrib(gen);
+   }
+
+   void Greedy::nextIteration(const logic::Character& character)
+   {
+      mLastY = character.getPosition().y;
+      mCharactersThatLanded.clear();
+      mEngine->removeAllCharacters();
+
+      mTargetMoves.clear();
+      auto &characters = mEngine->characters();
+      for (int i = 0; i < mBotsSize; ++i)
+      {
+         mEngine->addCharacterCopy(character);
+         Move move;
+         move.type = MoveType::Jump;
+         move.value = randomInRange(0, mEngine->getProperties().character.jump.max.y);
+         move.direction = static_cast<logic::CharacterDirection>(randomInRange(1, 2));
+         mTargetMoves.push_back(move);
+         characters.at(i)->setDirection(move.direction);
+         characters.at(i)->squat();
+      }
+      mSquatMustBeDone = true;
    }
 }

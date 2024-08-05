@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Move.hpp"
+
 #include "../../logic/inc/Engine.hpp"
 
 namespace jp::agents
@@ -7,16 +9,21 @@ namespace jp::agents
    enum class AgentName : int
    {
       Greedy = 0,
-      Human
+      Human,
+      Sequence
    };
 
    std::ostream& operator<<(std::ostream& os, AgentName name);
 
-   class Agent
+   class Agent : public logic::Updatable
    {
    public:
-      virtual void control(const std::shared_ptr<logic::Engine>& engine) = 0;
+      Agent(const std::shared_ptr<logic::Engine>& engine);
 
-      static std::unique_ptr<Agent> create(AgentName name);
+      void saveMoves(const std::string &filename) const;
+
+   protected:
+      std::shared_ptr<logic::Engine> mEngine;
+      std::vector<Move> mMoves;
    };
 }

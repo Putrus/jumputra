@@ -1,12 +1,28 @@
 #include "../inc/StateGame.hpp"
 
+#include "../../agents/inc/Greedy.hpp"
+#include "../../agents/inc/Human.hpp"
+
 #include <chrono>
 #include <format>
 
 namespace jp::game
 {
    StateGame::StateGame(StateStack* stack, Context& context)
-      : mGame(std::make_shared<Game>(context)), mAgent(agents::Agent::create(context.agent)), State(stack, context) {}
+      : mGame(std::make_shared<Game>(context)), State(stack, context)
+   {
+      switch (context.agent)
+      {
+      case agents::AgentName::Greedy:
+         mAgent = std::make_shared<agents::Greedy>(mGame, context.properties.agents.greedy.bots);
+         break;
+      case agents::AgentName::Human:
+         mAgent = std::make_shared<agents::Human>(mGame);
+         break;
+      default:
+         throw std::invalid_argument("jp::game::StateGame::StateGame - Failed to create agent, wrong agent name");
+      }
+   }
 
    void StateGame::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
    {
@@ -29,6 +45,9 @@ namespace jp::game
             mContext.statistics = mGame->getStatistics();
             popState();
             pushState(StateID::Pause);
+            break;
+         case sf::Keyboard::Key::M:
+            mAgent->saveMoves("test.json");
             break;
          default:
             break;
@@ -54,6 +73,6 @@ namespace jp::game
          popState();
          pushState(StateID::Win);
       }
-      mAgent->control(mGame);
+      mAgent->update(dt);
    }
 }

@@ -70,9 +70,9 @@ namespace jp::logic
       mCharacters.push_back(std::make_shared<Character>(rect, mProperties, mStatistics, mSegments, mWinds));
    }
 
-   void Engine::addCharacterCopy(const std::shared_ptr<Character>& character)
+   void Engine::addCharacterCopy(const Character& character)
    {
-      mCharacters.push_back(std::make_shared<Character>(*character));
+      mCharacters.push_back(std::make_shared<Character>(character));
    }
 
    void Engine::removeCharacter(const std::shared_ptr<Character>& character)

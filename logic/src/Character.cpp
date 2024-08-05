@@ -73,8 +73,10 @@ namespace jp::logic
       fromJson(json);
    }
 
-   Character::Character(const Character& other) : mProperties(other.mProperties), mTotalStatistics(other.mTotalStatistics),
-      mSegments(other.mSegments), mWinds(other.mWinds), mRunSpeed(other.getRunSpeed()), mGravity(other.mGravity), Entity(other) {}
+   Character::Character(const Character& other) : mState(other.mState), mDirection(other.mDirection),
+      mJumpPower(other.mJumpPower), mGravity(other.mGravity), mRunSpeed(other.mRunSpeed), mStatistics(other.mStatistics),
+      mProperties(other.mProperties), mTotalStatistics(other.mTotalStatistics),
+      mSegments(other.mSegments), mWinds(other.mWinds), Entity(other) {}
    
    Character& Character::operator=(const Character& other)
    {

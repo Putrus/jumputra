@@ -1,4 +1,9 @@
 {
+   "agents": {
+      "greedy" : {
+         "bots" :  50
+      }
+   },
    "graphic": {
       "language" : "polski",
       "window" : {

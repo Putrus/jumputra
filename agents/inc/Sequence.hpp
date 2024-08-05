@@ -4,10 +4,10 @@
 
 namespace jp::agents
 {
-   class Human final : public Agent
+   class Sequence final : public Agent
    {
    public:
-      Human(const std::shared_ptr<logic::Engine>& engine);
+      Sequence(const std::shared_ptr<logic::Engine>& engine);
 
       void update(float dt) override;
    };

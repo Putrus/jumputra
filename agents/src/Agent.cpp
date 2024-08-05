@@ -1,6 +1,9 @@
 #include "../inc/Agent.hpp"
 #include "../inc/Greedy.hpp"
 #include "../inc/Human.hpp"
+
+#include <fstream>
+
 namespace jp::agents
 {
    std::ostream& operator<<(std::ostream& os, AgentName name)
@@ -20,16 +23,17 @@ namespace jp::agents
       return os;
    }
 
-   std::unique_ptr<Agent> Agent::create(AgentName name)
+   Agent::Agent(const std::shared_ptr<logic::Engine>& engine) : mEngine(engine) {}
+
+   void Agent::saveMoves(const std::string &filename) const
    {
-      switch (name)
+      nlohmann::json json;
+      for (const auto& move : mMoves)
       {
-      case AgentName::Greedy:
-         return std::make_unique<Greedy>();
-      case AgentName::Human:
-         return std::make_unique<Human>();
-      default:
-         return nullptr;
+         json["moves"].push_back(move.toJson());
       }
+      std::ofstream file(filename);
+      file << json;
+      file.close();
    }
 }

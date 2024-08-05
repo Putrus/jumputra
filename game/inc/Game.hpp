@@ -25,7 +25,7 @@ namespace jp::game
       void update(float dt) override;
 
       void addCharacter(const math::Rect<float>& rect) override;
-      void addCharacterCopy(const std::shared_ptr<logic::Character>& character) override;
+      void addCharacterCopy(const logic::Character& character) override;
       void removeCharacter(const std::shared_ptr<logic::Character>& character) override;
       void removeAllCharacters() override;
       void removeAllCharactersExcept(const std::shared_ptr<logic::Character>& character) override;
