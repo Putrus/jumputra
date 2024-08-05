@@ -24,8 +24,10 @@ namespace jp::game
       void event(const sf::Event& event) override;
       void update(float dt) override;
 
-      void addCharacter(const math::Rect<float>& rect);
+      void addCharacter(const math::Rect<float>& rect) override;
+      void addCharacterCopy(const std::shared_ptr<logic::Character>& character) override;
       void removeCharacter(const std::shared_ptr<logic::Character>& character) override;
+      void removeAllCharacters() override;
       void removeAllCharactersExcept(const std::shared_ptr<logic::Character>& character) override;
       
       void load();
@@ -34,7 +36,8 @@ namespace jp::game
    private:
       void resetView();
       void updateView();
-      
+      void removeRedundantDrawables();
+
       void setGoal(const nlohmann::json& json) override;
       void addCharacter(const nlohmann::json& json) override;
       void addSegment(const math::Vector2<float>& a, const math::Vector2<float>& b,

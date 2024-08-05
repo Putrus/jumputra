@@ -19,7 +19,9 @@ namespace jp::logic
       virtual nlohmann::json toJson() const override;
 
       virtual void addCharacter(const math::Rect<float>& rect);
+      virtual void addCharacterCopy(const std::shared_ptr<Character>& character);
       virtual void removeCharacter(const std::shared_ptr<Character>& character);
+      virtual void removeAllCharacters();
       virtual void removeAllCharactersExcept(const std::shared_ptr<Character>& character);
 
       void saveStatistics(const std::string& filename) const;

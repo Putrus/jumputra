@@ -70,9 +70,19 @@ namespace jp::logic
       mCharacters.push_back(std::make_shared<Character>(rect, mProperties, mStatistics, mSegments, mWinds));
    }
 
+   void Engine::addCharacterCopy(const std::shared_ptr<Character>& character)
+   {
+      mCharacters.push_back(std::make_shared<Character>(*character));
+   }
+
    void Engine::removeCharacter(const std::shared_ptr<Character>& character)
    {
       mCharacters.erase(std::remove(mCharacters.begin(), mCharacters.end(), character), mCharacters.end());
+   }
+
+   void Engine::removeAllCharacters()
+   {
+      mCharacters.clear();
    }
 
    void Engine::removeAllCharactersExcept(const std::shared_ptr<Character>& character)

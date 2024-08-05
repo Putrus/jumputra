@@ -25,13 +25,8 @@ namespace jp::game
          logic::Statistics& totalStatistics,
          const std::vector<std::shared_ptr<logic::Segment>>& segments,
          const std::vector<std::shared_ptr<logic::Wind>>& winds);
+      Character(const std::shared_ptr<logic::Character>& character);
       
-      static std::shared_ptr<Character> create(const math::Rect<float>& rect,
-         const logic::Properties& properties,
-         logic::Statistics& totalStatistics,
-         const std::vector<std::shared_ptr<logic::Segment>>& segments,
-         const std::vector<std::shared_ptr<logic::Wind>>& winds);
-
       static std::shared_ptr<Character> create(const nlohmann::json& json,
          const logic::Properties& properties,
          logic::Statistics& totalStatistics,

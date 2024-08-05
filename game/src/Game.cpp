@@ -131,13 +131,23 @@ namespace jp::game
       mCharacters.push_back(character);
    }
 
+   void Game::addCharacterCopy(const std::shared_ptr<logic::Character>& character)
+   {
+      std::shared_ptr<Character> newCharacter = std::make_shared<Character>(character);
+      mDrawables.push_back(newCharacter);
+      mCharacters.push_back(newCharacter);
+   }
+
    void Game::removeCharacter(const std::shared_ptr<logic::Character>& character)
    {
       mCharacters.erase(std::remove(mCharacters.begin(), mCharacters.end(), character), mCharacters.end());
-      mDrawables.erase(std::remove_if(mDrawables.begin(), mDrawables.end(), [](const auto& drawable)
-         {
-            return dynamic_cast<Character*>(drawable.get()) != nullptr && drawable.use_count() <= 1;
-         }), mDrawables.end());
+      removeRedundantDrawables();
+   }
+
+   void Game::removeAllCharacters()
+   {
+      mCharacters.clear();
+      removeRedundantDrawables();
    }
 
    void Game::removeAllCharactersExcept(const std::shared_ptr<logic::Character>& character)
@@ -146,10 +156,7 @@ namespace jp::game
          {
             return otherCharacter != character;
          }), mCharacters.end());
-      mDrawables.erase(std::remove_if(mDrawables.begin(), mDrawables.end(), [](const auto& drawable)
-         {
-            return dynamic_cast<Character*>(drawable.get()) != nullptr && drawable.use_count() <= 1;
-         }), mDrawables.end());
+      removeRedundantDrawables();
    }
 
    void Game::load()
@@ -210,6 +217,14 @@ namespace jp::game
             break;
          }
       }
+   }
+
+   void Game::removeRedundantDrawables()
+   {
+         mDrawables.erase(std::remove_if(mDrawables.begin(), mDrawables.end(), [](const auto& drawable)
+         {
+            return dynamic_cast<Character*>(drawable.get()) != nullptr && drawable.use_count() <= 1;
+         }), mDrawables.end());
    }
 
    void Game::setGoal(const nlohmann::json& json)

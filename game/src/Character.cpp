@@ -23,6 +23,9 @@ namespace jp::game
       const std::vector<std::shared_ptr<logic::Wind>>& winds)
       : graphic::Character(json), logic::Character(json, properties, totalStatistics, segments, winds) {}
 
+   Character::Character(const std::shared_ptr<logic::Character>& character)
+      : graphic::Character(character->getRect()), logic::Character(*character) {}
+
    std::shared_ptr<Character> Character::create(const nlohmann::json& json,
       const logic::Properties &properties,
       logic::Statistics& totalStatistics,

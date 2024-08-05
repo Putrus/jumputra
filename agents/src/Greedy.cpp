@@ -4,7 +4,7 @@
 
 namespace jp::agents
 {
-   Greedy::Greedy(int botsNumber/* = 100*/) : mBotsNumber(botsNumber) {}
+   Greedy::Greedy(size_t bots/* = 100*/) : mBotsSize(bots) {}
 
    void Greedy::control(const std::shared_ptr<logic::Engine>& engine)
    {
@@ -15,21 +15,21 @@ namespace jp::agents
          mLastY = characters.at(0)->getPosition().y;
       }
 
+      if (mSquatMustBeDone)
+      {
+         mSquatMustBeDone = false;
+         for (auto& character : characters)
+         {
+            character->squat();
+         }
+         return;
+      }
+
       auto findIt = std::find_if(characters.begin(), characters.end(),
          [](const auto& character)
          {
             return !character->canSquat() || character->getState() == logic::CharacterState::Squatting;
          });
-
-      if (mSquatMustBeDone)
-      {
-         mSquatMustBeDone = false;
-         for (size_t i = 0; i < mBots.size(); ++i)
-         {
-            characters.at(i + 1)->squat();
-         }
-         return;
-      }
 
       if (findIt == characters.end())
       {
@@ -39,7 +39,7 @@ namespace jp::agents
             return lhs->getPosition().y < rhs->getPosition().y;
          });
 
-         std::shared_ptr<logic::Character>& bestJumper = *bestJumperIt;
+         std::shared_ptr<logic::Character> bestJumper = *bestJumperIt;
          if (bestJumper->getPosition().y == mLastY)
          {
             int random = randomInRange(1, 5);
@@ -60,30 +60,26 @@ namespace jp::agents
             }
          }
 
-         math::Rect<float> rect = bestJumper->getRect();
          mLastY = bestJumper->getPosition().y;
-         engine->removeAllCharactersExcept(bestJumper);
+         engine->removeAllCharacters();
 
-         mBots.clear();
-         for (int i = 0; i < mBotsNumber; ++i)
+         mTargetJumpPowers.clear();
+         for (int i = 0; i < mBotsSize; ++i)
          {
-            engine->addCharacter(rect);
-            Bot bot;
-            bot.jumpPowerY = randomInRange(0, engine->getProperties().character.jump.max.y);
-            bot.direction = static_cast<logic::CharacterDirection>(randomInRange(1, 2));
-            mBots.push_back(bot);
-            characters.at(i + 1)->setDirection(bot.direction);
-            characters.at(i + 1)->squat();
+            engine->addCharacterCopy(bestJumper);
+            mTargetJumpPowers.push_back(randomInRange(0, engine->getProperties().character.jump.max.y));
+            characters.at(i)->setDirection(static_cast<logic::CharacterDirection>(randomInRange(1, 2)));
+            characters.at(i)->squat();
          }
          mSquatMustBeDone = true;
       }
       else
       {
-         for (size_t i = 0; i < mBots.size(); ++i)
+         for (size_t i = 0; i < mTargetJumpPowers.size(); ++i)
          {
-            if (characters.at(i + 1)->getJumpPower().y >= mBots[i].jumpPowerY)
+            if (characters.at(i)->getJumpPower().y >= mTargetJumpPowers[i])
             {
-               characters.at(i + 1)->jump();
+               characters.at(i)->jump();
             }
          }
       }

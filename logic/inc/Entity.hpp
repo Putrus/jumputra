@@ -13,6 +13,7 @@ namespace jp::logic
       Entity(const math::Rect<float>& rect,
          const math::Vector2<float>& acceleration = 0.f,
          const math::Vector2<float>& velocity = 0.f);
+      Entity(const Entity& other);
 
       virtual void update(float dt) override;
       virtual void fromJson(const nlohmann::json& json) override;

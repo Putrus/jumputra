@@ -52,6 +52,9 @@ namespace jp::logic
          Statistics& totalStatistics,
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);
+      Character(const Character& other);
+
+      Character& operator=(Character& other);
 
       static std::shared_ptr<Character> create(const nlohmann::json& json,
          const Properties& properties,
@@ -69,6 +72,7 @@ namespace jp::logic
       void stop();
       
       void setDirection(CharacterDirection direction);
+      void setRunSpeed(float speed);
 
       CharacterDirection getDirection() const;
       CharacterState getState() const;
@@ -84,8 +88,6 @@ namespace jp::logic
 
    private:
       void resetJumpPower();
-      
-      void setRunSpeed(float speed);
 
       CharacterState mState = CharacterState::Flying;
       CharacterDirection mDirection = CharacterDirection::Up;

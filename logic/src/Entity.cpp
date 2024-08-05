@@ -9,6 +9,8 @@ namespace jp::logic
       const math::Vector2<float>& velocity/* = 0.f*/)
       : mRect(rect), mAcceleration(acceleration), mVelocity(velocity) {}
 
+   Entity::Entity(const Entity& other) : Entity(other.getRect(), other.getAcceleration(), other.getVelocity()) {}
+
    void Entity::update(float dt)
    {
       math::Vector2<float> distance = mVelocity * dt + mAcceleration * dt * dt / 2.f;

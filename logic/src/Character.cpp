@@ -72,6 +72,9 @@ namespace jp::logic
    {
       fromJson(json);
    }
+
+   Character::Character(const Character& other) : mProperties(other.mProperties), mTotalStatistics(other.mTotalStatistics),
+      mSegments(other.mSegments), mWinds(other.mWinds), mRunSpeed(other.getRunSpeed()), mGravity(other.mGravity), Entity(other) {}
    
    std::shared_ptr<Character> Character::create(const nlohmann::json& json,
       const Properties& properties,
@@ -470,6 +473,11 @@ namespace jp::logic
       mDirection = direction;
    }
 
+   void Character::setRunSpeed(float speed)
+   {
+      mRunSpeed = speed;
+   }
+
    float Character::getRunSpeed() const
    {
       return mRunSpeed;
@@ -519,10 +527,5 @@ namespace jp::logic
    void Character::resetJumpPower()
    {
       mJumpPower = 0.f;
-   }
-
-   void Character::setRunSpeed(float speed)
-   {
-      mRunSpeed = speed;
    }
 }
