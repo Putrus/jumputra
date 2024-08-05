@@ -178,36 +178,36 @@ namespace jp::game
 
    void Game::updateView()
    {
-      auto bestJumperIt = std::min_element(mCharacters.begin(), mCharacters.end(),
+      if (mCharacters.empty())
+      {
+         return;
+      }
+
+      auto followedCharacterIt = std::min_element(mCharacters.begin(), mCharacters.end(),
          [](const auto& lhs, const auto& rhs)
          {
             return lhs->getPosition().y < rhs->getPosition().y;
          });
-      
-      mFollowedCharacterId = std::distance(mCharacters.begin(), bestJumperIt);
+      const logic::Character& followedCharacter = **followedCharacterIt;
 
-      if (mFollowedCharacterId < mCharacters.size())
+      float halfWindowHeight = mContext.properties.graphic.window.size.y / 2.f;
+      sf::View view = mContext.window.getView();
+      while(true)
       {
-         const logic::Character& followedCharacter = *mCharacters[mFollowedCharacterId];
-         float halfWindowHeight = mContext.properties.graphic.window.size.y / 2.f;
-         sf::View view = mContext.window.getView();
-         while(true)
+         if (followedCharacter.getPosition().y < mContext.window.getView().getCenter().y -
+            halfWindowHeight - followedCharacter.getRect().height)
          {
-            if (followedCharacter.getPosition().y < mContext.window.getView().getCenter().y -
-               halfWindowHeight - followedCharacter.getRect().height)
-            {
-               view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y - mContext.properties.graphic.window.size.y));
-               mContext.window.setView(view);
-            }
-            else if (followedCharacter.getPosition().y > mContext.window.getView().getCenter().y + halfWindowHeight)
-            {
-               view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y + mContext.properties.graphic.window.size.y));
-               mContext.window.setView(view);
-            }
-            else
-            {
-               break;
-            }
+            view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y - mContext.properties.graphic.window.size.y));
+            mContext.window.setView(view);
+         }
+         else if (followedCharacter.getPosition().y > mContext.window.getView().getCenter().y + halfWindowHeight)
+         {
+            view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y + mContext.properties.graphic.window.size.y));
+            mContext.window.setView(view);
+         }
+         else
+         {
+            break;
          }
       }
    }

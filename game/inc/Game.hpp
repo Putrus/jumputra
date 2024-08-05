@@ -46,6 +46,5 @@ namespace jp::game
       Context& mContext;
       std::vector<std::shared_ptr<sf::Drawable>> mDrawables;
       size_t mControlledCharacterId = 0;
-      size_t mFollowedCharacterId = 0;
    };
 }
