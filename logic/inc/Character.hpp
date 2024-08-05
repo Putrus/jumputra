@@ -68,21 +68,23 @@ namespace jp::logic
       void squat();
       void stop();
       
+      void setDirection(CharacterDirection direction);
+
       CharacterDirection getDirection() const;
       CharacterState getState() const;
       float getRunSpeed() const;
       Statistics getStatistics() const;
+      const math::Vector2<float>& getJumpPower() const;
+
+      bool canRun() const;
+      bool canSquat() const;
 
    protected:
       virtual void setState(CharacterState state);
 
    private:
       void resetJumpPower();
-
-      bool canRun() const;
-      bool canSquat() const;
-
-      void setDirection(CharacterDirection direction);
+      
       void setRunSpeed(float speed);
 
       CharacterState mState = CharacterState::Flying;

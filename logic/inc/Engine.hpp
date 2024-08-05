@@ -17,18 +17,18 @@ namespace jp::logic
       virtual void update(float dt) override;
       virtual void fromJson(const nlohmann::json& json) override;
       virtual nlohmann::json toJson() const override;
-      virtual void removeCharacter(size_t id);
 
-      void setGoal(const std::shared_ptr<Goal>& goal);
-      void addCharacter(const std::shared_ptr<Character>& character);
-      void addSegment(const std::shared_ptr<Segment>& segment);
-      void addWind(const std::shared_ptr<Wind>& wind);
+      virtual void addCharacter(const math::Rect<float>& rect);
+      virtual void removeCharacter(const std::shared_ptr<Character>& character);
+      virtual void removeAllCharactersExcept(const std::shared_ptr<Character>& character);
 
       void saveStatistics(const std::string& filename) const;
       
       bool hasGoalBeenAchieved() const;
 
+      std::vector<std::shared_ptr<Character>>& characters();
       const std::vector<std::shared_ptr<Character>>& getCharacters() const;
+      const Properties& getProperties() const;
       const Statistics& getStatistics() const;
 
    protected:

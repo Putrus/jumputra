@@ -65,33 +65,22 @@ namespace jp::logic
       return json;
    }
 
-   void Engine::removeCharacter(size_t id)
+   void Engine::addCharacter(const math::Rect<float>& rect)
    {
-      if (id >= mCharacters.size())
-      {
-         return;
-      }
-      mCharacters.erase(mCharacters.begin() + id);
+      mCharacters.push_back(std::make_shared<Character>(rect, mProperties, mStatistics, mSegments, mWinds));
    }
 
-   void Engine::setGoal(const std::shared_ptr<Goal>& goal)
+   void Engine::removeCharacter(const std::shared_ptr<Character>& character)
    {
-      mGoal = goal;
+      mCharacters.erase(std::remove(mCharacters.begin(), mCharacters.end(), character), mCharacters.end());
    }
 
-   void Engine::addCharacter(const std::shared_ptr<Character>& character)
+   void Engine::removeAllCharactersExcept(const std::shared_ptr<Character>& character)
    {
-      mCharacters.push_back(character);
-   }
-
-   void Engine::addSegment(const std::shared_ptr<Segment>& segment)
-   {
-      mSegments.push_back(segment);
-   }
-
-   void Engine::addWind(const std::shared_ptr<Wind>& wind)
-   {
-      mWinds.push_back(wind);
+      mCharacters.erase(std::remove_if(mCharacters.begin(), mCharacters.end(), [&character](const auto& otherCharacter)
+         {
+            return otherCharacter != character;
+         }), mCharacters.end());
    }
 
    void Engine::saveStatistics(const std::string& filename) const
@@ -106,6 +95,16 @@ namespace jp::logic
    bool Engine::hasGoalBeenAchieved() const
    {
       return mGoalHasBeenAchieved;
+   }
+
+   std::vector<std::shared_ptr<Character>>& Engine::characters()
+   {
+      return mCharacters;
+   }
+
+   const Properties& Engine::getProperties() const
+   {
+      return mProperties;
    }
 
    const Statistics& Engine::getStatistics() const

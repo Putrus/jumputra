@@ -23,15 +23,13 @@ namespace jp::game
       void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
       void event(const sf::Event& event) override;
       void update(float dt) override;
-      void removeCharacter(size_t id) override;
 
+      void addCharacter(const math::Rect<float>& rect);
+      void removeCharacter(const std::shared_ptr<logic::Character>& character) override;
+      void removeAllCharactersExcept(const std::shared_ptr<logic::Character>& character) override;
+      
       void load();
       void save() const;
-
-      void setGoal(const std::shared_ptr<Goal>& goal);
-      void addCharacter(const std::shared_ptr<Character>& character);
-      void addSegment(const std::shared_ptr<Segment>& segment);
-      void addWind(const std::shared_ptr<Wind>& wind);
 
    private:
       void resetView();

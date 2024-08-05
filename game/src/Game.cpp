@@ -26,6 +26,31 @@ namespace jp::game
 
    void Game::event(const sf::Event& event)
    {
+      if (event.type == sf::Event::KeyReleased)
+      {
+         switch (event.key.code)
+         {
+         case sf::Keyboard::Key::L:
+            {
+               int i = 0;
+               for (const auto& character : mCharacters)
+               {
+                  std::cout << "Character " << i++ << std::endl; 
+                  std::cout << "Log: " << std::endl;
+                  std::cout << "state: " << character->getState() << std::endl;
+                  std::cout << "acceleration: " << character->getAcceleration() << std::endl;
+                  std::cout << "velocity: " << character->getVelocity() << std::endl;
+                  std::cout << "runSpeed: " << character->getRunSpeed() << std::endl;
+                  std::cout << "statistics: " << mContext.statistics << std::endl;
+                  std::cout << std::endl;
+               }
+            }
+            break;
+         default:
+            break;
+         }
+      }
+
       if (mControlledCharacterId >= mCharacters.size() ||
          mContext.agent != agents::AgentName::Human)
       {
@@ -99,23 +124,32 @@ namespace jp::game
       logic::Engine::update(dt);
    }
 
-   void Game::removeCharacter(size_t id)
+   void Game::addCharacter(const math::Rect<float>& rect)
    {
-      if (id >= mCharacters.size())
-      {
-         return;
-      }
+      std::shared_ptr<Character> character = std::make_shared<Character>(rect, mProperties, mStatistics, mSegments, mWinds);
+      mDrawables.push_back(character);
+      mCharacters.push_back(character);
+   }
 
-      auto characterToRemoveIt = mCharacters.begin() + id;
-      mCharacters.erase(characterToRemoveIt);
-
-      auto drawableToRemoveIt = std::remove_if(mDrawables.begin(), mDrawables.end(),
-         [](const std::shared_ptr<sf::Drawable>& drawable)
+   void Game::removeCharacter(const std::shared_ptr<logic::Character>& character)
+   {
+      mCharacters.erase(std::remove(mCharacters.begin(), mCharacters.end(), character), mCharacters.end());
+      mDrawables.erase(std::remove_if(mDrawables.begin(), mDrawables.end(), [](const auto& drawable)
          {
-            return drawable.use_count() <= 1 && dynamic_cast<Character*>(drawable.get()) != nullptr;
-         });
+            return dynamic_cast<Character*>(drawable.get()) != nullptr && drawable.use_count() <= 1;
+         }), mDrawables.end());
+   }
 
-      mDrawables.erase(drawableToRemoveIt, mDrawables.end());
+   void Game::removeAllCharactersExcept(const std::shared_ptr<logic::Character>& character)
+   {
+      mCharacters.erase(std::remove_if(mCharacters.begin(), mCharacters.end(), [&character](const auto& otherCharacter)
+         {
+            return otherCharacter != character;
+         }), mCharacters.end());
+      mDrawables.erase(std::remove_if(mDrawables.begin(), mDrawables.end(), [](const auto& drawable)
+         {
+            return dynamic_cast<Character*>(drawable.get()) != nullptr && drawable.use_count() <= 1;
+         }), mDrawables.end());
    }
 
    void Game::load()
@@ -134,30 +168,6 @@ namespace jp::game
       saveToJsonFile(makeSavePath());
    }
 
-   void Game::setGoal(const std::shared_ptr<Goal>& goal)
-   {
-      mDrawables.push_back(goal);
-      Engine::setGoal(goal);
-   }
-
-   void Game::addCharacter(const std::shared_ptr<Character>& character)
-   {
-      mDrawables.push_back(character);
-      Engine::addCharacter(character);
-   }
-
-   void Game::addSegment(const std::shared_ptr<Segment>& segment)
-   {
-      mDrawables.push_back(segment);
-      Engine::addSegment(segment->getLogicSegment());
-   }
-
-   void Game::addWind(const std::shared_ptr<Wind>& wind)
-   {
-      mDrawables.push_back(wind);
-      Engine::addWind(wind);
-   }
-
    void Game::resetView()
    {
       sf::View view = mContext.window.getView();
@@ -168,6 +178,14 @@ namespace jp::game
 
    void Game::updateView()
    {
+      auto bestJumperIt = std::min_element(mCharacters.begin(), mCharacters.end(),
+         [](const auto& lhs, const auto& rhs)
+         {
+            return lhs->getPosition().y < rhs->getPosition().y;
+         });
+      
+      mFollowedCharacterId = std::distance(mCharacters.begin(), bestJumperIt);
+
       if (mFollowedCharacterId < mCharacters.size())
       {
          const logic::Character& followedCharacter = *mCharacters[mFollowedCharacterId];

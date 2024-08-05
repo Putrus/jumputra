@@ -465,6 +465,11 @@ namespace jp::logic
       }
    }
 
+   void Character::setDirection(CharacterDirection direction)
+   {
+      mDirection = direction;
+   }
+
    float Character::getRunSpeed() const
    {
       return mRunSpeed;
@@ -485,14 +490,9 @@ namespace jp::logic
       return mStatistics;
    }
 
-   void Character::setState(CharacterState state)
+   const math::Vector2<float>& Character::getJumpPower() const
    {
-      mState = state;
-   }
-
-   void Character::resetJumpPower()
-   {
-      mJumpPower = 0.f;
+      return mJumpPower;
    }
 
    bool Character::canRun() const
@@ -511,9 +511,14 @@ namespace jp::logic
          getState() == CharacterState::Sticking;
    }
 
-   void Character::setDirection(CharacterDirection direction)
+   void Character::setState(CharacterState state)
    {
-      mDirection = direction;
+      mState = state;
+   }
+
+   void Character::resetJumpPower()
+   {
+      mJumpPower = 0.f;
    }
 
    void Character::setRunSpeed(float speed)
