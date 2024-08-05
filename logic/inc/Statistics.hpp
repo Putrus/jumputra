@@ -19,6 +19,7 @@ namespace jp::logic
       int jumps = 0;
       int falls = 0;
       float time = 0.f;
+      float totalTime = 0.f;
    };
 
    std::ostream& operator<<(std::ostream& os, const Statistics& statistics);

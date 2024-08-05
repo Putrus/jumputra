@@ -37,7 +37,8 @@
       "statistics": {
          "jumps": 0,
          "falls": 0,
-         "time": 0.0
+         "time": 0.0,
+         "totalTime": 0.0
       }
    }
    ],

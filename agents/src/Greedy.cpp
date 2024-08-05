@@ -5,15 +5,17 @@
 namespace jp::agents
 {
    Greedy::Greedy(const std::shared_ptr<logic::Engine>& mEngine, size_t bots/* = 100*/)
-      : mBotsSize(bots), Agent(mEngine)
-   {
-      logic::Character character = *mEngine->getCharacters()[0];
-      nextIteration(character);
-   }
+      : mBotsSize(bots), Agent(mEngine) {}
 
    void Greedy::update(float dt)
    {
       auto& characters = mEngine->characters();
+      if (characters.size() == 1)
+      {
+         logic::Character character = *mEngine->getCharacters()[0];
+         nextIteration(character);
+      }
+      
       if (mSquatMustBeDone)
       {
          mSquatMustBeDone = false;

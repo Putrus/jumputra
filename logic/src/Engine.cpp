@@ -13,6 +13,7 @@ namespace jp::logic
 
    void Engine::update(float dt)
    {
+      mStatistics.time += dt;
       for (auto& wind : mWinds)
       {
          wind->update(dt);

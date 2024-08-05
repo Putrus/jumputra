@@ -18,7 +18,8 @@
          "statistics": "STATISTICS",
          "sudovia": "SUDOVIA",
          "tarnovia": "TARNOVIA",
-         "time": "TIME"
+         "time": "TIME",
+         "totalTime": "TOTAL TIME"
       }
    },
    {
@@ -40,7 +41,8 @@
          "statistics": "STATYSTYKI",
          "sudovia": "SUDOWIA",
          "tarnovia": "TARNOWIA",
-         "time": "CZAS"
+         "time": "CZAS",
+         "totalTime": "LACZNY CZAS"
       }
    }
 ]

@@ -74,7 +74,7 @@ namespace jp::logic
    }
 
    Character::Character(const Character& other) : mState(other.mState), mDirection(other.mDirection),
-      mJumpPower(other.mJumpPower), mGravity(other.mGravity), mRunSpeed(other.mRunSpeed), mStatistics(other.mStatistics),
+      mJumpPower(other.mJumpPower), mGravity(other.mGravity), mRunSpeed(other.mRunSpeed),
       mProperties(other.mProperties), mTotalStatistics(other.mTotalStatistics),
       mSegments(other.mSegments), mWinds(other.mWinds), Entity(other) {}
    
@@ -87,7 +87,6 @@ namespace jp::logic
          mJumpPower = other.mJumpPower;
          mGravity = other.mGravity;
          mRunSpeed = other.mRunSpeed;
-         mStatistics = other.mStatistics;
          mRect = other.mRect;
          mAcceleration = other.mAcceleration;
          mVelocity = other.mVelocity;
@@ -373,7 +372,7 @@ namespace jp::logic
       }
 
       mStatistics.time += dt;
-      mTotalStatistics.time += dt;
+      mTotalStatistics.totalTime += dt;
 
       setAcceleration(newAcceleration);
       setVelocity(newVelocity);

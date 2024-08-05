@@ -14,6 +14,7 @@ namespace jp::logic
       jumps = json.at("jumps");
       falls = json.at("falls");
       time = json.at("time");
+      totalTime = json.at("totalTime");
    }
 
    nlohmann::json Statistics::toJson() const
@@ -22,6 +23,7 @@ namespace jp::logic
       json["jumps"] = jumps;
       json["falls"] = falls;
       json["time"] = time;
+      json["totalTime"] = totalTime;
 
       return json;
    }
@@ -34,7 +36,7 @@ namespace jp::logic
 
    std::ostream& operator<<(std::ostream& os, const Statistics& statistics)
    {
-      os << "jumps: " << statistics.jumps << " falls: " << statistics.falls << " time: " << statistics.time;
+      os << "jumps: " << statistics.jumps << " falls: " << statistics.falls << " time: " << statistics.time << " totalTime: " << statistics.totalTime;
       return os;
    }
 }
