@@ -28,7 +28,9 @@ namespace jp::game
    void Context::loadWorlds()
    {
       worlds.clear();
-      for (const auto& entry : std::filesystem::directory_iterator(WORLDS_DIR))
+
+      std::string directory = newGame ? WORLDS_DIR : SAVES_DIR;
+      for (const auto& entry : std::filesystem::directory_iterator(directory))
       {
          if (entry.is_regular_file())
          {
