@@ -46,7 +46,7 @@ namespace jp::algorithm
       else if (move.type == MoveType::Run)
       {
          mCurrentMoveValue += dt;
-         if (mCurrentMoveValue == move.value)
+         if (mCurrentMoveValue >= move.value)
          {
             ++mCurrentMoveId;
             mCurrentMoveValue = 0.f;
