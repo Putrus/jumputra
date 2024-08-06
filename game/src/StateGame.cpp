@@ -14,6 +14,7 @@ namespace jp::game
       switch (context.algorithm)
       {
       case algorithm::AlgorithmName::Dummy:
+      case algorithm::AlgorithmName::Genetic:
          mAlgorithm = std::make_shared<algorithm::Dummy>(mGame);
          break;
       case algorithm::AlgorithmName::Greedy:

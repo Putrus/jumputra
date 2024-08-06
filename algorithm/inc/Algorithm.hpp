@@ -9,6 +9,7 @@ namespace jp::algorithm
    enum class AlgorithmName : int
    {
       Dummy = 0,
+      Genetic,
       Greedy,
       Sequence
    };

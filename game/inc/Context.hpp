@@ -30,7 +30,9 @@ namespace jp::game
       Language language;
       Properties properties;
 
-      std::string world = "babiac";
+      std::vector<std::string> worlds;
+
+      std::string world = "";
       bool newGame = false;
       
       logic::Statistics statistics;
@@ -38,5 +40,7 @@ namespace jp::game
       algorithm::AlgorithmName algorithm = algorithm::AlgorithmName::Dummy;
 
       void setLanguage(const std::string& language);
+
+      void loadWorlds();
    };
 }

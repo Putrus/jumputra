@@ -4,16 +4,18 @@ namespace jp::game
 {
    StateAlgorithmChoice::StateAlgorithmChoice(StateStack* stack, Context& context) : StateMenu(stack, context)
    {
+      mMenu.addItem(context.language.getString("genetic"), context.resources.getFont(graphic::FontID::Pixeled), sf::Color::White, sf::Color::Green);
       mMenu.addItem(context.language.getString("greedy"), context.resources.getFont(graphic::FontID::Pixeled), sf::Color::White, sf::Color::Magenta);
       mMenu.addItem(context.language.getString("back"), context.resources.getFont(graphic::FontID::Pixeled));
    }
 
    void StateAlgorithmChoice::update(float dt)
    {
-      if (mMenu.getItems().at(0)->getTextString() != mContext.language.getString("greedy"))
+      if (mMenu.getItems().at(0)->getTextString() != mContext.language.getString("genetic"))
       {
-         mMenu.setItemText(0, mContext.language.getString("greedy"));
-         mMenu.setItemText(1, mContext.language.getString("back"));
+         mMenu.setItemText(0, mContext.language.getString("genetic"));
+         mMenu.setItemText(1, mContext.language.getString("greedy"));
+         mMenu.setItemText(2, mContext.language.getString("back"));
       }
    }
 
@@ -25,7 +27,11 @@ namespace jp::game
       }
       else
       {
-         if (mMenu.getSelectedTextString() == mContext.language.getString("greedy"))
+         if (mMenu.getSelectedTextString() == mContext.language.getString("genetic"))
+         {
+            mContext.algorithm = algorithm::AlgorithmName::Genetic;
+         }
+         else if (mMenu.getSelectedTextString() == mContext.language.getString("greedy"))
          {
             mContext.algorithm = algorithm::AlgorithmName::Greedy;
          }

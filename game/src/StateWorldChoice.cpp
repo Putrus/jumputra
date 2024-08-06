@@ -3,21 +3,25 @@
 namespace jp::game
 {
    StateWorldChoice::StateWorldChoice(StateStack* stack, Context& context) : StateMenu(stack, context)
-   { 
-      mMenu.addItem(context.language.getString("babiac"), context.resources.getFont(graphic::FontID::Pixeled), sf::Color::White, sf::Color::Red);
-      mMenu.addItem(context.language.getString("sudovia"), context.resources.getFont(graphic::FontID::Pixeled), sf::Color::White, sf::Color::Cyan);     
-      mMenu.addItem(context.language.getString("tarnovia"), context.resources.getFont(graphic::FontID::Pixeled), sf::Color::White, sf::Color::Blue);
+   {
+      context.loadWorlds();
+      for (const auto& world : context.worlds)
+      {
+         mMenu.addItem(context.language.getString(world), context.resources.getFont(graphic::FontID::Pixeled));
+      }
+      
       mMenu.addItem(context.language.getString("back"), context.resources.getFont(graphic::FontID::Pixeled));
    }
 
    void StateWorldChoice::update(float dt)
    {
-      if (mMenu.getItems().at(0)->getTextString() != mContext.language.getString("babiac"))
+      if (mMenu.getItems().back()->getTextString() != mContext.language.getString("back"))
       {
-         mMenu.setItemText(0, mContext.language.getString("babiac"));
-         mMenu.setItemText(1, mContext.language.getString("sudovia"));
-         mMenu.setItemText(2, mContext.language.getString("tarnovia"));
-         mMenu.setItemText(3, mContext.language.getString("back"));
+         for (size_t i = 0; i < mContext.worlds.size(); ++i)
+         {
+            mMenu.setItemText(i, mContext.worlds[i]);
+         }
+         mMenu.setItemText(mContext.worlds.size(), mContext.language.getString("back"));
       }
    }
 
@@ -26,23 +30,15 @@ namespace jp::game
       popState();
       if (mMenu.getSelectedTextString() != mContext.language.getString("back"))
       {
-         if (mMenu.getSelectedTextString() == mContext.language.getString("babiac"))
+         for (const auto& world : mContext.worlds)
          {
-            mContext.world = "babiac";
+            if (mMenu.getSelectedTextString() == mContext.language.getString(world))
+            {
+               mContext.world = world;
+               break;
+            }
          }
-         else if (mMenu.getSelectedTextString() == mContext.language.getString("sudovia"))
-         {
-            mContext.world = "sudovia";
-         }
-         else if (mMenu.getSelectedTextString() == mContext.language.getString("tarnovia"))
-         {
-            mContext.world = "tarnovia";
-         }
-         else
-         {
-            throw std::runtime_error("jp::game::StateWorldChoice::performSelected - Wrong option");
-         }
-
+         
          if (mContext.algorithm != algorithm::AlgorithmName::Dummy)
          {
             popState();

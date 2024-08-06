@@ -1,5 +1,7 @@
 #include "../inc/Context.hpp"
 
+#include <filesystem>
+
 namespace jp::game
 {
    Context::Context()
@@ -21,5 +23,23 @@ namespace jp::game
       properties.graphic.language = language;
       this->language.setLanguage(language);
       this->language.loadFromJsonFile(std::string(OPTIONS_DIR) + "languages.json");
+   }
+
+   void Context::loadWorlds()
+   {
+      worlds.clear();
+      for (const auto& entry : std::filesystem::directory_iterator(WORLDS_DIR))
+      {
+         if (entry.is_regular_file())
+         {
+            std::string worldName = entry.path().filename().string();
+            std::size_t dotIndex = worldName.find_last_of(".");
+            if (dotIndex != std::string::npos)
+            {
+               worldName = worldName.substr(0, dotIndex);
+               worlds.push_back(worldName);
+            }
+         }
+      }
    }
 }
