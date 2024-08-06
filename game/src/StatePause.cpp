@@ -44,13 +44,12 @@ namespace jp::game
       if (mMenu.getSelectedTextString() == mContext.language.getString("quit"))
       {
          popState();
+         popState();
       }
    }
 
    void StatePause::close()
    {
       popState();
-      mContext.newGame = false;
-      pushState(StateID::Game);
    }
 }

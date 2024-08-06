@@ -34,7 +34,10 @@ namespace jp::game
    {
       if (event.type == sf::Event::Closed)
       {
-         mGame->save();
+         if (mContext.algorithm == algorithm::AlgorithmName::Dummy)
+         {
+            mGame->save();
+         }
       }
 
       if (event.type == sf::Event::KeyReleased)
@@ -42,9 +45,12 @@ namespace jp::game
          switch (event.key.code)
          {
          case sf::Keyboard::Key::Escape:
-            mGame->save();
+            if (mContext.algorithm == algorithm::AlgorithmName::Dummy)
+            {
+               mGame->save();
+            }
+            mGame->resetView();
             mContext.statistics = mGame->getStatistics();
-            popState();
             pushState(StateID::Pause);
             break;
          case sf::Keyboard::Key::M:

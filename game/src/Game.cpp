@@ -172,7 +172,7 @@ namespace jp::game
 
    void Game::save() const
    {
-      saveToJsonFile(makeSavePath());
+      saveToJsonFile(std::string(SAVES_DIR) + mContext.world + ".json");
    }
 
    void Game::resetView()
@@ -258,8 +258,6 @@ namespace jp::game
 
    std::string Game::makeSavePath() const
    {
-      std::stringstream ss;
-      ss << SAVES_DIR << mContext.world << mContext.algorithm << ".json";
-      return ss.str();
+      return std::string(SAVES_DIR) + mContext.world + ".json";
    }
 }

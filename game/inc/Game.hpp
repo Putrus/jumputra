@@ -32,9 +32,9 @@ namespace jp::game
       
       void load();
       void save() const;
+      void resetView();
 
    private:
-      void resetView();
       void updateView();
       void removeRedundantDrawables();
 
