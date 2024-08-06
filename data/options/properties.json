@@ -1,5 +1,5 @@
 {
-   "agents": {
+   "algorithm": {
       "greedy" : {
          "bots" :  50
       }

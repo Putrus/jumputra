@@ -1,19 +1,19 @@
-#include "../inc/Agent.hpp"
+#include "../inc/Algorithm.hpp"
+#include "../inc/Dummy.hpp"
 #include "../inc/Greedy.hpp"
-#include "../inc/Human.hpp"
 
 #include <fstream>
 
-namespace jp::agents
+namespace jp::algorithm
 {
-   std::ostream& operator<<(std::ostream& os, AgentName name)
+   std::ostream& operator<<(std::ostream& os, AlgorithmName name)
    {
       switch (name)
       {
-         case AgentName::Human:
-         os << "Human";
+         case AlgorithmName::Dummy:
+         os << "Dummy";
          break;
-         case AgentName::Greedy:
+         case AlgorithmName::Greedy:
          os << "Greedy";
          break;
          default:
@@ -23,9 +23,9 @@ namespace jp::agents
       return os;
    }
 
-   Agent::Agent(const std::shared_ptr<logic::Engine>& engine) : mEngine(engine) {}
+   Algorithm::Algorithm(const std::shared_ptr<logic::Engine>& engine) : mEngine(engine) {}
 
-   void Agent::saveMoves(const std::string &filename) const
+   void Algorithm::saveMoves(const std::string &filename) const
    {
       nlohmann::json json;
       for (const auto& move : mMoves)

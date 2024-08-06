@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../agents/inc/Properties.hpp"
+#include "../../algorithm/inc/Properties.hpp"
 #include "../../graphic/inc/Properties.hpp"
 #include "../../logic/inc/Properties.hpp"
 
@@ -11,7 +11,7 @@ namespace jp::game
       void fromJson(const nlohmann::json& json) override;
       nlohmann::json toJson() const override;
 
-      agents::Properties agents;
+      algorithm::Properties algorithm;
       graphic::Properties graphic;
       logic::Properties logic;
    };

@@ -4,21 +4,21 @@
 
 #include "../../logic/inc/Engine.hpp"
 
-namespace jp::agents
+namespace jp::algorithm
 {
-   enum class AgentName : int
+   enum class AlgorithmName : int
    {
-      Greedy = 0,
-      Human,
+      Dummy = 0,
+      Greedy,
       Sequence
    };
 
-   std::ostream& operator<<(std::ostream& os, AgentName name);
+   std::ostream& operator<<(std::ostream& os, AlgorithmName name);
 
-   class Agent : public logic::Updatable
+   class Algorithm : public logic::Updatable
    {
    public:
-      Agent(const std::shared_ptr<logic::Engine>& engine);
+      Algorithm(const std::shared_ptr<logic::Engine>& engine);
 
       void saveMoves(const std::string &filename) const;
 

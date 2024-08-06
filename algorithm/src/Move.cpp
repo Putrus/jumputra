@@ -1,6 +1,6 @@
 #include "../inc/Move.hpp"
 
-namespace jp::agents
+namespace jp::algorithm
 {
    void Move::fromJson(const nlohmann::json& json)
    {

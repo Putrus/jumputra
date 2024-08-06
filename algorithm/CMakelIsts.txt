@@ -1,29 +1,29 @@
 cmake_minimum_required(VERSION 3.6..3.28)
 
-project(jp_agents
+project(jp_algorithm
 VERSION 0.0.1
 LANGUAGES CXX
-DESCRIPTION "jumputra agents"
+DESCRIPTION "jumputra algorithm"
 )
 
 set(HEADERS
-   inc/Agent.hpp
+   inc/Algorithm.hpp
+   inc/Dummy.hpp
    inc/Greedy.hpp
-   inc/Human.hpp
    inc/Move.hpp
    inc/Properties.hpp
    inc/Sequence.hpp
    )
 
 set(SOURCES
-   src/Agent.cpp
+   src/Algorithm.cpp
+   src/Dummy.cpp
    src/Greedy.cpp
-   src/Human.cpp
    src/Move.cpp
    src/Properties.cpp
    src/Sequence.cpp
    )
 
-add_library(jp_agents STATIC ${HEADERS} ${SOURCES})
+add_library(jp_algorithm STATIC ${HEADERS} ${SOURCES})
 
-target_link_libraries(jp_agents PUBLIC jp_logic)
+target_link_libraries(jp_algorithm PUBLIC jp_logic)

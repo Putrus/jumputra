@@ -1,4 +1,4 @@
-#include "../inc/StateAgentChoice.hpp"
+#include "../inc/StateAlgorithmChoice.hpp"
 #include "../inc/StateGame.hpp"
 #include "../inc/StateLanguage.hpp"
 #include "../inc/StateMainMenu.hpp"
@@ -62,8 +62,8 @@ namespace jp::game
          case PendingAction::Type::Push:
             switch (pendingAction.stateId)
             {
-            case StateID::AgentChoice:
-               mStack.push_back(std::make_shared<StateAgentChoice>(this, mContext));
+            case StateID::AlgorithmChoice:
+               mStack.push_back(std::make_shared<StateAlgorithmChoice>(this, mContext));
                break;
             case StateID::Game:
                mStack.push_back(std::make_shared<StateGame>(this, mContext));

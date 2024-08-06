@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Agent.hpp"
+#include "Algorithm.hpp"
 
-namespace jp::agents
+namespace jp::algorithm
 {
-   class Sequence final : public Agent
+   class Sequence final : public Algorithm
    {
    public:
       Sequence(const std::shared_ptr<logic::Engine>& engine);

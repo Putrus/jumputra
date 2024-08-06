@@ -1,6 +1,6 @@
 #include "../inc/Properties.hpp"
 
-namespace jp::agents
+namespace jp::algorithm
 {
    void Properties::fromJson(const nlohmann::json& json)
    {

@@ -8,6 +8,7 @@ namespace jp::game
    { 
       mMenu.addItem(context.language.getString("newGame"), context.resources.getFont(graphic::FontID::Pixeled));
       mMenu.addItem(context.language.getString("continue"), context.resources.getFont(graphic::FontID::Pixeled));
+      mMenu.addItem(context.language.getString("algorithms"), context.resources.getFont(graphic::FontID::Pixeled));
       mMenu.addItem(context.language.getString("language"), context.resources.getFont(graphic::FontID::Pixeled));
       mMenu.addItem(context.language.getString("quit"), context.resources.getFont(graphic::FontID::Pixeled));
    }
@@ -18,8 +19,9 @@ namespace jp::game
       {
          mMenu.setItemText(0, mContext.language.getString("newGame"));
          mMenu.setItemText(1, mContext.language.getString("continue"));
-         mMenu.setItemText(2, mContext.language.getString("language"));
-         mMenu.setItemText(3, mContext.language.getString("quit"));
+         mMenu.setItemText(2, mContext.language.getString("algorithms"));
+         mMenu.setItemText(3, mContext.language.getString("language"));
+         mMenu.setItemText(4, mContext.language.getString("quit"));
       }
    }
 
@@ -28,13 +30,21 @@ namespace jp::game
       if (mMenu.getSelectedTextString() == mContext.language.getString("newGame"))
       {
          mContext.newGame = true;
-         pushState(StateID::AgentChoice);
+         mContext.algorithm = algorithm::AlgorithmName::Dummy;
+         pushState(StateID::WorldChoice);
       }
 
       if (mMenu.getSelectedTextString() == mContext.language.getString("continue"))
       {
          mContext.newGame = false;
-         pushState(StateID::AgentChoice);
+         mContext.algorithm = algorithm::AlgorithmName::Dummy;
+         pushState(StateID::WorldChoice);
+      }
+
+      if (mMenu.getSelectedTextString() == mContext.language.getString("algorithms"))
+      {
+         mContext.newGame = true;
+         pushState(StateID::AlgorithmChoice);
       }
 
       if (mMenu.getSelectedTextString() == mContext.language.getString("language"))

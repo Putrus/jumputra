@@ -3,7 +3,7 @@
 #include "../inc/Game.hpp"
 #include "../inc/State.hpp"
 
-#include "../../agents/inc/Agent.hpp"
+#include "../../algorithm/inc/Algorithm.hpp"
 
 namespace jp::game
 {
@@ -18,6 +18,6 @@ namespace jp::game
 
    private:
       std::shared_ptr<Game> mGame;
-      std::shared_ptr<agents::Agent> mAgent;
+      std::shared_ptr<algorithm::Algorithm> mAlgorithm;
    };
 }

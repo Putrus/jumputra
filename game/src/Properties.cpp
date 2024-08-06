@@ -6,7 +6,7 @@ namespace jp::game
 {
    void Properties::fromJson(const nlohmann::json& json)
    {
-      agents.fromJson(json.at("agents"));
+      algorithm.fromJson(json.at("algorithm"));
       graphic.fromJson(json.at("graphic"));
       logic.fromJson(json.at("logic"));
    }
@@ -14,7 +14,7 @@ namespace jp::game
    nlohmann::json Properties::toJson() const
    {
       nlohmann::json json;
-      json["agents"] = agents.toJson();
+      json["algorithm"] = algorithm.toJson();
       json["graphic"] = graphic.toJson();
       json["logic"] = logic.toJson();
       return json;

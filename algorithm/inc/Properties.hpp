@@ -2,7 +2,7 @@
 
 #include "../../core/inc/Jsonable.hpp"
 
-namespace jp::agents
+namespace jp::algorithm
 {
    struct Properties : public core::Jsonable
    {

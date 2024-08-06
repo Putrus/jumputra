@@ -52,7 +52,7 @@ namespace jp::game
       }
 
       if (mControlledCharacterId >= mCharacters.size() ||
-         mContext.agent != agents::AgentName::Human)
+         mContext.algorithm != algorithm::AlgorithmName::Dummy)
       {
          return;
       }
@@ -259,7 +259,7 @@ namespace jp::game
    std::string Game::makeSavePath() const
    {
       std::stringstream ss;
-      ss << SAVES_DIR << mContext.world << mContext.agent << ".json";
+      ss << SAVES_DIR << mContext.world << mContext.algorithm << ".json";
       return ss.str();
    }
 }

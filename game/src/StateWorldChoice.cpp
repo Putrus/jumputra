@@ -23,30 +23,31 @@ namespace jp::game
 
    void StateWorldChoice::performSelected()
    {
-      if (mMenu.getSelectedTextString() == mContext.language.getString("babiac"))
+      popState();
+      if (mMenu.getSelectedTextString() != mContext.language.getString("back"))
       {
-         mContext.world = "babiac";
-         popState();
-         pushState(StateID::Game);
-      }
+         if (mMenu.getSelectedTextString() == mContext.language.getString("babiac"))
+         {
+            mContext.world = "babiac";
+         }
+         else if (mMenu.getSelectedTextString() == mContext.language.getString("sudovia"))
+         {
+            mContext.world = "sudovia";
+         }
+         else if (mMenu.getSelectedTextString() == mContext.language.getString("tarnovia"))
+         {
+            mContext.world = "tarnovia";
+         }
+         else
+         {
+            throw std::runtime_error("jp::game::StateWorldChoice::performSelected - Wrong option");
+         }
 
-      if (mMenu.getSelectedTextString() == mContext.language.getString("sudovia"))
-      {
-         mContext.world = "sudovia";
-         popState();
+         if (mContext.algorithm != algorithm::AlgorithmName::Dummy)
+         {
+            popState();
+         }
          pushState(StateID::Game);
-      }
-
-      if (mMenu.getSelectedTextString() == mContext.language.getString("tarnovia"))
-      {
-         mContext.world = "tarnovia";
-         popState();
-         pushState(StateID::Game);
-      }
-
-      if (mMenu.getSelectedTextString() == mContext.language.getString("back"))
-      {
-         popState();
       }
    }
 

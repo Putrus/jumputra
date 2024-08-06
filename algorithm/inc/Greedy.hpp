@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Agent.hpp"
+#include "Algorithm.hpp"
 
-namespace jp::agents
+namespace jp::algorithm
 {
-   class Greedy final : public Agent
+   class Greedy final : public Algorithm
    {
    public:
       Greedy(const std::shared_ptr<logic::Engine> &engine, size_t bots = 100);

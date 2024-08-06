@@ -14,7 +14,7 @@ namespace jp::game
    enum class StateID : unsigned long long
    {
       None = 0,
-      AgentChoice,
+      AlgorithmChoice,
       Game,
       Language,
       MainMenu,

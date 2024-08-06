@@ -1,7 +1,7 @@
 #include "../inc/StateGame.hpp"
 
-#include "../../agents/inc/Greedy.hpp"
-#include "../../agents/inc/Human.hpp"
+#include "../../algorithm/inc/Dummy.hpp"
+#include "../../algorithm/inc/Greedy.hpp"
 
 #include <chrono>
 #include <format>
@@ -11,13 +11,13 @@ namespace jp::game
    StateGame::StateGame(StateStack* stack, Context& context)
       : mGame(std::make_shared<Game>(context)), State(stack, context)
    {
-      switch (context.agent)
+      switch (context.algorithm)
       {
-      case agents::AgentName::Greedy:
-         mAgent = std::make_shared<agents::Greedy>(mGame, context.properties.agents.greedy.bots);
+      case algorithm::AlgorithmName::Dummy:
+         mAlgorithm = std::make_shared<algorithm::Dummy>(mGame);
          break;
-      case agents::AgentName::Human:
-         mAgent = std::make_shared<agents::Human>(mGame);
+      case algorithm::AlgorithmName::Greedy:
+         mAlgorithm = std::make_shared<algorithm::Greedy>(mGame, context.properties.algorithm.greedy.bots);
          break;
       default:
          throw std::invalid_argument("jp::game::StateGame::StateGame - Failed to create agent, wrong agent name");
@@ -47,7 +47,7 @@ namespace jp::game
             pushState(StateID::Pause);
             break;
          case sf::Keyboard::Key::M:
-            mAgent->saveMoves("test.json");
+            mAlgorithm->saveMoves("test.json");
             break;
          default:
             break;
@@ -65,7 +65,7 @@ namespace jp::game
          const auto now = std::chrono::system_clock::now();
          std::string time = std::format("{:%d-%m-%Y_%H-%M}", now);
          std::stringstream filenameSS;
-         filenameSS << mContext.world << mContext.agent;
+         filenameSS << mContext.world << mContext.algorithm;
          std::string filename = filenameSS.str();
          std::filesystem::remove(std::string(SAVES_DIR) + filename + ".json");
          mGame->saveStatistics(std::string(STATISTICS_DIR) + filename + "_" + time + ".json");
@@ -73,6 +73,6 @@ namespace jp::game
          popState();
          pushState(StateID::Win);
       }
-      mAgent->update(dt);
+      mAlgorithm->update(dt);
    }
 }

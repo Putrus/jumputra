@@ -2,10 +2,10 @@
 
 #include <random>
 
-namespace jp::agents
+namespace jp::algorithm
 {
    Greedy::Greedy(const std::shared_ptr<logic::Engine>& mEngine, size_t bots/* = 100*/)
-      : mBotsSize(bots), Agent(mEngine)
+      : mBotsSize(bots), Algorithm(mEngine)
    {
       logic::Character character = *mEngine->getCharacters()[0];
       nextIteration(character);

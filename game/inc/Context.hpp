@@ -10,7 +10,7 @@
 
 #include "../../logic/inc/Statistics.hpp"
 
-#include "../../agents/inc/Agent.hpp"
+#include "../../algorithm/inc/Algorithm.hpp"
 
 namespace jp::game
 {
@@ -35,7 +35,7 @@ namespace jp::game
       
       logic::Statistics statistics;
 
-      agents::AgentName agent = agents::AgentName::Human;
+      algorithm::AlgorithmName algorithm = algorithm::AlgorithmName::Dummy;
 
       void setLanguage(const std::string& language);
    };

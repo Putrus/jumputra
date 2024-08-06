@@ -4,7 +4,7 @@
 
 #include "../../logic/inc/Character.hpp"
 
-namespace jp::agents
+namespace jp::algorithm
 {
    enum class MoveType : int
    {
