@@ -2,6 +2,7 @@
 
 #include "../../algorithm/inc/Dummy.hpp"
 #include "../../algorithm/inc/Greedy.hpp"
+#include "../../algorithm/inc/Sequence.hpp"
 
 #include <chrono>
 #include <format>
@@ -14,6 +15,22 @@ namespace jp::game
       switch (context.controller)
       {
       case Controller::Genetic:
+      {
+         std::vector<algorithm::Move> moves;
+         algorithm::Move move;
+         //0
+         move.type = algorithm::MoveType::Jump;
+         move.direction = logic::CharacterDirection::Right;
+         move.value = 300.f;
+         moves.push_back(move);
+         //1
+         move.type = algorithm::MoveType::Jump;
+         move.direction = logic::CharacterDirection::Right;
+         move.value = 200.f;
+         moves.push_back(move);
+         mAlgorithm = std::make_shared<algorithm::Sequence>(moves, mGame);
+      }
+         break;
       case Controller::Human:
          mAlgorithm = std::make_shared<algorithm::Dummy>(mGame);
          break;

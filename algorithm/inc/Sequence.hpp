@@ -7,8 +7,15 @@ namespace jp::algorithm
    class Sequence final : public Algorithm
    {
    public:
-      Sequence(const std::shared_ptr<logic::Engine>& engine);
+      Sequence(const std::vector<Move>& moves, const std::shared_ptr<logic::Engine>& engine);
 
       void update(float dt) override;
+
+      bool isFinished() const;
+
+   private:
+      size_t mCurrentMoveId = 0;
+      float mCurrentMoveValue = 0.f;
+      bool mFinished = false;
    };
 }
