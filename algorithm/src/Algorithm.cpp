@@ -6,23 +6,6 @@
 
 namespace jp::algorithm
 {
-   std::ostream& operator<<(std::ostream& os, AlgorithmName name)
-   {
-      switch (name)
-      {
-         case AlgorithmName::Dummy:
-         os << "Dummy";
-         break;
-         case AlgorithmName::Greedy:
-         os << "Greedy";
-         break;
-         default:
-         os << "Unknown";
-         break;
-      }
-      return os;
-   }
-
    Algorithm::Algorithm(const std::shared_ptr<logic::Engine>& engine) : mEngine(engine) {}
 
    void Algorithm::saveMoves(const std::string &filename) const

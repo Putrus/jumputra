@@ -39,7 +39,7 @@ namespace jp::game
             }
          }
          
-         if (mContext.algorithm != algorithm::AlgorithmName::Dummy)
+         if (mContext.controller != Controller::Human)
          {
             popState();
          }

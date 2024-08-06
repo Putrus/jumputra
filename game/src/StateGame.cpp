@@ -11,13 +11,13 @@ namespace jp::game
    StateGame::StateGame(StateStack* stack, Context& context)
       : mGame(std::make_shared<Game>(context)), State(stack, context)
    {
-      switch (context.algorithm)
+      switch (context.controller)
       {
-      case algorithm::AlgorithmName::Dummy:
-      case algorithm::AlgorithmName::Genetic:
+      case Controller::Genetic:
+      case Controller::Human:
          mAlgorithm = std::make_shared<algorithm::Dummy>(mGame);
          break;
-      case algorithm::AlgorithmName::Greedy:
+      case Controller::Greedy:
          mAlgorithm = std::make_shared<algorithm::Greedy>(mGame, context.properties.algorithm.greedy.bots);
          break;
       default:
@@ -34,7 +34,7 @@ namespace jp::game
    {
       if (event.type == sf::Event::Closed)
       {
-         if (mContext.algorithm == algorithm::AlgorithmName::Dummy)
+         if (mContext.controller == Controller::Human)
          {
             mGame->save();
          }
@@ -45,7 +45,7 @@ namespace jp::game
          switch (event.key.code)
          {
          case sf::Keyboard::Key::Escape:
-            if (mContext.algorithm == algorithm::AlgorithmName::Dummy)
+            if (mContext.controller == Controller::Human)
             {
                mGame->save();
             }
@@ -72,8 +72,10 @@ namespace jp::game
          const auto now = std::chrono::system_clock::now();
          std::string time = std::format("{:%d-%m-%Y_%H-%M}", now);
          std::stringstream filenameSS;
-         filenameSS << mContext.world << mContext.algorithm;
+         filenameSS << mContext.world << '_' << mContext.controller;
          std::string filename = filenameSS.str();
+         std::transform(filename.begin(), filename.end(), filename.begin(),
+            [](char c) { return std::tolower(c); });
          std::filesystem::remove(std::string(SAVES_DIR) + filename + ".json");
          mGame->saveStatistics(std::string(STATISTICS_DIR) + filename + "_" + time + ".json");
          mContext.statistics = mGame->getStatistics();

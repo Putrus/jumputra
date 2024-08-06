@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../inc/Controller.hpp"
 #include "../inc/Language.hpp"
 #include "../inc/Properties.hpp"
 
@@ -10,7 +11,6 @@
 
 #include "../../logic/inc/Statistics.hpp"
 
-#include "../../algorithm/inc/Algorithm.hpp"
 
 namespace jp::game
 {
@@ -29,6 +29,7 @@ namespace jp::game
 
       Language language;
       Properties properties;
+      Controller controller = Controller::Human;
 
       std::vector<std::string> worlds;
 
@@ -37,7 +38,6 @@ namespace jp::game
       
       logic::Statistics statistics;
 
-      algorithm::AlgorithmName algorithm = algorithm::AlgorithmName::Dummy;
 
       void setLanguage(const std::string& language);
 

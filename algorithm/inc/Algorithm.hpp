@@ -6,16 +6,6 @@
 
 namespace jp::algorithm
 {
-   enum class AlgorithmName : int
-   {
-      Dummy = 0,
-      Genetic,
-      Greedy,
-      Sequence
-   };
-
-   std::ostream& operator<<(std::ostream& os, AlgorithmName name);
-
    class Algorithm : public logic::Updatable
    {
    public:

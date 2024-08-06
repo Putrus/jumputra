@@ -29,11 +29,11 @@ namespace jp::game
       {
          if (mMenu.getSelectedTextString() == mContext.language.getString("genetic"))
          {
-            mContext.algorithm = algorithm::AlgorithmName::Genetic;
+            mContext.controller = Controller::Genetic;
          }
          else if (mMenu.getSelectedTextString() == mContext.language.getString("greedy"))
          {
-            mContext.algorithm = algorithm::AlgorithmName::Greedy;
+            mContext.controller = Controller::Greedy;
          }
          else
          {

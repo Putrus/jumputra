@@ -37,6 +37,7 @@ namespace jp::game
    private:
       void updateView();
       void removeRedundantDrawables();
+      void humanCharacterControl(const sf::Event& event);
 
       void setGoal(const nlohmann::json& json) override;
       void addCharacter(const nlohmann::json& json) override;
@@ -48,6 +49,5 @@ namespace jp::game
 
       Context& mContext;
       std::vector<std::shared_ptr<sf::Drawable>> mDrawables;
-      size_t mControlledCharacterId = 0;
    };
 }

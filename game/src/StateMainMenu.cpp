@@ -30,14 +30,14 @@ namespace jp::game
       if (mMenu.getSelectedTextString() == mContext.language.getString("newGame"))
       {
          mContext.newGame = true;
-         mContext.algorithm = algorithm::AlgorithmName::Dummy;
+         mContext.controller = Controller::Human;
          pushState(StateID::WorldChoice);
       }
 
       if (mMenu.getSelectedTextString() == mContext.language.getString("continue"))
       {
          mContext.newGame = false;
-         mContext.algorithm = algorithm::AlgorithmName::Dummy;
+         mContext.controller = Controller::Human;
          pushState(StateID::WorldChoice);
       }
 

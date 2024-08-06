@@ -26,96 +26,12 @@ namespace jp::game
 
    void Game::event(const sf::Event& event)
    {
-      if (event.type == sf::Event::KeyReleased)
-      {
-         switch (event.key.code)
-         {
-         case sf::Keyboard::Key::L:
-            {
-               int i = 0;
-               for (const auto& character : mCharacters)
-               {
-                  std::cout << "Character " << i++ << std::endl; 
-                  std::cout << "Log: " << std::endl;
-                  std::cout << "state: " << character->getState() << std::endl;
-                  std::cout << "acceleration: " << character->getAcceleration() << std::endl;
-                  std::cout << "velocity: " << character->getVelocity() << std::endl;
-                  std::cout << "runSpeed: " << character->getRunSpeed() << std::endl;
-                  std::cout << "statistics: " << mContext.statistics << std::endl;
-                  std::cout << std::endl;
-               }
-            }
-            break;
-         default:
-            break;
-         }
-      }
-
-      if (mControlledCharacterId >= mCharacters.size() ||
-         mContext.algorithm != algorithm::AlgorithmName::Dummy)
+      if (mContext.controller != Controller::Human)
       {
          return;
       }
 
-      logic::Character& controlledCharacter = *mCharacters[mControlledCharacterId];
-
-      if (event.type == sf::Event::KeyPressed)
-      {
-         switch (event.key.code)
-         {
-         case sf::Keyboard::Key::Left:
-         case sf::Keyboard::Key::A:
-            controlledCharacter.run(logic::CharacterDirection::Left);
-            break;
-         case sf::Keyboard::Key::Right:
-         case sf::Keyboard::Key::D:
-            controlledCharacter.run(logic::CharacterDirection::Right);
-            break;
-         case sf::Keyboard::Key::Space:
-            controlledCharacter.squat();
-            break;
-         default:
-            break;
-         }
-      }
-
-      if (event.type == sf::Event::KeyReleased)
-      {
-         switch (event.key.code)
-         {
-         case sf::Keyboard::Key::Space:
-            controlledCharacter.jump();
-            break;
-         case sf::Keyboard::Key::Left:
-         case sf::Keyboard::Key::A:
-            if (controlledCharacter.getDirection() == logic::CharacterDirection::Left)
-            {
-               controlledCharacter.stop();
-            }
-            break;
-         case sf::Keyboard::Key::Right:
-         case sf::Keyboard::Key::D:
-            if (controlledCharacter.getDirection() == logic::CharacterDirection::Right)
-            {
-               controlledCharacter.stop();
-            }
-            break;
-         case sf::Keyboard::Key::L:
-            std::cout << "Log: " << std::endl;
-            std::cout << "state: " << controlledCharacter.getState() << std::endl;
-            std::cout << "acceleration: " << controlledCharacter.getAcceleration() << std::endl;
-            std::cout << "velocity: " << controlledCharacter.getVelocity() << std::endl;
-            std::cout << "runSpeed: " << controlledCharacter.getRunSpeed() << std::endl;
-            std::cout << "statistics: " << mContext.statistics << std::endl;
-            std::cout << std::endl;
-            break;
-         case sf::Keyboard::Key::S:
-            save();
-            break;
-         default:
-            break;
-         }
-      }
+      humanCharacterControl(event);
    }
 
    void Game::update(float dt)
@@ -225,6 +141,61 @@ namespace jp::game
          {
             return dynamic_cast<Character*>(drawable.get()) != nullptr && drawable.use_count() <= 1;
          }), mDrawables.end());
+   }
+
+   void Game::humanCharacterControl(const sf::Event& event)
+   {
+      if (mCharacters.empty())
+      {
+         return;
+      }
+
+      logic::Character& controlledCharacter = *mCharacters.at(0);
+      if (event.type == sf::Event::KeyPressed)
+      {
+         switch (event.key.code)
+         {
+         case sf::Keyboard::Key::Left:
+         case sf::Keyboard::Key::A:
+            controlledCharacter.run(logic::CharacterDirection::Left);
+            break;
+         case sf::Keyboard::Key::Right:
+         case sf::Keyboard::Key::D:
+            controlledCharacter.run(logic::CharacterDirection::Right);
+            break;
+         case sf::Keyboard::Key::Space:
+            controlledCharacter.squat();
+            break;
+         default:
+            break;
+         }
+      }
+
+      if (event.type == sf::Event::KeyReleased)
+      {
+         switch (event.key.code)
+         {
+         case sf::Keyboard::Key::Space:
+            controlledCharacter.jump();
+            break;
+         case sf::Keyboard::Key::Left:
+         case sf::Keyboard::Key::A:
+            if (controlledCharacter.getDirection() == logic::CharacterDirection::Left)
+            {
+               controlledCharacter.stop();
+            }
+            break;
+         case sf::Keyboard::Key::Right:
+         case sf::Keyboard::Key::D:
+            if (controlledCharacter.getDirection() == logic::CharacterDirection::Right)
+            {
+               controlledCharacter.stop();
+            }
+            break;
+         default:
+            break;
+         }
+      }
    }
 
    void Game::setGoal(const nlohmann::json& json)
