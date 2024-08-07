@@ -38,6 +38,27 @@ namespace jp::game
          move.direction = logic::CharacterDirection::Right;
          move.value = 2000.f;
          moves.push_back(move);
+         //4
+         move.type = algorithm::MoveType::Run;
+         move.direction = logic::CharacterDirection::Right;
+         move.value = 0.5f;
+         moves.push_back(move);
+         //5
+         move.type = algorithm::MoveType::Jump;
+         move.direction = logic::CharacterDirection::Left;
+         move.value = 2000.f;
+         moves.push_back(move);
+         //6
+         move.type = algorithm::MoveType::Run;
+         move.direction = logic::CharacterDirection::Left;
+         move.value = 1.f;
+         moves.push_back(move);
+         //7
+         move.type = algorithm::MoveType::Jump;
+         move.direction = logic::CharacterDirection::Right;
+         move.value = 2000.f;
+         moves.push_back(move);
+
          mAlgorithm = std::make_shared<algorithm::Sequence>(moves, mGame);
       }
          break;

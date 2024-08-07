@@ -21,11 +21,10 @@ namespace jp::algorithm
       Move& move = mMoves.at(mCurrentMoveId);
       if (move.type == MoveType::Jump)
       {
-         if (mCurrentMoveValue != 0.f && character.canSquat() &&
+         if (mCurrentMoveValue == 1.f && character.canSquat() &&
             character.getState() != logic::CharacterState::Squatting)
          {
-            ++mCurrentMoveId;
-            mCurrentMoveValue = 0.f;
+            nextMove();
             return;
          }
 
@@ -35,7 +34,7 @@ namespace jp::algorithm
             {
                character.setDirection(move.direction);
                character.squat();
-               mCurrentMoveValue += dt;
+               mCurrentMoveValue = 1.f;
             }
          }
          else if (character.getJumpPower().y >= move.value)
@@ -48,8 +47,7 @@ namespace jp::algorithm
          mCurrentMoveValue += dt;
          if (mCurrentMoveValue >= move.value)
          {
-            ++mCurrentMoveId;
-            mCurrentMoveValue = 0.f;
+            nextMove();
             return;
          }
          character.run(move.direction);
@@ -63,5 +61,11 @@ namespace jp::algorithm
    bool Sequence::isFinished() const
    {
       return mFinished;
+   }
+
+   void Sequence::nextMove()
+   {
+      ++mCurrentMoveId;
+      mCurrentMoveValue = 0.f;
    }
 }
