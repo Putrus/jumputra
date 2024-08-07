@@ -44,7 +44,7 @@ namespace jp::graphic
       {
          newPosition.x -= mTexture->getSize().x;
       }
-      else if (newPosition.x < -mTexture->getSize().x)
+      else
       {
          newPosition.x += mTexture->getSize().x;
       }
