@@ -17,4 +17,9 @@ namespace jp::algorithm
       file << json;
       file.close();
    }
+
+   const std::vector<Move>& Movable::getMoves() const
+   {
+      return mMoves;
+   }
 }

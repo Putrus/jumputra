@@ -53,6 +53,11 @@ namespace jp::algorithm
       }   
    }
 
+   const std::shared_ptr<logic::Character>& Bot::getCharacter() const
+   {
+      return mCharacter;
+   }
+
    bool Bot::finishedMoves() const
    {
       return mFinishedMoves;

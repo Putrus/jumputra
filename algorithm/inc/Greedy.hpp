@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Algorithm.hpp"
+#include "Bot.hpp"
 
 namespace jp::algorithm
 {
@@ -17,9 +18,8 @@ namespace jp::algorithm
       void nextIteration(const logic::Character &character);
 
       std::map<size_t, logic::Character> mCharactersThatLanded;
-      std::vector<Move> mTargetMoves;
+      std::vector<Bot> mBots;
       size_t mBotsSize = 0;
-      bool mSquatMustBeDone = false;
       float mLastY = 0.f;
    };
 }

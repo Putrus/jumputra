@@ -13,6 +13,8 @@ namespace jp::algorithm
 
       void update(float dt) override;
 
+      const std::shared_ptr<logic::Character>& getCharacter() const;
+
       bool finishedMoves() const;
 
    private:

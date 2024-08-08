@@ -11,6 +11,8 @@ namespace jp::algorithm
 
       void saveMoves(const std::string& filename) const;
 
+      const std::vector<Move>& getMoves() const;
+
    protected:
       std::vector<Move> mMoves;
    };

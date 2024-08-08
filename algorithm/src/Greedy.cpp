@@ -13,24 +13,16 @@ namespace jp::algorithm
 
    void Greedy::update(float dt)
    {
-      auto& characters = mEngine->characters();
-      if (mSquatMustBeDone)
+      for (auto& bot : mBots)
       {
-         mSquatMustBeDone = false;
-         for (auto& character : characters)
-         {
-            character->squat();
-         }
-         return;
+         bot.update(dt);
       }
 
-      for (size_t i = 0; i < characters.size(); ++i)
+      for (size_t i = 0; i < mBots.size(); ++i)
       {
-         logic::Character &character = *characters[i];
-         if (mCharactersThatLanded.find(i) == mCharactersThatLanded.end() && character.canSquat() &&
-            character.getState() != logic::CharacterState::Squatting)
+         if (mCharactersThatLanded.find(i) == mCharactersThatLanded.end() && mBots.at(i).finishedMoves())
          {
-            mCharactersThatLanded.insert({ i, logic::Character(character) });
+            mCharactersThatLanded.insert({ i, logic::Character(*mBots.at(i).getCharacter()) });
          }
       }
 
@@ -48,7 +40,7 @@ namespace jp::algorithm
          }
 
          logic::Character bestJumper = bestJumperIt->second;
-         Move bestMove = mTargetMoves.at(bestJumperIt->first);
+         Move bestMove = mBots.at(bestJumperIt->first).getMoves().at(0);
          if (bestJumper.getPosition().y == mLastY)
          {
             int random = randomInRange(1, 5);
@@ -56,7 +48,7 @@ namespace jp::algorithm
             {
                int randomId = randomInRange(0, mCharactersThatLanded.size() - 1);
                bestJumper = mCharactersThatLanded.at(randomId);
-               bestMove = mTargetMoves.at(randomId);
+               bestMove = mBots.at(randomId).getMoves().at(0);
             }
             else
             {
@@ -77,7 +69,7 @@ namespace jp::algorithm
                   if (id == randomId)
                   {
                      bestJumper = character.second;
-                     bestMove = mTargetMoves.at(character.first);
+                     bestMove = mBots.at(character.first).getMoves().at(0);
                      break;
                   }
                   ++id;
@@ -87,16 +79,6 @@ namespace jp::algorithm
 
          mMoves.push_back(bestMove);
          nextIteration(bestJumper);
-      }
-      else
-      {
-         for (size_t i = 0; i < mTargetMoves.size(); ++i)
-         {
-            if (characters.at(i)->getJumpPower().y >= mTargetMoves[i].value)
-            {
-               characters.at(i)->jump();
-            }
-         }
       }
    }
 
@@ -114,10 +96,9 @@ namespace jp::algorithm
    {
       mLastY = character.getPosition().y;
       mCharactersThatLanded.clear();
+      mBots.clear();
       mEngine->removeAllCharacters();
 
-      mTargetMoves.clear();
-      auto &characters = mEngine->characters();
       for (int i = 0; i < mBotsSize; ++i)
       {
          mEngine->addCharacterCopy(character);
@@ -125,10 +106,7 @@ namespace jp::algorithm
          move.type = MoveType::Jump;
          move.value = randomInRange(0, mEngine->getProperties().character.jump.max.y);
          move.direction = static_cast<logic::CharacterDirection>(randomInRange(1, 2));
-         mTargetMoves.push_back(move);
-         characters.at(i)->setDirection(move.direction);
-         characters.at(i)->squat();
+         mBots.push_back(Bot(mEngine->characters().at(i), { move }));
       }
-      mSquatMustBeDone = true;
    }
 }
