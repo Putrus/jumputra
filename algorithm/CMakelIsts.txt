@@ -8,20 +8,24 @@ DESCRIPTION "jumputra algorithm"
 
 set(HEADERS
    inc/Algorithm.hpp
+   inc/Bot.hpp
    inc/Dummy.hpp
+   inc/Genetic.hpp
    inc/Greedy.hpp
+   inc/Movable.hpp
    inc/Move.hpp
    inc/Properties.hpp
-   inc/Sequence.hpp
    )
 
 set(SOURCES
    src/Algorithm.cpp
+   src/Bot.cpp
    src/Dummy.cpp
+   src/Genetic.cpp
    src/Greedy.cpp
+   src/Movable.cpp
    src/Move.cpp
    src/Properties.cpp
-   src/Sequence.cpp
    )
 
 add_library(jp_algorithm STATIC ${HEADERS} ${SOURCES})

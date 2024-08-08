@@ -15,9 +15,6 @@ namespace jp::game
          case Controller::Human:
          os << "Human";
          break;
-         case Controller::Sequence:
-         os << "Sequence";
-         break;
          default:
          os << "Unknown";
          break;

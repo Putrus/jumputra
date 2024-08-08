@@ -1,14 +1,12 @@
-#include "../inc/Algorithm.hpp"
-#include "../inc/Dummy.hpp"
-#include "../inc/Greedy.hpp"
+#include "../inc/Movable.hpp"
 
 #include <fstream>
 
 namespace jp::algorithm
 {
-   Algorithm::Algorithm(const std::shared_ptr<logic::Engine>& engine) : mEngine(engine), Movable({}) {}
+   Movable::Movable(const std::vector<Move>& moves) : mMoves(moves) {}
 
-   void Algorithm::saveMoves(const std::string &filename) const
+   void Movable::saveMoves(const std::string &filename) const
    {
       nlohmann::json json;
       for (const auto& move : mMoves)

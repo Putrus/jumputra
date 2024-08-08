@@ -8,8 +8,7 @@ namespace jp::game
    {
       Genetic = 0,
       Greedy,
-      Human,
-      Sequence
+      Human
    };
 
    std::ostream& operator<<(std::ostream& os, Controller controller);
