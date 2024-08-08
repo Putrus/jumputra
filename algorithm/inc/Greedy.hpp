@@ -13,8 +13,6 @@ namespace jp::algorithm
       void update(float dt) override;
 
    private:
-      int randomInRange(int min, int max);
-
       void nextIteration(const logic::Character &character);
 
       std::map<size_t, logic::Character> mCharactersThatLanded;

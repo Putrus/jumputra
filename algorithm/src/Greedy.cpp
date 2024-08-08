@@ -1,11 +1,9 @@
 #include "../inc/Greedy.hpp"
 
-#include <random>
-
 namespace jp::algorithm
 {
-   Greedy::Greedy(const std::shared_ptr<logic::Engine>& mEngine, size_t bots/* = 100*/)
-      : mBotsSize(bots), Algorithm(mEngine)
+   Greedy::Greedy(const std::shared_ptr<logic::Engine>& engine, size_t bots/* = 100*/)
+      : mBotsSize(bots), Algorithm(engine)
    {
       logic::Character character = *mEngine->getCharacters()[0];
       nextIteration(character);
@@ -82,16 +80,6 @@ namespace jp::algorithm
       }
    }
 
-   int Greedy::randomInRange(int min, int max)
-   {
-      std::random_device rd;
-      std::mt19937 gen(rd());
-
-      std::uniform_int_distribution<std::mt19937::result_type> distrib(min, max);
-
-      return distrib(gen);
-   }
-
    void Greedy::nextIteration(const logic::Character& character)
    {
       mLastY = character.getPosition().y;
@@ -102,11 +90,7 @@ namespace jp::algorithm
       for (int i = 0; i < mBotsSize; ++i)
       {
          mEngine->addCharacterCopy(character);
-         Move move;
-         move.type = MoveType::Jump;
-         move.value = randomInRange(0, mEngine->getProperties().character.jump.max.y);
-         move.direction = static_cast<logic::CharacterDirection>(randomInRange(1, 2));
-         mBots.push_back(Bot(mEngine->characters().at(i), { move }));
+         mBots.push_back(Bot(mEngine->characters().at(i), { randomJump() }));
       }
    }
 }

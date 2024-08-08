@@ -1,6 +1,7 @@
 #include "../inc/StateGame.hpp"
 
 #include "../../algorithm/inc/Dummy.hpp"
+#include "../../algorithm/inc/Genetic.hpp"
 #include "../../algorithm/inc/Greedy.hpp"
 
 #include <chrono>
@@ -14,11 +15,13 @@ namespace jp::game
       switch (context.controller)
       {
       case Controller::Genetic:
-      case Controller::Human:
-         mAlgorithm = std::make_shared<algorithm::Dummy>(mGame);
+         mAlgorithm = std::make_shared<algorithm::Genetic>(mGame, 50);
          break;
       case Controller::Greedy:
          mAlgorithm = std::make_shared<algorithm::Greedy>(mGame, context.properties.algorithm.greedy.bots);
+         break;
+      case Controller::Human:
+         mAlgorithm = std::make_shared<algorithm::Dummy>(mGame);
          break;
       default:
          throw std::invalid_argument("jp::game::StateGame::StateGame - Failed to create agent, wrong agent name");
