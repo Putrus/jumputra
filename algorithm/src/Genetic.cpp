@@ -22,33 +22,15 @@ namespace jp::algorithm
       if (mIndividualsThatFinished.size() == mPopulationSize)
       {
          std::pair<size_t, size_t> parents = selectParents();
-         
+         float newBestFitness = std::min(mIndividualsThatFinished.at(parents.first).fitness, mIndividualsThatFinished.at(parents.second).fitness);
+         adjustMutationRate(newBestFitness);
+         mLastBestFitness = newBestFitness;
+
          std::cout << "Iteration: " << mIteration++ << ", parents: " << parents.first << " f: " <<
             mIndividualsThatFinished.at(parents.first).fitness << " and " << parents.second << " f: " <<
             mIndividualsThatFinished.at(parents.second).fitness << " mutation:" << mMutationRate << std::endl;
 
-         float newBestFitness = std::min(mIndividualsThatFinished.at(parents.first).fitness, mIndividualsThatFinished.at(parents.second).fitness);
-         if (newBestFitness < mLastBestFitness)
-         {
-            mMutationRate = std::max(0.f, mMutationRate - 0.01f);
-         }
-         else
-         {
-            mMutationRate = std::min(0.2f, mMutationRate + 0.01f);
-         }
-         mLastBestFitness = newBestFitness;
-         std::pair<std::vector<Move>, std::vector<Move>> parentsMoves =
-            { mPopulation.at(parents.first).getMoves(), mPopulation.at(parents.second).getMoves() };
-         mIndividualsThatFinished.clear();
-         mPopulation.clear();
-         mEngine->removeAllCharacters();
-         for (size_t i = 0; i < mPopulationSize; ++i)
-         {
-            mEngine->addCharacter(mStartRect);
-            std::vector<Move> moves = crossover(parentsMoves);
-            mutate(moves, mMutationRate);
-            mPopulation.push_back(Bot(mEngine->characters().at(i), moves));
-         }
+         createPopulation(parents);
       }
    }
 
@@ -63,6 +45,22 @@ namespace jp::algorithm
          {
             moves.push_back(randomMove());
          }
+         mPopulation.push_back(Bot(mEngine->characters().at(i), moves));
+      }
+   }
+
+   void Genetic::createPopulation(const std::pair<size_t, size_t>& parents)
+   {
+      std::pair<std::vector<Move>, std::vector<Move>> parentsMoves =
+         { mPopulation.at(parents.first).getMoves(), mPopulation.at(parents.second).getMoves() };
+      mIndividualsThatFinished.clear();
+      mPopulation.clear();
+      mEngine->removeAllCharacters();
+      for (size_t i = 0; i < mPopulationSize; ++i)
+      {
+         mEngine->addCharacter(mStartRect);
+         std::vector<Move> moves = crossover(parentsMoves);
+         mutate(moves, mMutationRate);
          mPopulation.push_back(Bot(mEngine->characters().at(i), moves));
       }
    }
@@ -157,7 +155,7 @@ namespace jp::algorithm
       }
 
       //chance to add random move
-      mutationDist = static_cast<float>(randomInRange(0, 100)) / 500.f;
+      mutationDist = static_cast<float>(randomInRange(0, 100)) / 1000.f;
       if (mutationDist < mutationRate)
       {
          int randomMoves = randomInRange(1, 4);
@@ -165,6 +163,18 @@ namespace jp::algorithm
          {
             moves.push_back(randomMove());
          }
+      }
+   }
+
+   void Genetic::adjustMutationRate(float fitness)
+   {
+      if (fitness < mLastBestFitness)
+      {
+         mMutationRate = std::max(MUTATION_RATE_CHANGE, mMutationRate - MUTATION_RATE_CHANGE);
+      }
+      else
+      {
+         mMutationRate = std::min(MUTATION_RATE_MAX, mMutationRate + MUTATION_RATE_CHANGE);
       }
    }
 }
