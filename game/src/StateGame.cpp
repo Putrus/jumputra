@@ -15,7 +15,7 @@ namespace jp::game
       switch (context.controller)
       {
       case Controller::Genetic:
-         mAlgorithm = std::make_shared<algorithm::Genetic>(mGame, 50);
+         mAlgorithm = std::make_shared<algorithm::Genetic>(mGame, 200);
          break;
       case Controller::Greedy:
          mAlgorithm = std::make_shared<algorithm::Greedy>(mGame, context.properties.algorithm.greedy.bots);

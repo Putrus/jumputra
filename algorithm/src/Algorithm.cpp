@@ -27,11 +27,11 @@ namespace jp::algorithm
       move.type = static_cast<MoveType>(randomInRange(0, 1));
       if (move.type == MoveType::Jump)
       {
-         move.value = static_cast<float>(randomInRange(0, mEngine->getProperties().character.jump.max.y));
+         move.value = static_cast<float>(randomInRange(1, mEngine->getProperties().character.jump.max.y));
       }
       else
       {
-         move.value = static_cast<float>(randomInRange(0, 100)) / 100.f;
+         move.value = static_cast<float>(randomInRange(1, 100)) / 100.f;
       }
       move.direction = static_cast<logic::CharacterDirection>(randomInRange(1, 2));
       return move;
