@@ -41,6 +41,7 @@ namespace jp::algorithm
       size_t mPopulationSize = 0;
       float mLastBestFitness = std::numeric_limits<float>::max();
       float mMutationRate = MUTATION_RATE_MAX;
+      float mNewMovesDist = 0.1f;
       math::Rect<float> mStartRect;
    };
 }

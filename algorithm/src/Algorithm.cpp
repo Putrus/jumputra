@@ -4,6 +4,8 @@
 
 #include <fstream>
 
+constexpr float FLOAT_PRECISION = 10000.f;
+
 namespace jp::algorithm
 {
    Algorithm::Algorithm(const std::shared_ptr<logic::Engine>& engine)
@@ -24,16 +26,16 @@ namespace jp::algorithm
    Move Algorithm::randomMove() const
    {
       Move move;
-      move.type = static_cast<MoveType>(randomInRange(0, 1));
+      move.type = static_cast<MoveType>(randomInt(0, 1));
       if (move.type == MoveType::Jump)
       {
-         move.value = static_cast<float>(randomInRange(1, mEngine->getProperties().character.jump.max.y));
+         move.value = randomFloat(1.f, mEngine->getProperties().character.jump.max.y);
       }
       else
       {
-         move.value = static_cast<float>(randomInRange(1, 100)) / 100.f;
+         move.value = randomFloat(0.1f, 1.f);
       }
-      move.direction = static_cast<logic::CharacterDirection>(randomInRange(1, 2));
+      move.direction = static_cast<logic::CharacterDirection>(randomInt(1, 2));
       return move;
    }
 
@@ -41,15 +43,24 @@ namespace jp::algorithm
    {
       Move move;
       move.type = MoveType::Jump;
-      move.value = randomInRange(0, mEngine->getProperties().character.jump.max.y);
-      move.direction = static_cast<logic::CharacterDirection>(randomInRange(1, 2));
+      move.value = randomFloat(0.f, mEngine->getProperties().character.jump.max.y);
+      move.direction = static_cast<logic::CharacterDirection>(randomInt(1, 2));
       return move;
    }
 
-   int Algorithm::randomInRange(int min, int max) const
+   int Algorithm::randomInt(int min, int max) const
    {
       std::uniform_int_distribution<std::mt19937::result_type> distrib(min, max);
 
       return distrib(mRandomGenerator);
+   }
+
+   float Algorithm::randomFloat(float min, float max) const
+   {
+      int intMin = static_cast<int>(min * FLOAT_PRECISION);
+      int intMax = static_cast<int>(max * FLOAT_PRECISION);
+      std::uniform_int_distribution<std::mt19937::result_type> distrib(intMin, intMax);
+
+      return static_cast<float>(distrib(mRandomGenerator)) / FLOAT_PRECISION;
    }
 }

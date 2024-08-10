@@ -41,10 +41,10 @@ namespace jp::algorithm
          Move bestMove = mBots.at(bestJumperIt->first).getMoves().at(0);
          if (bestJumper.getPosition().y == mLastY)
          {
-            int random = randomInRange(1, 5);
+            int random = randomInt(1, 5);
             if (random == 1)
             {
-               int randomId = randomInRange(0, mCharactersThatLanded.size() - 1);
+               int randomId = randomInt(0, mCharactersThatLanded.size() - 1);
                bestJumper = mCharactersThatLanded.at(randomId);
                bestMove = mBots.at(randomId).getMoves().at(0);
             }
@@ -59,7 +59,7 @@ namespace jp::algorithm
                   }
                }
 
-               int randomId = randomInRange(0, filteredCharacters.size() - 1);
+               int randomId = randomInt(0, filteredCharacters.size() - 1);
 
                int id = 0;
                for (const auto& character : filteredCharacters)

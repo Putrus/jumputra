@@ -28,7 +28,8 @@ namespace jp::algorithm
 
          std::cout << "Iteration: " << mIteration++ << ", parents: " << parents.first << " f: " <<
             mIndividualsThatFinished.at(parents.first).fitness << " and " << parents.second << " f: " <<
-            mIndividualsThatFinished.at(parents.second).fitness << " mutation:" << mMutationRate << std::endl;
+            mIndividualsThatFinished.at(parents.second).fitness << " mutation:" << mMutationRate <<
+            " new moves: " << mNewMovesDist << std::endl;
 
          createPopulation(parents);
       }
@@ -78,7 +79,7 @@ namespace jp::algorithm
          std::vector<size_t> candidates;
          for (size_t i = 0; i < tournamentSize; ++i)
          {
-            size_t candidate = randomInRange(0, mIndividualsThatFinished.size() - 1);
+            size_t candidate = randomInt(0, mIndividualsThatFinished.size() - 1);
             candidates.push_back(candidate);
          }
 
@@ -120,7 +121,7 @@ namespace jp::algorithm
       {
          moves = parentsMoves.first;
       }
-      size_t crossoverPoint = randomInRange(0, std::min(parentsMoves.first.size(), parentsMoves.second.size()) - 1);
+      size_t crossoverPoint = randomInt(0, std::min(parentsMoves.first.size(), parentsMoves.second.size()) - 1);
       for (size_t i = 0; i < crossoverPoint; ++i)
       {
          moves.at(i) = parentsMoves.first.at(i);
@@ -131,9 +132,10 @@ namespace jp::algorithm
 
    void Genetic::mutate(std::vector<Move>& moves, float mutationRate)
    {
+      //chance to change moves
       for (auto& move : moves)
       {
-         float mutationDist = static_cast<float>(randomInRange(0, 100)) / 100.f;      
+         float mutationDist = randomFloat(0.f, 1.f);
          if (mutationDist >= mutationRate)
          {
             continue;
@@ -143,22 +145,22 @@ namespace jp::algorithm
       }
 
       //chance to remove one random move
-      float mutationDist = static_cast<float>(randomInRange(0, 100)) / 100.f;
+      float mutationDist = randomFloat(0.f, 1.f);
       if (mutationDist < mutationRate)
       {
-         int randomRemoves = randomInRange(1, 2);
+         int randomRemoves = randomInt(1, 5);
          for (int i = 0; i < randomRemoves && !moves.empty(); ++i)
          {
-            size_t id = randomInRange(0, moves.size() - 1);
+            size_t id = randomInt(0, moves.size() - 1);
             moves.erase(moves.begin() + id);
          }
       }
 
       //chance to add random move
-      mutationDist = static_cast<float>(randomInRange(0, 100)) / 1000.f;
+      mutationDist = randomFloat(0.f, mNewMovesDist);
       if (mutationDist < mutationRate)
       {
-         int randomMoves = randomInRange(1, 4);
+         int randomMoves = randomInt(1, 10);
          for (int i = 0; i < randomMoves; ++i)
          {
             moves.push_back(randomMove());
@@ -171,10 +173,12 @@ namespace jp::algorithm
       if (fitness < mLastBestFitness)
       {
          mMutationRate = std::max(MUTATION_RATE_CHANGE, mMutationRate - MUTATION_RATE_CHANGE);
+         mNewMovesDist += 0.01f;
       }
       else
       {
          mMutationRate = std::min(MUTATION_RATE_MAX, mMutationRate + MUTATION_RATE_CHANGE);
+         mNewMovesDist -= 0.01f;
       }
    }
 }

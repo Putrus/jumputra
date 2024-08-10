@@ -19,7 +19,8 @@ namespace jp::algorithm
       Move randomMove() const;
       Move randomJump() const;
 
-      int randomInRange(int min, int max) const;
+      int randomInt(int min, int max) const;
+      float randomFloat(float min, float max) const;
 
       mutable std::mt19937 mRandomGenerator;
 

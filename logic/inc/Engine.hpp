@@ -7,6 +7,8 @@
 #include "Updatable.hpp"
 #include "Wind.hpp"
 
+#include <atomic>
+
 namespace jp::logic
 {
    class Engine : public Updatable, public core::Jsonable
@@ -53,6 +55,6 @@ namespace jp::logic
       std::vector<std::shared_ptr<Segment>> mSegments;
       std::vector<std::shared_ptr<Wind>> mWinds;
 
-      bool mGoalHasBeenAchieved = false;
+      std::atomic<bool> mGoalHasBeenAchieved = false;
    };
 }
