@@ -20,33 +20,13 @@ namespace jp::logic
          wind->update(dt);
       }
 
-      const size_t numThreads = std::thread::hardware_concurrency();
-      size_t chunkSize = (mCharacters.size() + numThreads - 1) / numThreads;
-      std::vector<std::thread> threads;
-
-      auto updateAndCheckWin = [this](std::vector<std::shared_ptr<Character>>::iterator startIt,
-         std::vector<std::shared_ptr<Character>>::iterator endIt, float dt)
+      for (auto& character : mCharacters)
       {
-         for (auto it = startIt; it != endIt; ++it)
+         character->update(dt);
+         if (mGoal->checkWin(character->getRect()))
          {
-            (*it)->update(dt);
-            if (mGoal->checkWin((*it)->getRect()))
-            {
-               mGoalHasBeenAchieved.store(true);
-            }
+            mGoalHasBeenAchieved = true;
          }
-      };
-
-      for (size_t i = 0; i < numThreads; ++i)
-      {
-        auto startIt = mCharacters.begin() + i * chunkSize;
-        auto endIt = (i == numThreads - 1) ? mCharacters.end() : startIt + chunkSize;
-        threads.emplace_back(updateAndCheckWin, startIt, endIt, dt);
-      }
-
-      for (auto& thread : threads)
-      {
-         thread.join();
       }
    }
 
