@@ -1,7 +1,4 @@
-#include "../../algorithm/inc/Genetic.hpp"
-#include "../../algorithm/inc/Greedy.hpp"
-
-#include "../../logic/inc/Properties.hpp"
+#include "../inc/Consolutra.hpp"
 
 #include <iostream>
 
@@ -17,17 +14,15 @@ int main(int argc, char** argv)
    std::string worldFilename = argv[2];
    std::string algortihmName = argv[3];
 
-   jp::logic::Properties properties;
-   properties.loadFromJsonFile(propertiesFilename);
-
-   if (algortihmName == "genetic")
+   try
    {
-
+      jp::console::Consolutra consolutra(propertiesFilename, worldFilename, algortihmName);
+      consolutra.run();
    }
-   else if (algortihmName == "greedy")
+   catch (const std::exception& e)
    {
-
+      std::cerr << e.what() << std::endl;
    }
-
+   
    return 0;
 }

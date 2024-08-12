@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-namespace jp::game
+namespace jp::console
 {
    void Properties::fromJson(const nlohmann::json& json)
    {

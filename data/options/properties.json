@@ -1,5 +1,14 @@
 {
    "algorithm": {
+      "genetic": {
+         "population": {
+            "size": 100
+         },
+         "mutation": {
+            "change": 0.01,
+            "max": 0.05
+         }
+      },
       "greedy" : {
          "bots" :  50
       }

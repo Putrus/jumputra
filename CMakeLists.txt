@@ -21,6 +21,7 @@ set(SFML_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/SFML/lib)
 link_directories(${SFML_LIB_DIR})
 
 add_subdirectory(algorithm)
+add_subdirectory(console)
 add_subdirectory(core)
 add_subdirectory(external)
 add_subdirectory(game)

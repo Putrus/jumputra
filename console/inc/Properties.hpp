@@ -3,7 +3,7 @@
 #include "../../algorithm/inc/Properties.hpp"
 #include "../../logic/inc/Properties.hpp"
 
-namespace jp::game
+namespace jp::console
 {
    struct Properties : public core::Jsonable
    {

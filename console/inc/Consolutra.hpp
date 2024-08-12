@@ -1,11 +1,9 @@
 #pragma once
 
+#include "Properties.hpp"
+
 #include "../../algorithm/inc/Algorithm.hpp"
-#include "../../algorithm/inc/Properties.hpp"
-
 #include "../../logic/inc/Engine.hpp"
-
-#include <string>
 
 namespace jp::console
 {
@@ -14,10 +12,12 @@ namespace jp::console
    public:
       Consolutra(const std::string& propertiesFilename, const std::string& worldFilename, const std::string& algorithmName);
 
+      void run();
+      
    private:
-      algorithm::Properties mProperties;
+      Properties mProperties;
 
-      std::unique_ptr<logic::Engine> mEngine;
+      std::shared_ptr<logic::Engine> mEngine;
       std::unique_ptr<algorithm::Algorithm> mAlgorithm;
    };
 }
