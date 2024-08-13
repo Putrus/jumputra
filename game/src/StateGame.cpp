@@ -1,5 +1,6 @@
 #include "../inc/StateGame.hpp"
 
+#include "../../algorithm/inc/AntColony.hpp"
 #include "../../algorithm/inc/Dummy.hpp"
 #include "../../algorithm/inc/Genetic.hpp"
 #include "../../algorithm/inc/Greedy.hpp"
@@ -14,6 +15,9 @@ namespace jp::game
    {
       switch (context.controller)
       {
+      case Controller::AntColony:
+         mAlgorithm = std::make_shared<algorithm::AntColony>(mGame, mContext.properties.algorithm);
+         break;
       case Controller::Genetic:
          mAlgorithm = std::make_shared<algorithm::Genetic>(mGame, mContext.properties.algorithm);
          break;

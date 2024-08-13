@@ -6,7 +6,8 @@ namespace jp::game
 {
    enum class Controller
    {
-      Genetic = 0,
+      AntColony = 0,
+      Genetic,
       Greedy,
       Human
    };

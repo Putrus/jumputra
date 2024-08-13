@@ -3,6 +3,7 @@
       "name": "english",
       "texts": {
          "algorithms": "ALGORITHMS",
+         "antColony": "ANT COLONY",
          "babiac": "BABIAC",
          "back": "BACK",
          "continue": "CONTINUE",
@@ -27,6 +28,7 @@
       "name": "polski",
       "texts": {
          "algorithms": "ALGORYTMY",
+         "antColony": "MROWKOWY",
          "babiac": "BABIAK",
          "back": "WROC",
          "continue": "KONTYNUUJ",
