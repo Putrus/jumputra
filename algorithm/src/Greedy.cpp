@@ -2,8 +2,8 @@
 
 namespace jp::algorithm
 {
-   Greedy::Greedy(const std::shared_ptr<logic::Engine>& engine, size_t bots/* = 100*/)
-      : mBotsSize(bots), Algorithm(engine)
+   Greedy::Greedy(const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties)
+      : Algorithm(engine, properties)
    {
       logic::Character character = *mEngine->getCharacters()[0];
       nextIteration(character);
@@ -24,7 +24,7 @@ namespace jp::algorithm
          }
       }
 
-      if (mCharactersThatLanded.size() == mBotsSize)
+      if (mCharactersThatLanded.size() == mProperties.greedy.bots)
       {
          auto bestJumperIt = std::min_element(mCharactersThatLanded.begin(), mCharactersThatLanded.end(),
          [](const auto& lhs, const auto& rhs)
@@ -82,12 +82,13 @@ namespace jp::algorithm
 
    void Greedy::nextIteration(const logic::Character& character)
    {
+      std::cout << mIteration++ << " position: " << character.getPosition().y << " moves: " << mMoves.size() << std::endl;
       mLastY = character.getPosition().y;
       mCharactersThatLanded.clear();
       mBots.clear();
       mEngine->removeAllCharacters();
 
-      for (int i = 0; i < mBotsSize; ++i)
+      for (int i = 0; i < mProperties.greedy.bots; ++i)
       {
          mEngine->addCharacterCopy(character);
          mBots.push_back(Bot(mEngine->characters().at(i), { randomJump() }));

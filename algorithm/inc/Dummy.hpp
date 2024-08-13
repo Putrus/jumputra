@@ -7,7 +7,7 @@ namespace jp::algorithm
    class Dummy final : public Algorithm
    {
    public:
-      Dummy(const std::shared_ptr<logic::Engine>& engine);
+      Dummy(const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties);
 
       void update(float dt) override;
    };

@@ -16,11 +16,11 @@ namespace jp::console
       mEngine->loadFromJsonFile(worldFilename);
       if (algorithmName == "genetic")
       {
-         mAlgorithm = std::make_unique<algorithm::Genetic>(mEngine, mProperties.algorithm.genetic.population.size);
+         mAlgorithm = std::make_unique<algorithm::Genetic>(mEngine, mProperties.algorithm);
       }
       else if (algorithmName == "greedy")
       {
-         mAlgorithm = std::make_unique<algorithm::Greedy>(mEngine, mProperties.algorithm.greedy.bots);
+         mAlgorithm = std::make_unique<algorithm::Greedy>(mEngine, mProperties.algorithm);
       }
       else
       {

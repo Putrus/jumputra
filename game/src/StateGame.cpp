@@ -15,13 +15,13 @@ namespace jp::game
       switch (context.controller)
       {
       case Controller::Genetic:
-         mAlgorithm = std::make_shared<algorithm::Genetic>(mGame, 800);
+         mAlgorithm = std::make_shared<algorithm::Genetic>(mGame, mContext.properties.algorithm);
          break;
       case Controller::Greedy:
-         mAlgorithm = std::make_shared<algorithm::Greedy>(mGame, context.properties.algorithm.greedy.bots);
+         mAlgorithm = std::make_shared<algorithm::Greedy>(mGame, mContext.properties.algorithm);
          break;
       case Controller::Human:
-         mAlgorithm = std::make_shared<algorithm::Dummy>(mGame);
+         mAlgorithm = std::make_shared<algorithm::Dummy>(mGame, mContext.properties.algorithm);
          break;
       default:
          throw std::invalid_argument("jp::game::StateGame::StateGame - Failed to create agent, wrong agent name");

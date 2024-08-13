@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Movable.hpp"
+#include "Properties.hpp"
 
 #include "../../logic/inc/Engine.hpp"
 
@@ -17,7 +18,7 @@ namespace jp::algorithm
    class Algorithm : public Movable
    {
    public:
-      Algorithm(const std::shared_ptr<logic::Engine>& engine);
+      Algorithm(const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties);
 
       void saveMoves(const std::string &filename) const;
 
@@ -28,8 +29,10 @@ namespace jp::algorithm
       int randomInt(int min, int max) const;
       float randomFloat(float min, float max) const;
 
-      mutable std::mt19937 mRandomGenerator;
-
       std::shared_ptr<logic::Engine> mEngine;
+      const Properties& mProperties;
+
+   private:
+      mutable std::mt19937 mRandomGenerator;
    };
 }

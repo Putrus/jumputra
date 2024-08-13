@@ -2,15 +2,19 @@
    "algorithm": {
       "genetic": {
          "population": {
-            "size": 100
+            "size": 400,
+            "elitism": 150
          },
          "mutation": {
             "change": 0.01,
             "max": 0.05
+         },
+         "tournament": {
+            "size": 200
          }
       },
       "greedy" : {
-         "bots" :  50
+         "bots" :  100
       }
    },
    "graphic": {
@@ -43,7 +47,7 @@
       },
       "physics" : {
          "bounceFactor" : 0.5,
-         "checkCollisionDistance" : 600.0,
+         "checkCollisionDistance" : 480.0,
          "fallSpeed" : 500.0,
          "slipperyFriction" : 200.0,
          "gravity" : {

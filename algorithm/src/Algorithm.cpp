@@ -8,8 +8,8 @@ constexpr float FLOAT_PRECISION = 10000.f;
 
 namespace jp::algorithm
 {
-   Algorithm::Algorithm(const std::shared_ptr<logic::Engine>& engine)
-      : mRandomGenerator(std::random_device{}()), mEngine(engine), Movable({}) {}
+   Algorithm::Algorithm(const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties)
+      : mRandomGenerator(std::random_device{}()), mEngine(engine), mProperties(properties), Movable({}) {}
 
    void Algorithm::saveMoves(const std::string &filename) const
    {

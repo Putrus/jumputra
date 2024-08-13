@@ -2,8 +2,8 @@
 
 namespace jp::algorithm
 {
-   Genetic::Genetic(const std::shared_ptr<logic::Engine>& engine, size_t population/* = 100*/)
-      : mPopulationSize(population), mStartRect(engine->getCharacters().at(0)->getRect()), Algorithm(engine)
+   Genetic::Genetic(const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties)
+      : mStartRect(engine->getCharacters().at(0)->getRect()), Algorithm(engine, properties)
    {
       initializePopulation();
    }
@@ -19,17 +19,17 @@ namespace jp::algorithm
          }
       }
 
-      if (mIndividualsThatFinished.size() == mPopulationSize)
+      if (mIndividualsThatFinished.size() == mProperties.genetic.population.size)
       {
          std::pair<size_t, size_t> parents = selectParents();
          float newBestFitness = std::min(mIndividualsThatFinished.at(parents.first).fitness, mIndividualsThatFinished.at(parents.second).fitness);
          adjustMutationRate(newBestFitness);
          mLastBestFitness = newBestFitness;
 
-         std::cout << "Iteration: " << mIteration++ << ", parents: " << parents.first << " f: " <<
-            mIndividualsThatFinished.at(parents.first).fitness << " and " << parents.second << " f: " <<
-            mIndividualsThatFinished.at(parents.second).fitness << " mutation:" << mMutationRate <<
-            " new moves: " << mNewMovesDist << std::endl;
+         std::cout << "Generation: " << mGeneration++ <<
+            " first: " << mIndividualsThatFinished.at(parents.first).fitness << " moves: " << mPopulation.at(parents.first).getMoves().size() <<
+            " second: " << mIndividualsThatFinished.at(parents.second).fitness << " moves: " << mPopulation.at(parents.second).getMoves().size() <<
+            " mutation: " << mMutationRate << std::endl;
 
          createPopulation(parents);
       }
@@ -38,7 +38,7 @@ namespace jp::algorithm
    void Genetic::initializePopulation()
    {
       mEngine->removeAllCharacters();
-      for (size_t i = 0; i < mPopulationSize; ++i)
+      for (size_t i = 0; i < mProperties.genetic.population.size; ++i)
       {
          mEngine->addCharacter(mStartRect);
          std::vector<Move> moves;
@@ -57,11 +57,18 @@ namespace jp::algorithm
       mIndividualsThatFinished.clear();
       mPopulation.clear();
       mEngine->removeAllCharacters();
-      for (size_t i = 0; i < mPopulationSize; ++i)
+      for (size_t i = 0; i < mProperties.genetic.population.elitism; ++i)
       {
          mEngine->addCharacter(mStartRect);
          std::vector<Move> moves = crossover(parentsMoves);
-         mutate(moves, mMutationRate);
+         addRandomMoves(moves);
+         mPopulation.push_back(Bot(mEngine->characters().at(i), moves));
+      }
+      for (size_t i = mProperties.genetic.population.elitism; i < mProperties.genetic.population.size; ++i)
+      {
+         mEngine->addCharacter(mStartRect);
+         std::vector<Move> moves = crossover(parentsMoves);
+         mutate(moves);
          mPopulation.push_back(Bot(mEngine->characters().at(i), moves));
       }
    }
@@ -99,12 +106,11 @@ namespace jp::algorithm
          return bestCandidate;
       };
 
-      size_t tournamentSize = mPopulationSize / 2;
-
-      std::pair<Candidate, Candidate> parents = { tournament(tournamentSize), tournament(tournamentSize) };
+      std::pair<Candidate, Candidate> parents = { tournament(mProperties.genetic.tournament.size),
+         tournament(mProperties.genetic.tournament.size) };
       while (parents.first.id == parents.second.id)
       {
-         parents.second = tournament(tournamentSize);
+         parents.second = tournament(mProperties.genetic.tournament.size);
       }
 
       return { parents.first.id, parents.second.id };
@@ -130,41 +136,48 @@ namespace jp::algorithm
       return moves;
    }
 
-   void Genetic::mutate(std::vector<Move>& moves, float mutationRate)
+   void Genetic::addRandomMoves(std::vector<Move>& moves) const
    {
-      //chance to change moves
+      int randomMoves = randomInt(1, 10);
+      for (int i = 0; i < randomMoves; ++i)
+      {
+         moves.push_back(randomMove());
+      }
+   }
+
+   void Genetic::changeRandomMoves(std::vector<Move>& moves) const
+   {
       for (auto& move : moves)
       {
-         float mutationDist = randomFloat(0.f, 1.f);
-         if (mutationDist >= mutationRate)
+         if (!shouldBeMutated())
          {
             continue;
          }
 
          move = randomMove();
       }
+   }
 
-      //chance to remove one random move
-      float mutationDist = randomFloat(0.f, 1.f);
-      if (mutationDist < mutationRate)
+   void Genetic::removeRandomMoves(std::vector<Move>& moves) const
+   {
+      int randomRemoves = randomInt(1, 5);
+      for (int i = 0; i < randomRemoves && !moves.empty(); ++i)
       {
-         int randomRemoves = randomInt(1, 5);
-         for (int i = 0; i < randomRemoves && !moves.empty(); ++i)
-         {
-            size_t id = randomInt(0, moves.size() - 1);
-            moves.erase(moves.begin() + id);
-         }
+         size_t id = randomInt(0, moves.size() - 1);
+         moves.erase(moves.begin() + id);
       }
+   }
 
-      //chance to add random move
-      mutationDist = randomFloat(0.f, mNewMovesDist);
-      if (mutationDist < mutationRate)
+   void Genetic::mutate(std::vector<Move>& moves) const
+   {
+      if (shouldBeMutated())
       {
-         int randomMoves = randomInt(1, 10);
-         for (int i = 0; i < randomMoves; ++i)
-         {
-            moves.push_back(randomMove());
-         }
+         addRandomMoves(moves);
+      }
+      changeRandomMoves(moves);
+      if (shouldBeMutated())
+      {
+         removeRandomMoves(moves);
       }
    }
 
@@ -172,13 +185,16 @@ namespace jp::algorithm
    {
       if (fitness < mLastBestFitness)
       {
-         mMutationRate = std::max(MUTATION_RATE_CHANGE, mMutationRate - MUTATION_RATE_CHANGE);
-         mNewMovesDist += 0.01f;
+         mMutationRate = std::max(mProperties.genetic.mutation.change, mMutationRate - mProperties.genetic.mutation.change);
       }
       else
       {
-         mMutationRate = std::min(MUTATION_RATE_MAX, mMutationRate + MUTATION_RATE_CHANGE);
-         mNewMovesDist -= 0.01f;
+         mMutationRate = std::min(mProperties.genetic.mutation.max, mMutationRate + mProperties.genetic.mutation.change);
       }
+   }
+
+   bool Genetic::shouldBeMutated() const
+   {
+      return randomFloat(0.f, 1.f) < mMutationRate;
    }
 }

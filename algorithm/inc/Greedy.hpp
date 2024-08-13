@@ -8,7 +8,7 @@ namespace jp::algorithm
    class Greedy final : public Algorithm
    {
    public:
-      Greedy(const std::shared_ptr<logic::Engine> &engine, size_t bots = 100);
+      Greedy(const std::shared_ptr<logic::Engine> &engine, const algorithm::Properties& properties);
 
       void update(float dt) override;
 
@@ -17,7 +17,7 @@ namespace jp::algorithm
 
       std::map<size_t, logic::Character> mCharactersThatLanded;
       std::vector<Bot> mBots;
-      size_t mBotsSize = 0;
       float mLastY = 0.f;
+      size_t mIteration = 0;
    };
 }

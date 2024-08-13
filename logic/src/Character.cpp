@@ -156,6 +156,12 @@ namespace jp::logic
       math::Rect<float> oldRect = mRect;
       for (const auto& segment : mSegments)
       {
+         if (std::min(segment->a.y, segment->b.y) < newRect.top - mProperties.physics.checkCollisionDistance ||
+            std::max(segment->a.y, segment->b.y) > newRect.getBottom() + mProperties.physics.checkCollisionDistance)
+         {
+            continue;
+         }
+         
          SegmentCollision segmentCollision = segment->checkCollision(oldRect, newRect);
          switch (segmentCollision)
          {
