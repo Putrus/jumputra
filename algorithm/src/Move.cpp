@@ -2,6 +2,11 @@
 
 namespace jp::algorithm
 {
+   Move::Move() {}
+   
+   Move::Move(MoveType type, logic::CharacterDirection direction, float value)
+      : type(type), direction(direction), value(value) {}
+
    void Move::fromJson(const nlohmann::json& json)
    {
       type = json.at("move");

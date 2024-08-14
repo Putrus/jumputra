@@ -14,11 +14,14 @@ namespace jp::algorithm
 
    struct Move : public core::Jsonable
    {
+      Move();
+      Move(MoveType type, logic::CharacterDirection direction, float value);
+
       void fromJson(const nlohmann::json& json) override;
       nlohmann::json toJson() const override;
       
-      MoveType type;
-      logic::CharacterDirection direction;
-      float value;
+      MoveType type = MoveType::Run;
+      logic::CharacterDirection direction = logic::CharacterDirection::Up;
+      float value = 0.f;
    };
 }

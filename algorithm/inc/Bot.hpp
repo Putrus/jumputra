@@ -11,11 +11,21 @@ namespace jp::algorithm
    public:
       Bot(const std::shared_ptr<logic::Character>& character, const std::vector<Move>& moves = {});
 
-      void update(float dt) override;
+      virtual void update(float dt) override;
 
       const std::shared_ptr<logic::Character>& getCharacter() const;
 
       bool finishedMoves() const;
+
+   protected:
+      Move getCurrentMove() const;
+
+      void clearMoves();
+
+      logic::CharacterDirection oppositeDirection(logic::CharacterDirection direction) const;
+
+      std::shared_ptr<logic::Character> mCharacter;
+      bool mFinishedMoves = false;
 
    private:
       void nextMove();
@@ -25,9 +35,5 @@ namespace jp::algorithm
          size_t id = 0;
          float value = 0.f;
       } mCurrentMove;
-
-      std::shared_ptr<logic::Character> mCharacter;
-
-      bool mFinishedMoves = false;
    };
 }

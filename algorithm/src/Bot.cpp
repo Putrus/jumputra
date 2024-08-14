@@ -63,6 +63,41 @@ namespace jp::algorithm
       return mFinishedMoves;
    }
 
+   Move Bot::getCurrentMove() const
+   {
+      if (mCurrentMove.id < mMoves.size())
+      {
+         return mMoves.at(mCurrentMove.id);
+      }
+      else
+      {
+         return {};
+      }
+   }
+
+   void Bot::clearMoves()
+   {
+      mMoves.clear();
+      mCurrentMove.id = 0;
+      mCurrentMove.value = 0.f;
+   }
+
+   logic::CharacterDirection Bot::oppositeDirection(logic::CharacterDirection direction) const
+   {
+      if (direction == logic::CharacterDirection::Left)
+      {
+         return logic::CharacterDirection::Right;
+      }
+      else if (direction == logic::CharacterDirection::Right)
+      {
+         return logic::CharacterDirection::Left;
+      }
+      else
+      {
+         return logic::CharacterDirection::Up;
+      }
+   }
+
    void Bot::nextMove()
    {
       ++mCurrentMove.id;

@@ -43,8 +43,8 @@ namespace jp::algorithm
    {
       Move move;
       move.type = MoveType::Jump;
-      move.value = randomFloat(0.f, mEngine->getProperties().character.jump.max.y);
       move.direction = static_cast<logic::CharacterDirection>(randomInt(1, 2));
+      move.value = randomFloat(0.f, mEngine->getProperties().character.jump.max.y);
       return move;
    }
 
