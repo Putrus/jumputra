@@ -1,43 +1,64 @@
 #include "../inc/Ant.hpp"
 
+#include "../../core/inc/Random.hpp"
+
 namespace jp::algorithm
 {
-   Ant::Ant(const std::shared_ptr<logic::Character>& character)
-      : Bot(character, { Move(MoveType::Run, logic::CharacterDirection::Right, 2.f) }) {}
+   Ant::Ant(std::map<math::Vector2<float>, std::vector<Pheromone>>& pheromones, const std::shared_ptr<logic::Character>& character)
+      : mPheromones(pheromones), Bot(character, { Move(MoveType::Run, logic::CharacterDirection::Right, 2.f) }) {}
 
    void Ant::update(float dt)
    {
       Bot::update(dt);
       Move currentMove = getCurrentMove();
-      std::cout << mLastPosition << " " << getCharacter()->getPosition() << std::endl;
-      if (currentMove.type == MoveType::Run && mLastPosition == getCharacter()->getPosition()
-         && mLastDirection != currentMove.direction)
+      if (currentMove.type == MoveType::Run)
       {
-         clearMoves();
-         if (currentMove.direction == logic::CharacterDirection::Left)
+         if (mLastPosition == getCharacter()->getPosition() &&
+            mLastChangeDirectionPosition != getCharacter()->getPosition())
          {
-            mMoves.push_back(Move(MoveType::Run, logic::CharacterDirection::Right, 2.f));
+            std::cout << "lastpos: " << mLastPosition << " lastchangedirpos: " << mLastChangeDirectionPosition << " pos: " << getCharacter()->getPosition() << std::endl;
+            clearMoves();
+            mMoves.push_back(Move(MoveType::Run, oppositeDirection(getCharacter()->getDirection()), std::numeric_limits<float>::max()));
+            mLastChangeDirectionPosition = getCharacter()->getPosition();
          }
-         else
+
+         if (mPheromones.find(getCharacter()->getPosition()) != mPheromones.end())
          {
-            mMoves.push_back(Move(MoveType::Run, logic::CharacterDirection::Left, 2.f));
-         }
-      }
-      else
-      {
-         if (mLastPosition != getCharacter()->getPosition() &&
-            currentMove.direction == mLastDirection)
-         {
-            if (currentMove.direction == logic::CharacterDirection::Left)
+            for (const auto& pheromone : mPheromones.at(getCharacter()->getPosition()))
             {
-               mLastDirection = logic::CharacterDirection::Right;
+               if (core::Random::getFloat(0.f, 1000.f) < pheromone.getIntensity())
+               {
+                  clearMoves();
+                  mMoves.push_back(pheromone.getMove());
+                  break;
+               }
+            }
+
+            if (core::Random::getFloat(0.f, 1000.f) < 100.f)
+            {
+               clearMoves();
+               mMoves.push_back(Move::randomJump(500.f));
             }
             else
             {
-               mLastDirection = logic::CharacterDirection::Left;
+               clearMoves();
+               mMoves.push_back(Move(MoveType::Run, oppositeDirection(getCharacter()->getDirection()), std::numeric_limits<float>::max()));
             }
          }
-         mLastPosition = getCharacter()->getPosition();  
+         else
+         {
+            if (core::Random::getFloat(0.f, 1000.f) < 1.f)
+            {
+               clearMoves();
+               mMoves.push_back(Move::randomJump(500.f));
+            }
+            else
+            {
+               clearMoves();
+               mMoves.push_back(Move(MoveType::Run, oppositeDirection(getCharacter()->getDirection()), std::numeric_limits<float>::max()));
+            }
+         }
       }
+      mLastPosition = getCharacter()->getPosition();
    }
 }

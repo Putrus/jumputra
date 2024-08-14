@@ -1,5 +1,7 @@
 #include "../inc/Greedy.hpp"
 
+#include "../../core/inc/Random.hpp"
+
 namespace jp::algorithm
 {
    Greedy::Greedy(const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties)
@@ -41,10 +43,10 @@ namespace jp::algorithm
          Move bestMove = mBots.at(bestJumperIt->first).getMoves().at(0);
          if (bestJumper.getPosition().y == mLastY)
          {
-            int random = randomInt(1, 5);
+            int random = core::Random::getInt(1, 5);
             if (random == 1)
             {
-               int randomId = randomInt(0, mCharactersThatLanded.size() - 1);
+               int randomId = core::Random::getInt(0, mCharactersThatLanded.size() - 1);
                bestJumper = mCharactersThatLanded.at(randomId);
                bestMove = mBots.at(randomId).getMoves().at(0);
             }
@@ -59,7 +61,7 @@ namespace jp::algorithm
                   }
                }
 
-               int randomId = randomInt(0, filteredCharacters.size() - 1);
+               int randomId = core::Random::getInt(0, filteredCharacters.size() - 1);
 
                int id = 0;
                for (const auto& character : filteredCharacters)

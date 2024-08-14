@@ -10,7 +10,7 @@ namespace jp::algorithm
       for (int i = 0; i < 1; ++i)
       {
          mEngine->addCharacter(startRect);
-         mAnts.push_back(Ant(mEngine->characters().at(i)));
+         mAnts.push_back(Ant(mPheromones, mEngine->characters().at(i)));
       }
    }
 

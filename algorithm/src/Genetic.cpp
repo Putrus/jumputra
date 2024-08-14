@@ -1,5 +1,7 @@
 #include "../inc/Genetic.hpp"
 
+#include "../../core/inc/Random.hpp"
+
 namespace jp::algorithm
 {
    Genetic::Genetic(const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties)
@@ -86,7 +88,7 @@ namespace jp::algorithm
          std::vector<size_t> candidates;
          for (size_t i = 0; i < tournamentSize; ++i)
          {
-            size_t candidate = randomInt(0, mIndividualsThatFinished.size() - 1);
+            size_t candidate = core::Random::getInt(0, mIndividualsThatFinished.size() - 1);
             candidates.push_back(candidate);
          }
 
@@ -127,7 +129,7 @@ namespace jp::algorithm
       {
          moves = parentsMoves.first;
       }
-      size_t crossoverPoint = randomInt(0, std::min(parentsMoves.first.size(), parentsMoves.second.size()) - 1);
+      size_t crossoverPoint = core::Random::getInt(0, std::min(parentsMoves.first.size(), parentsMoves.second.size()) - 1);
       for (size_t i = 0; i < crossoverPoint; ++i)
       {
          moves.at(i) = parentsMoves.first.at(i);
@@ -138,7 +140,7 @@ namespace jp::algorithm
 
    void Genetic::addRandomMoves(std::vector<Move>& moves) const
    {
-      int randomMoves = randomInt(1, 10);
+      int randomMoves = core::Random::getInt(1, 10);
       for (int i = 0; i < randomMoves; ++i)
       {
          moves.push_back(randomMove());
@@ -160,10 +162,10 @@ namespace jp::algorithm
 
    void Genetic::removeRandomMoves(std::vector<Move>& moves) const
    {
-      int randomRemoves = randomInt(1, 5);
+      int randomRemoves = core::Random::getInt(1, 5);
       for (int i = 0; i < randomRemoves && !moves.empty(); ++i)
       {
-         size_t id = randomInt(0, moves.size() - 1);
+         size_t id = core::Random::getInt(0, moves.size() - 1);
          moves.erase(moves.begin() + id);
       }
    }
@@ -195,6 +197,6 @@ namespace jp::algorithm
 
    bool Genetic::shouldBeMutated() const
    {
-      return randomFloat(0.f, 1.f) < mMutationRate;
+      return core::Random::getFloat(0.f, 1.f) < mMutationRate;
    }
 }

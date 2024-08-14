@@ -19,7 +19,10 @@ namespace jp::algorithm
 
       void fromJson(const nlohmann::json& json) override;
       nlohmann::json toJson() const override;
-      
+
+      static Move random(float jumpMaxY, float runMaxTime);
+      static Move randomJump(float jumpMaxY);
+
       MoveType type = MoveType::Run;
       logic::CharacterDirection direction = logic::CharacterDirection::Up;
       float value = 0.f;

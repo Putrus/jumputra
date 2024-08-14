@@ -14,5 +14,6 @@ namespace jp::algorithm
 
    private:
       std::vector<Ant> mAnts;
+      std::map<math::Vector2<float>, std::vector<Pheromone>> mPheromones;
    };
 }

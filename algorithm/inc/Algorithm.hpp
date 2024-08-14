@@ -26,13 +26,7 @@ namespace jp::algorithm
       Move randomMove() const;
       Move randomJump() const;
 
-      int randomInt(int min, int max) const;
-      float randomFloat(float min, float max) const;
-
       std::shared_ptr<logic::Engine> mEngine;
       const Properties& mProperties;
-
-   private:
-      mutable std::mt19937 mRandomGenerator;
    };
 }

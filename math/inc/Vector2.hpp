@@ -176,4 +176,10 @@ namespace jp::math
    {
       return lhs.x != rhs.x || lhs.y != rhs.y;
    }
+
+   template <typename T>
+   bool operator<(const Vector2<T>& lhs, const Vector2<T>& rhs)
+   {
+      return lhs.y < rhs.y || (lhs.y == rhs.y && lhs.x < rhs.x);
+   }
 }

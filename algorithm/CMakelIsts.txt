@@ -16,6 +16,7 @@ set(HEADERS
    inc/Greedy.hpp
    inc/Movable.hpp
    inc/Move.hpp
+   inc/Pheromone.hpp
    inc/Properties.hpp
    )
 
@@ -29,6 +30,7 @@ set(SOURCES
    src/Greedy.cpp
    src/Movable.cpp
    src/Move.cpp
+   src/Pheromone.cpp
    src/Properties.cpp
    )
 
