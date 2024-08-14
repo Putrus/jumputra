@@ -10,6 +10,31 @@ namespace jp::algorithm
    void Ant::update(float dt)
    {
       Bot::update(dt);
+
+      if (finishedMoves())
+      {
+         Move lastMove = getLastMove();
+         float intensity = 0.f;
+         if (getCharacter()->getPosition().y < mLastPosition.y)
+         {
+            intensity = 500.f;
+         }
+         else if (getCharacter()->getPosition().y == mLastPosition.y)
+         {
+            intensity = 250.f;
+         }
+         else
+         {
+            intensity = 100.f;
+         }
+
+         if (mPheromones.find(mLastPosition) == mPheromones.end())
+         {
+            mPheromones[mLastPosition] = std::vector<Pheromone>();
+         }
+         mPheromones.at(mLastPosition).push_back(Pheromone(lastMove, intensity));
+      }
+
       Move currentMove = getCurrentMove();
       if (currentMove.type == MoveType::Run)
       {
@@ -21,44 +46,13 @@ namespace jp::algorithm
             mMoves.push_back(Move(MoveType::Run, oppositeDirection(getCharacter()->getDirection()), std::numeric_limits<float>::max()));
             mLastChangeDirectionPosition = getCharacter()->getPosition();
          }
+         mLastPosition = getCharacter()->getPosition();
 
-         if (mPheromones.find(getCharacter()->getPosition()) != mPheromones.end())
+         if (core::Random::getInt(0, 1000) <= 1)
          {
-            for (const auto& pheromone : mPheromones.at(getCharacter()->getPosition()))
-            {
-               if (core::Random::getFloat(0.f, 1000.f) < pheromone.getIntensity())
-               {
-                  clearMoves();
-                  mMoves.push_back(pheromone.getMove());
-                  break;
-               }
-            }
-
-            if (core::Random::getFloat(0.f, 1000.f) < 100.f)
-            {
-               clearMoves();
-               mMoves.push_back(Move::randomJump(500.f));
-            }
-            else
-            {
-               clearMoves();
-               mMoves.push_back(Move(MoveType::Run, oppositeDirection(getCharacter()->getDirection()), std::numeric_limits<float>::max()));
-            }
-         }
-         else
-         {
-            if (core::Random::getFloat(0.f, 1000.f) < 1.f)
-            {
-               clearMoves();
-               mMoves.push_back(Move::randomJump(500.f));
-            }
-            else
-            {
-               clearMoves();
-               mMoves.push_back(Move(MoveType::Run, oppositeDirection(getCharacter()->getDirection()), std::numeric_limits<float>::max()));
-            }
+            clearMoves();
+            mMoves.push_back(Move::randomJump(1.f, 500.f));
          }
       }
-      mLastPosition = getCharacter()->getPosition();
    }
 }

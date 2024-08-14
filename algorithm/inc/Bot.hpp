@@ -19,6 +19,7 @@ namespace jp::algorithm
 
    protected:
       Move getCurrentMove() const;
+      Move getLastMove() const;
 
       void clearMoves();
 

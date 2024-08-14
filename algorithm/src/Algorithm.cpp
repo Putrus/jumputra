@@ -25,11 +25,11 @@ namespace jp::algorithm
 
    Move Algorithm::randomMove() const
    {
-      return Move::random(mEngine->getProperties().character.jump.max.y, 1.f);
+      return Move::random(1.f, mEngine->getProperties().character.jump.max.y, 0.1f, 1.f);
    }
 
    Move Algorithm::randomJump() const
    {
-      return Move::randomJump(mEngine->getProperties().character.jump.max.y);
+      return Move::randomJump(1.f, mEngine->getProperties().character.jump.max.y);
    }
 }

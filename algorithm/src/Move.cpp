@@ -25,25 +25,25 @@ namespace jp::algorithm
       return json;
    }
 
-   Move Move::random(float jumpMaxY, float runMaxTime)
+   Move Move::random(float jumpMinY, float jumpMaxY, float runMinTime, float runMaxTime)
    {
       Move move;
       move.type = static_cast<MoveType>(core::Random::getInt(0, 1));
       if (move.type == MoveType::Jump)
       {
-         move.value = core::Random::getFloat(1.f, jumpMaxY);
+         move.value = core::Random::getFloat(jumpMinY, jumpMaxY);
       }
       else
       {
-         move.value = core::Random::getFloat(0.1f, runMaxTime);
+         move.value = core::Random::getFloat(runMinTime, runMaxTime);
       }
       move.direction = static_cast<logic::CharacterDirection>(core::Random::getInt(1, 2));
       return move;
    }
 
-   Move Move::randomJump(float jumpMaxY)
+   Move Move::randomJump(float jumpMinY, float jumpMaxY)
    {
       return Move(MoveType::Jump, static_cast<logic::CharacterDirection>(core::Random::getInt(1, 2)),
-         core::Random::getFloat(0.f, jumpMaxY));
+         core::Random::getFloat(jumpMinY, jumpMaxY));
    }
 }

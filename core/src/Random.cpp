@@ -5,14 +5,12 @@ namespace jp::core
    int Random::getInt(int min, int max)
    {
       std::uniform_int_distribution<int> distrib(min, max);
-
       return distrib(getGenerator());
    }
 
    float Random::getFloat(float min, float max)
    {
       std::uniform_real_distribution<float> distrib(min, max);
-
       return distrib(getGenerator());
    }
 

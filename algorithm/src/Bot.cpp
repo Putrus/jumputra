@@ -75,6 +75,18 @@ namespace jp::algorithm
       }
    }
 
+   Move Bot::getLastMove() const
+   {
+      if (mCurrentMove.id - 1 < mMoves.size())
+      {
+         return mMoves.at(mCurrentMove.id - 1);
+      }
+      else
+      {
+         return {};
+      }
+   }
+
    void Bot::clearMoves()
    {
       mMoves.clear();
