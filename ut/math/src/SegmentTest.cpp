@@ -103,8 +103,10 @@ namespace jp::ut::math
       Segment<float> segment1(69.f, 69.f, 42.f, 42.f);
       Segment<float> segment2(69.f, 69.f, 42.f, 42.f);
       Segment<float> segment3(690.f, 69.f, 42.f, 42.f);
+      Segment<float> segment4(690.f, 69.f, 52.f, 42.f);
       EXPECT_TRUE(segment1 == segment2);
       EXPECT_FALSE(segment1 == segment3);
+      EXPECT_FALSE(segment3 == segment4);
    }
 
    TEST(SegmentFloatTest, IntersectsNoIntersection)

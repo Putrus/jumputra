@@ -175,6 +175,6 @@ namespace jp::math
    template <typename T>
    bool operator==(const Segment<T>& lhs, const Segment<T>& rhs)
    {
-      return lhs.a == rhs.a && lhs.a == rhs.a;
+      return lhs.a == rhs.a && lhs.b == rhs.b;
    }
 }
