@@ -70,7 +70,8 @@ namespace jp::ut::logic
             "statistics": {
                "jumps": 1,
                "falls": 2,
-               "time": 6.5
+               "time": 6.5,
+               "totalTime": 5.75
             }
          }
          )");
@@ -145,7 +146,8 @@ namespace jp::ut::logic
             "statistics": {
                "jumps": 1,
                "falls": 2,
-               "time": 6.5
+               "time": 6.5,
+               "totalTime": 5.75
             }
          }
          )");
@@ -220,7 +222,8 @@ namespace jp::ut::logic
             "statistics": {
                "jumps": 1,
                "falls": 2,
-               "time": 6.5
+               "time": 6.5,
+               "totalTime": 5.75
             }
          }
          )");
@@ -293,7 +296,8 @@ namespace jp::ut::logic
             "statistics": {
                "jumps": 0,
                "falls": 0,
-               "time": 0.0
+               "time": 0.0,
+               "totalTime": 0.0
             }
          }
          )");

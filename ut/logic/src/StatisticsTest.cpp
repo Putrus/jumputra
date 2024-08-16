@@ -14,7 +14,8 @@ namespace jp::ut::logic
          {
             "jumps": 20,
             "falls": 32,
-            "time": 76.5
+            "time": 76.5,
+            "totalTime": 54.75
          }
          )");
 
@@ -22,6 +23,7 @@ namespace jp::ut::logic
       EXPECT_EQ(20, statistics.jumps);
       EXPECT_EQ(32, statistics.falls);
       EXPECT_EQ(76.5f, statistics.time);
+      EXPECT_EQ(54.75f, statistics.totalTime);
    }
 
    TEST(StatisticsTest, FromJsonWrongJson)
@@ -46,12 +48,14 @@ namespace jp::ut::logic
       statistics.jumps = 35;
       statistics.falls = 22;
       statistics.time = 340.25f;
+      statistics.totalTime = 23.75f;
 
       nlohmann::json expectedJson = nlohmann::json::parse(R"(
          {
             "jumps": 35,
             "falls": 22,
-            "time": 340.25
+            "time": 340.25,
+            "totalTime": 23.75
          }
          )");
 

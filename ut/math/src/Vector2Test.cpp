@@ -169,6 +169,41 @@ namespace jp::ut::math
       ASSERT_ANY_THROW(v = json);
    }
 
+   TEST(Vector2FloatTest, LessThanOperatorYLess)
+   {
+      Vector2<float> lhs(5.f, 5.f);
+      Vector2<float> rhs(10.f, 10.f);
+      ASSERT_TRUE(lhs < rhs);
+   }
+
+   TEST(Vector2FloatTest, LessThanOperatorXLess)
+   {
+      Vector2<float> lhs(5.f, 5.f);
+      Vector2<float> rhs(10.f, 5.f);
+      ASSERT_TRUE(lhs < rhs);
+   }
+
+   TEST(Vector2FloatTest, LessThanOperatorYGreater)
+   {
+      Vector2<float> lhs(5.f, 10.f);
+      Vector2<float> rhs(10.f, 5.f);
+      ASSERT_FALSE(lhs < rhs);
+   }
+
+   TEST(Vector2FloatTest, LessThanOperatorXGreater)
+   {
+      Vector2<float> lhs(10.f, 5.f);
+      Vector2<float> rhs(5.f, 5.f);
+      ASSERT_FALSE(lhs < rhs);
+   }
+
+   TEST(Vector2FloatTest, LessThanOperatorEqual)
+   {
+      Vector2<float> lhs(5.f, 5.f);
+      Vector2<float> rhs(5.f, 5.f);
+      ASSERT_FALSE(lhs < rhs);
+   }
+
    TEST(Vector2FloatTest, FromJson)
    {
       nlohmann::json json = nlohmann::json::parse(R"(
