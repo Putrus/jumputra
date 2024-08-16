@@ -106,7 +106,7 @@ namespace jp::logic
    std::shared_ptr<Segment> Segment::create(const math::Vector2<float>& a, const math::Vector2<float>& b,
       SegmentSurface surface/* = SegmentSurface::Ordinary*/)
    {
-      return Segment::create(a.x, a.y, b.x, b.y);
+      return Segment::create(a.x, a.y, b.x, b.y, surface);
    }
       
    SegmentSurface Segment::getSurface() const

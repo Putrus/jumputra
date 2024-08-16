@@ -1,6 +1,7 @@
 #include "../inc/Engine.hpp"
 #include "../inc/DiagonalSegment.hpp"
 #include "../inc/HorizontalSegment.hpp"
+#include "../inc/SegmentsConnector.hpp"
 #include "../inc/VerticalSegment.hpp"
 
 #include <chrono>
@@ -153,12 +154,13 @@ namespace jp::logic
    }
 
    void Engine::segmentsFromJson(const nlohmann::json& json)
-   {
+   {      
       if (json.find("segments") == json.end())
       {
          return;
       }
 
+      std::vector<std::shared_ptr<Segment>> mTemporarySegments;
       for (const auto& jsonSegment : json.at("segments"))
       {
          if (jsonSegment.at("type") == "comment")
@@ -191,27 +193,34 @@ namespace jp::logic
             {
                math::Vector2<float> a(jsonPoints.at(i - 1));
                math::Vector2<float> b(jsonPoints.at(i));
-               addSegment(a, b, surface);
+               mTemporarySegments.push_back(Segment::create(a, b, surface));
             }
          }
          else if (jsonSegment.at("type") == "segment")
          {
             math::Vector2<float> a(jsonSegment.at("a"));
             math::Vector2<float> b(jsonSegment.at("b"));
-            addSegment(a, b, surface);
+            mTemporarySegments.push_back(Segment::create(a, b, surface));
          }
          else if (jsonSegment.at("type") == "rectangle")
          {
             math::Rect<float> rect(jsonSegment);
-            addSegment(rect.getLeftTop(), rect.getRightTop(), surface);
-            addSegment(rect.getRightTop(), rect.getRightBottom(), surface);
-            addSegment(rect.getLeftBottom(), rect.getRightBottom(), surface);
-            addSegment(rect.getLeftTop(), rect.getLeftBottom(), surface);
+            mTemporarySegments.push_back(Segment::create(rect.getLeftTop(), rect.getRightTop(), surface));
+            mTemporarySegments.push_back(Segment::create(rect.getRightTop(), rect.getRightBottom(), surface));
+            mTemporarySegments.push_back(Segment::create(rect.getLeftBottom(), rect.getRightBottom(), surface));
+            mTemporarySegments.push_back(Segment::create(rect.getLeftTop(), rect.getLeftBottom(), surface));
          }
          else
          {
             throw std::runtime_error("jp::logic::Engine::segmentsFromJson - Wrong segment type, failed to load segment");
          }
+      }
+
+      SegmentsConnector::connect(mTemporarySegments);
+
+      for (const auto& segment : mTemporarySegments)
+      {
+         addSegment(segment->a, segment->b, segment->getSurface());
       }
    }
    

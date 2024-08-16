@@ -2,6 +2,7 @@ if(BUILD_TESTING)
    set(HEADERS
       inc/CharacterTest.hpp
       inc/EntityTest.hpp
+      inc/SegmentsConnectorTest.hpp
       inc/SegmentTest.hpp
       inc/SelectionManagerTest.hpp
       )
@@ -13,6 +14,7 @@ if(BUILD_TESTING)
       src/HorizontalSegmentTest.cpp
       src/PropertiesTest.cpp
       src/RunnableTest.cpp
+      src/SegmentsConnectorTest.cpp
       src/SegmentTest.cpp
       src/SelectableTest.cpp
       src/SelectionManagerTest.cpp
