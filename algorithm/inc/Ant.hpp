@@ -13,6 +13,8 @@ namespace jp::algorithm
       virtual void update(float dt) override;
 
    private:
+      void setMove(const Move& move);
+
       logic::CharacterDirection mLastDirection = logic::CharacterDirection::Left;
       math::Vector2<float> mLastPosition = math::Vector2<float>();
       math::Vector2<float> mLastChangeDirectionPosition = math::Vector2<float>();

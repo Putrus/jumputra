@@ -4,6 +4,26 @@
 
 namespace jp::algorithm
 {
+   std::ostream& operator<<(std::ostream& os, MoveType type)
+   {
+      switch (type)
+      {
+         case MoveType::Idle:
+         os << "Idle";
+         break;
+         case MoveType::Jump:
+         os << "Jump";
+         break;
+         case MoveType::Run:
+         os << "Run";
+         break;
+         default:
+         os << "Unknown";
+         break;
+      }
+      return os;
+   }
+
    Move::Move() {}
    
    Move::Move(MoveType type, logic::CharacterDirection direction, float value)
@@ -45,5 +65,10 @@ namespace jp::algorithm
    {
       return Move(MoveType::Jump, static_cast<logic::CharacterDirection>(core::Random::getInt(1, 2)),
          core::Random::getFloat(jumpMinY, jumpMaxY));
+   }
+
+   Move Move::infiniteRun(logic::CharacterDirection direction)
+   {
+      return Move(MoveType::Run, direction, std::numeric_limits<float>::max());
    }
 }

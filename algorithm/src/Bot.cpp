@@ -58,6 +58,16 @@ namespace jp::algorithm
       return mCharacter;
    }
 
+   math::Vector2<float> Bot::getPosition() const
+   {
+      return mCharacter->getPosition();
+   }
+
+   logic::CharacterDirection Bot::getDirection() const
+   {
+      return mCharacter->getDirection();
+   }
+
    bool Bot::finishedMoves() const
    {
       return mFinishedMoves;
@@ -71,26 +81,29 @@ namespace jp::algorithm
       }
       else
       {
-         return {};
+         return Move();
       }
    }
 
-   Move Bot::getLastMove() const
+   Move Bot::getFirstMove() const
    {
-      if (mCurrentMove.id - 1 < mMoves.size())
+      if (mMoves.empty())
       {
-         return mMoves.at(mCurrentMove.id - 1);
+         return Move();
       }
-      else
-      {
-         return {};
-      }
+      return mMoves.front();
    }
 
    void Bot::clearMoves()
    {
       mMoves.clear();
       mCurrentMove.id = 0;
+      mCurrentMove.value = 0.f;
+   }
+
+   void Bot::nextMove()
+   {
+      ++mCurrentMove.id;
       mCurrentMove.value = 0.f;
    }
 
@@ -108,11 +121,5 @@ namespace jp::algorithm
       {
          return logic::CharacterDirection::Up;
       }
-   }
-
-   void Bot::nextMove()
-   {
-      ++mCurrentMove.id;
-      mCurrentMove.value = 0.f;
    }
 }

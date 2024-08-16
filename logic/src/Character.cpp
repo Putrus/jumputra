@@ -48,6 +48,26 @@ namespace jp::logic
       return os;
    }
 
+      std::ostream& operator<<(std::ostream& os, CharacterDirection direction)
+   {
+      switch (direction)
+      {
+         case CharacterDirection::Up:
+         os << "Up";
+         break;
+         case CharacterDirection::Left:
+         os << "Left";
+         break;
+         case CharacterDirection::Right:
+         os << "Right";
+         break;
+         default:
+         os << "Unknown";
+         break;
+      }
+      return os;
+   }
+
    Character::Character(const math::Vector2<float> &position, const math::Vector2<float> &size,
       const Properties &properties,
       Statistics& totalStatistics,
@@ -525,6 +545,11 @@ namespace jp::logic
    const math::Vector2<float>& Character::getJumpPower() const
    {
       return mJumpPower;
+   }
+
+   const Properties& Character::getProperties() const
+   {
+      return mProperties;
    }
 
    bool Character::canRun() const

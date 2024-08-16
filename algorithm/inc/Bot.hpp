@@ -14,22 +14,23 @@ namespace jp::algorithm
       virtual void update(float dt) override;
 
       const std::shared_ptr<logic::Character>& getCharacter() const;
+      math::Vector2<float> getPosition() const;
+      logic::CharacterDirection getDirection() const;
 
       bool finishedMoves() const;
 
    protected:
       Move getCurrentMove() const;
-      Move getLastMove() const;
+      Move getFirstMove() const;
 
       void clearMoves();
+      void nextMove();
 
       logic::CharacterDirection oppositeDirection(logic::CharacterDirection direction) const;
 
       std::shared_ptr<logic::Character> mCharacter;
       bool mFinishedMoves = false;
 
-   private:
-      void nextMove();
 
       struct CurrentMove
       {

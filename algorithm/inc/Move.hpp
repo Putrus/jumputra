@@ -8,9 +8,12 @@ namespace jp::algorithm
 {
    enum class MoveType : int
    {
-      Jump = 0,
+      Idle = 0,
+      Jump,
       Run
    };
+
+   std::ostream& operator<<(std::ostream& os, MoveType type);
 
    struct Move : public core::Jsonable
    {
@@ -22,8 +25,9 @@ namespace jp::algorithm
 
       static Move random(float jumpMinY, float jumpMaxY, float runMinTime, float runMaxTime);
       static Move randomJump(float jumpMinY, float jumpMaxY);
+      static Move infiniteRun(logic::CharacterDirection direction);
 
-      MoveType type = MoveType::Run;
+      MoveType type = MoveType::Idle;
       logic::CharacterDirection direction = logic::CharacterDirection::Up;
       float value = 0.f;
    };

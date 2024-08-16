@@ -25,6 +25,8 @@ namespace jp::logic
       Sticking
    };
 
+   std::ostream& operator<<(std::ostream& os, CharacterState state);
+
    enum class CharacterDirection : unsigned long long
    {
       Up = 0,
@@ -32,7 +34,7 @@ namespace jp::logic
       Right
    };
 
-   std::ostream& operator<<(std::ostream& os, CharacterState state);
+   std::ostream& operator<<(std::ostream& os, CharacterDirection direction);
 
    class Character : public Entity
    {
@@ -79,6 +81,7 @@ namespace jp::logic
       float getRunSpeed() const;
       Statistics getStatistics() const;
       const math::Vector2<float>& getJumpPower() const;
+      const Properties& getProperties() const;
 
       bool canRun() const;
       bool canSquat() const;

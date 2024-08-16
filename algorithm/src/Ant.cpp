@@ -5,54 +5,78 @@
 namespace jp::algorithm
 {
    Ant::Ant(std::map<math::Vector2<float>, std::vector<Pheromone>>& pheromones, const std::shared_ptr<logic::Character>& character)
-      : mPheromones(pheromones), Bot(character, { Move(MoveType::Run, logic::CharacterDirection::Right, 2.f) }) {}
+      : mPheromones(pheromones), Bot(character, { Move::infiniteRun(logic::CharacterDirection::Right) }) {}
 
    void Ant::update(float dt)
    {
       Bot::update(dt);
 
+      math::Vector2<float> position = getPosition();
+
       if (finishedMoves())
       {
-         Move lastMove = getLastMove();
-         float intensity = 0.f;
-         if (getCharacter()->getPosition().y < mLastPosition.y)
-         {
-            intensity = 500.f;
-         }
-         else if (getCharacter()->getPosition().y == mLastPosition.y)
-         {
-            intensity = 250.f;
-         }
-         else
-         {
-            intensity = 100.f;
-         }
-
          if (mPheromones.find(mLastPosition) == mPheromones.end())
          {
-            mPheromones[mLastPosition] = std::vector<Pheromone>();
+            mPheromones.insert({ mLastPosition, std::vector<Pheromone>() });
          }
-         mPheromones.at(mLastPosition).push_back(Pheromone(lastMove, intensity));
-      }
 
-      Move currentMove = getCurrentMove();
-      if (currentMove.type == MoveType::Run)
+         if (position < mLastPosition)
+         {
+            mPheromones.at(mLastPosition).push_back(Pheromone(getFirstMove(), 5000.f));
+         }
+         else if (position == mLastPosition)
+         {
+            mPheromones.at(mLastPosition).push_back(Pheromone(getFirstMove(), 2000.f));
+         }
+
+         setMove(Move::infiniteRun(getDirection()));
+         mLastChangeDirectionPosition = position;
+      }
+      else
       {
-         if (mLastPosition == getCharacter()->getPosition() &&
-            mLastChangeDirectionPosition != getCharacter()->getPosition())
+         Move currentMove = getCurrentMove();
+         if (currentMove.type == MoveType::Run)
          {
-            std::cout << "lastpos: " << mLastPosition << " lastchangedirpos: " << mLastChangeDirectionPosition << " pos: " << getCharacter()->getPosition() << std::endl;
-            clearMoves();
-            mMoves.push_back(Move(MoveType::Run, oppositeDirection(getCharacter()->getDirection()), std::numeric_limits<float>::max()));
-            mLastChangeDirectionPosition = getCharacter()->getPosition();
-         }
-         mLastPosition = getCharacter()->getPosition();
+            if (mLastPosition == position &&
+               mLastChangeDirectionPosition != position)
+            {
+               setMove(Move::infiniteRun(oppositeDirection(getDirection())));
+               mLastChangeDirectionPosition = position;
+            }
 
-         if (core::Random::getInt(0, 1000) <= 1)
-         {
-            clearMoves();
-            mMoves.push_back(Move::randomJump(1.f, 500.f));
+            mLastPosition = position;
+
+            if (mPheromones.find(position) != mPheromones.end())
+            {
+               for (const auto& pheromone : mPheromones.at(position))
+               {
+                  float random = core::Random::getFloat(0, 10000.f);
+                  if (random < pheromone.getIntensity())
+                  {
+                     setMove(pheromone.getMove());
+                     return;
+                  }
+               }
+            }
+
+            int randomNumber = core::Random::getInt(0, 10000);
+            if (randomNumber < 100)
+            {
+               setMove(Move::randomJump(1.f, getCharacter()->getProperties().character.jump.max.y));
+            }
          }
       }
+   }
+
+   void Ant::setMove(const Move& move)
+   {
+      if (mMoves.empty())
+      {
+         throw std::runtime_error("Ant::setMove - Failed to set move, moves are empty");
+      }
+      mFinishedMoves = false;
+      mCurrentMove.id = 0;
+      mCurrentMove.value = 0.f;
+      mMoves.at(0) = move;
    }
 }
