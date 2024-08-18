@@ -48,7 +48,7 @@ namespace jp::algorithm
    Move Move::random(float jumpMinY, float jumpMaxY, float runMinTime, float runMaxTime)
    {
       Move move;
-      move.type = static_cast<MoveType>(core::Random::getInt(0, 1));
+      move.type = static_cast<MoveType>(core::Random::getInt(1, 2));
       if (move.type == MoveType::Jump)
       {
          move.value = core::Random::getFloat(jumpMinY, jumpMaxY);

@@ -176,8 +176,8 @@ namespace jp::logic
       math::Rect<float> oldRect = mRect;
       for (const auto& segment : mSegments)
       {
-         if (std::min(segment->a.y, segment->b.y) < newRect.top - mProperties.physics.checkCollisionDistance ||
-            std::max(segment->a.y, segment->b.y) > newRect.getBottom() + mProperties.physics.checkCollisionDistance)
+         if (std::max(segment->a.y, segment->b.y) < newRect.top - mProperties.physics.checkCollisionDistance ||
+            std::min(segment->a.y, segment->b.y) > newRect.getBottom() + mProperties.physics.checkCollisionDistance)
          {
             continue;
          }
@@ -236,6 +236,7 @@ namespace jp::logic
                }
                newRect.top = std::min(segment->a.y, segment->b.y) - newRect.height;
                newVelocity.y = 0.f;
+               mLastHorizontalSegment = segment;
                if (segment->getSurface() == SegmentSurface::Ordinary)
                {
                   newRunSpeed = getRunSpeed();
@@ -540,6 +541,11 @@ namespace jp::logic
    Statistics Character::getStatistics() const
    {
       return mStatistics;
+   }
+
+   const std::shared_ptr<Segment>& Character::getLastHorizontalSegment() const
+   {
+      return mLastHorizontalSegment;
    }
 
    const math::Vector2<float>& Character::getJumpPower() const

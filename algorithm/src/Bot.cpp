@@ -19,6 +19,7 @@ namespace jp::algorithm
          if (mCurrentMove.value == 1.f && mCharacter->canSquat() &&
             mCharacter->getState() != logic::CharacterState::Squatting)
          {
+            addVisitedHorizontalSegment();
             nextMove();
             return;
          }
@@ -34,6 +35,7 @@ namespace jp::algorithm
          }
          else if (mCharacter->getJumpPower().y >= currentMove.value)
          {
+            addVisitedHorizontalSegment();
             mCharacter->jump();
          }
       }
@@ -66,6 +68,29 @@ namespace jp::algorithm
    logic::CharacterDirection Bot::getDirection() const
    {
       return mCharacter->getDirection();
+   }
+
+   const std::vector<std::shared_ptr<logic::Segment>>& Bot::getVisitedHorizontalSegments() const
+   {
+      return mVisitedHorizontalSegments;
+   }
+
+   std::shared_ptr<logic::Segment> Bot::getPreviousVisitedHorizontalSegment() const
+   {
+      if (mVisitedHorizontalSegments.size() < 2)
+      {
+         return nullptr;
+      }
+      return mVisitedHorizontalSegments.at(mVisitedHorizontalSegments.size() - 2);
+   }
+
+   std::shared_ptr<logic::Segment> Bot::getCurrentVisitedHorizontalSegment() const
+   {
+      if (mVisitedHorizontalSegments.empty())
+      {
+         return nullptr;
+      }
+      return mVisitedHorizontalSegments.back();
    }
 
    bool Bot::finishedMoves() const
@@ -120,6 +145,14 @@ namespace jp::algorithm
       else
       {
          return logic::CharacterDirection::Up;
+      }
+   }
+
+   void Bot::addVisitedHorizontalSegment()
+   {
+      if (mVisitedHorizontalSegments.empty() || mVisitedHorizontalSegments.back() != mCharacter->getLastHorizontalSegment())
+      {
+         mVisitedHorizontalSegments.push_back(mCharacter->getLastHorizontalSegment());
       }
    }
 }

@@ -3,6 +3,8 @@
 #include "Algorithm.hpp"
 #include "Bot.hpp"
 
+#include <set>
+
 namespace jp::algorithm
 {
    class Genetic final : public Algorithm
@@ -27,11 +29,12 @@ namespace jp::algorithm
 
       struct Individual
       {
-         Individual(const std::shared_ptr<logic::Character> logicCharacter)
-            : character(*logicCharacter)
+         Individual(const Bot& bot)
+            : character(*bot.getCharacter())
          {
-            const logic::Statistics &statistics = logicCharacter->getStatistics();
-            fitness = statistics.falls + statistics.jumps + statistics.time + logicCharacter->getPosition().y;
+            const logic::Statistics& statistics = bot.getCharacter()->getStatistics();
+            std::set<std::shared_ptr<logic::Segment>> mUniqueHorizontalSegments(bot.getVisitedHorizontalSegments().begin(), bot.getVisitedHorizontalSegments().end());
+            fitness = statistics.falls + statistics.jumps + statistics.time + bot.getCharacter()->getPosition().y + bot.getVisitedHorizontalSegments().size() - mUniqueHorizontalSegments.size() * 10.f;
          }
          logic::Character character;
          float fitness = 0.f;

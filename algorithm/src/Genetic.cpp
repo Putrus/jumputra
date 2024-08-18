@@ -17,7 +17,7 @@ namespace jp::algorithm
          mPopulation.at(i).update(dt);
          if (mIndividualsThatFinished.find(i) == mIndividualsThatFinished.end() && mPopulation.at(i).finishedMoves())
          {
-            mIndividualsThatFinished.insert({ i, Individual(mPopulation.at(i).getCharacter()) });
+            mIndividualsThatFinished.insert({ i, Individual(mPopulation.at(i)) });
          }
       }
 
@@ -140,7 +140,7 @@ namespace jp::algorithm
 
    void Genetic::addRandomMoves(std::vector<Move>& moves) const
    {
-      int randomMoves = core::Random::getInt(1, 10);
+      int randomMoves = core::Random::getInt(1, 5);
       for (int i = 0; i < randomMoves; ++i)
       {
          moves.push_back(randomMove());
@@ -162,7 +162,7 @@ namespace jp::algorithm
 
    void Genetic::removeRandomMoves(std::vector<Move>& moves) const
    {
-      int randomRemoves = core::Random::getInt(1, 5);
+      int randomRemoves = core::Random::getInt(1, 3);
       for (int i = 0; i < randomRemoves && !moves.empty(); ++i)
       {
          size_t id = core::Random::getInt(0, moves.size() - 1);
