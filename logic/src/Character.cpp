@@ -123,6 +123,22 @@ namespace jp::logic
       return std::make_shared<Character>(json, properties, totalStatistics, segments, winds);
    }
 
+   CharacterDirection Character::oppositeDirection(CharacterDirection direction)
+   {
+      if (direction == CharacterDirection::Left)
+      {
+         return CharacterDirection::Right;
+      }
+      else if (direction == CharacterDirection::Right)
+      {
+         return CharacterDirection::Left;
+      }
+      else
+      {
+         return CharacterDirection::Up;
+      }
+   }
+
    void Character::update(float dt)
    {
       if (getState() != CharacterState::Sledding)
@@ -236,7 +252,11 @@ namespace jp::logic
                }
                newRect.top = std::min(segment->a.y, segment->b.y) - newRect.height;
                newVelocity.y = 0.f;
-               mLastHorizontalSegment = segment;
+               if (segment->isHorizontal() && (mVisitedHorizontalSegments.empty() || segment != mVisitedHorizontalSegments.back()))
+               {
+                  mVisitedHorizontalSegments.push_back(segment);
+               }
+
                if (segment->getSurface() == SegmentSurface::Ordinary)
                {
                   newRunSpeed = getRunSpeed();
@@ -543,9 +563,9 @@ namespace jp::logic
       return mStatistics;
    }
 
-   const std::shared_ptr<Segment>& Character::getLastHorizontalSegment() const
+   const std::vector<std::shared_ptr<logic::Segment>>& Character::getVisitedHorizontalSegments() const
    {
-      return mLastHorizontalSegment;
+      return mVisitedHorizontalSegments;
    }
 
    const math::Vector2<float>& Character::getJumpPower() const

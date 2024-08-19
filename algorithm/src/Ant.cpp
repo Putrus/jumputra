@@ -40,7 +40,7 @@ namespace jp::algorithm
             if (mLastPosition == position &&
                mLastChangeDirectionPosition != position)
             {
-               setMove(Move::infiniteRun(oppositeDirection(getDirection())));
+               setMove(Move::infiniteRun(logic::Character::oppositeDirection(getDirection())));
                mLastChangeDirectionPosition = position;
             }
 

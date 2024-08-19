@@ -13,13 +13,9 @@ namespace jp::algorithm
 
    void Greedy::update(float dt)
    {
-      for (auto& bot : mBots)
-      {
-         bot.update(dt);
-      }
-
       for (size_t i = 0; i < mBots.size(); ++i)
       {
+         mBots.at(i).update(dt);
          if (mCharactersThatLanded.find(i) == mCharactersThatLanded.end() && mBots.at(i).finishedMoves())
          {
             mCharactersThatLanded.insert({ i, logic::Character(*mBots.at(i).getCharacter()) });

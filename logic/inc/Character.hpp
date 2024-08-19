@@ -64,6 +64,8 @@ namespace jp::logic
          const std::vector<std::shared_ptr<Segment>>& segments,
          const std::vector<std::shared_ptr<Wind>>& winds);
 
+      static CharacterDirection oppositeDirection(CharacterDirection direction);
+
       void update(float dt) override;
       virtual void fromJson(const nlohmann::json& json) override;
       virtual nlohmann::json toJson() const override;
@@ -80,7 +82,7 @@ namespace jp::logic
       CharacterState getState() const;
       float getRunSpeed() const;
       Statistics getStatistics() const;
-      const std::shared_ptr<Segment>& getLastHorizontalSegment() const;
+      const std::vector<std::shared_ptr<logic::Segment>>& getVisitedHorizontalSegments() const;
       const math::Vector2<float>& getJumpPower() const;
       const Properties& getProperties() const;
 
@@ -97,7 +99,7 @@ namespace jp::logic
       CharacterDirection mDirection = CharacterDirection::Up;
       math::Vector2<float> mJumpPower = math::Vector2<float>();
       math::Vector2<float> mGravity = math::Vector2<float>();
-      std::shared_ptr<logic::Segment> mLastHorizontalSegment;
+      std::vector<std::shared_ptr<logic::Segment>> mVisitedHorizontalSegments;
       float mRunSpeed = 0.f;
       Statistics mStatistics;
 

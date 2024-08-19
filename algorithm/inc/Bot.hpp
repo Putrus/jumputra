@@ -16,9 +16,8 @@ namespace jp::algorithm
       const std::shared_ptr<logic::Character>& getCharacter() const;
       math::Vector2<float> getPosition() const;
       logic::CharacterDirection getDirection() const;
+      const logic::Character& getFinishedCharacter() const;
       const std::vector<std::shared_ptr<logic::Segment>>& getVisitedHorizontalSegments() const;
-      std::shared_ptr<logic::Segment> getPreviousVisitedHorizontalSegment() const;
-      std::shared_ptr<logic::Segment> getCurrentVisitedHorizontalSegment() const;
 
       bool finishedMoves() const;
 
@@ -29,10 +28,8 @@ namespace jp::algorithm
       void clearMoves();
       void nextMove();
 
-      logic::CharacterDirection oppositeDirection(logic::CharacterDirection direction) const;
-
       std::shared_ptr<logic::Character> mCharacter;
-      std::vector<std::shared_ptr<logic::Segment>> mVisitedHorizontalSegments;
+      logic::Character mFinishedCharacter;
       bool mFinishedMoves = false;
 
       struct CurrentMove

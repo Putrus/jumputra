@@ -7,6 +7,7 @@ namespace jp::game
    enum class Controller
    {
       AntColony = 0,
+      DecisionTree,
       Genetic,
       Greedy,
       Human
