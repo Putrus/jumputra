@@ -33,8 +33,8 @@ namespace jp::algorithm
             : character(*bot.getCharacter())
          {
             const logic::Statistics& statistics = bot.getCharacter()->getStatistics();
-            std::set<std::shared_ptr<logic::Segment>> mUniqueHorizontalSegments(bot.getVisitedHorizontalSegments().begin(), bot.getVisitedHorizontalSegments().end());
-            fitness = statistics.falls + statistics.jumps + statistics.time + bot.getCharacter()->getPosition().y + bot.getVisitedHorizontalSegments().size() - mUniqueHorizontalSegments.size() * 10.f;
+            std::set<std::shared_ptr<logic::Segment>> mUniqueHorizontalSegments(bot.getVisitedSegments().begin(), bot.getVisitedSegments().end());
+            fitness = statistics.falls + statistics.jumps + statistics.time + bot.getCharacter()->getPosition().y + bot.getVisitedSegments().size() - mUniqueHorizontalSegments.size() * 10.f;
          }
          logic::Character character;
          float fitness = 0.f;

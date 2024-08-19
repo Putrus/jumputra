@@ -11,6 +11,7 @@ set(HEADERS
    inc/Ant.hpp
    inc/AntColony.hpp
    inc/Bot.hpp
+   inc/DecisionNode.hpp
    inc/DecisionTree.hpp
    inc/Dummy.hpp
    inc/Genetic.hpp
@@ -26,6 +27,7 @@ set(SOURCES
    src/Ant.cpp
    src/AntColony.cpp
    src/Bot.cpp
+   src/DecisionNode.cpp
    src/DecisionTree.cpp
    src/Dummy.cpp
    src/Genetic.cpp

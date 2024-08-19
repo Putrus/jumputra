@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Algorithm.hpp"
-#include "Bot.hpp"
+#include "DecisionNode.hpp"
+
+#include <set>
 
 namespace jp::algorithm
 {
@@ -13,8 +14,7 @@ namespace jp::algorithm
       void update(float dt) override;
 
    private:
-      std::vector<Bot> mBots;
-      math::Vector2<float> mLastRunPosition = math::Vector2<float>();
-      logic::CharacterDirection mRunDirection = logic::CharacterDirection::Right;
+      std::shared_ptr<DecisionNode> mNode;
+      std::set<std::shared_ptr<logic::Segment>> mVisitedSegments;
    };
 }

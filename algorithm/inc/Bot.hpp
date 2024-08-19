@@ -15,9 +15,10 @@ namespace jp::algorithm
 
       const std::shared_ptr<logic::Character>& getCharacter() const;
       math::Vector2<float> getPosition() const;
+      math::Vector2<float> getPositionBeforeMoves() const;
       logic::CharacterDirection getDirection() const;
       const logic::Character& getFinishedCharacter() const;
-      const std::vector<std::shared_ptr<logic::Segment>>& getVisitedHorizontalSegments() const;
+      const std::vector<std::shared_ptr<logic::Segment>>& getVisitedSegments() const;
 
       bool finishedMoves() const;
 
@@ -40,5 +41,7 @@ namespace jp::algorithm
 
    private:
       void addVisitedHorizontalSegment();
+
+      math::Vector2<float> mPositionBeforeMoves = math::Vector2<float>();
    };
 }

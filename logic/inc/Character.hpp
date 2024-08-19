@@ -82,7 +82,7 @@ namespace jp::logic
       CharacterState getState() const;
       float getRunSpeed() const;
       Statistics getStatistics() const;
-      const std::vector<std::shared_ptr<logic::Segment>>& getVisitedHorizontalSegments() const;
+      const std::vector<std::shared_ptr<logic::Segment>>& getVisitedSegments() const;
       const math::Vector2<float>& getJumpPower() const;
       const Properties& getProperties() const;
 
@@ -99,7 +99,7 @@ namespace jp::logic
       CharacterDirection mDirection = CharacterDirection::Up;
       math::Vector2<float> mJumpPower = math::Vector2<float>();
       math::Vector2<float> mGravity = math::Vector2<float>();
-      std::vector<std::shared_ptr<logic::Segment>> mVisitedHorizontalSegments;
+      std::vector<std::shared_ptr<logic::Segment>> mVisitedSegments;
       float mRunSpeed = 0.f;
       Statistics mStatistics;
 

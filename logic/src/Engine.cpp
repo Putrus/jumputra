@@ -80,7 +80,7 @@ namespace jp::logic
 
    void Engine::removeCharacter(const std::shared_ptr<Character>& character)
    {
-      mCharacters.erase(std::remove(mCharacters.begin(), mCharacters.end(), character), mCharacters.end());
+      mCharacters.erase(std::find(mCharacters.begin(), mCharacters.end(), character));
    }
 
    void Engine::removeAllCharacters()

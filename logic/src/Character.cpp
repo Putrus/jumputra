@@ -106,6 +106,7 @@ namespace jp::logic
          mDirection = other.mDirection;
          mJumpPower = other.mJumpPower;
          mGravity = other.mGravity;
+         mVisitedSegments = other.mVisitedSegments;
          mRunSpeed = other.mRunSpeed;
          mRect = other.mRect;
          mAcceleration = other.mAcceleration;
@@ -252,9 +253,9 @@ namespace jp::logic
                }
                newRect.top = std::min(segment->a.y, segment->b.y) - newRect.height;
                newVelocity.y = 0.f;
-               if (segment->isHorizontal() && (mVisitedHorizontalSegments.empty() || segment != mVisitedHorizontalSegments.back()))
+               if (mVisitedSegments.empty() || segment != mVisitedSegments.back())
                {
-                  mVisitedHorizontalSegments.push_back(segment);
+                  mVisitedSegments.push_back(segment);
                }
 
                if (segment->getSurface() == SegmentSurface::Ordinary)
@@ -563,9 +564,9 @@ namespace jp::logic
       return mStatistics;
    }
 
-   const std::vector<std::shared_ptr<logic::Segment>>& Character::getVisitedHorizontalSegments() const
+   const std::vector<std::shared_ptr<logic::Segment>>& Character::getVisitedSegments() const
    {
-      return mVisitedHorizontalSegments;
+      return mVisitedSegments;
    }
 
    const math::Vector2<float>& Character::getJumpPower() const

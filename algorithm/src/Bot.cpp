@@ -3,7 +3,7 @@
 namespace jp::algorithm
 {
    Bot::Bot(const std::shared_ptr<logic::Character>& character, const std::vector<Move>& moves/* = {}*/)
-      : mCharacter(character), mFinishedCharacter(*character), Movable(moves) {}
+      : mPositionBeforeMoves(character->getPosition()), mCharacter(character), mFinishedCharacter(*character), Movable(moves) {}
 
    void Bot::update(float dt)
    {
@@ -68,6 +68,11 @@ namespace jp::algorithm
       return mCharacter->getPosition();
    }
 
+   math::Vector2<float> Bot::getPositionBeforeMoves() const
+   {
+      return mPositionBeforeMoves;
+   }
+
    logic::CharacterDirection Bot::getDirection() const
    {
       return mCharacter->getDirection();
@@ -78,9 +83,9 @@ namespace jp::algorithm
       return mFinishedCharacter;
    }
 
-   const std::vector<std::shared_ptr<logic::Segment>>& Bot::getVisitedHorizontalSegments() const
+   const std::vector<std::shared_ptr<logic::Segment>>& Bot::getVisitedSegments() const
    {
-      return mCharacter->getVisitedHorizontalSegments();
+      return mCharacter->getVisitedSegments();
    }
 
    bool Bot::finishedMoves() const

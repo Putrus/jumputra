@@ -56,23 +56,34 @@ namespace jp::game
 
    void Game::removeCharacter(const std::shared_ptr<logic::Character>& character)
    {
-      mCharacters.erase(std::remove(mCharacters.begin(), mCharacters.end(), character), mCharacters.end());
-      removeRedundantDrawables();
+      mDrawables.erase(std::remove_if(mDrawables.begin(), mDrawables.end(), [&character](const auto& drawable)
+         {
+            return dynamic_cast<game::Character*>(character.get()) == dynamic_cast<game::Character*>(drawable.get());
+         }), mDrawables.end());
+      mCharacters.erase(std::find(mCharacters.begin(), mCharacters.end(), character));
    }
 
    void Game::removeAllCharacters()
    {
-      mCharacters.clear();
-      removeRedundantDrawables();
+      while (!mCharacters.empty())
+      {
+         removeCharacter(mCharacters.front());
+      }
    }
 
    void Game::removeAllCharactersExcept(const std::shared_ptr<logic::Character>& character)
    {
-      mCharacters.erase(std::remove_if(mCharacters.begin(), mCharacters.end(), [&character](const auto& otherCharacter)
+      while (mCharacters.size() > 1)
+      {
+         if (mCharacters.front() == character)
          {
-            return otherCharacter != character;
-         }), mCharacters.end());
-      removeRedundantDrawables();
+            removeCharacter(mCharacters.back());
+         }
+         else
+         {
+            removeCharacter(mCharacters.front());
+         }
+      }
    }
 
    void Game::load()
