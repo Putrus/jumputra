@@ -88,6 +88,7 @@ namespace jp::logic
 
       bool canRun() const;
       bool canSquat() const;
+      bool isSticked() const;
 
    protected:
       virtual void setState(CharacterState state);

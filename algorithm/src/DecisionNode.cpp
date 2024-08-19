@@ -1,5 +1,7 @@
 #include "../inc/DecisionNode.hpp"
 
+constexpr float JUMP_RUN_VALUE = 10.f;
+
 namespace jp::algorithm
 {
    DecisionNode::DecisionNode(DecisionNode* parent, const Move& move, std::set<std::shared_ptr<logic::Segment>>& visitedSegments,
@@ -11,20 +13,42 @@ namespace jp::algorithm
          mMoves.push_back(move);
       }
 
-      if (parent != nullptr && move.type == MoveType::Run)
+      if (parent != nullptr && move.type == MoveType::Run ||
+         (move.value == JUMP_RUN_VALUE && character.isSticked()))
       {
          mEngine->addCharacterCopy(character);
-         mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Run,
-            move.direction, engine->getProperties().secondsPerUpdate) }));
+         if (move.type == MoveType::Run)
+         {
+            mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Run,
+               move.direction, engine->getProperties().secondsPerUpdate) }));
+         }
+         else
+         {
+            mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Jump,
+               move.direction, JUMP_RUN_VALUE) }));
+         }
       }
       else
       {
-         mEngine->addCharacterCopy(character);
-         mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Run,
-             logic::CharacterDirection::Left, engine->getProperties().secondsPerUpdate) }));
-         mEngine->addCharacterCopy(character);
-         mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Run,
-            logic::CharacterDirection::Right, engine->getProperties().secondsPerUpdate) }));
+         if (character.isSticked())
+         {
+            mEngine->addCharacterCopy(character);
+            mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Jump,
+               logic::CharacterDirection::Left, JUMP_RUN_VALUE) }));
+            mEngine->addCharacterCopy(character);
+            mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Jump,
+               logic::CharacterDirection::Right, JUMP_RUN_VALUE) }));
+         }
+         else
+         {
+            mEngine->addCharacterCopy(character);
+            mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Run,
+               logic::CharacterDirection::Left, engine->getProperties().secondsPerUpdate) }));
+            mEngine->addCharacterCopy(character);
+            mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Run,
+               logic::CharacterDirection::Right, engine->getProperties().secondsPerUpdate) }));
+         }
+         
       }
 
       for (float jumpPowerY = 50.f; jumpPowerY <= mEngine->getProperties().character.jump.max.y; jumpPowerY += 50.f)
@@ -81,7 +105,8 @@ namespace jp::algorithm
                mChildren.push_back(std::make_shared<DecisionNode>(this, bot.getMoves().back(),
                   mVisitedSegments, bot.getFinishedCharacter(), mEngine, mProperties));
             }
-            else if (mVisitedSegments.find(bot.getCharacter()->getVisitedSegments().back()) == mVisitedSegments.end())
+            else if (mVisitedSegments.find(bot.getCharacter()->getVisitedSegments().back()) == mVisitedSegments.end() ||
+               (bot.getMoves().back().value == JUMP_RUN_VALUE && bot.getFinishedCharacter().isSticked()))
             {
                mVisitedSegments.insert(bot.getCharacter()->getVisitedSegments().back());
                mChildren.push_back(std::make_shared<DecisionNode>(this, bot.getMoves().back(),

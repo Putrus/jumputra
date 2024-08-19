@@ -591,7 +591,12 @@ namespace jp::logic
    bool Character::canSquat() const
    {
       return canRun() ||
-         getState() == CharacterState::Burying ||
+         isSticked();
+   }
+
+   bool Character::isSticked() const
+   {
+      return getState() == CharacterState::Burying ||
          getState() == CharacterState::Sticking;
    }
 
