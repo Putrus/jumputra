@@ -11,6 +11,7 @@ namespace jp::algorithm
       genetic.tournament.size = json.at("genetic").at("tournament").at("size");
 
       greedy.bots = json.at("greedy").at("bots");
+      greedy.epsilon = json.at("greedy").at("epsilon");
    }
 
    nlohmann::json Properties::toJson() const
@@ -23,6 +24,7 @@ namespace jp::algorithm
       json["genetic"]["tournament"]["size"] = genetic.tournament.size;
 
       json["greedy"]["bots"] = greedy.bots;
+      json["greedy"]["epsilon"] = greedy.epsilon;
 
       return json;
    }

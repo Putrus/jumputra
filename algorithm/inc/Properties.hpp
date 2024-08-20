@@ -32,6 +32,7 @@ namespace jp::algorithm
       struct Greedy
       {
          size_t bots;
+         float epsilon;
       } greedy;
    };
 }

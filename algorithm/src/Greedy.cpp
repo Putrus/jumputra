@@ -5,91 +5,85 @@
 namespace jp::algorithm
 {
    Greedy::Greedy(const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties)
-      : Algorithm(engine, properties)
+      : mStep(engine->getProperties().character.jump.max.y * 2.f / properties.greedy.bots), Algorithm(engine, properties)
    {
-      logic::Character character = *mEngine->getCharacters()[0];
-      nextIteration(character);
+      if (!mEngine->getWinds().empty())
+      {
+         mStep *= 1.5f;
+      }
+
+      nextIteration(*mEngine->getCharacters()[0]);
    }
 
    void Greedy::update(float dt)
    {
-      for (size_t i = 0; i < mBots.size(); ++i)
+      for (auto& bot : mBots)
       {
-         mBots.at(i).update(dt);
-         if (mCharactersThatLanded.find(i) == mCharactersThatLanded.end() && mBots.at(i).finishedMoves())
-         {
-            mCharactersThatLanded.insert({ i, logic::Character(*mBots.at(i).getCharacter()) });
-         }
+         bot.update(dt);
       }
 
-      if (mCharactersThatLanded.size() == mProperties.greedy.bots)
+      if (std::find_if(mBots.begin(), mBots.end(), [](const auto& bot)
+         { return !bot.finishedMoves(); }) == mBots.end())
       {
-         auto bestJumperIt = std::min_element(mCharactersThatLanded.begin(), mCharactersThatLanded.end(),
+         auto bestJumperIt = std::min_element(mBots.begin(), mBots.end(),
          [](const auto& lhs, const auto& rhs)
          {
-            return lhs.second.getPosition().y < rhs.second.getPosition().y;
+            return lhs.getFinishedCharacter().getPosition().y < rhs.getFinishedCharacter().getPosition().y;
          });
 
-         if (bestJumperIt == mCharactersThatLanded.end())
+         Bot bestJumper = *bestJumperIt;
+         if (bestJumper.getFinishedCharacter().getPosition().y == mLastY)
          {
-            throw std::runtime_error("Greedy::update - Failed to find best jumper in this group");
-         }
-
-         logic::Character bestJumper = bestJumperIt->second;
-         Move bestMove = mBots.at(bestJumperIt->first).getMoves().at(0);
-         if (bestJumper.getPosition().y == mLastY)
-         {
-            int random = core::Random::getInt(1, 5);
-            if (random == 1)
+            if (core::Random::getFloat(0, 1) <= mProperties.greedy.epsilon)
             {
-               int randomId = core::Random::getInt(0, mCharactersThatLanded.size() - 1);
-               bestJumper = mCharactersThatLanded.at(randomId);
-               bestMove = mBots.at(randomId).getMoves().at(0);
+               bestJumper = mBots.at(core::Random::getInt(0, mBots.size() - 1));
             }
             else
             {
-               std::map<size_t, logic::Character> filteredCharacters;
-               for (const auto& character : mCharactersThatLanded)
+               std::vector<Bot> filteredBots;
+               for (const auto& bot : mBots)
                {
-                  if (character.second.getPosition().y == mLastY)
+                  if (bot.getFinishedCharacter().getPosition().y == mLastY)
                   {
-                     filteredCharacters.insert(character);
+                     filteredBots.push_back(bot);
                   }
                }
 
-               int randomId = core::Random::getInt(0, filteredCharacters.size() - 1);
-
-               int id = 0;
-               for (const auto& character : filteredCharacters)
-               {
-                  if (id == randomId)
-                  {
-                     bestJumper = character.second;
-                     bestMove = mBots.at(character.first).getMoves().at(0);
-                     break;
-                  }
-                  ++id;
-               }
+               bestJumper = filteredBots.at(core::Random::getInt(0, filteredBots.size() - 1));
             }
          }
 
-         mMoves.push_back(bestMove);
-         nextIteration(bestJumper);
+         mMoves.push_back(bestJumper.getMoves().back());
+         nextIteration(bestJumper.getFinishedCharacter());
       }
    }
 
-   void Greedy::nextIteration(const logic::Character& character)
+   void Greedy::addBot(const logic::Character& character, const Move& move)
    {
-      std::cout << mIteration++ << " position: " << character.getPosition().y << " moves: " << mMoves.size() << std::endl;
-      mLastY = character.getPosition().y;
-      mCharactersThatLanded.clear();
+      mEngine->addCharacterCopy(character);
+      mBots.push_back(Bot(mEngine->getCharacters().back(), { move }));
+   }
+
+   void Greedy::clear()
+   {
       mBots.clear();
       mEngine->removeAllCharacters();
+   }
 
-      for (int i = 0; i < mProperties.greedy.bots; ++i)
+   void Greedy::nextIteration(logic::Character character)
+   {
+      mLastY = character.getPosition().y;
+      clear();
+
+      for (float jumpPowerY = mStep; jumpPowerY <= mEngine->getProperties().character.jump.max.y; jumpPowerY += mStep)
       {
-         mEngine->addCharacterCopy(character);
-         mBots.push_back(Bot(mEngine->characters().at(i), { randomJump() }));
+         addBot(character, Move(MoveType::Jump, logic::CharacterDirection::Left, jumpPowerY));
+         addBot(character, Move(MoveType::Jump, logic::CharacterDirection::Right, jumpPowerY));
+
+         if (!mEngine->getWinds().empty())
+         {
+            addBot(character, Move(MoveType::Jump, logic::CharacterDirection::Up, jumpPowerY));
+         }
       }
    }
 }

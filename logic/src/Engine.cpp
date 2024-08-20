@@ -130,6 +130,11 @@ namespace jp::logic
       return mCharacters;
    }
 
+   const std::vector<std::shared_ptr<Wind>>& Engine::getWinds() const
+   {
+      return mWinds;
+   }
+
    void Engine::goalFromJson(const nlohmann::json& json)
    {
       if (json.find("goal") == json.end())

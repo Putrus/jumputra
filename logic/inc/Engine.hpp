@@ -32,6 +32,7 @@ namespace jp::logic
 
       std::vector<std::shared_ptr<Character>>& characters();
       const std::vector<std::shared_ptr<Character>>& getCharacters() const;
+      const std::vector<std::shared_ptr<Wind>>& getWinds() const;
       const Properties& getProperties() const;
       const Statistics& getStatistics() const;
 

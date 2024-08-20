@@ -1,5 +1,7 @@
 #include "../inc/Consolutra.hpp"
 
+#include "../../algorithm/inc/AntColony.hpp"
+#include "../../algorithm/inc/DecisionTree.hpp"
 #include "../../algorithm/inc/Genetic.hpp"
 #include "../../algorithm/inc/Greedy.hpp"
 
@@ -14,7 +16,15 @@ namespace jp::console
       mProperties.loadFromJsonFile(propertiesFilename);
       mEngine = std::make_shared<logic::Engine>(mProperties.logic);
       mEngine->loadFromJsonFile(worldFilename);
-      if (algorithmName == "genetic")
+      if (algorithmName == "antColony")
+      {
+         mAlgorithm = std::make_unique<algorithm::AntColony>(mEngine, mProperties.algorithm);
+      }
+      else if (algorithmName == "decisionTree")
+      {
+         mAlgorithm = std::make_unique<algorithm::DecisionTree>(mEngine, mProperties.algorithm);
+      }
+      else if (algorithmName == "genetic")
       {
          mAlgorithm = std::make_unique<algorithm::Genetic>(mEngine, mProperties.algorithm);
       }

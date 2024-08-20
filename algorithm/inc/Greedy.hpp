@@ -13,11 +13,13 @@ namespace jp::algorithm
       void update(float dt) override;
 
    private:
-      void nextIteration(const logic::Character &character);
+      void addBot(const logic::Character& character, const Move& move);
+      void clear();
+      void nextIteration(logic::Character character);
 
-      std::map<size_t, logic::Character> mCharactersThatLanded;
       std::vector<Bot> mBots;
       float mLastY = 0.f;
+      float mStep = 0.f;
       size_t mIteration = 0;
    };
 }

@@ -13,46 +13,47 @@
             "size": 200
          }
       },
-      "greedy" : {
-         "bots" :  100
+      "greedy": {
+         "bots":  100,
+         "epsilon": 0.2
       }
    },
    "graphic": {
-      "language" : "polski",
-      "window" : {
-         "size" : {
-            "x" : 480,
-            "y" : 360
+      "language": "polski",
+      "window": {
+         "size": {
+            "x": 480,
+            "y": 360
          }
       }
    },
    "logic": {
-      "secondsPerUpdate" : 0.0167,
-      "character" : {
-         "jump" : {
-            "gain" : {
-               "x" : 0.0,
-               "y" : 1000.0
+      "secondsPerUpdate": 0.0167,
+      "character": {
+         "jump": {
+            "gain": {
+               "x": 0.0,
+               "y": 1000.0
             },
-            "max" : {
-               "x" : 195.0,
-               "y" : 500.0
+            "max": {
+               "x": 195.0,
+               "y": 500.0
             }
          },
-         "runSpeed" : 85.0,
-         "size" : {
-            "x" : 24.0,
-            "y" : 24.0
+         "runSpeed": 85.0,
+         "size": {
+            "x": 24.0,
+            "y": 24.0
          }
       },
-      "physics" : {
-         "bounceFactor" : 0.5,
-         "checkCollisionDistance" : 480.0,
-         "fallSpeed" : 500.0,
-         "slipperyFriction" : 200.0,
-         "gravity" : {
-            "x" : 0.0,
-            "y" : 800.0
+      "physics": {
+         "bounceFactor": 0.5,
+         "checkCollisionDistance": 480.0,
+         "fallSpeed": 500.0,
+         "slipperyFriction": 200.0,
+         "gravity": {
+            "x": 0.0,
+            "y": 800.0
          }
       }
    }
