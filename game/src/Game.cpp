@@ -203,6 +203,16 @@ namespace jp::game
                controlledCharacter.stop();
             }
             break;
+         case sf::Keyboard::Key::L:
+            std::cout << "Log: " << std::endl;
+            std::cout << "position: " << controlledCharacter.getPosition() << std::endl;
+            std::cout << "state: " << controlledCharacter.getState() << std::endl;
+            std::cout << "acceleration: " << controlledCharacter.getAcceleration() << std::endl;
+            std::cout << "velocity: " << controlledCharacter.getVelocity() << std::endl;
+            std::cout << "runSpeed: " << controlledCharacter.getRunSpeed() << std::endl;
+            std::cout << "statistics: " << mContext.statistics << std::endl;
+            std::cout << std::endl;
+            break;
          default:
             break;
          }

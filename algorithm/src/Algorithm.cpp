@@ -32,4 +32,9 @@ namespace jp::algorithm
    {
       return Move::randomJump(1.f, mEngine->getProperties().character.jump.max.y);
    }
+
+   Move Algorithm::randomSideJump() const
+   {
+      return Move::randomSideJump(1.f, mEngine->getProperties().character.jump.max.y);
+   }
 }

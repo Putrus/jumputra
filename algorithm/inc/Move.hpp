@@ -25,6 +25,7 @@ namespace jp::algorithm
 
       static Move random(float jumpMinY, float jumpMaxY, float runMinTime, float runMaxTime);
       static Move randomJump(float jumpMinY, float jumpMaxY);
+      static Move randomSideJump(float jumpMinY, float jumpMaxY);
       static Move infiniteRun(logic::CharacterDirection direction);
 
       MoveType type = MoveType::Idle;

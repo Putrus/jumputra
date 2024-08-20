@@ -62,7 +62,7 @@ namespace jp::algorithm
             int randomNumber = core::Random::getInt(0, 10000);
             if (randomNumber < 100)
             {
-               setMove(Move::randomJump(1.f, getCharacter()->getProperties().character.jump.max.y));
+               setMove(Move::randomSideJump(1.f, getCharacter()->getProperties().character.jump.max.y));
             }
          }
       }

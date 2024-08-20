@@ -25,6 +25,7 @@ namespace jp::algorithm
    protected:
       Move randomMove() const;
       Move randomJump() const;
+      Move randomSideJump() const;
 
       std::shared_ptr<logic::Engine> mEngine;
       const Properties& mProperties;

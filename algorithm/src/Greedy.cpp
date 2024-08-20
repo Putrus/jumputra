@@ -5,13 +5,8 @@
 namespace jp::algorithm
 {
    Greedy::Greedy(const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties)
-      : mStep(engine->getProperties().character.jump.max.y * 2.f / properties.greedy.bots), Algorithm(engine, properties)
+      : Algorithm(engine, properties)
    {
-      if (!mEngine->getWinds().empty())
-      {
-         mStep *= 1.5f;
-      }
-
       nextIteration(*mEngine->getCharacters()[0]);
    }
 
@@ -70,19 +65,22 @@ namespace jp::algorithm
       mEngine->removeAllCharacters();
    }
 
-   void Greedy::nextIteration(logic::Character character)
+   void Greedy::nextIteration(logic::Character bestJumper)
    {
-      mLastY = character.getPosition().y;
+      mLastY = bestJumper.getPosition().y;
       clear();
 
-      for (float jumpPowerY = mStep; jumpPowerY <= mEngine->getProperties().character.jump.max.y; jumpPowerY += mStep)
-      {
-         addBot(character, Move(MoveType::Jump, logic::CharacterDirection::Left, jumpPowerY));
-         addBot(character, Move(MoveType::Jump, logic::CharacterDirection::Right, jumpPowerY));
+      std::cout << "Iteration: " << mMoves.size() << " position: " << bestJumper.getPosition() << std::endl;
 
-         if (!mEngine->getWinds().empty())
+      for (size_t i = 0; i < mProperties.greedy.bots; ++i)
+      {
+         if (mEngine->getWinds().empty())
          {
-            addBot(character, Move(MoveType::Jump, logic::CharacterDirection::Up, jumpPowerY));
+            addBot(bestJumper, Move::randomSideJump(1.f, mEngine->getProperties().character.jump.max.y));
+         }
+         else
+         {
+            addBot(bestJumper, Move::randomJump(1.f, mEngine->getProperties().character.jump.max.y));
          }
       }
    }

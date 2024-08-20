@@ -63,6 +63,12 @@ namespace jp::algorithm
 
    Move Move::randomJump(float jumpMinY, float jumpMaxY)
    {
+      return Move(MoveType::Jump, static_cast<logic::CharacterDirection>(core::Random::getInt(0, 2)),
+         core::Random::getFloat(jumpMinY, jumpMaxY));
+   }
+
+   Move Move::randomSideJump(float jumpMinY, float jumpMaxY)
+   {
       return Move(MoveType::Jump, static_cast<logic::CharacterDirection>(core::Random::getInt(1, 2)),
          core::Random::getFloat(jumpMinY, jumpMaxY));
    }

@@ -15,11 +15,9 @@ namespace jp::algorithm
    private:
       void addBot(const logic::Character& character, const Move& move);
       void clear();
-      void nextIteration(logic::Character character);
+      void nextIteration(logic::Character bestJumper);
 
       std::vector<Bot> mBots;
       float mLastY = 0.f;
-      float mStep = 0.f;
-      size_t mIteration = 0;
    };
 }

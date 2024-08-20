@@ -6,6 +6,12 @@ namespace jp::game
    {
       switch (controller)
       {
+         case Controller::AntColony:
+         os << "AntColony";
+         break;
+         case Controller::DecisionTree:
+         os << "DecisionTree";
+         break;
          case Controller::Genetic:
          os << "Genetic";
          break;
