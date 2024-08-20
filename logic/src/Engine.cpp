@@ -115,6 +115,21 @@ namespace jp::logic
       return mCharacters;
    }
 
+   const std::vector<std::shared_ptr<Character>>& Engine::getCharacters() const
+   {
+      return mCharacters;
+   }
+
+   std::vector<std::shared_ptr<Wind>>& Engine::winds()
+   {
+      return mWinds;
+   }
+
+   const std::vector<std::shared_ptr<Wind>>& Engine::getWinds() const
+   {
+      return mWinds;
+   }
+
    const Properties& Engine::getProperties() const
    {
       return mProperties;
@@ -123,16 +138,6 @@ namespace jp::logic
    const Statistics& Engine::getStatistics() const
    {
       return mStatistics;
-   }
-
-   const std::vector<std::shared_ptr<Character>>& Engine::getCharacters() const
-   {
-      return mCharacters;
-   }
-
-   const std::vector<std::shared_ptr<Wind>>& Engine::getWinds() const
-   {
-      return mWinds;
    }
 
    void Engine::goalFromJson(const nlohmann::json& json)

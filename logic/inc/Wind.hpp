@@ -16,6 +16,8 @@ namespace jp::logic
          const math::Vector2<float>& velocity = 0.f);
       Wind(const nlohmann::json& json);
 
+      Wind& operator=(const Wind& other);
+
       static std::shared_ptr<Wind> create(const nlohmann::json& json);
 
       virtual void update(float dt) override;

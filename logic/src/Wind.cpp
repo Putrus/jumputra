@@ -14,6 +14,19 @@ namespace jp::logic
    {
       fromJson(json);
    }
+
+   Wind& Wind::operator=(const Wind& other)
+   {
+      if (this != &other)
+      {
+         mImpact = other.mImpact;
+         mMaxVelocity = other.mMaxVelocity;
+         mRect = other.mRect;
+         mAcceleration = other.mAcceleration;
+         mVelocity = other.mVelocity;
+      }
+      return *this;
+   }
    
    std::shared_ptr<Wind> Wind::create(const nlohmann::json& json)
    {
