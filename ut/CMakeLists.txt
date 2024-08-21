@@ -6,5 +6,6 @@ project(jp_ut
 
 include(CTest)
 
+add_subdirectory(algorithm)
 add_subdirectory(logic)
 add_subdirectory(math)
