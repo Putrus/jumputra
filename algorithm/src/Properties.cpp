@@ -4,6 +4,10 @@ namespace jp::algorithm
 {
    void Properties::fromJson(const nlohmann::json& json)
    {
+      decisionTree.jumps = json.at("decisionTree").at("jumps");
+      decisionTree.jumpValue = json.at("decisionTree").at("jumpValue");
+      decisionTree.runValue = json.at("decisionTree").at("runValue");
+
       genetic.population.size = json.at("genetic").at("population").at("size");
       genetic.population.elitism = json.at("genetic").at("population").at("elitism");
       genetic.mutation.change = json.at("genetic").at("mutation").at("change");
@@ -17,6 +21,10 @@ namespace jp::algorithm
    nlohmann::json Properties::toJson() const
    {
       nlohmann::json json;
+      json["decisionTree"]["jumps"] = decisionTree.jumps;
+      json["decisionTree"]["jumpValue"] = decisionTree.jumpValue;
+      json["decisionTree"]["runValue"] = decisionTree.runValue;
+      
       json["genetic"]["population"]["size"] = genetic.population.size;
       json["genetic"]["population"]["elitism"] = genetic.population.elitism;
       json["genetic"]["mutation"]["change"] = genetic.mutation.change;

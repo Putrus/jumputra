@@ -9,6 +9,13 @@ namespace jp::algorithm
       void fromJson(const nlohmann::json& json) override;
       nlohmann::json toJson() const override;
 
+      struct DecisionTree
+      {
+         size_t jumps;
+         float jumpValue;
+         float runValue;
+      } decisionTree;
+
       struct Genetic
       {
          struct Population
@@ -29,6 +36,7 @@ namespace jp::algorithm
          } tournament;
 
       } genetic;
+
       struct Greedy
       {
          size_t bots;

@@ -1,5 +1,10 @@
 {
    "algorithm": {
+      "decisionTree": {
+         "jumps": 20,
+         "jumpValue": 10.0,
+         "runValue": 0.017
+      },
       "genetic": {
          "population": {
             "size": 400,
