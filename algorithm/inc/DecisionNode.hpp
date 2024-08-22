@@ -5,7 +5,6 @@
 
 #include <memory>
 #include <set>
-#include <vector>
 
 namespace jp::algorithm
 {
@@ -18,7 +17,6 @@ namespace jp::algorithm
       void update(float dt) override;
 
    private:
-      std::vector<Bot> mBots;
       std::set<std::shared_ptr<logic::Segment>>& mVisitedSegments;
       DecisionNode* mParent;
       std::vector<std::shared_ptr<DecisionNode>> mChildren;

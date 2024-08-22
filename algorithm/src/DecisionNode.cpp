@@ -14,37 +14,32 @@ namespace jp::algorithm
       if (parent != nullptr && move.type == MoveType::Run ||
          (move.value == mProperties.decisionTree.jumpValue && character.isSticked()))
       {
-         mEngine->addCharacterCopy(character);
          if (move.type == MoveType::Run)
          {
-            mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Run,
-               move.direction, mProperties.decisionTree.runValue) }));
+            addBot(character, Move(MoveType::Run,
+               move.direction, mProperties.decisionTree.runValue));
          }
          else
          {
-            mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Jump,
-               move.direction, mProperties.decisionTree.jumpValue) }));
+            addBot(character, Move(MoveType::Jump,
+               move.direction, mProperties.decisionTree.jumpValue));
          }
       }
       else
       {
          if (character.isSticked())
          {
-            mEngine->addCharacterCopy(character);
-            mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Jump,
-               logic::CharacterDirection::Left, mProperties.decisionTree.jumpValue) }));
-            mEngine->addCharacterCopy(character);
-            mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Jump,
-               logic::CharacterDirection::Right, mProperties.decisionTree.jumpValue) }));
+            addBot(character, Move(MoveType::Jump,
+               logic::CharacterDirection::Left, mProperties.decisionTree.jumpValue));
+            addBot(character, Move(MoveType::Jump,
+               logic::CharacterDirection::Right, mProperties.decisionTree.jumpValue));
          }
          else
          {
-            mEngine->addCharacterCopy(character);
-            mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Run,
-               logic::CharacterDirection::Left, engine->getProperties().secondsPerUpdate) }));
-            mEngine->addCharacterCopy(character);
-            mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Run,
-               logic::CharacterDirection::Right, engine->getProperties().secondsPerUpdate) }));
+            addBot(character, Move(MoveType::Run,
+               logic::CharacterDirection::Left, mProperties.decisionTree.runValue));
+            addBot(character, Move(MoveType::Run,
+               logic::CharacterDirection::Right, mProperties.decisionTree.runValue));
          }
          
       }
@@ -61,14 +56,14 @@ namespace jp::algorithm
          {
             continue;
          }
-         mEngine->addCharacterCopy(character);
-         mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Jump, logic::CharacterDirection::Left, jumpPowerY) }));
-         mEngine->addCharacterCopy(character);
-         mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Jump, logic::CharacterDirection::Right, jumpPowerY) }));
+         addBot(character, Move(MoveType::Jump,
+               logic::CharacterDirection::Left, jumpPowerY));
+         addBot(character, Move(MoveType::Jump,
+            logic::CharacterDirection::Right, jumpPowerY));
          if (!mEngine->getWinds().empty())
          {
-            mEngine->addCharacterCopy(character);
-            mBots.push_back(Bot(mEngine->getCharacters().back(), { Move(MoveType::Jump, logic::CharacterDirection::Up, jumpPowerY) }));
+            addBot(character, Move(MoveType::Jump,
+            logic::CharacterDirection::Up, jumpPowerY));
          }
       }
    }
@@ -90,8 +85,7 @@ namespace jp::algorithm
          bot.update(dt);
       }
 
-      if (std::find_if(mBots.begin(), mBots.end(), [](const auto& bot)
-         { return !bot.finishedMoves(); }) == mBots.end())
+      if (haveBotsFinishedMoves())
       {
          for (auto& bot : mBots)
          {

@@ -13,11 +13,8 @@ namespace jp::algorithm
       void update(float dt) override;
 
    private:
-      void addBot(const logic::Character& character, const Move& move);
-      void clear();
       void nextIteration(logic::Character bestJumper);
 
-      std::vector<Bot> mBots;
       float mLastY = 0.f;
    };
 }

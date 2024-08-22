@@ -17,8 +17,7 @@ namespace jp::algorithm
          bot.update(dt);
       }
 
-      if (std::find_if(mBots.begin(), mBots.end(), [](const auto& bot)
-         { return !bot.finishedMoves(); }) == mBots.end())
+      if (haveBotsFinishedMoves())
       {
          auto bestJumperIt = std::min_element(mBots.begin(), mBots.end(),
          [](const auto& lhs, const auto& rhs)
@@ -53,22 +52,10 @@ namespace jp::algorithm
       }
    }
 
-   void Greedy::addBot(const logic::Character& character, const Move& move)
-   {
-      mEngine->addCharacterCopy(character);
-      mBots.push_back(Bot(mEngine->getCharacters().back(), { move }));
-   }
-
-   void Greedy::clear()
-   {
-      mBots.clear();
-      mEngine->removeAllCharacters();
-   }
-
    void Greedy::nextIteration(logic::Character bestJumper)
    {
       mLastY = bestJumper.getPosition().y;
-      clear();
+      clearBots();
 
       std::cout << "Iteration: " << mMoves.size() << " position: " << bestJumper.getPosition() << std::endl;
 
