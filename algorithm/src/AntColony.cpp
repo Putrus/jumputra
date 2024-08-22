@@ -5,34 +5,41 @@ namespace jp::algorithm
    AntColony::AntColony(const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties)
       : Algorithm(engine, properties)
    {
-      math::Rect<float> startRect = engine->getCharacters().at(0)->getRect();
-      mEngine->removeAllCharacters();
-      for (int i = 0; i < 200; ++i)
+      math::Rect<float> startRect = engine->getCharacters().front()->getRect();
+      clearAnts();
+      for (int i = 0; i < mProperties.antColony.ants; ++i)
       {
-         mEngine->addCharacter(startRect);
-         mAnts.push_back(Ant(mPheromones, mEngine->characters().at(i)));
+         addAnt(startRect);
       }
    }
 
    void AntColony::update(float dt)
    {
-      for (auto& pheromones : mPheromones)
+      for (auto& pheromone : mPheromones)
       {
-         for (auto& pheromone : pheromones.second)
-         {
-            pheromone.evaporate(dt);
-         }
-
-         pheromones.second.erase(std::remove_if(pheromones.second.begin(), pheromones.second.end(),
-            [](const auto& element)
-            {
-               return element.getIntensity() < 0.f;
-            }), pheromones.second.end());
+         pheromone->evaporate(dt);
       }
+
+      mPheromones.erase(std::remove_if(mPheromones.begin(), mPheromones.end(),
+         [](const auto& pheromone)
+         {
+            return pheromone->getIntensity() < 0.f;
+         }), mPheromones.end());
 
       for (auto& ant : mAnts)
       {
-         ant.update(dt);
+         ant->update(dt);
       }
+   }
+
+   void AntColony::addAnt(const math::Rect<float>& rect)
+   {
+      mEngine->addCharacter(rect);
+      mAnts.push_back(std::make_shared<Ant>(mPheromones, mProperties, mEngine->characters().back()));
+   }
+
+   void AntColony::clearAnts()
+   {
+      clearBots();
    }
 }

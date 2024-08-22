@@ -9,6 +9,12 @@ namespace jp::algorithm
       void fromJson(const nlohmann::json& json) override;
       nlohmann::json toJson() const override;
 
+      struct AntColony
+      {
+         size_t ants;
+         float randomJumpChance;
+      } antColony;
+
       struct DecisionTree
       {
          size_t jumps;

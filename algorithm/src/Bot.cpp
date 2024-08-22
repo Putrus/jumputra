@@ -105,15 +105,6 @@ namespace jp::algorithm
       }
    }
 
-   Move Bot::getFirstMove() const
-   {
-      if (mMoves.empty())
-      {
-         return Move();
-      }
-      return mMoves.front();
-   }
-
    void Bot::clearMoves()
    {
       mMoves.clear();

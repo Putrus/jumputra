@@ -2,12 +2,12 @@
 
 namespace jp::algorithm
 {
-   Pheromone::Pheromone(Move move, float intensity)
-      : mMove(move), mIntensity(intensity) {}
+   Pheromone::Pheromone(const math::Vector2<float>& position, const Move& move, float intensity)
+      : mPosition(position), mMove(move), mIntensity(intensity) {}
    
-   void Pheromone::evaporate(float dt)
+   void Pheromone::evaporate(float value)
    {
-      mIntensity -= dt;
+      mIntensity -= value;
    }
 
    void Pheromone::increaseIntensity(float value)
@@ -15,9 +15,14 @@ namespace jp::algorithm
       mIntensity += value;
    }
 
-   Move Pheromone::getMove() const
+   const Move& Pheromone::getMove() const
    {
       return mMove;
+   }
+
+   const math::Vector2<float>& Pheromone::getPosition() const
+   {
+      return mPosition;
    }
 
    float Pheromone::getIntensity() const

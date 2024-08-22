@@ -4,6 +4,9 @@ namespace jp::algorithm
 {
    void Properties::fromJson(const nlohmann::json& json)
    {
+      antColony.ants = json.at("antColony").at("ants");
+      antColony.randomJumpChance = json.at("antColony").at("randomJumpChance");
+
       decisionTree.jumps = json.at("decisionTree").at("jumps");
       decisionTree.jumpValue = json.at("decisionTree").at("jumpValue");
       decisionTree.runValue = json.at("decisionTree").at("runValue");
@@ -22,6 +25,9 @@ namespace jp::algorithm
    nlohmann::json Properties::toJson() const
    {
       nlohmann::json json;
+      json["antColony"]["ants"] = antColony.ants;
+      json["antColony"]["randomJumpChance"] = antColony.randomJumpChance;
+
       json["decisionTree"]["jumps"] = decisionTree.jumps;
       json["decisionTree"]["jumpValue"] = decisionTree.jumpValue;
       json["decisionTree"]["runValue"] = decisionTree.runValue;

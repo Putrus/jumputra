@@ -24,7 +24,6 @@ namespace jp::algorithm
 
    protected:
       Move getCurrentMove() const;
-      Move getFirstMove() const;
 
       void clearMoves();
       void nextMove();
@@ -32,14 +31,12 @@ namespace jp::algorithm
       std::shared_ptr<logic::Character> mCharacter;
       logic::Character mFinishedCharacter;
       bool mFinishedMoves = false;
+      math::Vector2<float> mPositionBeforeMoves = math::Vector2<float>();
 
       struct CurrentMove
       {
          size_t id = 0;
          float value = 0.f;
       } mCurrentMove;
-
-   private:
-      math::Vector2<float> mPositionBeforeMoves = math::Vector2<float>();
    };
 }

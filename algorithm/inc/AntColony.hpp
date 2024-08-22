@@ -3,6 +3,8 @@
 #include "Algorithm.hpp"
 #include "Ant.hpp"
 
+#include <set>
+
 namespace jp::algorithm
 {
    class AntColony final : public Algorithm
@@ -13,7 +15,10 @@ namespace jp::algorithm
       void update(float dt) override;
 
    private:
-      std::vector<Ant> mAnts;
-      std::map<math::Vector2<float>, std::vector<Pheromone>> mPheromones;
+      void addAnt(const math::Rect<float>& rect);
+      void clearAnts();
+
+      std::vector<std::shared_ptr<Bot>>& mAnts = mBots;
+      std::vector<std::shared_ptr<Pheromone>> mPheromones;
    };
 }

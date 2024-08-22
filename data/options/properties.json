@@ -1,5 +1,10 @@
 {
    "algorithm": {
+      "antColony": {
+         "ants": 1,
+         "randomJumpChance": 0.1,
+         "evaporationRate": 0.1
+      },
       "decisionTree": {
          "jumps": 20,
          "jumpValue": 10.0,
