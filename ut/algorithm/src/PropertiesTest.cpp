@@ -12,6 +12,11 @@ namespace jp::ut::algorithm
 
       nlohmann::json json = nlohmann::json::parse(R"(
          {
+            "decisionTree": {
+               "jumps": 20,
+               "jumpValue": 10.0,
+               "runValue": 0.075
+            },
             "genetic": {
                "population": {
                   "size": 400,
@@ -33,6 +38,10 @@ namespace jp::ut::algorithm
          )");
 
       ASSERT_NO_THROW(properties.fromJson(json));
+      EXPECT_EQ(20, properties.decisionTree.jumps);
+      EXPECT_EQ(10.f, properties.decisionTree.jumpValue);
+      EXPECT_EQ(0.075f, properties.decisionTree.runValue);
+
       EXPECT_EQ(400, properties.genetic.population.size);
       EXPECT_EQ(150, properties.genetic.population.elitism);
       EXPECT_EQ(0.25f, properties.genetic.mutation.change);
@@ -49,6 +58,11 @@ namespace jp::ut::algorithm
 
       nlohmann::json json = nlohmann::json::parse(R"(
          {
+            "decisionTree": {
+               "jumps": 20,
+               "jumpValue": 10.0,
+               "runValue": 0.075
+            },
             "dupenetic": {
                "population": {
                   "size": 400,
@@ -76,6 +90,10 @@ namespace jp::ut::algorithm
    {
       Properties properties;
 
+      properties.decisionTree.jumps = 10;
+      properties.decisionTree.jumpValue = 10.75f;
+      properties.decisionTree.runValue = 0.5f;
+
       properties.genetic.population.size = 400;
       properties.genetic.population.elitism = 150;
       properties.genetic.mutation.change = 0.25f;
@@ -86,6 +104,11 @@ namespace jp::ut::algorithm
 
       nlohmann::json expectedJson = nlohmann::json::parse(R"(
          {
+            "decisionTree": {
+               "jumps": 10,
+               "jumpValue": 10.75,
+               "runValue": 0.5
+            },
             "genetic": {
                "population": {
                   "size": 400,

@@ -55,7 +55,7 @@ namespace jp::algorithm
          step *= 1.5f;
       }
 
-      for (float jumpPowerY = step; jumpPowerY <= mEngine->getProperties().character.jump.max.y; jumpPowerY += step)
+      for (float jumpPowerY = step; jumpPowerY < mEngine->getProperties().character.jump.max.y + step; jumpPowerY += step)
       {
          if (jumpPowerY == mProperties.decisionTree.jumpValue)
          {

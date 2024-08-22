@@ -3,7 +3,7 @@
       "decisionTree": {
          "jumps": 20,
          "jumpValue": 10.0,
-         "runValue": 0.017
+         "runValue": 0.075
       },
       "genetic": {
          "population": {
