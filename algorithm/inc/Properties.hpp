@@ -21,7 +21,7 @@ namespace jp::algorithm
          struct Population
          {
             size_t size;
-            size_t elitism;
+            float elitism;
          } population;
 
          struct Mutation
@@ -30,10 +30,8 @@ namespace jp::algorithm
             float change;
          } mutation;
 
-         struct Tournament
-         {
-            size_t size;
-         } tournament;
+         float tournament;
+         float visitedSegmentsImpact;
 
       } genetic;
 

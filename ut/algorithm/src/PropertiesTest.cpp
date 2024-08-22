@@ -20,15 +20,14 @@ namespace jp::ut::algorithm
             "genetic": {
                "population": {
                   "size": 400,
-                  "elitism": 150
+                  "elitism": 0.375
                },
                "mutation": {
                   "change": 0.25,
                   "max": 0.5
                },
-               "tournament": {
-                  "size": 200
-               }
+               "tournament": 0.5,
+               "visitedSegmentsImpact": 10.0
             },
             "greedy": {
                "bots":  100,
@@ -43,10 +42,11 @@ namespace jp::ut::algorithm
       EXPECT_EQ(0.075f, properties.decisionTree.runValue);
 
       EXPECT_EQ(400, properties.genetic.population.size);
-      EXPECT_EQ(150, properties.genetic.population.elitism);
+      EXPECT_EQ(0.375f, properties.genetic.population.elitism);
       EXPECT_EQ(0.25f, properties.genetic.mutation.change);
       EXPECT_EQ(0.5f, properties.genetic.mutation.max);
-      EXPECT_EQ(200, properties.genetic.tournament.size);
+      EXPECT_EQ(0.5f, properties.genetic.tournament);
+      EXPECT_EQ(10.f, properties.genetic.visitedSegmentsImpact);
 
       EXPECT_EQ(100, properties.greedy.bots);
       EXPECT_EQ(0.75f, properties.greedy.epsilon);
@@ -95,10 +95,11 @@ namespace jp::ut::algorithm
       properties.decisionTree.runValue = 0.5f;
 
       properties.genetic.population.size = 400;
-      properties.genetic.population.elitism = 150;
+      properties.genetic.population.elitism = 0.25f;
       properties.genetic.mutation.change = 0.25f;
       properties.genetic.mutation.max = 0.5f;
-      properties.genetic.tournament.size = 200;
+      properties.genetic.tournament = 0.5f;
+      properties.genetic.visitedSegmentsImpact = 0.75f;
       properties.greedy.bots = 100;
       properties.greedy.epsilon = 0.75f;
 
@@ -112,15 +113,14 @@ namespace jp::ut::algorithm
             "genetic": {
                "population": {
                   "size": 400,
-                  "elitism": 150
+                  "elitism": 0.25
                },
                "mutation": {
                   "change": 0.25,
                   "max": 0.5
                },
-               "tournament": {
-                  "size": 200
-               }
+               "tournament": 0.5,
+               "visitedSegmentsImpact": 0.75
             },
             "greedy": {
                "bots":  100,

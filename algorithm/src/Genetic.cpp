@@ -51,13 +51,14 @@ namespace jp::algorithm
          { parents.first->getMoves(), parents.second->getMoves() };
 
       clearPopulation();
-      for (size_t i = 0; i < mProperties.genetic.population.elitism; ++i)
+      size_t elitismSize = static_cast<size_t>(mPopulation.size() * mProperties.genetic.population.elitism);
+      for (size_t i = 0; i < elitismSize; ++i)
       {
          std::vector<Move> moves = crossover(parentsMoves);
          addRandomMoves(moves);
          addIndividual(mStartRect, moves);
       }
-      for (size_t i = mProperties.genetic.population.elitism; i < mProperties.genetic.population.size; ++i)
+      for (size_t i = elitismSize; i < mProperties.genetic.population.size; ++i)
       {
          std::vector<Move> moves = crossover(parentsMoves);
          mutate(moves);
@@ -68,7 +69,8 @@ namespace jp::algorithm
    std::shared_ptr<Individual> Genetic::tournament() const
    {
       std::vector<std::shared_ptr<Individual>> candidates;
-      for (size_t i = 0; i < mProperties.genetic.tournament.size; ++i)
+      size_t tournamentSize = static_cast<size_t>(mPopulation.size() * mProperties.genetic.tournament);
+      for (size_t i = 0; i < tournamentSize; ++i)
       {
          candidates.push_back(mPopulation.at(core::Random::getInt(0, mPopulation.size() - 1)));
       }
@@ -201,9 +203,9 @@ namespace jp::algorithm
    {
       const logic::Character& finishedCharacter = individual->getFinishedCharacter();
       const logic::Statistics& statistics = finishedCharacter.getStatistics();
-      std::set<std::shared_ptr<logic::Segment>> uniqueHorizontalSegments(finishedCharacter.getVisitedSegments().begin(),
+      std::set<std::shared_ptr<logic::Segment>> uniqueVisitedSegments(finishedCharacter.getVisitedSegments().begin(),
          finishedCharacter.getVisitedSegments().end());
       return statistics.falls + statistics.jumps + statistics.time + finishedCharacter.getPosition().y +
-         finishedCharacter.getVisitedSegments().size() - uniqueHorizontalSegments.size() * 10.f;
+         finishedCharacter.getVisitedSegments().size() - uniqueVisitedSegments.size() * mProperties.genetic.visitedSegmentsImpact;
    }
 }

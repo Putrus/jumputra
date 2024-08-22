@@ -8,15 +8,14 @@
       "genetic": {
          "population": {
             "size": 400,
-            "elitism": 150
+            "elitism": 0.375
          },
          "mutation": {
             "change": 0.01,
             "max": 0.05
          },
-         "tournament": {
-            "size": 200
-         }
+         "tournament": 0.5,
+         "visitedSegmentsImpact": 10.0
       },
       "greedy": {
          "bots":  100,
