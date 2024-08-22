@@ -7,6 +7,8 @@
 
 namespace jp::algorithm
 {
+   typedef Bot Individual;
+
    class Genetic final : public Algorithm
    {
    public:
@@ -16,35 +18,27 @@ namespace jp::algorithm
 
    private:
       void initializePopulation();
-      void createPopulation(const std::pair<size_t, size_t>& parents);
-      std::pair<size_t, size_t> selectParents() const;
+      void createPopulation(const std::pair<std::shared_ptr<Individual>, std::shared_ptr<Individual>>& parents);
+      std::shared_ptr<Individual> tournament() const;
+      std::pair<std::shared_ptr<Individual>, std::shared_ptr<Individual>> selectParents() const;
       std::vector<Move> crossover(const std::pair<std::vector<Move>, std::vector<Move>>& parentsMoves) const;
       void addRandomMoves(std::vector<Move>& moves) const;
       void changeRandomMoves(std::vector<Move>& moves) const;
       void removeRandomMoves(std::vector<Move>& moves) const;
       void mutate(std::vector<Move>& moves) const;
       void adjustMutationRate(float fitness);
+      void clearPopulation();
+      void addIndividual(const math::Rect<float>& rect, const std::vector<Move>& moves);
 
       bool shouldBeMutated() const;
+      bool haveIndividualsFinishedMoves() const;
 
-      struct Individual
-      {
-         Individual(const Bot& bot)
-            : character(*bot.getCharacter())
-         {
-            const logic::Statistics& statistics = bot.getCharacter()->getStatistics();
-            std::set<std::shared_ptr<logic::Segment>> mUniqueHorizontalSegments(bot.getVisitedSegments().begin(), bot.getVisitedSegments().end());
-            fitness = statistics.falls + statistics.jumps + statistics.time + bot.getCharacter()->getPosition().y + bot.getVisitedSegments().size() - mUniqueHorizontalSegments.size() * 10.f;
-         }
-         logic::Character character;
-         float fitness = 0.f;
-      };
+      float calculateFitness(const std::shared_ptr<Individual>& individual) const;
 
-      std::map<size_t, Individual> mIndividualsThatFinished;
-      std::vector<Bot> mPopulation;
       size_t mGeneration = 0;
       float mLastBestFitness = std::numeric_limits<float>::max();
       float mMutationRate = 0.1f;
       math::Rect<float> mStartRect = math::Rect<float>();
+      std::vector<std::shared_ptr<Individual>>& mPopulation = mBots;
    };
 }

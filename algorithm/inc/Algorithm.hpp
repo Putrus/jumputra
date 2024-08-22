@@ -33,7 +33,7 @@ namespace jp::algorithm
       Move randomJump() const;
       Move randomSideJump() const;
 
-      std::vector<Bot> mBots;
+      std::vector<std::shared_ptr<Bot>> mBots;
       std::shared_ptr<logic::Engine> mEngine;
       const Properties& mProperties;
    };

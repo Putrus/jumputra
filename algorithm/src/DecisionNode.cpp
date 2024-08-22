@@ -82,45 +82,45 @@ namespace jp::algorithm
 
       for (auto& bot : mBots)
       {
-         bot.update(dt);
+         bot->update(dt);
       }
 
       if (haveBotsFinishedMoves())
       {
          for (auto& bot : mBots)
          {
-            if (bot.getMoves().empty())
+            if (bot->getMoves().empty())
             {
                throw std::runtime_error("DecisionNode::update - Failed to update, bot moves are empty");
             }
 
-            if (bot.getMoves().back().type == MoveType::Idle)
+            if (bot->getMoves().back().type == MoveType::Idle)
             {
                throw std::runtime_error("DecisionNode::update - Failed to update, wrong move type");
             }
 
-            if (bot.getMoves().back().type == MoveType::Run)
+            if (bot->getMoves().back().type == MoveType::Run)
             {
-               if (bot.getPositionBeforeMoves() == bot.getFinishedCharacter().getPosition() ||
-                  bot.getFinishedCharacter().getPosition().y > bot.getPositionBeforeMoves().y)
+               if (bot->getPositionBeforeMoves() == bot->getFinishedCharacter().getPosition() ||
+                  bot->getFinishedCharacter().getPosition().y > bot->getPositionBeforeMoves().y)
                {
-                  mEngine->removeCharacter(bot.getCharacter());
+                  mEngine->removeCharacter(bot->getCharacter());
                   continue;
                }
 
-               mVisitedSegments.insert(bot.getCharacter()->getVisitedSegments().back());
-               mChildren.push_back(std::make_shared<DecisionNode>(this, bot.getMoves().back(),
-                  mVisitedSegments, bot.getFinishedCharacter(), mEngine, mProperties));
+               mVisitedSegments.insert(bot->getCharacter()->getVisitedSegments().back());
+               mChildren.push_back(std::make_shared<DecisionNode>(this, bot->getMoves().back(),
+                  mVisitedSegments, bot->getFinishedCharacter(), mEngine, mProperties));
             }
-            else if (mVisitedSegments.find(bot.getCharacter()->getVisitedSegments().back()) == mVisitedSegments.end() ||
-               (bot.getMoves().back().value == mProperties.decisionTree.jumpValue && bot.getFinishedCharacter().isSticked()))
+            else if (mVisitedSegments.find(bot->getCharacter()->getVisitedSegments().back()) == mVisitedSegments.end() ||
+               (bot->getMoves().back().value == mProperties.decisionTree.jumpValue && bot->getFinishedCharacter().isSticked()))
             {
-               mVisitedSegments.insert(bot.getCharacter()->getVisitedSegments().back());
-               mChildren.push_back(std::make_shared<DecisionNode>(this, bot.getMoves().back(),
-                  mVisitedSegments, bot.getFinishedCharacter(), mEngine, mProperties));
+               mVisitedSegments.insert(bot->getCharacter()->getVisitedSegments().back());
+               mChildren.push_back(std::make_shared<DecisionNode>(this, bot->getMoves().back(),
+                  mVisitedSegments, bot->getFinishedCharacter(), mEngine, mProperties));
             }
 
-            mEngine->removeCharacter(bot.getCharacter());
+            mEngine->removeCharacter(bot->getCharacter());
          }
          mBots.clear();
       }

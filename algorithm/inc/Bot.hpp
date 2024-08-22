@@ -40,8 +40,6 @@ namespace jp::algorithm
       } mCurrentMove;
 
    private:
-      void addVisitedHorizontalSegment();
-
       math::Vector2<float> mPositionBeforeMoves = math::Vector2<float>();
    };
 }

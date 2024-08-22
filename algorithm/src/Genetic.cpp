@@ -12,26 +12,20 @@ namespace jp::algorithm
 
    void Genetic::update(float dt)
    {
-      for (size_t i = 0; i < mPopulation.size(); ++i)
+      for (auto& individual : mPopulation)
       {
-         mPopulation.at(i).update(dt);
-         if (mIndividualsThatFinished.find(i) == mIndividualsThatFinished.end() && mPopulation.at(i).finishedMoves())
-         {
-            mIndividualsThatFinished.insert({ i, Individual(mPopulation.at(i)) });
-         }
+         individual->update(dt);
       }
 
-      if (mIndividualsThatFinished.size() == mProperties.genetic.population.size)
+      if (haveIndividualsFinishedMoves())
       {
-         std::pair<size_t, size_t> parents = selectParents();
-         float newBestFitness = std::min(mIndividualsThatFinished.at(parents.first).fitness, mIndividualsThatFinished.at(parents.second).fitness);
+         std::pair<std::shared_ptr<Individual>, std::shared_ptr<Individual>> parents = selectParents();
+         float newBestFitness = std::min(calculateFitness(parents.first), calculateFitness(parents.second));
          adjustMutationRate(newBestFitness);
          mLastBestFitness = newBestFitness;
 
          std::cout << "Generation: " << mGeneration++ <<
-            " first: " << mIndividualsThatFinished.at(parents.first).fitness << " moves: " << mPopulation.at(parents.first).getMoves().size() <<
-            " second: " << mIndividualsThatFinished.at(parents.second).fitness << " moves: " << mPopulation.at(parents.second).getMoves().size() <<
-            " mutation: " << mMutationRate << std::endl;
+            " best fitness: " << newBestFitness << " moves: " << parents.first->getMoves().size() << " mutation: " << mMutationRate << std::endl;
 
          createPopulation(parents);
       }
@@ -42,80 +36,67 @@ namespace jp::algorithm
       mEngine->removeAllCharacters();
       for (size_t i = 0; i < mProperties.genetic.population.size; ++i)
       {
-         mEngine->addCharacter(mStartRect);
          std::vector<Move> moves;
          for (size_t j = 0; j < 10; ++j)
          {
             moves.push_back(randomMove());
          }
-         mPopulation.push_back(Bot(mEngine->characters().at(i), moves));
+         addIndividual(mStartRect, moves);
       }
    }
 
-   void Genetic::createPopulation(const std::pair<size_t, size_t>& parents)
+   void Genetic::createPopulation(const std::pair<std::shared_ptr<Individual>, std::shared_ptr<Individual>>& parents)
    {
       std::pair<std::vector<Move>, std::vector<Move>> parentsMoves =
-         { mPopulation.at(parents.first).getMoves(), mPopulation.at(parents.second).getMoves() };
-      mIndividualsThatFinished.clear();
-      mPopulation.clear();
-      mEngine->removeAllCharacters();
+         { parents.first->getMoves(), parents.second->getMoves() };
+
+      clearPopulation();
       for (size_t i = 0; i < mProperties.genetic.population.elitism; ++i)
       {
-         mEngine->addCharacter(mStartRect);
          std::vector<Move> moves = crossover(parentsMoves);
          addRandomMoves(moves);
-         mPopulation.push_back(Bot(mEngine->characters().at(i), moves));
+         addIndividual(mStartRect, moves);
       }
       for (size_t i = mProperties.genetic.population.elitism; i < mProperties.genetic.population.size; ++i)
       {
-         mEngine->addCharacter(mStartRect);
          std::vector<Move> moves = crossover(parentsMoves);
          mutate(moves);
-         mPopulation.push_back(Bot(mEngine->characters().at(i), moves));
+         addIndividual(mStartRect, moves);
       }
    }
 
-   std::pair<size_t, size_t> Genetic::selectParents() const
+   std::shared_ptr<Individual> Genetic::tournament() const
    {
-      struct Candidate
+      std::vector<std::shared_ptr<Individual>> candidates;
+      for (size_t i = 0; i < mProperties.genetic.tournament.size; ++i)
       {
-         size_t id;
-         float fitness;
-      };
-
-      auto tournament = [this](size_t tournamentSize) -> Candidate
-      {
-         std::vector<size_t> candidates;
-         for (size_t i = 0; i < tournamentSize; ++i)
-         {
-            size_t candidate = core::Random::getInt(0, mIndividualsThatFinished.size() - 1);
-            candidates.push_back(candidate);
-         }
-
-         Candidate bestCandidate;
-         bestCandidate.id = candidates.front();
-         bestCandidate.fitness = mIndividualsThatFinished.at(bestCandidate.id).fitness;
-         for (const auto& candidate : candidates)
-         {
-            float fitness = mIndividualsThatFinished.at(candidate).fitness;
-            if (fitness < bestCandidate.fitness)
-            {
-               bestCandidate.id = candidate;
-               bestCandidate.fitness = fitness;
-            }
-         }
-
-         return bestCandidate;
-      };
-
-      std::pair<Candidate, Candidate> parents = { tournament(mProperties.genetic.tournament.size),
-         tournament(mProperties.genetic.tournament.size) };
-      while (parents.first.id == parents.second.id)
-      {
-         parents.second = tournament(mProperties.genetic.tournament.size);
+         candidates.push_back(mPopulation.at(core::Random::getInt(0, mPopulation.size() - 1)));
       }
 
-      return { parents.first.id, parents.second.id };
+      std::shared_ptr<Individual> bestCandidate = candidates.front();
+      float bestFitness = calculateFitness(bestCandidate);
+      for (const auto& candidate : candidates)
+      {
+         float fitness = calculateFitness(candidate);
+         if (fitness < bestFitness)
+         {
+            bestCandidate = candidate;
+            bestFitness = fitness;
+         }
+      }
+
+      return bestCandidate;
+   }
+
+   std::pair<std::shared_ptr<Individual>, std::shared_ptr<Individual>> Genetic::selectParents() const
+   {
+      std::pair<std::shared_ptr<Individual>, std::shared_ptr<Individual>> parents = { tournament(), tournament() };
+      while (parents.first == parents.second)
+      {
+         parents.second = tournament();
+      }
+
+      return parents;
    }
 
    std::vector<Move> Genetic::crossover(const std::pair<std::vector<Move>, std::vector<Move>>& parentsMoves) const
@@ -195,8 +176,34 @@ namespace jp::algorithm
       }
    }
 
+   void Genetic::clearPopulation()
+   {
+      clearBots();
+   }
+
+   void Genetic::addIndividual(const math::Rect<float>& rect, const std::vector<Move>& moves)
+   {
+      mEngine->addCharacter(rect);
+      mPopulation.push_back(std::make_shared<Individual>(mEngine->getCharacters().back(), moves));
+   }
+
    bool Genetic::shouldBeMutated() const
    {
       return core::Random::getFloat(0.f, 1.f) < mMutationRate;
+   }
+
+   bool Genetic::haveIndividualsFinishedMoves() const
+   {
+      return haveBotsFinishedMoves();
+   }
+
+   float Genetic::calculateFitness(const std::shared_ptr<Individual>& individual) const
+   {
+      const logic::Character& finishedCharacter = individual->getFinishedCharacter();
+      const logic::Statistics& statistics = finishedCharacter.getStatistics();
+      std::set<std::shared_ptr<logic::Segment>> uniqueHorizontalSegments(finishedCharacter.getVisitedSegments().begin(),
+         finishedCharacter.getVisitedSegments().end());
+      return statistics.falls + statistics.jumps + statistics.time + finishedCharacter.getPosition().y +
+         finishedCharacter.getVisitedSegments().size() - uniqueHorizontalSegments.size() * 10.f;
    }
 }

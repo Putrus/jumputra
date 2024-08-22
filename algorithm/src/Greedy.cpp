@@ -14,7 +14,7 @@ namespace jp::algorithm
    {
       for (auto& bot : mBots)
       {
-         bot.update(dt);
+         bot->update(dt);
       }
 
       if (haveBotsFinishedMoves())
@@ -22,11 +22,11 @@ namespace jp::algorithm
          auto bestJumperIt = std::min_element(mBots.begin(), mBots.end(),
          [](const auto& lhs, const auto& rhs)
          {
-            return lhs.getFinishedCharacter().getPosition().y < rhs.getFinishedCharacter().getPosition().y;
+            return lhs->getFinishedCharacter().getPosition().y < rhs->getFinishedCharacter().getPosition().y;
          });
 
-         Bot bestJumper = *bestJumperIt;
-         if (bestJumper.getFinishedCharacter().getPosition().y == mLastY)
+         std::shared_ptr<Bot> bestJumper = *bestJumperIt;
+         if (bestJumper->getFinishedCharacter().getPosition().y == mLastY)
          {
             if (core::Random::getFloat(0, 1) <= mProperties.greedy.epsilon)
             {
@@ -34,10 +34,10 @@ namespace jp::algorithm
             }
             else
             {
-               std::vector<Bot> filteredBots;
+               std::vector<std::shared_ptr<Bot>> filteredBots;
                for (const auto& bot : mBots)
                {
-                  if (bot.getFinishedCharacter().getPosition().y == mLastY)
+                  if (bot->getFinishedCharacter().getPosition().y == mLastY)
                   {
                      filteredBots.push_back(bot);
                   }
@@ -47,8 +47,8 @@ namespace jp::algorithm
             }
          }
 
-         mMoves.push_back(bestJumper.getMoves().back());
-         nextIteration(bestJumper.getFinishedCharacter());
+         mMoves.push_back(bestJumper->getMoves().back());
+         nextIteration(bestJumper->getFinishedCharacter());
       }
    }
 

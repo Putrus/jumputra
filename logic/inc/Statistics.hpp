@@ -14,6 +14,7 @@ namespace jp::logic
       void fromJson(const nlohmann::json& json) override;
       nlohmann::json toJson() const override;
 
+      Statistics& operator=(const Statistics &other);
       Statistics& operator=(const nlohmann::json& json);
 
       int jumps = 0;

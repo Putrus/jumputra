@@ -26,13 +26,14 @@ namespace jp::algorithm
    void Algorithm::addBot(const logic::Character& character, const std::vector<Move>& moves)
    {
       mEngine->addCharacterCopy(character);
-      mBots.push_back(Bot(mEngine->getCharacters().back(), moves));
+      mBots.push_back(std::make_shared<Bot>(mEngine->getCharacters().back(), moves));
    }
 
    void Algorithm::addBot(const logic::Character& character, const Move& move)
    {
       mEngine->addCharacterCopy(character);
-      mBots.push_back(Bot(mEngine->getCharacters().back(), { move }));
+      std::vector<Move> moves = { move };
+      mBots.push_back(std::make_shared<Bot>(mEngine->getCharacters().back(), moves));
    }
 
    void Algorithm::clearBots()
@@ -44,7 +45,7 @@ namespace jp::algorithm
    bool Algorithm::haveBotsFinishedMoves() const
    {
       return std::find_if(mBots.begin(), mBots.end(), [](const auto& bot)
-         { return !bot.finishedMoves(); }) == mBots.end();
+         { return !bot->finishedMoves(); }) == mBots.end();
    }
 
    Move Algorithm::randomMove() const

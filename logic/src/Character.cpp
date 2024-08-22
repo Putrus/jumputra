@@ -108,6 +108,7 @@ namespace jp::logic
          mGravity = other.mGravity;
          mVisitedSegments = other.mVisitedSegments;
          mRunSpeed = other.mRunSpeed;
+         mStatistics = other.mStatistics;
          mRect = other.mRect;
          mAcceleration = other.mAcceleration;
          mVelocity = other.mVelocity;

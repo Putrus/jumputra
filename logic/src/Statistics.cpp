@@ -28,6 +28,15 @@ namespace jp::logic
       return json;
    }
 
+   Statistics& Statistics::operator=(const Statistics& other)
+   {
+      jumps = other.jumps;
+      falls = other.falls;
+      time = other.time;
+      totalTime = other.totalTime;
+      return *this;
+   }
+
    Statistics& Statistics::operator=(const nlohmann::json& json)
    {
       fromJson(json);
