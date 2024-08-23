@@ -20,5 +20,6 @@ namespace jp::algorithm
 
       std::vector<std::shared_ptr<Bot>>& mAnts = mBots;
       std::vector<std::shared_ptr<Pheromone>> mPheromones;
+      size_t mPheromonesLastSize = 0;
    };
 }

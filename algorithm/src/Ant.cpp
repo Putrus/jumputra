@@ -32,11 +32,6 @@ namespace jp::algorithm
 
          if (!find)
          {
-            // std::cout << "Visited segments: " << std::endl;
-            // for (const auto& segment : getVisitedSegments())
-            // {
-            //    std::cout << *segment << std::endl;
-            // }
             auto findPheromone = std::find_if(mPheromones.begin(), mPheromones.end(), [this](const auto& pheromone)
             {
                const math::Vector2<float>& pheromonePosition = pheromone->getPosition();
@@ -45,14 +40,12 @@ namespace jp::algorithm
 
             if (findPheromone == mPheromones.end())
             {
-               mPheromones.push_back(std::make_shared<Pheromone>(mLastPosition, getMoves().back(), 100.f));
-
-               // for (const auto& pheromone : mPheromones)
-               // {
-               //    std::cout << "position: " << pheromone->getPosition() << " move: " <<
-               //       pheromone->getMove().type << " " << pheromone->getMove().direction << " " << pheromone->getMove().value << std::endl;
-               // }
-               // std::cout << std::endl;
+               float intensity = 100.f;
+               if (mLastPosition.y < getPosition().y)
+               {
+                  intensity = 1.f;
+               }
+               mPheromones.push_back(std::make_shared<Pheromone>(mLastPosition, getMoves().back(), intensity));
             }
          }
 
@@ -83,7 +76,7 @@ namespace jp::algorithm
                if (core::Random::getFloat(0.f, 100.f) <= (*findPheromone)->getIntensity())
                {
                   setMove((*findPheromone)->getMove());
-                  (*findPheromone)->increaseIntensity(10.f);
+                  (*findPheromone)->increaseIntensity(5.f);
                   return;
                }
             }

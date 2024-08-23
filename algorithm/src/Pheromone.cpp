@@ -12,7 +12,7 @@ namespace jp::algorithm
 
    void Pheromone::increaseIntensity(float value)
    {
-      mIntensity += value;
+      mIntensity = std::min(100.f, mIntensity + value);
    }
 
    const Move& Pheromone::getMove() const

@@ -26,10 +26,22 @@ namespace jp::algorithm
             return pheromone->getIntensity() < 0.f;
          }), mPheromones.end());
 
+      float bestY = std::numeric_limits<float>::max();
       for (auto& ant : mAnts)
       {
          ant->update(dt);
+         if (ant->getPosition().y < bestY)
+         {
+            bestY = ant->getPosition().y;
+         }
       }
+
+      if (mPheromonesLastSize != mPheromones.size())
+      {
+         std::cout << mPheromones.size() << " pos: " << bestY << std::endl;
+      }
+
+      mPheromonesLastSize = mPheromones.size();
    }
 
    void AntColony::addAnt(const math::Rect<float>& rect)
