@@ -51,7 +51,7 @@ namespace jp::algorithm
          { parents.first->getMoves(), parents.second->getMoves() };
 
       clearPopulation();
-      size_t elitismSize = static_cast<size_t>(mPopulation.size() * mProperties.genetic.population.elitism);
+      size_t elitismSize = static_cast<size_t>(mProperties.genetic.population.size * mProperties.genetic.population.elitism);
       for (size_t i = 0; i < elitismSize; ++i)
       {
          std::vector<Move> moves = crossover(parentsMoves);
@@ -69,7 +69,7 @@ namespace jp::algorithm
    std::shared_ptr<Individual> Genetic::tournament() const
    {
       std::vector<std::shared_ptr<Individual>> candidates;
-      size_t tournamentSize = static_cast<size_t>(mPopulation.size() * mProperties.genetic.tournament);
+      size_t tournamentSize = static_cast<size_t>(mProperties.genetic.population.size * mProperties.genetic.tournament);
       for (size_t i = 0; i < tournamentSize; ++i)
       {
          candidates.push_back(mPopulation.at(core::Random::getInt(0, mPopulation.size() - 1)));
