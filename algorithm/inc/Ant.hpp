@@ -21,9 +21,9 @@ namespace jp::algorithm
    private:
       void setMove(const Move& move);
 
-      logic::CharacterDirection mLastDirection = logic::CharacterDirection::Left;
       math::Vector2<float> mLastChangeDirectionPosition = math::Vector2<float>();
       math::Vector2<float> mLastPosition = math::Vector2<float>();
+      std::shared_ptr<logic::Segment> mSegmentBeforeJump;
       const Properties& mProperties;
       std::vector<std::shared_ptr<Pheromone>>& mPheromones;
    };

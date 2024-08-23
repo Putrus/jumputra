@@ -17,14 +17,13 @@ namespace jp::algorithm
       if (finishedMoves())
       {
          bool find = false;
-         if (getVisitedSegments().size() == 1)
+         if (getVisitedSegments().size() == 1 || getVisitedSegments().back() == mSegmentBeforeJump)
          {
             find = true;
          }
          for (size_t i = 0; i < getVisitedSegments().size() - 1; ++i)
          {
-            if (getVisitedSegments().at(i) == getVisitedSegments().back() || getVisitedSegments().back()->isVertical() 
-               || getVisitedSegments().at(i)->isVertical())
+            if (getVisitedSegments().at(i) == getVisitedSegments().back() || getVisitedSegments().back()->isVertical())
             {
                find = true;
                break;
@@ -33,6 +32,11 @@ namespace jp::algorithm
 
          if (!find)
          {
+            // std::cout << "Visited segments: " << std::endl;
+            // for (const auto& segment : getVisitedSegments())
+            // {
+            //    std::cout << *segment << std::endl;
+            // }
             auto findPheromone = std::find_if(mPheromones.begin(), mPheromones.end(), [this](const auto& pheromone)
             {
                const math::Vector2<float>& pheromonePosition = pheromone->getPosition();
@@ -42,10 +46,17 @@ namespace jp::algorithm
             if (findPheromone == mPheromones.end())
             {
                mPheromones.push_back(std::make_shared<Pheromone>(mLastPosition, getMoves().back(), 100.f));
+
+               // for (const auto& pheromone : mPheromones)
+               // {
+               //    std::cout << "position: " << pheromone->getPosition() << " move: " <<
+               //       pheromone->getMove().type << " " << pheromone->getMove().direction << " " << pheromone->getMove().value << std::endl;
+               // }
+               // std::cout << std::endl;
             }
          }
 
-         setMove(Move::infiniteRun(mLastDirection));
+         setMove(Move::infiniteRun(static_cast<logic::CharacterDirection>(core::Random::getInt(1, 2))));
          mLastChangeDirectionPosition = position;
       }
       else
@@ -73,15 +84,17 @@ namespace jp::algorithm
                {
                   setMove((*findPheromone)->getMove());
                   (*findPheromone)->increaseIntensity(10.f);
-                  mLastDirection = mMoves.back().direction;
                   return;
                }
             }
 
             if (core::Random::getFloat(0.f, 1.f) <= mProperties.antColony.randomJumpChance)
             {
+               if (!getVisitedSegments().empty())
+               {
+                  mSegmentBeforeJump = getVisitedSegments().back();
+               }
                setMove(Move::randomSideJump(10.f, mCharacter->getProperties().character.jump.max.y));
-               mLastDirection = mMoves.back().direction;
             }
          }
       }
