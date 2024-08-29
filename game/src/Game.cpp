@@ -99,6 +99,10 @@ namespace jp::game
 
    void Game::save() const
    {
+      if (!std::filesystem::exists(SAVES_DIR))
+      {
+         std::filesystem::create_directory(SAVES_DIR);
+      }
       saveToJsonFile(std::string(SAVES_DIR) + mContext.world + ".json");
    }
 
