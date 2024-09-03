@@ -21,9 +21,10 @@ namespace jp::algorithm
          {
             find = true;
          }
+
          for (size_t i = 0; i < getVisitedSegments().size() - 1; ++i)
          {
-            if (getVisitedSegments().at(i) == getVisitedSegments().back() || getVisitedSegments().back()->isVertical())
+            if (getVisitedSegments().at(i) == getVisitedSegments().back())
             {
                find = true;
                break;
