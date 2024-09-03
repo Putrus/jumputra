@@ -254,7 +254,7 @@ namespace jp::logic
                }
                newRect.top = std::min(segment->a.y, segment->b.y) - newRect.height;
                newVelocity.y = 0.f;
-               if (mVisitedSegments.empty() || segment != mVisitedSegments.back())
+               if (segment->isHorizontal() && (mVisitedSegments.empty() || segment != mVisitedSegments.back()))
                {
                   mVisitedSegments.push_back(segment);
                }

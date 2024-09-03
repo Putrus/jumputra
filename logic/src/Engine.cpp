@@ -232,6 +232,26 @@ namespace jp::logic
       {
          addSegment(segment->a, segment->b, segment->getSurface());
       }
+
+      std::sort(mSegments.begin(), mSegments.end(), [](const auto& lhs, const auto& rhs)
+         {
+            auto getTypePriority = [](const auto& segment)
+               {
+                  if (segment->isHorizontal())
+                  {
+                     return 0;
+                  }
+                  else if (segment->isVertical())
+                  {
+                     return 1;
+                  }
+                  else
+                  {
+                     return 2;
+                  }
+               };
+            return getTypePriority(lhs) < getTypePriority(rhs);
+         });
    }
    
    void Engine::windsFromJson(const nlohmann::json& json)
