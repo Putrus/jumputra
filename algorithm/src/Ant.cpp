@@ -40,55 +40,76 @@ namespace jp::algorithm
 
             if (findPheromone == mPheromones.end())
             {
-               float intensity = 100.f;
+               float intensity = 50.f;
                if (mLastPosition.y < getPosition().y)
                {
                   intensity = 1.f;
                }
-               mPheromones.push_back(std::make_shared<Pheromone>(mLastPosition, getMoves().back(), intensity));
+
+               if (getVisitedSegments().size() < 2)
+               {
+                  throw std::runtime_error("Ant::update - Failed to add new pheromone, visited segments size is less than 2");
+               }
+
+               mPheromones.push_back(std::make_shared<Pheromone>(mLastPosition, getMoves().back(),
+                  intensity, getVisitedSegments().at(getVisitedSegments().size() - 2)));
             }
          }
 
-         setMove(Move::infiniteRun(static_cast<logic::CharacterDirection>(core::Random::getInt(1, 2))));
+         auto findPheromone = std::find_if(mPheromones.begin(), mPheromones.end(), [this](const auto& pheromone)
+            {
+               return pheromone->getSegment() == getVisitedSegments().back() && core::Random::getFloat(0.f, 100.f) <= pheromone->getIntensity();
+            });
+
+         logic::CharacterDirection runDirection = static_cast<logic::CharacterDirection>(core::Random::getInt(1, 2));
+
+         if (findPheromone != mPheromones.end())
+         {
+            if ((*findPheromone)->getPosition().x < getPosition().x)
+            {
+               runDirection = logic::CharacterDirection::Left;
+            }
+            else
+            {
+               runDirection = logic::CharacterDirection::Right;
+            }
+         }
+         setMove(Move::infiniteRun(runDirection));
          mLastChangeDirectionPosition = position;
       }
-      else
+      else if (getCurrentMove().type == MoveType::Run)
       {
-         Move currentMove = getCurrentMove();
-         if (currentMove.type == MoveType::Run)
+         if (mLastPosition == position &&
+            mLastChangeDirectionPosition != position)
          {
-            if (mLastPosition == position &&
-               mLastChangeDirectionPosition != position)
-            {
-               setMove(Move::infiniteRun(logic::Character::oppositeDirection(getDirection())));
-               mLastChangeDirectionPosition = position;
-            }
-            mLastPosition = position;
+            setMove(Move::infiniteRun(logic::Character::oppositeDirection(getDirection())));
+            mLastChangeDirectionPosition = position;
+         }
+         mLastPosition = position;
 
-            auto findPheromone = std::find_if(mPheromones.begin(), mPheromones.end(), [position](const auto& pheromone)
-               {
-                  const math::Vector2<float>& pheromonePosition = pheromone->getPosition();
-                  return position.y == pheromonePosition.y && position.x > pheromonePosition.x - 0.5f && position.x < pheromonePosition.x + 0.5f;
-               });
-
-            if (findPheromone != mPheromones.end())
+         auto findPheromone = std::find_if(mPheromones.begin(), mPheromones.end(), [position](const auto& pheromone)
             {
-               if (core::Random::getFloat(0.f, 100.f) <= (*findPheromone)->getIntensity())
-               {
-                  setMove((*findPheromone)->getMove());
-                  (*findPheromone)->increaseIntensity(5.f);
-                  return;
-               }
-            }
+               const math::Vector2<float>& pheromonePosition = pheromone->getPosition();
+               return position.y == pheromonePosition.y && position.x > pheromonePosition.x - 0.5f && position.x < pheromonePosition.x + 0.5f;
+            });
 
-            if (core::Random::getFloat(0.f, 1.f) <= mProperties.antColony.randomJumpChance)
+         if (findPheromone != mPheromones.end())
+         {
+            if (core::Random::getFloat(0.f, 100.f) <= (*findPheromone)->getIntensity())
             {
-               if (!getVisitedSegments().empty())
-               {
-                  mSegmentBeforeJump = getVisitedSegments().back();
-               }
-               setMove(Move::randomSideJump(10.f, mCharacter->getProperties().character.jump.max.y));
+               setMove((*findPheromone)->getMove());
+               (*findPheromone)->increaseIntensity(5.f);
+               return;
             }
+         }
+
+         if (core::Random::getFloat(0.f, 1.f) <= mProperties.antColony.randomJumpChance)
+         {
+            if (!getVisitedSegments().empty())
+            {
+               mSegmentBeforeJump = getVisitedSegments().back();
+            }
+            setMove(Move::randomSideJump(10.f, mCharacter->getProperties().character.jump.max.y));
          }
       }
    }
