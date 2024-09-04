@@ -5,6 +5,7 @@
 #include "../../algorithm/inc/Dummy.hpp"
 #include "../../algorithm/inc/Genetic.hpp"
 #include "../../algorithm/inc/Greedy.hpp"
+#include "../../algorithm/inc/QLearning.hpp"
 
 #include <chrono>
 #include <format>
@@ -30,6 +31,9 @@ namespace jp::game
          break;
       case Controller::Human:
          mAlgorithm = std::make_shared<algorithm::Dummy>(mGame, mContext.properties.algorithm);
+         break;
+      case Controller::QLearning:
+         mAlgorithm = std::make_shared<algorithm::QLearning>(mGame, mContext.properties.algorithm);
          break;
       default:
          throw std::invalid_argument("jp::game::StateGame::StateGame - Failed to create agent, wrong agent name");

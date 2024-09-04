@@ -10,7 +10,8 @@ namespace jp::game
       DecisionTree,
       Genetic,
       Greedy,
-      Human
+      Human,
+      QLearning
    };
 
    std::ostream& operator<<(std::ostream& os, Controller controller);

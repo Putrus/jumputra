@@ -4,6 +4,8 @@
 #include "../../algorithm/inc/DecisionTree.hpp"
 #include "../../algorithm/inc/Genetic.hpp"
 #include "../../algorithm/inc/Greedy.hpp"
+#include "../../algorithm/inc/QLearning.hpp"
+
 
 #include <nlohmann/json.hpp>
 
@@ -31,6 +33,10 @@ namespace jp::console
       else if (algorithmName == "greedy")
       {
          mAlgorithm = std::make_unique<algorithm::Greedy>(mEngine, mProperties.algorithm);
+      }
+      else if (algorithmName == "qLearning")
+      {
+         mAlgorithm = std::make_unique<algorithm::QLearning>(mEngine, mProperties.algorithm);
       }
       else
       {
