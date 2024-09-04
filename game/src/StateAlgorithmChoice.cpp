@@ -8,6 +8,7 @@ namespace jp::game
       mMenu.addItem(context.language.getString("decisionTree"), context.resources.getFont(graphic::FontID::Pixeled), sf::Color::White, sf::Color::Red);
       mMenu.addItem(context.language.getString("genetic"), context.resources.getFont(graphic::FontID::Pixeled), sf::Color::White, sf::Color::Cyan);
       mMenu.addItem(context.language.getString("greedy"), context.resources.getFont(graphic::FontID::Pixeled), sf::Color::White, sf::Color::Magenta);
+      mMenu.addItem(context.language.getString("qLearning"), context.resources.getFont(graphic::FontID::Pixeled), sf::Color::White, sf::Color::Blue);
       mMenu.addItem(context.language.getString("back"), context.resources.getFont(graphic::FontID::Pixeled));
    }
 
@@ -19,7 +20,8 @@ namespace jp::game
          mMenu.setItemText(1, mContext.language.getString("decisionTree"));
          mMenu.setItemText(2, mContext.language.getString("genetic"));
          mMenu.setItemText(3, mContext.language.getString("greedy"));
-         mMenu.setItemText(4, mContext.language.getString("back"));
+         mMenu.setItemText(4, mContext.language.getString("qLearning"));
+         mMenu.setItemText(5, mContext.language.getString("back"));
       }
    }
 
@@ -46,6 +48,10 @@ namespace jp::game
          else if (mMenu.getSelectedTextString() == mContext.language.getString("greedy"))
          {
             mContext.controller = Controller::Greedy;
+         }
+         else if (mMenu.getSelectedTextString() == mContext.language.getString("qLearning"))
+         {
+            mContext.controller = Controller::QLearning;
          }
          else
          {

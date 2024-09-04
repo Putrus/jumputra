@@ -9,12 +9,6 @@
 
 namespace jp::algorithm
 {
-   enum class AlgorithmType : int
-   {
-      Genetic,
-      Greedy
-   };
-
    class Algorithm : public Movable
    {
    public:

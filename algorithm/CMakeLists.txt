@@ -20,6 +20,7 @@ set(HEADERS
    inc/Move.hpp
    inc/Pheromone.hpp
    inc/Properties.hpp
+   inc/QLearning.hpp
    )
 
 set(SOURCES
@@ -36,6 +37,7 @@ set(SOURCES
    src/Move.cpp
    src/Pheromone.cpp
    src/Properties.cpp
+   src/QLearning.cpp
    )
 
 add_library(jp_algorithm STATIC ${HEADERS} ${SOURCES})
