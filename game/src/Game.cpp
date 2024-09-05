@@ -26,6 +26,32 @@ namespace jp::game
 
    void Game::event(const sf::Event& event)
    {
+      if (event.type == sf::Event::KeyReleased)
+      {
+         switch (event.key.code)
+         {
+         case sf::Keyboard::Key::V:
+            mViewFollowCharacter = mViewFollowCharacter ? false : true;
+            break;
+         case sf::Keyboard::Key::Numpad8:
+            if (!mViewFollowCharacter)
+            {
+               sf::View view = mContext.window.getView();
+               view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y - mContext.properties.graphic.window.size.y));
+               mContext.window.setView(view);
+            }
+            break;
+         case sf::Keyboard::Key::Numpad2:
+            if (!mViewFollowCharacter)
+            {
+               sf::View view = mContext.window.getView();
+               view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y + mContext.properties.graphic.window.size.y));
+               mContext.window.setView(view);
+            }
+         default:
+            break;
+         }
+      }
       if (mContext.controller != Controller::Human)
       {
          return;
@@ -116,7 +142,7 @@ namespace jp::game
 
    void Game::updateView()
    {
-      if (mCharacters.empty())
+      if (mCharacters.empty() || !mViewFollowCharacter)
       {
          return;
       }

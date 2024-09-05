@@ -49,5 +49,6 @@ namespace jp::game
 
       Context& mContext;
       std::vector<std::shared_ptr<sf::Drawable>> mDrawables;
+      bool mViewFollowCharacter = true;
    };
 }

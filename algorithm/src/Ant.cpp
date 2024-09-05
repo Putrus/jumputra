@@ -4,6 +4,8 @@
 
 namespace jp::algorithm
 {
+   constexpr float COLLISION_THRESHOLD = 0.25f;
+
    Ant::Ant(std::vector<std::shared_ptr<Pheromone>>& pheromones,
       const algorithm::Properties& properties, const std::shared_ptr<logic::Character>& character)
       : mPheromones(pheromones), mProperties(properties),
@@ -36,7 +38,8 @@ namespace jp::algorithm
             auto findPheromone = std::find_if(mPheromones.begin(), mPheromones.end(), [this](const auto& pheromone)
             {
                const math::Vector2<float>& pheromonePosition = pheromone->getPosition();
-               return mLastPosition.y == pheromonePosition.y && mLastPosition.x > pheromonePosition.x - 0.5f && mLastPosition.x < pheromonePosition.x + 0.5f;
+               return mLastPosition.y == pheromonePosition.y && mLastPosition.x > pheromonePosition.x - COLLISION_THRESHOLD &&
+                  mLastPosition.x < pheromonePosition.x + COLLISION_THRESHOLD;
             });
 
             if (findPheromone == mPheromones.end())
@@ -91,7 +94,8 @@ namespace jp::algorithm
          auto findPheromone = std::find_if(mPheromones.begin(), mPheromones.end(), [position](const auto& pheromone)
             {
                const math::Vector2<float>& pheromonePosition = pheromone->getPosition();
-               return position.y == pheromonePosition.y && position.x > pheromonePosition.x - 0.5f && position.x < pheromonePosition.x + 0.5f;
+               return position.y == pheromonePosition.y && position.x > pheromonePosition.x - COLLISION_THRESHOLD &&
+                  position.x < pheromonePosition.x + COLLISION_THRESHOLD;
             });
 
          if (findPheromone != mPheromones.end())
