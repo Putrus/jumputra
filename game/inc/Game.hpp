@@ -38,6 +38,7 @@ namespace jp::game
       void updateView();
       void removeRedundantDrawables();
       void humanCharacterControl(const sf::Event& event);
+      void changeView(float y);
 
       void setGoal(const nlohmann::json& json) override;
       void addCharacter(const nlohmann::json& json) override;

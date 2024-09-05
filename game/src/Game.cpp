@@ -36,17 +36,13 @@ namespace jp::game
          case sf::Keyboard::Key::Numpad8:
             if (!mViewFollowCharacter)
             {
-               sf::View view = mContext.window.getView();
-               view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y - mContext.properties.graphic.window.size.y));
-               mContext.window.setView(view);
+               changeView(-static_cast<float>(mContext.properties.graphic.window.size.y));
             }
             break;
          case sf::Keyboard::Key::Numpad2:
             if (!mViewFollowCharacter)
             {
-               sf::View view = mContext.window.getView();
-               view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y + mContext.properties.graphic.window.size.y));
-               mContext.window.setView(view);
+               changeView(mContext.properties.graphic.window.size.y);
             }
          default:
             break;
@@ -155,19 +151,16 @@ namespace jp::game
       const logic::Character& followedCharacter = **followedCharacterIt;
 
       float halfWindowHeight = mContext.properties.graphic.window.size.y / 2.f;
-      sf::View view = mContext.window.getView();
       while(true)
       {
          if (followedCharacter.getPosition().y < mContext.window.getView().getCenter().y -
             halfWindowHeight - followedCharacter.getRect().height)
          {
-            view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y - mContext.properties.graphic.window.size.y));
-            mContext.window.setView(view);
+            changeView(-static_cast<float>(mContext.properties.graphic.window.size.y));
          }
          else if (followedCharacter.getPosition().y > mContext.window.getView().getCenter().y + halfWindowHeight)
          {
-            view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y + mContext.properties.graphic.window.size.y));
-            mContext.window.setView(view);
+            changeView(mContext.properties.graphic.window.size.y);
          }
          else
          {
@@ -247,6 +240,13 @@ namespace jp::game
             break;
          }
       }
+   }
+
+   void Game::changeView(float y)
+   {
+      sf::View view = mContext.window.getView();
+      view.setCenter(sf::Vector2f(view.getCenter().x, view.getCenter().y + y));
+      mContext.window.setView(view);
    }
 
    void Game::setGoal(const nlohmann::json& json)
