@@ -16,7 +16,6 @@ namespace jp::core
       template <typename T>
       Logger& operator<<(const T& value);
 
-      template <typename T>
       Logger& operator<<(std::ostream& (*manip)(std::ostream&));
 
    private:
@@ -39,25 +38,6 @@ namespace jp::core
       if (mConsole)
       {
          std::cout << value;
-      }
-      return *this;
-   }
-
-   template <typename T>
-   Logger& Logger::operator<<(std::ostream& (*manip)(std::ostream&))
-   {
-      if (mFile.is_open())
-      {
-         mFile << manip;
-      }
-      else
-      {
-         throw std::runtime_error("jp::core::Logger::operator<< - Failed to log, file isn't open");
-      }
-
-      if (mConsole)
-      {
-         std::cout << manip;
       }
       return *this;
    }

@@ -8,4 +8,22 @@ namespace jp::core
    {
       mFile.close();
    }
+
+   Logger& Logger::operator<<(std::ostream& (*manip)(std::ostream&))
+   {
+      if (mFile.is_open())
+      {
+         mFile << manip;
+      }
+      else
+      {
+         throw std::runtime_error("jp::core::Logger::operator<< - Failed to log, file isn't open");
+      }
+
+      if (mConsole)
+      {
+         std::cout << manip;
+      }
+      return *this;
+   }
 }

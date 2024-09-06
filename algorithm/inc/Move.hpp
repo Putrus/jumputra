@@ -32,4 +32,6 @@ namespace jp::algorithm
       logic::CharacterDirection direction = logic::CharacterDirection::Up;
       float value = 0.f;
    };
+
+   std::ostream& operator<<(std::ostream& os, const Move& move);
 }

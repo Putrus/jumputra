@@ -15,7 +15,7 @@
 namespace jp::console
 {
    Consolutra::Consolutra(const std::string& propertiesFilename, const std::string& worldFilename, const std::string& algorithmName)
-      : mLogger(std::make_shared<core::Logger>("data/logs/" + core::String::toLower(worldFilename) + "_" +
+      : mLogger(std::make_shared<core::Logger>("data/logs/" + core::String::toLower(std::filesystem::path(worldFilename).filename().string()) + "_" +
          core::String::toLower(algorithmName) + "_" + core::String::currentDate() + ".txt", true))
    {
       mProperties.loadFromJsonFile(propertiesFilename);
@@ -55,6 +55,12 @@ namespace jp::console
          mAlgorithm->update(1 / 60.f);
       }
 
-      std::cout << mEngine->getStatistics() << std::endl;
+      *mLogger << "Moves:" << mAlgorithm->getMoves().size() << std::endl;
+      for (size_t i = 0; i < mAlgorithm->getMoves().size();  ++i)
+      {
+         *mLogger << i << " " << mAlgorithm->getMoves().at(i) << std::endl;
+      }
+
+      *mLogger << "Statistics: " << mEngine->getStatistics() << std::endl;
    }
 }

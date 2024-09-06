@@ -77,4 +77,10 @@ namespace jp::algorithm
    {
       return Move(MoveType::Run, direction, std::numeric_limits<float>::max());
    }
+
+   std::ostream& operator<<(std::ostream& os, const Move& move)
+   {
+      os << "type: " << move.type << " direction: " << move.direction << " value: " << move.value;
+      return os;
+   }
 }

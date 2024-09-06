@@ -58,7 +58,7 @@ namespace jp::algorithm
       mLastY = bestJumper.getPosition().y;
       clearBots();
 
-      std::cout << "Iteration: " << mMoves.size() << " position: " << bestJumper.getPosition() << std::endl;
+      *mLogger << "Iteration: " << mMoves.size() << " position: " << bestJumper.getPosition() << std::endl;
 
       for (size_t i = 0; i < mProperties.greedy.bots; ++i)
       {
