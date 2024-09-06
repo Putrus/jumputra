@@ -25,8 +25,8 @@ namespace jp::algorithm
          adjustMutationRate(newBestFitness);
          mLastBestFitness = newBestFitness;
 
-         std::cout << "Generation: " << mGeneration++ <<
-            " best fitness: " << newBestFitness << " moves: " << parents.first->getMoves().size() << " mutation: " << mMutationRate << std::endl;
+         *mLogger << "Generation: " << mGeneration++ << " best fitness: " << newBestFitness <<
+            " moves: " << parents.first->getMoves().size() << " mutation: " << mMutationRate << std::endl;
 
          createPopulation(parents);
       }

@@ -15,7 +15,7 @@
 namespace jp::console
 {
    Consolutra::Consolutra(const std::string& propertiesFilename, const std::string& worldFilename, const std::string& algorithmName)
-      : mLogger(std::make_shared<core::Logger>("data/logs/" + core::String::toLower(std::filesystem::path(worldFilename).filename().string()) + "_" +
+      : mLogger(std::make_shared<core::Logger>("data/logs/" + core::String::toLower(std::filesystem::path(worldFilename).stem().string()) + "_" +
          core::String::toLower(algorithmName) + "_" + core::String::currentDate() + ".txt", true))
    {
       mProperties.loadFromJsonFile(propertiesFilename);
