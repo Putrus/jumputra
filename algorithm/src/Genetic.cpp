@@ -4,8 +4,9 @@
 
 namespace jp::algorithm
 {
-   Genetic::Genetic(const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties)
-      : mStartRect(engine->getCharacters().at(0)->getRect()), Algorithm(engine, properties)
+   Genetic::Genetic(const std::shared_ptr<logic::Engine>& engine,
+      const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties)
+      : mStartRect(engine->getCharacters().at(0)->getRect()), Algorithm(engine, logger, properties)
    {
       initializePopulation();
    }

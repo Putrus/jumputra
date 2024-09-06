@@ -8,12 +8,16 @@ DESCRIPTION "jumputra core"
 
 set(HEADERS
    inc/Jsonable.hpp
+   inc/Logger.hpp
    inc/Random.hpp
+   inc/String.hpp
    )
 
 set(SOURCES
    src/Jsonable.cpp
+   src/Logger.cpp
    src/Random.cpp
+   src/String.cpp
    )
 
 add_library(jp_core STATIC ${HEADERS} ${SOURCES})

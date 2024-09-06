@@ -8,8 +8,9 @@
 
 namespace jp::algorithm
 {
-   Algorithm::Algorithm(const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties)
-      : mEngine(engine), mProperties(properties), Movable({}) {}
+   Algorithm::Algorithm(const std::shared_ptr<logic::Engine>& engine,
+      const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties)
+      : mEngine(engine), mProperties(properties), mLogger(logger), Movable({}) {}
 
    void Algorithm::saveMoves(const std::string &filename) const
    {

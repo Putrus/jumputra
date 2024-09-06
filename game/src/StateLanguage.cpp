@@ -1,5 +1,7 @@
 #include "../inc/StateLanguage.hpp"
 
+#include "../../core/inc/String.hpp"
+
 #include <algorithm>
 #include <string>
 
@@ -9,9 +11,7 @@ namespace jp::game
    {
       for (const auto& language : context.language.getAvailableLanguages())
       {
-         std::string strLanguage = language;
-         std::transform(strLanguage.begin(), strLanguage.end(), strLanguage.begin(), toupper);
-         mMenu.addItem(strLanguage, context.resources.getFont(graphic::FontID::Pixeled));
+         mMenu.addItem(core::String::toUpper(language), context.resources.getFont(graphic::FontID::Pixeled));
       }
       
       mMenu.addItem(context.language.getString("back"), context.resources.getFont(graphic::FontID::Pixeled));
@@ -33,9 +33,7 @@ namespace jp::game
       }
       else
       {
-         std::string strLanguage = mMenu.getSelectedTextString();
-         std::transform(strLanguage.begin(), strLanguage.end(), strLanguage.begin(), tolower);
-         mContext.setLanguage(strLanguage);
+         mContext.setLanguage(core::String::toLower(mMenu.getSelectedTextString()));
       }
    }
 

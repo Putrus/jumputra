@@ -8,7 +8,8 @@ namespace jp::algorithm
    class Greedy final : public Algorithm
    {
    public:
-      Greedy(const std::shared_ptr<logic::Engine> &engine, const algorithm::Properties& properties);
+      Greedy(const std::shared_ptr<logic::Engine>& engine,
+         const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties);
 
       void update(float dt) override;
 

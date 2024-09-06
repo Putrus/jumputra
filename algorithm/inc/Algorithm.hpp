@@ -3,6 +3,8 @@
 #include "Bot.hpp"
 #include "Properties.hpp"
 
+#include "../../core/inc/Logger.hpp"
+
 #include "../../logic/inc/Engine.hpp"
 
 #include <vector>
@@ -12,7 +14,8 @@ namespace jp::algorithm
    class Algorithm : public Movable
    {
    public:
-      Algorithm(const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties);
+      Algorithm(const std::shared_ptr<logic::Engine>& engine,
+         const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties);
 
       void saveMoves(const std::string &filename) const;
 
@@ -29,6 +32,7 @@ namespace jp::algorithm
 
       std::vector<std::shared_ptr<Bot>> mBots;
       std::shared_ptr<logic::Engine> mEngine;
+      std::shared_ptr<core::Logger> mLogger;
       const Properties& mProperties;
    };
 }

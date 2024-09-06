@@ -11,9 +11,9 @@
 
 #include "../../logic/inc/Statistics.hpp"
 
-
 namespace jp::game
 {
+   constexpr char LOGS_DIR[] = "data/logs/";
    constexpr char OPTIONS_DIR[] = "data/options/";
    constexpr char RESOURCES_DIR[] = "data/resources/";
    constexpr char SAVES_DIR[] = "data/saves/";
@@ -37,7 +37,6 @@ namespace jp::game
       bool newGame = false;
       
       logic::Statistics statistics;
-
 
       void setLanguage(const std::string& language);
 

@@ -52,7 +52,7 @@ namespace jp::algorithm
 
                if (getVisitedSegments().size() < 2)
                {
-                  throw std::runtime_error("Ant::update - Failed to add new pheromone, visited segments size is less than 2");
+                  throw std::runtime_error("jp::algorithm::Ant::update - Failed to add new pheromone, visited segments size is less than 2");
                }
 
                mPheromones.push_back(std::make_shared<Pheromone>(mLastPosition, getMoves().back(),
@@ -123,7 +123,7 @@ namespace jp::algorithm
    {
       if (mMoves.empty())
       {
-         throw std::runtime_error("Ant::setMove - Failed to set move, moves are empty");
+         throw std::runtime_error("jp::algorithm::Ant::setMove - Failed to set move, moves are empty");
       }
       mFinishedMoves = false;
       mCurrentMove.id = 0;

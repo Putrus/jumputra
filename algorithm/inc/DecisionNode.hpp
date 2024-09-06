@@ -12,7 +12,8 @@ namespace jp::algorithm
    {
    public:
       DecisionNode(DecisionNode* parent, const Move& move, std::set<std::shared_ptr<logic::Segment>>& visitedSegments,
-         const logic::Character& character, const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties);
+         const logic::Character& character, const std::shared_ptr<logic::Engine>& engine,
+         const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties);
 
       void update(float dt) override;
 

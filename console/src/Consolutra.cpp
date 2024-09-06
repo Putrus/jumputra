@@ -6,6 +6,7 @@
 #include "../../algorithm/inc/Greedy.hpp"
 #include "../../algorithm/inc/QLearning.hpp"
 
+#include "../../core/inc/String.hpp"
 
 #include <nlohmann/json.hpp>
 
@@ -14,29 +15,31 @@
 namespace jp::console
 {
    Consolutra::Consolutra(const std::string& propertiesFilename, const std::string& worldFilename, const std::string& algorithmName)
+      : mLogger(std::make_shared<core::Logger>("data/logs/" + core::String::toLower(worldFilename) + "_" +
+         core::String::toLower(algorithmName) + "_" + core::String::currentDate() + ".txt", true))
    {
       mProperties.loadFromJsonFile(propertiesFilename);
       mEngine = std::make_shared<logic::Engine>(mProperties.logic);
       mEngine->loadFromJsonFile(worldFilename);
       if (algorithmName == "antColony")
       {
-         mAlgorithm = std::make_unique<algorithm::AntColony>(mEngine, mProperties.algorithm);
+         mAlgorithm = std::make_unique<algorithm::AntColony>(mEngine, mLogger, mProperties.algorithm);
       }
       else if (algorithmName == "decisionTree")
       {
-         mAlgorithm = std::make_unique<algorithm::DecisionTree>(mEngine, mProperties.algorithm);
+         mAlgorithm = std::make_unique<algorithm::DecisionTree>(mEngine, mLogger, mProperties.algorithm);
       }
       else if (algorithmName == "genetic")
       {
-         mAlgorithm = std::make_unique<algorithm::Genetic>(mEngine, mProperties.algorithm);
+         mAlgorithm = std::make_unique<algorithm::Genetic>(mEngine, mLogger, mProperties.algorithm);
       }
       else if (algorithmName == "greedy")
       {
-         mAlgorithm = std::make_unique<algorithm::Greedy>(mEngine, mProperties.algorithm);
+         mAlgorithm = std::make_unique<algorithm::Greedy>(mEngine, mLogger, mProperties.algorithm);
       }
       else if (algorithmName == "qLearning")
       {
-         mAlgorithm = std::make_unique<algorithm::QLearning>(mEngine, mProperties.algorithm);
+         mAlgorithm = std::make_unique<algorithm::QLearning>(mEngine, mLogger, mProperties.algorithm);
       }
       else
       {

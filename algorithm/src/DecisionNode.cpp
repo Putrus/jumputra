@@ -3,8 +3,9 @@
 namespace jp::algorithm
 {
    DecisionNode::DecisionNode(DecisionNode* parent, const Move& move, std::set<std::shared_ptr<logic::Segment>>& visitedSegments,
-         const logic::Character& character, const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties)
-      : mParent(parent), mVisitedSegments(visitedSegments), Algorithm(engine, properties)
+      const logic::Character& character, const std::shared_ptr<logic::Engine>& engine,
+      const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties)
+      : mParent(parent), mVisitedSegments(visitedSegments), Algorithm(engine, logger, properties)
    {
       if (move.type != MoveType::Idle)
       {
@@ -91,12 +92,12 @@ namespace jp::algorithm
          {
             if (bot->getMoves().empty())
             {
-               throw std::runtime_error("DecisionNode::update - Failed to update, bot moves are empty");
+               throw std::runtime_error("jp::algorithm::DecisionNode::update - Failed to update, bot moves are empty");
             }
 
             if (bot->getMoves().back().type == MoveType::Idle)
             {
-               throw std::runtime_error("DecisionNode::update - Failed to update, wrong move type");
+               throw std::runtime_error("jp::algorithm::DecisionNode::update - Failed to update, wrong move type");
             }
 
             if (bot->getMoves().back().type == MoveType::Run)
@@ -110,14 +111,14 @@ namespace jp::algorithm
 
                mVisitedSegments.insert(bot->getCharacter()->getVisitedSegments().back());
                mChildren.push_back(std::make_shared<DecisionNode>(this, bot->getMoves().back(),
-                  mVisitedSegments, bot->getFinishedCharacter(), mEngine, mProperties));
+                  mVisitedSegments, bot->getFinishedCharacter(), mEngine, mLogger, mProperties));
             }
             else if (mVisitedSegments.find(bot->getCharacter()->getVisitedSegments().back()) == mVisitedSegments.end() ||
                (bot->getMoves().back().value == mProperties.decisionTree.jumpValue && bot->getFinishedCharacter().isSticked()))
             {
                mVisitedSegments.insert(bot->getCharacter()->getVisitedSegments().back());
                mChildren.push_back(std::make_shared<DecisionNode>(this, bot->getMoves().back(),
-                  mVisitedSegments, bot->getFinishedCharacter(), mEngine, mProperties));
+                  mVisitedSegments, bot->getFinishedCharacter(), mEngine, mLogger, mProperties));
             }
 
             mEngine->removeCharacter(bot->getCharacter());

@@ -9,7 +9,8 @@ namespace jp::algorithm
    class DecisionTree final : public Algorithm
    {
    public:
-      DecisionTree(const std::shared_ptr<logic::Engine>& engine, const algorithm::Properties& properties);
+      DecisionTree(const std::shared_ptr<logic::Engine>& engine,
+         const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties);
 
       void update(float dt) override;
 

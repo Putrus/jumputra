@@ -7,6 +7,8 @@
 #include "../../algorithm/inc/Greedy.hpp"
 #include "../../algorithm/inc/QLearning.hpp"
 
+#include "../../core/inc/String.hpp"
+
 #include <chrono>
 #include <format>
 
@@ -15,25 +17,29 @@ namespace jp::game
    StateGame::StateGame(StateStack* stack, Context& context)
       : mGame(std::make_shared<Game>(context)), State(stack, context)
    {
+      std::stringstream ss;
+      ss << mContext.controller;
+      std::shared_ptr<core::Logger> logger = std::make_shared<core::Logger>(std::string(LOGS_DIR) + mContext.world + "_" +
+         core::String::toLower(ss.str()) + "_" + core::String::currentDate() + ".txt", false);
       switch (context.controller)
       {
       case Controller::AntColony:
-         mAlgorithm = std::make_shared<algorithm::AntColony>(mGame, mContext.properties.algorithm);
+         mAlgorithm = std::make_shared<algorithm::AntColony>(mGame, logger, mContext.properties.algorithm);
          break;
       case Controller::DecisionTree:
-         mAlgorithm = std::make_shared<algorithm::DecisionTree>(mGame, mContext.properties.algorithm);
+         mAlgorithm = std::make_shared<algorithm::DecisionTree>(mGame, logger, mContext.properties.algorithm);
          break;
       case Controller::Genetic:
-         mAlgorithm = std::make_shared<algorithm::Genetic>(mGame, mContext.properties.algorithm);
+         mAlgorithm = std::make_shared<algorithm::Genetic>(mGame, logger, mContext.properties.algorithm);
          break;
       case Controller::Greedy:
-         mAlgorithm = std::make_shared<algorithm::Greedy>(mGame, mContext.properties.algorithm);
+         mAlgorithm = std::make_shared<algorithm::Greedy>(mGame, logger, mContext.properties.algorithm);
          break;
       case Controller::Human:
-         mAlgorithm = std::make_shared<algorithm::Dummy>(mGame, mContext.properties.algorithm);
+         mAlgorithm = std::make_shared<algorithm::Dummy>(mGame, logger, mContext.properties.algorithm);
          break;
       case Controller::QLearning:
-         mAlgorithm = std::make_shared<algorithm::QLearning>(mGame, mContext.properties.algorithm);
+         mAlgorithm = std::make_shared<algorithm::QLearning>(mGame, logger, mContext.properties.algorithm);
          break;
       default:
          throw std::invalid_argument("jp::game::StateGame::StateGame - Failed to create agent, wrong agent name");
@@ -84,15 +90,12 @@ namespace jp::game
       mGame->update(dt);
       if (mGame->hasGoalBeenAchieved())
       {
-         const auto now = std::chrono::system_clock::now();
-         std::string time = std::format("{:%d-%m-%Y_%H-%M}", now);
          std::stringstream filenameSS;
          filenameSS << mContext.world << '_' << mContext.controller;
          std::string filename = filenameSS.str();
-         std::transform(filename.begin(), filename.end(), filename.begin(),
-            [](char c) { return std::tolower(c); });
+         filename = core::String::toLower(filename);
          std::filesystem::remove(std::string(SAVES_DIR) + filename + ".json");
-         mGame->saveStatistics(std::string(STATISTICS_DIR) + filename + "_" + time + ".json");
+         mGame->saveStatistics(std::string(STATISTICS_DIR) + filename + "_" + core::String::currentDate() + ".json");
          mContext.statistics = mGame->getStatistics();
          popState();
          pushState(StateID::Win);
