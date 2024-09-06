@@ -17,6 +17,8 @@ namespace jp::algorithm
 
       void update(float dt) override;
 
+      const std::vector<std::shared_ptr<DecisionNode>>& getChildren() const;
+
    private:
       std::set<std::shared_ptr<logic::Segment>>& mVisitedSegments;
       DecisionNode* mParent;

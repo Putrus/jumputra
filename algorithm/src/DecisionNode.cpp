@@ -109,14 +109,24 @@ namespace jp::algorithm
                   continue;
                }
 
-               mVisitedSegments.insert(bot->getCharacter()->getVisitedSegments().back());
+               if (!bot->getCharacter()->getVisitedSegments().empty())
+               {
+                  mVisitedSegments.insert(bot->getCharacter()->getVisitedSegments().back());
+               }
+
                mChildren.push_back(std::make_shared<DecisionNode>(this, bot->getMoves().back(),
                   mVisitedSegments, bot->getFinishedCharacter(), mEngine, mLogger, mProperties));
+
+               *mLogger << "New node at the position: " << bot->getFinishedCharacter().getPosition() << std::endl;
             }
-            else if (mVisitedSegments.find(bot->getCharacter()->getVisitedSegments().back()) == mVisitedSegments.end() ||
+            else if (bot->getCharacter()->getVisitedSegments().empty() || mVisitedSegments.find(bot->getCharacter()->getVisitedSegments().back()) == mVisitedSegments.end() ||
                (bot->getMoves().back().value == mProperties.decisionTree.jumpValue && bot->getFinishedCharacter().isSticked()))
             {
-               mVisitedSegments.insert(bot->getCharacter()->getVisitedSegments().back());
+               if (!bot->getCharacter()->getVisitedSegments().empty())
+               {
+                  mVisitedSegments.insert(bot->getCharacter()->getVisitedSegments().back());
+               }
+
                mChildren.push_back(std::make_shared<DecisionNode>(this, bot->getMoves().back(),
                   mVisitedSegments, bot->getFinishedCharacter(), mEngine, mLogger, mProperties));
             }
@@ -125,5 +135,10 @@ namespace jp::algorithm
          }
          mBots.clear();
       }
+   }
+
+   const std::vector<std::shared_ptr<DecisionNode>>& DecisionNode::getChildren() const
+   {
+      return mChildren;
    }
 }
