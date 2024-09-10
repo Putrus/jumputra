@@ -234,6 +234,11 @@ namespace jp::game
             std::cout << "velocity: " << controlledCharacter.getVelocity() << std::endl;
             std::cout << "runSpeed: " << controlledCharacter.getRunSpeed() << std::endl;
             std::cout << "statistics: " << mContext.statistics << std::endl;
+            std::cout << "visited segments: " << controlledCharacter.getVisitedSegments().size() << std::endl;
+            for (const auto& segment : controlledCharacter.getVisitedSegments())
+            {
+               std::cout << *segment << std::endl;
+            }
             std::cout << std::endl;
             break;
          default:

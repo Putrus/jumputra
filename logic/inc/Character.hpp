@@ -83,6 +83,9 @@ namespace jp::logic
       float getRunSpeed() const;
       Statistics getStatistics() const;
       const std::vector<std::shared_ptr<logic::Segment>>& getVisitedSegments() const;
+      std::vector<std::shared_ptr<logic::Segment>> getVisitedHorizontalSegments() const;
+      std::vector<std::shared_ptr<logic::Segment>> getVisitedDiagonalSegments() const;
+      std::vector<std::shared_ptr<logic::Segment>> getVisitedVerticalSegments() const;
       const math::Vector2<float>& getJumpPower() const;
       const Properties& getProperties() const;
 

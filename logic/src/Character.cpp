@@ -254,7 +254,7 @@ namespace jp::logic
                }
                newRect.top = std::min(segment->a.y, segment->b.y) - newRect.height;
                newVelocity.y = 0.f;
-               if (segment->isHorizontal() && (mVisitedSegments.empty() || segment != mVisitedSegments.back()))
+               if (mVisitedSegments.empty() || segment != mVisitedSegments.back())
                {
                   mVisitedSegments.push_back(segment);
                }
@@ -568,6 +568,39 @@ namespace jp::logic
    const std::vector<std::shared_ptr<logic::Segment>>& Character::getVisitedSegments() const
    {
       return mVisitedSegments;
+   }
+
+   std::vector<std::shared_ptr<logic::Segment>> Character::getVisitedHorizontalSegments() const
+   {
+      std::vector<std::shared_ptr<logic::Segment>> visitedHorizontalSegments;
+      std::copy_if(mVisitedSegments.begin(), mVisitedSegments.end(), std::back_inserter(visitedHorizontalSegments),
+         [](const auto& segment)
+         {
+            return segment->isHorizontal();
+         });
+      return visitedHorizontalSegments;
+   }
+
+   std::vector<std::shared_ptr<logic::Segment>> Character::getVisitedDiagonalSegments() const
+   {
+      std::vector<std::shared_ptr<logic::Segment>> visitedDiagonalSegments;
+      std::copy_if(mVisitedSegments.begin(), mVisitedSegments.end(), std::back_inserter(visitedDiagonalSegments),
+         [](const auto& segment)
+         {
+            return segment->isDiagonal();
+         });
+      return visitedDiagonalSegments;
+   }
+
+   std::vector<std::shared_ptr<logic::Segment>> Character::getVisitedVerticalSegments() const
+   {
+      std::vector<std::shared_ptr<logic::Segment>> visitedVerticalSegments;
+      std::copy_if(mVisitedSegments.begin(), mVisitedSegments.end(), std::back_inserter(visitedVerticalSegments),
+         [](const auto& segment)
+         {
+            return segment->isVertical();
+         });
+      return visitedVerticalSegments;
    }
 
    const math::Vector2<float>& Character::getJumpPower() const
