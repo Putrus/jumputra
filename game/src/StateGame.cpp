@@ -20,7 +20,7 @@ namespace jp::game
       std::stringstream ss;
       ss << mContext.controller;
       std::shared_ptr<core::Logger> logger = std::make_shared<core::Logger>(std::string(LOGS_DIR) + mContext.world + "_" +
-         core::String::toLower(ss.str()) + "_" + core::String::currentDate() + ".txt", false);
+         core::String::toLower(ss.str()) + "_" + core::String::currentDate() + ".txt", true);
       switch (context.controller)
       {
       case Controller::AntColony:
@@ -88,7 +88,7 @@ namespace jp::game
    void StateGame::update(float dt)
    {
       mGame->update(dt);
-      if (mGame->hasGoalBeenAchieved())
+      if (mGame->getWinner())
       {
          std::stringstream filenameSS;
          filenameSS << mContext.world << '_' << mContext.controller;

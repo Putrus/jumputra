@@ -129,6 +129,8 @@ namespace jp::algorithm
 
                mChildren.push_back(std::make_shared<DecisionNode>(this, bot->getMoves().back(),
                   mVisitedSegments, bot->getFinishedCharacter(), mEngine, mLogger, mProperties));
+
+               *mLogger << "New node at the position: " << bot->getFinishedCharacter().getPosition() << std::endl;
             }
 
             mEngine->removeCharacter(bot->getCharacter());

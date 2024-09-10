@@ -26,7 +26,8 @@ namespace jp::logic
          character->update(dt);
          if (mGoal->checkWin(character->getRect()))
          {
-            mGoalHasBeenAchieved = true;
+            mWinner = character;
+            break;
          }
       }
    }
@@ -105,9 +106,9 @@ namespace jp::logic
       file.close();
    }
 
-   bool Engine::hasGoalBeenAchieved() const
+   const std::shared_ptr<Character>& Engine::getWinner() const
    {
-      return mGoalHasBeenAchieved;
+      return mWinner;
    }
 
    std::vector<std::shared_ptr<Character>>& Engine::characters()

@@ -27,9 +27,8 @@ namespace jp::logic
       virtual void removeAllCharactersExcept(const std::shared_ptr<Character>& character);
 
       void saveStatistics(const std::string& filename) const;
-      
-      bool hasGoalBeenAchieved() const;
 
+      const std::shared_ptr<Character>& getWinner() const;
       std::vector<std::shared_ptr<Character>>& characters();
       const std::vector<std::shared_ptr<Character>>& getCharacters() const;
       std::vector<std::shared_ptr<Wind>>& winds();
@@ -53,10 +52,9 @@ namespace jp::logic
       Statistics mStatistics;
 
       std::shared_ptr<Goal> mGoal;
+      std::shared_ptr<Character> mWinner;
       std::vector<std::shared_ptr<Character>> mCharacters;
       std::vector<std::shared_ptr<Segment>> mSegments;
       std::vector<std::shared_ptr<Wind>> mWinds;
-
-      std::atomic<bool> mGoalHasBeenAchieved = false;
    };
 }

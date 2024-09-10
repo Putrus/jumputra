@@ -49,10 +49,10 @@ namespace jp::console
 
    void Consolutra::run()
    {
-      while (!mEngine->hasGoalBeenAchieved())
+      while (!mEngine->getWinner())
       {
-         mEngine->update(1 / 60.f);
-         mAlgorithm->update(1 / 60.f);
+         mEngine->update(mEngine->getProperties().secondsPerUpdate);
+         mAlgorithm->update(mEngine->getProperties().secondsPerUpdate);
       }
 
       *mLogger << "Moves:" << mAlgorithm->getMoves().size() << std::endl;
