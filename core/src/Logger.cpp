@@ -1,8 +1,14 @@
 #include "../inc/Logger.hpp"
 
+#include <filesystem>
+
 namespace jp::core
 {
-   Logger::Logger(const std::string& filename, bool console) : mFile(filename, std::ios::out | std::ios::app), mConsole(console) {}
+   Logger::Logger(const std::string& filename, bool console) : mConsole(console)
+   {
+      std::filesystem::create_directories(std::filesystem::path(filename).parent_path());
+      mFile.open(filename, std::ios::out | std::ios::app);
+   }
 
    Logger::~Logger()
    {
