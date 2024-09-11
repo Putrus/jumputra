@@ -21,6 +21,11 @@ namespace jp::algorithm
       for (auto& individual : mPopulation)
       {
          individual->update(dt);
+         if (mEngine->getWinner() == individual->getCharacter())
+         {
+            mMoves = individual->getMoves();
+            return;
+         }
       }
 
       if (haveIndividualsFinishedMoves())
