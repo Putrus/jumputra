@@ -33,7 +33,30 @@ namespace jp::game
       }
       else
       {
-         mContext.algorithm = algorithm::Algorithm::stringToName(mMenu.getSelectedTextString());
+         if (mMenu.getSelectedTextString() == mContext.language.getString("antColony"))
+         {
+            mContext.algorithm = algorithm::AlgorithmName::AntColony;
+         }
+         else if (mMenu.getSelectedTextString() == mContext.language.getString("decisionTree"))
+         {
+            mContext.algorithm = algorithm::AlgorithmName::DecisionTree;
+         }
+         else if (mMenu.getSelectedTextString() == mContext.language.getString("genetic"))
+         {
+            mContext.algorithm = algorithm::AlgorithmName::Genetic;
+         }
+         else if (mMenu.getSelectedTextString() == mContext.language.getString("greedy"))
+         {
+            mContext.algorithm = algorithm::AlgorithmName::Greedy;
+         }
+         else if (mMenu.getSelectedTextString() == mContext.language.getString("qLearning"))
+         {
+            mContext.algorithm = algorithm::AlgorithmName::QLearning;
+         }
+         else
+         {
+            throw std::runtime_error("jp::game::StateAlgorithmChoice::performSelected - Wrong option");
+         }
          pushState(StateID::WorldChoice);
       }
    }

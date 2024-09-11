@@ -77,33 +77,33 @@ namespace jp::algorithm
    AlgorithmName Algorithm::stringToName(const std::string& name)
    {
       std::string algorithmName = core::String::toLower(name);
-      if (name == "antcolony")
+      if (algorithmName == "antcolony")
       {
          return AlgorithmName::AntColony;
       }
-      else if (name == "decisiontree")
+      else if (algorithmName == "decisiontree")
       {
          return AlgorithmName::DecisionTree;
       }
-      else if (name == "genetic")
+      else if (algorithmName == "genetic")
       {
          return AlgorithmName::Genetic;
       }
-      else if (name == "greedy")
+      else if (algorithmName == "greedy")
       {
          return AlgorithmName::Greedy;
       }
-      else if (name == "human")
+      else if (algorithmName == "human")
       {
          return AlgorithmName::Human;
       }
-      else if (name == "qlearning")
+      else if (algorithmName == "qlearning")
       {
          return AlgorithmName::QLearning;
       }
       else
       {
-         throw std::invalid_argument("jp::Algorithm::stringToName - Failed to convert to name, wrong string");
+         throw std::invalid_argument("jp::Algorithm::stringToName - Failed to convert to name, wrong string " + algorithmName);
       }
    }
 
