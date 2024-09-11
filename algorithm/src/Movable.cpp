@@ -6,6 +6,11 @@ namespace jp::algorithm
 {
    Movable::Movable(const std::vector<Move>& moves) : mMoves(moves) {}
 
+   void Movable::addMove(const Move& move)
+   {
+      mMoves.push_back(move);
+   }
+
    void Movable::saveMoves(const std::string &filename) const
    {
       nlohmann::json json;

@@ -21,6 +21,11 @@ namespace jp::algorithm
       for (auto& bot : mBots)
       {
          bot->update(dt);
+         if (mEngine->getWinner() == bot->getCharacter())
+         {
+            mMoves.push_back(bot->getMoves().back());
+            return;
+         }
       }
 
       if (haveBotsFinishedMoves())
