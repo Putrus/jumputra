@@ -48,12 +48,11 @@ namespace jp::game
             break;
          }
       }
-      if (mContext.controller != Controller::Human)
-      {
-         return;
-      }
 
-      humanCharacterControl(event);
+      if (mContext.algorithm == algorithm::AlgorithmName::Human)
+      {
+         humanCharacterControl(event);
+      }      
    }
 
    void Game::update(float dt)

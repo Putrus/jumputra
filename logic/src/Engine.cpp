@@ -10,8 +10,14 @@
 
 namespace jp::logic
 {
-   Engine::Engine(const logic::Properties& properties) 
+   Engine::Engine(const Properties& properties) 
       : mProperties(properties) {}
+
+   Engine::Engine(const Properties& properties, const std::string& worldFilename)
+      : mProperties(properties)
+   {
+      loadFromJsonFile(worldFilename);
+   }
 
    void Engine::update(float dt)
    {

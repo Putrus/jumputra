@@ -9,7 +9,6 @@ DESCRIPTION "jumputra game"
 set(HEADERS
    inc/Character.hpp
    inc/Context.hpp
-   inc/Controller.hpp
    inc/Eventable.hpp
    inc/Game.hpp
    inc/Goal.hpp
@@ -35,7 +34,6 @@ set(HEADERS
 set(SOURCES
    src/Character.cpp
    src/Context.cpp
-   src/Controller.cpp
    src/Game.cpp
    src/Goal.cpp
    src/Jumputra.cpp

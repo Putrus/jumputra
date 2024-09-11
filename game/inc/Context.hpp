@@ -1,8 +1,9 @@
 #pragma once
 
-#include "../inc/Controller.hpp"
 #include "../inc/Language.hpp"
 #include "../inc/Properties.hpp"
+
+#include "../../algorithm/inc/Algorithm.hpp"
 
 #include "../../math/inc/Vector2.hpp"
 
@@ -29,7 +30,7 @@ namespace jp::game
 
       Language language;
       Properties properties;
-      Controller controller = Controller::Human;
+      algorithm::AlgorithmName algorithm = algorithm::AlgorithmName::Human;
 
       std::vector<std::string> worlds;
 

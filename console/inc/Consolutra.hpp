@@ -18,6 +18,8 @@ namespace jp::console
    private:
       Properties mProperties;
 
+      std::string mWorld;
+
       std::shared_ptr<logic::Engine> mEngine;
       std::shared_ptr<core::Logger> mLogger;
       std::unique_ptr<algorithm::Algorithm> mAlgorithm;

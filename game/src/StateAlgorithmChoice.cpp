@@ -33,30 +33,7 @@ namespace jp::game
       }
       else
       {
-         if (mMenu.getSelectedTextString() == mContext.language.getString("antColony"))
-         {
-            mContext.controller = Controller::AntColony;
-         }
-         else if (mMenu.getSelectedTextString() == mContext.language.getString("decisionTree"))
-         {
-            mContext.controller = Controller::DecisionTree;
-         }
-         else if (mMenu.getSelectedTextString() == mContext.language.getString("genetic"))
-         {
-            mContext.controller = Controller::Genetic;
-         }
-         else if (mMenu.getSelectedTextString() == mContext.language.getString("greedy"))
-         {
-            mContext.controller = Controller::Greedy;
-         }
-         else if (mMenu.getSelectedTextString() == mContext.language.getString("qLearning"))
-         {
-            mContext.controller = Controller::QLearning;
-         }
-         else
-         {
-            throw std::runtime_error("jp::game::StateAlgorithmChoice::performSelected - Wrong option");
-         }
+         mContext.algorithm = algorithm::Algorithm::stringToName(mMenu.getSelectedTextString());
          pushState(StateID::WorldChoice);
       }
    }

@@ -15,36 +15,13 @@
 namespace jp::console
 {
    Consolutra::Consolutra(const std::string& propertiesFilename, const std::string& worldFilename, const std::string& algorithmName)
-      : mLogger(std::make_shared<core::Logger>("data/logs/" + core::String::toLower(std::filesystem::path(worldFilename).stem().string()) + "_" +
-         core::String::toLower(algorithmName) + "_" + core::String::currentDate() + ".txt", true))
+      : mLogger(), mWorld(core::String::toLower(std::filesystem::path(worldFilename).stem().string()))
    {
       mProperties.loadFromJsonFile(propertiesFilename);
-      mEngine = std::make_shared<logic::Engine>(mProperties.logic);
-      mEngine->loadFromJsonFile(worldFilename);
-      if (algorithmName == "antColony")
-      {
-         mAlgorithm = std::make_unique<algorithm::AntColony>(mEngine, mLogger, mProperties.algorithm);
-      }
-      else if (algorithmName == "decisionTree")
-      {
-         mAlgorithm = std::make_unique<algorithm::DecisionTree>(mEngine, mLogger, mProperties.algorithm);
-      }
-      else if (algorithmName == "genetic")
-      {
-         mAlgorithm = std::make_unique<algorithm::Genetic>(mEngine, mLogger, mProperties.algorithm);
-      }
-      else if (algorithmName == "greedy")
-      {
-         mAlgorithm = std::make_unique<algorithm::Greedy>(mEngine, mLogger, mProperties.algorithm);
-      }
-      else if (algorithmName == "qLearning")
-      {
-         mAlgorithm = std::make_unique<algorithm::QLearning>(mEngine, mLogger, mProperties.algorithm);
-      }
-      else
-      {
-         throw std::invalid_argument("Consolutra::Consolutra - Failed to create algorithm, wrong name");
-      }
+      mLogger = std::make_shared<core::Logger>("data/logs/" + mWorld + "_" +
+         core::String::toLower(algorithmName) + "_" + core::String::currentDate() + ".txt", true);
+      mEngine = std::make_shared<logic::Engine>(mProperties.logic, worldFilename);
+      mAlgorithm = algorithm::Algorithm::create(algorithm::Algorithm::stringToName(algorithmName), mEngine, mLogger, mProperties.algorithm);
    }
 
    void Consolutra::run()
@@ -55,6 +32,6 @@ namespace jp::console
          mAlgorithm->update(mEngine->getProperties().secondsPerUpdate);
       }
 
-      mAlgorithm->saveStatistics("data/statistics/console_" + core::String::currentDate() + ".json");
+      mAlgorithm->saveStatistics("data/statistics/" + core::String::currentDate() + ".json");
    }
 }

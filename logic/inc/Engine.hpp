@@ -15,6 +15,7 @@ namespace jp::logic
    {
    public:
       Engine(const Properties& properties);
+      Engine(const Properties& properties, const std::string& worldFilename);
 
       virtual void update(float dt) override;
       virtual void fromJson(const nlohmann::json& json) override;

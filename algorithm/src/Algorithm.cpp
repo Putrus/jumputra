@@ -1,14 +1,118 @@
 #include "../inc/Algorithm.hpp"
+#include "../inc/AntColony.hpp"
+#include "../inc/DecisionTree.hpp"
+#include "../inc/Genetic.hpp"
+#include "../inc/Greedy.hpp"
+#include "../inc/Human.hpp"
+#include "../inc/QLearning.hpp"
 
 #include "../../core/inc/Random.hpp"
+#include "../../core/inc/String.hpp"
 
 #include <fstream>
 
 namespace jp::algorithm
 {
+   std::ostream& operator<<(std::ostream& os, AlgorithmName name)
+   {
+      switch (name)
+      {
+         case AlgorithmName::AntColony:
+         os << "AntColony";
+         break;
+         case AlgorithmName::DecisionTree:
+         os << "DecisionTree";
+         break;
+         case AlgorithmName::Genetic:
+         os << "Genetic";
+         break;
+         case AlgorithmName::Greedy:
+         os << "Greedy";
+         break;
+         case AlgorithmName::Human:
+         os << "Human";
+         break;
+         case AlgorithmName::QLearning:
+         os << "QLearning";
+         break;
+         default:
+         os << "Unknown";
+         break;
+      }
+      return os;
+   }
+
    Algorithm::Algorithm(const std::shared_ptr<logic::Engine>& engine,
-      const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties)
+      const std::shared_ptr<core::Logger>& logger, const  Properties& properties)
       : mEngine(engine), mProperties(properties), mLogger(logger), Movable({}) {}
+
+   std::unique_ptr<Algorithm> Algorithm::create(AlgorithmName name, const std::shared_ptr<logic::Engine>& engine,
+      const std::shared_ptr<core::Logger>& logger, const Properties& properties)
+   {
+      switch (name)
+      {
+      case AlgorithmName::AntColony:
+         return std::make_unique<algorithm::AntColony>(engine, logger, properties);
+         break;
+      case AlgorithmName::DecisionTree:
+         return std::make_unique<algorithm::DecisionTree>(engine, logger, properties);
+         break;
+      case AlgorithmName::Genetic:
+         return std::make_unique<algorithm::Genetic>(engine, logger, properties);
+         break;
+      case AlgorithmName::Greedy:
+         return std::make_unique<algorithm::Greedy>(engine, logger, properties);
+         break;
+      case AlgorithmName::Human:
+         return std::make_unique<algorithm::Human>(engine, logger, properties);
+         break;
+      case AlgorithmName::QLearning:
+         return std::make_unique<algorithm::QLearning>(engine, logger, properties);
+         break;
+      default:
+         throw std::invalid_argument("jp::Algorithm::create - Failed to create algorithm, wrong name");
+      }
+   }
+
+   AlgorithmName Algorithm::stringToName(const std::string& name)
+   {
+      std::string algorithmName = core::String::toLower(name);
+      if (name == "antcolony")
+      {
+         return AlgorithmName::AntColony;
+      }
+      else if (name == "decisiontree")
+      {
+         return AlgorithmName::DecisionTree;
+      }
+      else if (name == "genetic")
+      {
+         return AlgorithmName::Genetic;
+      }
+      else if (name == "greedy")
+      {
+         return AlgorithmName::Greedy;
+      }
+      else if (name == "human")
+      {
+         return AlgorithmName::Human;
+      }
+      else if (name == "qlearning")
+      {
+         return AlgorithmName::QLearning;
+      }
+      else
+      {
+         throw std::invalid_argument("jp::Algorithm::stringToName - Failed to convert to name, wrong string");
+      }
+   }
+
+   std::string Algorithm::nameToString(AlgorithmName name)
+   {
+      std::stringstream ss;
+      ss << name;
+      return core::String::toLower(ss.str());
+   }
 
    void Algorithm::saveStatistics(const std::string& filename) const
    {

@@ -11,11 +11,29 @@
 
 namespace jp::algorithm
 {
+   enum class AlgorithmName
+   {
+      AntColony = 0,
+      DecisionTree,
+      Genetic,
+      Greedy,
+      Human,
+      QLearning
+   };
+
+   std::ostream& operator<<(std::ostream& os, AlgorithmName name);
+
    class Algorithm : public Movable
    {
    public:
       Algorithm(const std::shared_ptr<logic::Engine>& engine,
          const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties);
+
+      static std::unique_ptr<Algorithm> create(AlgorithmName name, const std::shared_ptr<logic::Engine>& engine,
+         const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties);
+
+      static AlgorithmName stringToName(const std::string& name);
+      static std::string nameToString(AlgorithmName name);
 
       virtual std::string getName() const = 0;
       virtual void saveStatistics(const std::string& filename) const;

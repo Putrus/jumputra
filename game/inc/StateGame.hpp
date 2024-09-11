@@ -18,6 +18,6 @@ namespace jp::game
 
    private:
       std::shared_ptr<Game> mGame;
-      std::shared_ptr<algorithm::Algorithm> mAlgorithm;
+      std::unique_ptr<algorithm::Algorithm> mAlgorithm;
    };
 }

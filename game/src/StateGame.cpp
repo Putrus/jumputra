@@ -17,33 +17,10 @@ namespace jp::game
    StateGame::StateGame(StateStack* stack, Context& context)
       : mGame(std::make_shared<Game>(context)), State(stack, context)
    {
-      std::stringstream ss;
-      ss << mContext.controller;
       std::shared_ptr<core::Logger> logger = std::make_shared<core::Logger>(std::string(LOGS_DIR) + mContext.world + "_" +
-         core::String::toLower(ss.str()) + "_" + core::String::currentDate() + ".txt", true);
-      switch (context.controller)
-      {
-      case Controller::AntColony:
-         mAlgorithm = std::make_shared<algorithm::AntColony>(mGame, logger, mContext.properties.algorithm);
-         break;
-      case Controller::DecisionTree:
-         mAlgorithm = std::make_shared<algorithm::DecisionTree>(mGame, logger, mContext.properties.algorithm);
-         break;
-      case Controller::Genetic:
-         mAlgorithm = std::make_shared<algorithm::Genetic>(mGame, logger, mContext.properties.algorithm);
-         break;
-      case Controller::Greedy:
-         mAlgorithm = std::make_shared<algorithm::Greedy>(mGame, logger, mContext.properties.algorithm);
-         break;
-      case Controller::Human:
-         mAlgorithm = std::make_shared<algorithm::Human>(mGame, logger, mContext.properties.algorithm);
-         break;
-      case Controller::QLearning:
-         mAlgorithm = std::make_shared<algorithm::QLearning>(mGame, logger, mContext.properties.algorithm);
-         break;
-      default:
-         throw std::invalid_argument("jp::game::StateGame::StateGame - Failed to create agent, wrong agent name");
-      }
+         algorithm::Algorithm::nameToString(mContext.algorithm) + "_" + core::String::currentDate() + ".txt", true);
+
+      mAlgorithm = algorithm::Algorithm::create(mContext.algorithm, mGame, logger, context.properties.algorithm);
    }
 
    void StateGame::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
@@ -55,7 +32,7 @@ namespace jp::game
    {
       if (event.type == sf::Event::Closed)
       {
-         if (mContext.controller == Controller::Human)
+         if (mContext.algorithm == algorithm::AlgorithmName::Human)
          {
             mGame->save();
          }
@@ -66,7 +43,7 @@ namespace jp::game
          switch (event.key.code)
          {
          case sf::Keyboard::Key::Escape:
-            if (mContext.controller == Controller::Human)
+            if (mContext.algorithm == algorithm::AlgorithmName::Human)
             {
                mGame->save();
             }
