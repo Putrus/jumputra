@@ -11,6 +11,11 @@ namespace jp::algorithm
       nextIteration(*mEngine->getCharacters()[0]);
    }
 
+   std::string Greedy::getName() const
+   {
+      return "Greedy";
+   }
+
    void Greedy::update(float dt)
    {
       for (auto& bot : mBots)

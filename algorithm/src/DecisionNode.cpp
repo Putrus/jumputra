@@ -69,6 +69,11 @@ namespace jp::algorithm
       }
    }
 
+   std::string DecisionNode::getName() const
+   {
+      return "DecisionNode";
+   }
+
    void DecisionNode::update(float dt)
    {
       for (auto& child : mChildren)

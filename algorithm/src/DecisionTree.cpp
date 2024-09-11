@@ -11,6 +11,11 @@ namespace jp::algorithm
       mNode = std::make_shared<DecisionNode>(nullptr, Move(), mVisitedSegments, startCharacter, engine, logger, properties);
    }
 
+   std::string DecisionTree::getName() const
+   {
+      return "DecisionTree";
+   }
+
    void DecisionTree::update(float dt)
    {
       mNode->update(dt);

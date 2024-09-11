@@ -11,6 +11,11 @@ namespace jp::algorithm
       initializePopulation();
    }
 
+   std::string Genetic::getName() const
+   {
+      return "Genetic";
+   }
+
    void Genetic::update(float dt)
    {
       for (auto& individual : mPopulation)

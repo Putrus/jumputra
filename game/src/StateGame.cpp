@@ -2,9 +2,9 @@
 
 #include "../../algorithm/inc/AntColony.hpp"
 #include "../../algorithm/inc/DecisionTree.hpp"
-#include "../../algorithm/inc/Dummy.hpp"
 #include "../../algorithm/inc/Genetic.hpp"
 #include "../../algorithm/inc/Greedy.hpp"
+#include "../../algorithm/inc/Human.hpp"
 #include "../../algorithm/inc/QLearning.hpp"
 
 #include "../../core/inc/String.hpp"
@@ -36,7 +36,7 @@ namespace jp::game
          mAlgorithm = std::make_shared<algorithm::Greedy>(mGame, logger, mContext.properties.algorithm);
          break;
       case Controller::Human:
-         mAlgorithm = std::make_shared<algorithm::Dummy>(mGame, logger, mContext.properties.algorithm);
+         mAlgorithm = std::make_shared<algorithm::Human>(mGame, logger, mContext.properties.algorithm);
          break;
       case Controller::QLearning:
          mAlgorithm = std::make_shared<algorithm::QLearning>(mGame, logger, mContext.properties.algorithm);
@@ -90,12 +90,10 @@ namespace jp::game
       mGame->update(dt);
       if (mGame->getWinner())
       {
-         std::stringstream filenameSS;
-         filenameSS << mContext.world << '_' << mContext.controller;
-         std::string filename = filenameSS.str();
-         filename = core::String::toLower(filename);
+         std::string filename = core::String::toLower(mContext.world + "_" + mAlgorithm->getName());
          std::filesystem::remove(std::string(SAVES_DIR) + filename + ".json");
-         mAlgorithm->saveStatistics(std::string(STATISTICS_DIR) + filename + "_" + core::String::currentDate() + ".json");
+         std::string statisticsFilename = std::string(STATISTICS_DIR) + filename + "_" + core::String::currentDate() + ".json";
+         mAlgorithm->saveStatistics(statisticsFilename);
          mContext.statistics = mGame->getStatistics();
          popState();
          pushState(StateID::Win);

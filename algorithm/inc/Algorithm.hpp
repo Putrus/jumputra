@@ -17,6 +17,7 @@ namespace jp::algorithm
       Algorithm(const std::shared_ptr<logic::Engine>& engine,
          const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties);
 
+      virtual std::string getName() const = 0;
       virtual void saveStatistics(const std::string& filename) const;
 
    protected:

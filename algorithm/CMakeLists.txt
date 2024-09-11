@@ -13,9 +13,9 @@ set(HEADERS
    inc/Bot.hpp
    inc/DecisionNode.hpp
    inc/DecisionTree.hpp
-   inc/Dummy.hpp
    inc/Genetic.hpp
    inc/Greedy.hpp
+   inc/Human.hpp
    inc/Movable.hpp
    inc/Move.hpp
    inc/Pheromone.hpp
@@ -30,9 +30,9 @@ set(SOURCES
    src/Bot.cpp
    src/DecisionNode.cpp
    src/DecisionTree.cpp
-   src/Dummy.cpp
    src/Genetic.cpp
    src/Greedy.cpp
+   src/Human.cpp
    src/Movable.cpp
    src/Move.cpp
    src/Pheromone.cpp

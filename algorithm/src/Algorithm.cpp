@@ -1,6 +1,4 @@
 #include "../inc/Algorithm.hpp"
-#include "../inc/Dummy.hpp"
-#include "../inc/Greedy.hpp"
 
 #include "../../core/inc/Random.hpp"
 
@@ -14,6 +12,13 @@ namespace jp::algorithm
 
    void Algorithm::saveStatistics(const std::string& filename) const
    {
+      *mLogger << "Moves: " << mMoves.size() << std::endl;
+      for (size_t i = 0; i < mMoves.size();  ++i)
+      {
+         *mLogger << i << " " << mMoves.at(i) << std::endl;
+      }
+      *mLogger << "Statistics: " << mEngine->getStatistics() << std::endl;
+
       nlohmann::json json;
       json["totalStatistics"] = mEngine->getStatistics().toJson();
       json["movesSize"] = mMoves.size();

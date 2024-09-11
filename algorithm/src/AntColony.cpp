@@ -14,6 +14,11 @@ namespace jp::algorithm
       }
    }
 
+   std::string AntColony::getName() const
+   {
+      return "AntColony";
+   }
+
    void AntColony::update(float dt)
    {
       for (auto& pheromone : mPheromones)
