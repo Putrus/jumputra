@@ -10,7 +10,7 @@
 
 namespace jp::logic
 {
-   enum class CharacterState : unsigned long long
+   enum class CharacterState : int
    {
       Burying = 0,
       Dying,
@@ -27,7 +27,7 @@ namespace jp::logic
 
    std::ostream& operator<<(std::ostream& os, CharacterState state);
 
-   enum class CharacterDirection : unsigned long long
+   enum class CharacterDirection : int
    {
       Up = 0,
       Left,
