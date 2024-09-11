@@ -3,9 +3,9 @@
 namespace jp::algorithm
 {
    DecisionNode::DecisionNode(DecisionNode* parent, const Move& move, std::set<std::shared_ptr<logic::Segment>>& visitedSegments,
-      const logic::Character& character, const std::shared_ptr<logic::Engine>& engine,
+      std::vector<Move>& moves, const logic::Character& character, const std::shared_ptr<logic::Engine>& engine,
       const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties)
-      : mParent(parent), mVisitedSegments(visitedSegments), Algorithm(engine, logger, properties)
+      : mParent(parent), mVisitedSegments(visitedSegments), mResultMoves(moves), Algorithm(engine, logger, properties)
    {
       if (move.type != MoveType::Idle)
       {
@@ -89,6 +89,11 @@ namespace jp::algorithm
       for (auto& bot : mBots)
       {
          bot->update(dt);
+         if (mEngine->getWinner() == bot->getCharacter())
+         {
+            fillResultMoves(bot->getMoves().back());
+            return;
+         }
       }
 
       if (haveBotsFinishedMoves())
@@ -120,7 +125,7 @@ namespace jp::algorithm
                }
 
                mChildren.push_back(std::make_shared<DecisionNode>(this, bot->getMoves().back(),
-                  mVisitedSegments, bot->getFinishedCharacter(), mEngine, mLogger, mProperties));
+                  mVisitedSegments, mResultMoves, bot->getFinishedCharacter(), mEngine, mLogger, mProperties));
 
                *mLogger << "New node at the position: " << bot->getFinishedCharacter().getPosition() << std::endl;
             }
@@ -133,7 +138,7 @@ namespace jp::algorithm
                }
 
                mChildren.push_back(std::make_shared<DecisionNode>(this, bot->getMoves().back(),
-                  mVisitedSegments, bot->getFinishedCharacter(), mEngine, mLogger, mProperties));
+                  mVisitedSegments, mResultMoves, bot->getFinishedCharacter(), mEngine, mLogger, mProperties));
 
                *mLogger << "New node at the position: " << bot->getFinishedCharacter().getPosition() << std::endl;
             }
@@ -147,5 +152,22 @@ namespace jp::algorithm
    const std::vector<std::shared_ptr<DecisionNode>>& DecisionNode::getChildren() const
    {
       return mChildren;
+   }
+
+   DecisionNode* DecisionNode::getParent()
+   {
+      return mParent;
+   }
+
+   void DecisionNode::fillResultMoves(const Move& lastMove)
+   {
+      mResultMoves.push_back(lastMove);
+      DecisionNode* parent = mParent;
+      while (parent != nullptr && !parent->getMoves().empty())
+      {
+         mResultMoves.push_back(parent->getMoves().back());
+         parent = parent->getParent();
+      }
+      std::reverse(mResultMoves.begin(), mResultMoves.end());
    }
 }

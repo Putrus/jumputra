@@ -8,7 +8,7 @@ namespace jp::algorithm
    {
       logic::Character startCharacter = *engine->getCharacters().front();
       engine->removeAllCharacters();
-      mNode = std::make_shared<DecisionNode>(nullptr, Move(), mVisitedSegments, startCharacter, engine, logger, properties);
+      mNode = std::make_shared<DecisionNode>(nullptr, Move(), mVisitedSegments, mMoves, startCharacter, engine, logger, properties);
    }
 
    std::string DecisionTree::getName() const
