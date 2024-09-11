@@ -17,7 +17,7 @@ namespace jp::algorithm
       Algorithm(const std::shared_ptr<logic::Engine>& engine,
          const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties);
 
-      void saveMoves(const std::string &filename) const;
+      virtual void saveStatistics(const std::string& filename) const;
 
    protected:
       void addBot(const logic::Character& character, const std::vector<Move>& moves);

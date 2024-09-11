@@ -55,6 +55,8 @@ namespace jp::console
          mAlgorithm->update(mEngine->getProperties().secondsPerUpdate);
       }
 
+      mAlgorithm->saveStatistics("data/statistics/console_" + core::String::currentDate() + ".json");
+
       *mLogger << "Moves:" << mAlgorithm->getMoves().size() << std::endl;
       for (size_t i = 0; i < mAlgorithm->getMoves().size();  ++i)
       {

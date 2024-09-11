@@ -12,13 +12,16 @@ namespace jp::algorithm
       const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties)
       : mEngine(engine), mProperties(properties), mLogger(logger), Movable({}) {}
 
-   void Algorithm::saveMoves(const std::string &filename) const
+   void Algorithm::saveStatistics(const std::string& filename) const
    {
       nlohmann::json json;
+      json["totalStatistics"] = mEngine->getStatistics().toJson();
+      json["movesSize"] = mMoves.size();
       for (const auto& move : mMoves)
       {
          json["moves"].push_back(move.toJson());
       }
+
       std::ofstream file(filename);
       file << json;
       file.close();

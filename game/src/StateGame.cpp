@@ -95,7 +95,7 @@ namespace jp::game
          std::string filename = filenameSS.str();
          filename = core::String::toLower(filename);
          std::filesystem::remove(std::string(SAVES_DIR) + filename + ".json");
-         mGame->saveStatistics(std::string(STATISTICS_DIR) + filename + "_" + core::String::currentDate() + ".json");
+         mAlgorithm->saveStatistics(std::string(STATISTICS_DIR) + filename + "_" + core::String::currentDate() + ".json");
          mContext.statistics = mGame->getStatistics();
          popState();
          pushState(StateID::Win);
