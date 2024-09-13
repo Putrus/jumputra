@@ -45,13 +45,19 @@ namespace jp::algorithm
          
       }
 
-      float step = mEngine->getProperties().character.jump.max.y * 2.f / static_cast<float>(mProperties.decisionTree.jumps);
-      if (!mEngine->getWinds().empty())
+      auto lockedEngine = mEngine.lock();
+      if (!lockedEngine)
+      {
+         throw std::runtime_error("jp::algorithm::DecisionNode::DecisionNode - Failed to create decision node, engine doesn't exist");
+      }
+
+      float step = lockedEngine->getProperties().character.jump.max.y * 2.f / static_cast<float>(mProperties.decisionTree.jumps);
+      if (!lockedEngine->getWinds().empty())
       {
          step *= 1.5f;
       }
 
-      for (float jumpPowerY = step; jumpPowerY < mEngine->getProperties().character.jump.max.y + step; jumpPowerY += step)
+      for (float jumpPowerY = step; jumpPowerY < lockedEngine->getProperties().character.jump.max.y + step; jumpPowerY += step)
       {
          if (jumpPowerY == mProperties.decisionTree.jumpValue)
          {
@@ -61,7 +67,7 @@ namespace jp::algorithm
                logic::CharacterDirection::Left, jumpPowerY));
          addBot(character, Move(MoveType::Jump,
             logic::CharacterDirection::Right, jumpPowerY));
-         if (!mEngine->getWinds().empty())
+         if (!lockedEngine->getWinds().empty())
          {
             addBot(character, Move(MoveType::Jump,
             logic::CharacterDirection::Up, jumpPowerY));
@@ -86,11 +92,22 @@ namespace jp::algorithm
          return;
       }
 
+      auto lockedEngine = mEngine.lock();
+      if (!lockedEngine)
+      {
+         throw std::runtime_error("jp::algorithm::DecisionNode::update - Failed to update, engine doesn't exist");
+      }
+
       for (auto& bot : mBots)
       {
          bot->update(dt);
-         if (mEngine->getWinner() == bot->getCharacter())
+         if (lockedEngine->getWinner() == bot->getCharacter())
          {
+            if (bot->getMoves().empty())
+            {
+               throw std::runtime_error("jp::algorithm::DecisionNode::update - Failed to fill result moves, winner bot moves are empty");
+            }
+
             fillResultMoves(bot->getMoves().back());
             return;
          }
@@ -110,40 +127,37 @@ namespace jp::algorithm
                throw std::runtime_error("jp::algorithm::DecisionNode::update - Failed to update, wrong move type");
             }
 
+            if (bot->getCharacter()->getVisitedSegments().empty())
+            {
+               throw std::runtime_error("jp::algorithm::DecisionNode::update - Failed to update, bot visited segments are empty");
+            }
+
             if (bot->getMoves().back().type == MoveType::Run)
             {
                if (bot->getPositionBeforeMoves() == bot->getFinishedCharacter().getPosition() ||
                   bot->getFinishedCharacter().getPosition().y > bot->getPositionBeforeMoves().y)
                {
-                  mEngine->removeCharacter(bot->getCharacter());
+                  lockedEngine->removeCharacter(bot->getCharacter());
                   continue;
                }
 
-               if (!bot->getCharacter()->getVisitedSegments().empty())
-               {
-                  mVisitedSegments.insert(bot->getCharacter()->getVisitedSegments().back());
-               }
-
+               mVisitedSegments.insert(bot->getCharacter()->getVisitedSegments().back());
                mChildren.push_back(std::make_shared<DecisionNode>(this, bot->getMoves().back(),
-                  mVisitedSegments, mResultMoves, bot->getFinishedCharacter(), mEngine, mLogger, mProperties));
+                  mVisitedSegments, mResultMoves, bot->getFinishedCharacter(), lockedEngine, mLogger, mProperties));
 
                *mLogger << "New node at the position: " << bot->getFinishedCharacter().getPosition() << std::endl;
             }
-            else if (bot->getCharacter()->getVisitedSegments().empty() || mVisitedSegments.find(bot->getCharacter()->getVisitedSegments().back()) == mVisitedSegments.end() ||
+            else if (mVisitedSegments.find(bot->getCharacter()->getVisitedSegments().back()) == mVisitedSegments.end() ||
                (bot->getMoves().back().value == mProperties.decisionTree.jumpValue && bot->getFinishedCharacter().isSticked()))
             {
-               if (!bot->getCharacter()->getVisitedSegments().empty())
-               {
-                  mVisitedSegments.insert(bot->getCharacter()->getVisitedSegments().back());
-               }
-
+               mVisitedSegments.insert(bot->getCharacter()->getVisitedSegments().back());
                mChildren.push_back(std::make_shared<DecisionNode>(this, bot->getMoves().back(),
-                  mVisitedSegments, mResultMoves, bot->getFinishedCharacter(), mEngine, mLogger, mProperties));
+                  mVisitedSegments, mResultMoves, bot->getFinishedCharacter(), lockedEngine, mLogger, mProperties));
 
                *mLogger << "New node at the position: " << bot->getFinishedCharacter().getPosition() << std::endl;
             }
 
-            mEngine->removeCharacter(bot->getCharacter());
+            lockedEngine->removeCharacter(bot->getCharacter());
          }
          mBots.clear();
       }

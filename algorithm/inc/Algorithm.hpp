@@ -50,7 +50,7 @@ namespace jp::algorithm
       Move randomSideJump() const;
 
       std::vector<std::shared_ptr<Bot>> mBots;
-      std::shared_ptr<logic::Engine> mEngine;
+      std::weak_ptr<logic::Engine> mEngine;
       std::shared_ptr<core::Logger> mLogger;
       const Properties& mProperties;
    };

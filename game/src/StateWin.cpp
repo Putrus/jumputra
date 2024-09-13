@@ -14,6 +14,8 @@ namespace jp::game
          mContext.resources.getFont(graphic::FontID::Pixeled));
       mMenu.addItem(mContext.language.getString("time") + ": " + std::to_string((int)mContext.statistics.time) + " s",
          mContext.resources.getFont(graphic::FontID::Pixeled));
+      mMenu.addItem(mContext.language.getString("totalTime") + ": " + std::to_string((int)mContext.statistics.totalTime) + " s",
+         mContext.resources.getFont(graphic::FontID::Pixeled));
       mMenu.addItem(mContext.language.getString("back"),
          mContext.resources.getFont(graphic::FontID::Pixeled));
    }
@@ -27,7 +29,8 @@ namespace jp::game
          mMenu.setItemText(2, mContext.language.getString("jumps") + ": " + std::to_string(mContext.statistics.jumps));
          mMenu.setItemText(3, mContext.language.getString("falls") + ": " + std::to_string(mContext.statistics.falls));
          mMenu.setItemText(4, mContext.language.getString("time") + ": " + std::to_string((int)mContext.statistics.time) + " s");
-         mMenu.setItemText(5, mContext.language.getString("back"));
+         mMenu.setItemText(5, mContext.language.getString("totalTime") + ": " + std::to_string((int)mContext.statistics.totalTime) + " s");
+         mMenu.setItemText(6, mContext.language.getString("back"));
       }
    }
 

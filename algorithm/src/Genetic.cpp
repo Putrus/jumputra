@@ -18,10 +18,16 @@ namespace jp::algorithm
 
    void Genetic::update(float dt)
    {
+      auto lockedEngine = mEngine.lock();
+      if (!lockedEngine)
+      {
+         throw std::runtime_error("jp::algorithm::Genetic::update - Failed to update, engine doesn't exist");
+      }
+
       for (auto& individual : mPopulation)
       {
          individual->update(dt);
-         if (mEngine->getWinner() == individual->getCharacter())
+         if (lockedEngine->getWinner() == individual->getCharacter())
          {
             mMoves = individual->getMoves();
             return;
@@ -44,7 +50,13 @@ namespace jp::algorithm
 
    void Genetic::initializePopulation()
    {
-      mEngine->removeAllCharacters();
+      auto lockedEngine = mEngine.lock();
+      if (!lockedEngine)
+      {
+         throw std::runtime_error("jp::algorithm::Genetic::initializePopulation - Failed to initialize population, engine doesn't exist");
+      }
+
+      lockedEngine->removeAllCharacters();
       for (size_t i = 0; i < mProperties.genetic.population.size; ++i)
       {
          std::vector<Move> moves;
@@ -196,8 +208,14 @@ namespace jp::algorithm
 
    void Genetic::addIndividual(const math::Rect<float>& rect, const std::vector<Move>& moves)
    {
-      mEngine->addCharacter(rect);
-      mPopulation.push_back(std::make_shared<Individual>(mEngine->getCharacters().back(), moves));
+      auto lockedEngine = mEngine.lock();
+      if (!lockedEngine)
+      {
+         throw std::runtime_error("jp::algorithm::Genetic::addIndividual - Failed to add individual, engine doesn't exist");
+      }
+
+      lockedEngine->addCharacter(rect);
+      mPopulation.push_back(std::make_shared<Individual>(lockedEngine->getCharacters().back(), moves));
    }
 
    bool Genetic::shouldBeMutated() const

@@ -42,18 +42,19 @@ namespace jp::algorithm
          }
       }
 
-      if (mPheromonesLastSize != mPheromones.size())
-      {
-         std::cout << mPheromones.size() << " pos: " << bestY << std::endl;
-      }
-
       mPheromonesLastSize = mPheromones.size();
    }
 
    void AntColony::addAnt(const math::Rect<float>& rect)
    {
-      mEngine->addCharacter(rect);
-      mAnts.push_back(std::make_shared<Ant>(mPheromones, mProperties, mEngine->characters().back()));
+      auto lockedEngine = mEngine.lock();
+      if (!lockedEngine)
+      {
+         throw std::runtime_error("jp::algorithm::AntColony::addAnt - Failed to add ant, engine doesn't exist");
+      }
+
+      lockedEngine->addCharacter(rect);
+      mAnts.push_back(std::make_shared<Ant>(mPheromones, mProperties, lockedEngine->characters().back()));
    }
 
    void AntColony::clearAnts()

@@ -65,16 +65,25 @@ namespace jp::game
    void StateGame::update(float dt)
    {
       mGame->update(dt);
+      mAlgorithm->update(dt);
       if (mGame->getWinner())
       {
-         std::string filename = core::String::toLower(mContext.world + "_" + mAlgorithm->getName());
-         std::filesystem::remove(std::string(SAVES_DIR) + filename + ".json");
-         std::string statisticsFilename = std::string(STATISTICS_DIR) + filename + "_" + core::String::currentDate() + ".json";
-         mAlgorithm->saveStatistics(statisticsFilename);
+         if (mContext.algorithm == algorithm::AlgorithmName::Human)
+         {
+            std::filesystem::remove(std::string(SAVES_DIR) + mContext.world + ".json");
+         }
+
+         if (!std::filesystem::exists(STATISTICS_DIR))
+         {
+            std::filesystem::create_directory(STATISTICS_DIR);
+         }
+
+         std::string filename = std::string(STATISTICS_DIR) +
+            core::String::toLower(mContext.world + "_" + mAlgorithm->getName()) + "_" + core::String::currentDate() + ".json";
+         mAlgorithm->saveStatistics(filename);
          mContext.statistics = mGame->getStatistics();
          popState();
          pushState(StateID::Win);
       }
-      mAlgorithm->update(dt);
    }
 }

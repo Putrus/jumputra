@@ -116,43 +116,71 @@ namespace jp::algorithm
 
    void Algorithm::saveStatistics(const std::string& filename) const
    {
-      *mLogger << "Moves: " << mMoves.size() << std::endl;
-      for (size_t i = 0; i < mMoves.size();  ++i)
+      if (auto lockedEngine = mEngine.lock())
       {
-         *mLogger << i << " " << mMoves.at(i) << std::endl;
-      }
-      *mLogger << "Statistics: " << mEngine->getStatistics() << std::endl;
+         *mLogger << "Moves: " << mMoves.size() << std::endl;
+         for (size_t i = 0; i < mMoves.size();  ++i)
+         {
+            *mLogger << i << " " << mMoves.at(i) << std::endl;
+         }
+         *mLogger << "Statistics: " << lockedEngine->getStatistics() << std::endl;
 
-      nlohmann::json json;
-      json["totalStatistics"] = mEngine->getStatistics().toJson();
-      json["movesSize"] = mMoves.size();
-      for (const auto& move : mMoves)
+         nlohmann::json json;
+         json["totalStatistics"] = lockedEngine->getStatistics().toJson();
+         json["movesSize"] = mMoves.size();
+         for (const auto& move : mMoves)
+         {
+            json["moves"].push_back(move.toJson());
+         }
+
+         std::ofstream file(filename);
+         file << json;
+         file.close();
+      }
+      else
       {
-         json["moves"].push_back(move.toJson());
+         throw std::runtime_error("jp::algorithm::Algorithm::saveStatistics - Failed to save statistics, engine doesn't exist");
       }
-
-      std::ofstream file(filename);
-      file << json;
-      file.close();
    }
 
    void Algorithm::addBot(const logic::Character& character, const std::vector<Move>& moves)
    {
-      mEngine->addCharacterCopy(character);
-      mBots.push_back(std::make_shared<Bot>(mEngine->getCharacters().back(), moves));
+      if (auto lockedEngine = mEngine.lock())
+      {
+         lockedEngine->addCharacterCopy(character);
+         mBots.push_back(std::make_shared<Bot>(lockedEngine->getCharacters().back(), moves));
+      }
+      else
+      {
+         throw std::runtime_error("jp::algorithm::Algorithm::addBot - Failed to add bot, engine doesn't exist");
+      }
    }
 
    void Algorithm::addBot(const logic::Character& character, const Move& move)
    {
-      mEngine->addCharacterCopy(character);
-      std::vector<Move> moves = { move };
-      mBots.push_back(std::make_shared<Bot>(mEngine->getCharacters().back(), moves));
+      if (auto lockedEngine = mEngine.lock())
+      {
+         lockedEngine->addCharacterCopy(character);
+         std::vector<Move> moves = { move };
+         mBots.push_back(std::make_shared<Bot>(lockedEngine->getCharacters().back(), moves));
+      }
+      else
+      {
+         throw std::runtime_error("jp::algorithm::Algorithm::addBot - Failed to add bot, engine doesn't exist");
+      }
    }
 
    void Algorithm::clearBots()
    {
-      mBots.clear();
-      mEngine->removeAllCharacters();
+      if (auto lockedEngine = mEngine.lock())
+      {
+         mBots.clear();
+         lockedEngine->removeAllCharacters();
+      }
+      else
+      {
+         throw std::runtime_error("jp::algorithm::Algorithm::clearBots - Failed to clear bots, engine doesn't exist");
+      }
    }
 
    bool Algorithm::haveBotsFinishedMoves() const
@@ -163,16 +191,37 @@ namespace jp::algorithm
 
    Move Algorithm::randomMove() const
    {
-      return Move::random(1.f, mEngine->getProperties().character.jump.max.y, 0.1f, 1.f);
+      if (auto lockedEngine = mEngine.lock())
+      {
+         return Move::random(1.f, lockedEngine->getProperties().character.jump.max.y, 0.1f, 1.f);
+      }
+      else
+      {
+         throw std::runtime_error("jp::algorithm::Algorithm::randomMove - Failed to create random move, engine doesn't exist");
+      }
    }
 
    Move Algorithm::randomJump() const
    {
-      return Move::randomJump(1.f, mEngine->getProperties().character.jump.max.y);
+      if (auto lockedEngine = mEngine.lock())
+      {
+         return Move::randomJump(1.f, lockedEngine->getProperties().character.jump.max.y);
+      }
+      else
+      {
+         throw std::runtime_error("jp::algorithm::Algorithm::randomJump - Failed to create random jump, engine doesn't exist");
+      }
    }
 
    Move Algorithm::randomSideJump() const
    {
-      return Move::randomSideJump(1.f, mEngine->getProperties().character.jump.max.y);
+      if (auto lockedEngine = mEngine.lock())
+      {
+         return Move::randomSideJump(1.f, lockedEngine->getProperties().character.jump.max.y);
+      }
+      else
+      {
+         throw std::runtime_error("jp::algorithm::Algorithm::randomSideJump - Failed to create random side jump, engine doesn't exist");
+      }
    }
 }

@@ -8,7 +8,13 @@ namespace jp::algorithm
       const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties)
       : Algorithm(engine, logger, properties)
    {
-      nextIteration(*mEngine->getCharacters()[0]);
+      auto lockedEngine = mEngine.lock();
+      if (!lockedEngine)
+      {
+         throw std::runtime_error("jp::algorithm::Greedy::Greedy - Failed to create greedy algorithm, engine doesn't exist");
+      }
+
+      nextIteration(*lockedEngine->getCharacters()[0]);
    }
 
    std::string Greedy::getName() const
@@ -18,10 +24,16 @@ namespace jp::algorithm
 
    void Greedy::update(float dt)
    {
+      auto lockedEngine = mEngine.lock();
+      if (!lockedEngine)
+      {
+         throw std::runtime_error("jp::algorithm::Greedy::update - Failed to update, engine doesn't exist");
+      }
+
       for (auto& bot : mBots)
       {
          bot->update(dt);
-         if (mEngine->getWinner() == bot->getCharacter())
+         if (lockedEngine->getWinner() == bot->getCharacter())
          {
             mMoves.push_back(bot->getMoves().back());
             return;
@@ -70,15 +82,21 @@ namespace jp::algorithm
 
       *mLogger << "Iteration: " << mMoves.size() << " position: " << bestJumper.getPosition() << std::endl;
 
+      auto lockedEngine = mEngine.lock();
+      if (!lockedEngine)
+      {
+         throw std::runtime_error("jp::algorithm::Greedy::nextIteration - Failed to iterate, engine doesn't exist");
+      }
+
       for (size_t i = 0; i < mProperties.greedy.bots; ++i)
       {
-         if (mEngine->getWinds().empty())
+         if (lockedEngine->getWinds().empty())
          {
-            addBot(bestJumper, Move::randomSideJump(1.f, mEngine->getProperties().character.jump.max.y));
+            addBot(bestJumper, Move::randomSideJump(1.f, lockedEngine->getProperties().character.jump.max.y));
          }
          else
          {
-            addBot(bestJumper, Move::randomJump(1.f, mEngine->getProperties().character.jump.max.y));
+            addBot(bestJumper, Move::randomJump(1.f, lockedEngine->getProperties().character.jump.max.y));
          }
       }
    }
