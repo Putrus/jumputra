@@ -22,6 +22,7 @@
          "statistics": "STATISTICS",
          "sudovia": "SUDOVIA",
          "tarnovia": "TARNOVIA",
+         "testovia": "TESTOVIA",
          "time": "TIME",
          "totalTime": "TOTAL TIME"
       }
@@ -49,6 +50,7 @@
          "statistics": "STATYSTYKI",
          "sudovia": "SUDOWIA",
          "tarnovia": "TARNOWIA",
+         "testovia": "TESTOWIA",
          "time": "CZAS",
          "totalTime": "LACZNY CZAS"
       }

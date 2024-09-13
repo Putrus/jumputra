@@ -1,0 +1,308 @@
+{
+   "goal": {
+      "rect": {
+         "left": 232.0,
+         "top": 6678.0,
+         "width": 24.0,
+         "height": 24.0
+      }
+   },
+   "characters": [
+   {
+      "rect": {
+         "left": 128.0,
+         "top": 7860.0,
+         "width": 24.0,
+         "height": 24.0
+      },
+      "acceleration": {
+         "x": 0.0,
+         "y": 0.0
+      },
+      "velocity": {
+         "x": 0.0,
+         "y": 0.0
+      },
+      "state": 3,
+      "direction": 0,
+      "jumpPower": {
+         "x": 0.0,
+         "y": 0.0
+      },
+      "gravity": {
+         "x": 0.0,
+         "y": 0.0
+      },
+      "runSpeed": 0.0,
+      "statistics": {
+         "jumps": 0,
+         "falls": 0,
+         "time": 0.0,
+         "totalTime": 0.0
+      }
+   }
+   ],
+   "segments": [
+   {
+      "type" : "comment",
+      "text" : "testovia 0"
+   },
+   {
+      "type" : "points",
+      "surface" : "ordinary",
+      "points" : [
+      {
+         "x" : 64,
+         "y" : 7560
+      },
+      {
+         "x" : 64,
+         "y" : 7671
+      },
+      {
+         "x" : 7,
+         "y" : 7671
+      },
+      {
+         "x" : 7,
+         "y" : 7744
+      },
+      {
+         "x": 127,
+         "y": 7744
+      },
+      {
+         "x": 127,
+         "y": 7888
+      },
+      {
+         "x": 352,
+         "y": 7888
+      },
+      {
+         "x": 352,
+         "y": 7744
+      },
+      {
+         "x": 447,
+         "y": 7744
+      },
+      {
+         "x": 447,
+         "y": 7560
+      }
+      ]
+   },
+   {
+      "type" : "rectangle",
+      "surface" : "ordinary",
+      "left" : 184.0,
+      "top" : 7600.0,
+      "width" : 112.0,
+      "height" : 48.0
+   },
+   {
+      "type" : "comment",
+      "text" : "testovia 1"
+   },
+   {
+      "type" : "points",
+      "surface" : "ordinary",
+      "points" : [
+      {
+         "x" : 7,
+         "y" : 7200
+      },
+      {
+         "x" : 7,
+         "y" : 7240
+      },
+      {
+         "x" : 32,
+         "y" : 7240
+      },
+      {
+         "x": 32,
+         "y": 7424
+      },
+      {
+         "x": 64,
+         "y": 7424
+      },
+      {
+         "x": 64,
+         "y": 7559
+      }
+      ]
+   },
+   {
+      "type" : "points",
+      "surface" : "ordinary",
+      "points" : [
+      {
+         "x" : 472,
+         "y" : 7200
+      },
+      {
+         "x" : 472,
+         "y" : 7264
+      },
+      {
+         "x" : 447,
+         "y" : 7264
+      },
+      {
+         "x" : 447,
+         "y" : 7559
+      }
+      ]
+   },
+   {
+      "type" : "rectangle",
+      "surface" : "ordinary",
+      "left" : 128.0,
+      "top" : 7520.0,
+      "width" : 40.0,
+      "height" : 8.0
+   },
+   {
+      "type" : "rectangle",
+      "surface" : "ordinary",
+      "left" : 144.0,
+      "top" : 7400.0,
+      "width" : 40.0,
+      "height" : 8.0
+   },
+   {
+      "type" : "rectangle",
+      "surface" : "ordinary",
+      "left" : 320.0,
+      "top" : 7368.0,
+      "width" : 40.0,
+      "height" : 8.0
+   },
+   {
+      "type" : "comment",
+      "text" : "testovia 2"
+   },
+   {
+      "type" : "points",
+      "surface" : "ordinary",
+      "points" : [
+      {
+         "x" : 7,
+         "y" : 6840
+      },
+      {
+         "x" : 7,
+         "y" : 7199
+      }
+      ]
+   },
+   {
+      "type" : "points",
+      "surface" : "ordinary",
+      "points" : [
+      {
+         "x" : 472,
+         "y" : 6840
+      },
+      {
+         "x" : 472,
+         "y" : 7199
+      }
+      ]
+   },
+   {
+      "type" : "rectangle",
+      "surface" : "ordinary",
+      "left" : 240.0,
+      "top" : 7152.0,
+      "width" : 40.0,
+      "height" : 8.0
+   },
+   {
+      "type" : "rectangle",
+      "surface" : "ordinary",
+      "left" : 96.0,
+      "top" : 7048.0,
+      "width" : 40.0,
+      "height" : 8.0
+   },
+   {
+      "type" : "rectangle",
+      "surface" : "ordinary",
+      "left" : 240.0,
+      "top" : 7048.0,
+      "width" : 40.0,
+      "height" : 8.0
+   },
+   {
+      "type" : "rectangle",
+      "surface" : "ordinary",
+      "left" : 352.0,
+      "top" : 6984.0,
+      "width" : 40.0,
+      "height" : 8.0
+   },
+   {
+      "type" : "rectangle",
+      "surface" : "ordinary",
+      "left" : 248.0,
+      "top" : 6920.0,
+      "width" : 40.0,
+      "height" : 8.0
+   },
+   {
+      "type" : "comment",
+      "text" : "testovia 3"
+   },
+   {
+      "type" : "points",
+      "surface" : "ordinary",
+      "points" : [
+      {
+         "x" : 7,
+         "y" : 6839
+      },
+      {
+         "x" : 7,
+         "y" : 6487
+      },
+      {
+         "x" : 472,
+         "y" : 6487
+      },
+      {
+         "x" : 472,
+         "y" : 6839
+      }
+      ]
+   },
+   {
+      "type" : "rectangle",
+      "surface" : "ordinary",
+      "left" : 72.0,
+      "top" : 6784.0,
+      "width" : 40.0,
+      "height" : 8.0
+   },
+   {
+      "type" : "rectangle",
+      "surface" : "ordinary",
+      "left" : 352.0,
+      "top" : 6824.0,
+      "width" : 72.0,
+      "height" : 32.0
+   },
+   {
+      "type" : "rectangle",
+      "surface" : "ordinary",
+      "left" : 208.0,
+      "top" : 6704.0,
+      "width" : 72.0,
+      "height" : 24.0
+   }
+   ],
+   "winds": []
+}
