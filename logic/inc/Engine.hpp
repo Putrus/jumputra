@@ -27,6 +27,8 @@ namespace jp::logic
       virtual void removeAllCharacters();
       virtual void removeAllCharactersExcept(const std::shared_ptr<Character>& character);
 
+      void resetWinds();
+
       void saveStatistics(const std::string& filename) const;
 
       const std::shared_ptr<Character>& getWinner() const;

@@ -43,7 +43,7 @@ namespace jp::algorithm
 
          *mLogger << "Generation: " << mGeneration++ << " best fitness: " << newBestFitness <<
             " moves: " << parents.first->getMoves().size() << " mutation: " << mMutationRate << std::endl;
-
+         lockedEngine->resetWinds();
          createPopulation(parents);
       }
    }

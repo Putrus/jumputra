@@ -24,6 +24,8 @@ namespace jp::logic
       virtual void fromJson(const nlohmann::json& json) override;
       virtual nlohmann::json toJson() const override;
 
+      void reset();
+
       float getImpact() const;
       const math::Vector2<float>& getMaxVelocity() const;
 

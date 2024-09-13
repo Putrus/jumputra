@@ -73,6 +73,13 @@ namespace jp::logic
       return json;
    }
 
+   void Wind::reset()
+   {
+      mMaxVelocity = math::abs(mMaxVelocity);
+      mAcceleration = math::abs(mAcceleration);
+      mVelocity = math::Vector2<float>();
+   }
+
    float Wind::getImpact() const
    {
       return mImpact;

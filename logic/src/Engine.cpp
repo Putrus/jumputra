@@ -103,6 +103,14 @@ namespace jp::logic
          }), mCharacters.end());
    }
 
+   void Engine::resetWinds()
+   {
+      for (auto& wind : mWinds)
+      {
+         wind->reset();
+      }
+   }
+
    void Engine::saveStatistics(const std::string& filename) const
    {
       nlohmann::json json;
