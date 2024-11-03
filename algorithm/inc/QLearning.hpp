@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Algorithm.hpp"
+#include "Agent.hpp"
 
 namespace jp::algorithm
 {
@@ -12,5 +13,8 @@ namespace jp::algorithm
 
       std::string getName() const override;
       void update(float dt) override;
+
+   private:    
+      std::vector<std::shared_ptr<Bot>>& mAgents = mBots;
    };
 }

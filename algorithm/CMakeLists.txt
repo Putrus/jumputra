@@ -7,6 +7,7 @@ DESCRIPTION "jumputra algorithm"
 )
 
 set(HEADERS
+   inc/Agent.hpp
    inc/Algorithm.hpp
    inc/Ant.hpp
    inc/AntColony.hpp
@@ -24,6 +25,7 @@ set(HEADERS
    )
 
 set(SOURCES
+   src/Agent.cpp
    src/Algorithm.cpp
    src/Ant.cpp
    src/AntColony.cpp
