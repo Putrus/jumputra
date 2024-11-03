@@ -1,11 +1,12 @@
 #pragma once
 
+#include "AgentMove.hpp"
 #include "Bot.hpp"
 #include "Properties.hpp"
 
 #include "../../logic/inc/Engine.hpp"
 
-#include <set>
+#include <map>
 
 namespace jp::algorithm
 {
@@ -23,5 +24,7 @@ namespace jp::algorithm
       math::Vector2<float> mLastPosition = math::Vector2<float>();
       std::shared_ptr<logic::Segment> mSegmentBeforeJump;
       const Properties& mProperties;
+
+      std::map<math::Vector2<float>, std::vector<AgentMove>> mQ;
    };
 }

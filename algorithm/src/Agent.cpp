@@ -17,6 +17,29 @@ namespace jp::algorithm
       math::Vector2<float> position = getPosition();
       if (finishedMoves())
       {
+         if (mSegmentBeforeJump != getVisitedSegments().back())
+         {
+            AgentMove move(mLastPosition, getMoves().back(), mSegmentBeforeJump->a.y - getVisitedSegments().back()->a.y);
+            if (mQ.find(getVisitedSegments().back()->a) == mQ.end())
+            {
+               mQ.insert({ mSegmentBeforeJump->a, { move } });
+            }
+            else
+            {
+               mQ.at(mSegmentBeforeJump->a).push_back(move);
+            }
+
+            for (const auto& q : mQ)
+            {
+               std::cout << q.first << ": " << std::endl;
+               for (const auto& m : q.second)
+               {
+                  std::cout << m.getPosition() << " q: " << m.getQ() << std::endl;
+               }
+               std::cout << std::endl;
+            }
+         }
+
          logic::CharacterDirection runDirection = static_cast<logic::CharacterDirection>(core::Random::getInt(1, 2));
          setMove(Move::infiniteRun(runDirection));
          mLastChangeDirectionPosition = position;
@@ -33,10 +56,11 @@ namespace jp::algorithm
 
          if (core::Random::getFloat(0.f, 1.f) <= mProperties.antColony.randomJumpChance)
          {
-            if (!getVisitedSegments().empty())
+            if (getVisitedSegments().empty())
             {
-               mSegmentBeforeJump = getVisitedSegments().back();
+               throw std::runtime_error("jp::algorithm::Agent::Update - Failed to get segment before jump, visited segments are empty");
             }
+            mSegmentBeforeJump = getVisitedSegments().back();
             setMove(Move::randomSideJump(10.f, mCharacter->getProperties().character.jump.max.y));
          }
       }
