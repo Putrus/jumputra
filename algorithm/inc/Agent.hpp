@@ -25,6 +25,7 @@ namespace jp::algorithm
       std::shared_ptr<logic::Segment> mSegmentBeforeJump;
       const Properties& mProperties;
 
-      std::map<math::Vector2<float>, std::vector<AgentMove>> mQ;
+      std::map<math::Vector2<float>, std::map<math::Vector2<float>, std::shared_ptr<AgentMove>>> mGraph;
+      std::map<math::Vector2<float>, std::map<math::Vector2<float>, std::shared_ptr<AgentMove>>> mBackwardGraph;
    };
 }

@@ -17,7 +17,7 @@ namespace jp::algorithm
 
    struct Move : public core::Jsonable
    {
-      Move();
+      Move() = default;
       Move(MoveType type, logic::CharacterDirection direction, float value);
 
       void fromJson(const nlohmann::json& json) override;

@@ -23,8 +23,6 @@ namespace jp::algorithm
       }
       return os;
    }
-
-   Move::Move() {}
    
    Move::Move(MoveType type, logic::CharacterDirection direction, float value)
       : type(type), direction(direction), value(value) {}

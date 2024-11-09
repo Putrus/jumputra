@@ -19,22 +19,17 @@ namespace jp::algorithm
       {
          if (mSegmentBeforeJump != getVisitedSegments().back())
          {
-            AgentMove move(mLastPosition, getMoves().back(), mSegmentBeforeJump->a.y - getVisitedSegments().back()->a.y);
-            if (mQ.find(getVisitedSegments().back()->a) == mQ.end())
-            {
-               mQ.insert({ mSegmentBeforeJump->a, { move } });
-            }
-            else
-            {
-               mQ.at(mSegmentBeforeJump->a).push_back(move);
-            }
+            std::shared_ptr<AgentMove> move = std::make_shared<AgentMove>(mLastPosition,
+               getMoves().back(), mSegmentBeforeJump->a.y - getVisitedSegments().back()->a.y);
+            mGraph[mSegmentBeforeJump->a][getVisitedSegments().back()->a] = move;
+            mBackwardGraph[mSegmentBeforeJump->a][getVisitedSegments().back()->a] = move;
 
-            for (const auto& q : mQ)
+            for (const auto& segment : mGraph)
             {
-               std::cout << q.first << ": " << std::endl;
-               for (const auto& m : q.second)
+               std::cout << segment.first << " : " << std::endl;
+               for (const auto& neighbour : segment.second)
                {
-                  std::cout << m.getPosition() << " q: " << m.getQ() << std::endl;
+                  std::cout << "{ " << neighbour.first << ", " << neighbour.second << " }" << std::endl;
                }
                std::cout << std::endl;
             }
