@@ -63,6 +63,15 @@ namespace jp::algorithm
       return mCharacter;
    }
 
+   const std::shared_ptr<logic::Segment>& Bot::getCurrentSegment() const
+   {
+      if (getVisitedSegments().empty())
+      {
+         throw std::runtime_error("jp::algorithm::Bot::getCurrentSegments - Failed to get current segment, visited segments are empty");
+      }
+      return getVisitedSegments().back();
+   }
+
    math::Vector2<float> Bot::getPosition() const
    {
       return mCharacter->getPosition();

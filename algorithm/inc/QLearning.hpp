@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Algorithm.hpp"
-#include "Agent.hpp"
+#include "Wanderer.hpp"
 
 namespace jp::algorithm
 {

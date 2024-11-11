@@ -141,16 +141,16 @@ namespace jp::algorithm
                   continue;
                }
 
-               mVisitedSegments.insert(bot->getCharacter()->getVisitedSegments().back());
+               mVisitedSegments.insert(bot->getCurrentSegment());
                mChildren.push_back(std::make_shared<DecisionNode>(this, bot->getMoves().back(),
                   mVisitedSegments, mResultMoves, bot->getFinishedCharacter(), lockedEngine, mLogger, mProperties));
 
                *mLogger << "New node at the position: " << bot->getFinishedCharacter().getPosition() << std::endl;
             }
-            else if (mVisitedSegments.find(bot->getCharacter()->getVisitedSegments().back()) == mVisitedSegments.end() ||
+            else if (mVisitedSegments.find(bot->getCurrentSegment()) == mVisitedSegments.end() ||
                (bot->getMoves().back().value == mProperties.decisionTree.jumpValue && bot->getFinishedCharacter().isSticked()))
             {
-               mVisitedSegments.insert(bot->getCharacter()->getVisitedSegments().back());
+               mVisitedSegments.insert(bot->getCurrentSegment());
                mChildren.push_back(std::make_shared<DecisionNode>(this, bot->getMoves().back(),
                   mVisitedSegments, mResultMoves, bot->getFinishedCharacter(), lockedEngine, mLogger, mProperties));
 

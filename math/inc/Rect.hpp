@@ -192,7 +192,7 @@ namespace jp::math
    template <typename T>
    std::ostream& operator<<(std::ostream& os, const Rect<T>& rect)
    {
-      os << rect.left << ' ' << rect.top << ' ' << rect.width << ' ' << rect.height;
+      os << rect.left << ", " << rect.top << ", " << rect.width << ", " << rect.height;
       return os;
    }
 

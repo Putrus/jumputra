@@ -161,7 +161,7 @@ namespace jp::math
    template <typename T>
    std::ostream& operator<<(std::ostream& os, const Vector2<T>& vec)
    {
-      os << vec.x << ' ' << vec.y;
+      os << vec.x << ", " << vec.y;
       return os;
    }
 

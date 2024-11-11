@@ -45,7 +45,8 @@ namespace jp::logic
 
    std::ostream& operator<<(std::ostream& os, const Statistics& statistics)
    {
-      os << "jumps: " << statistics.jumps << " falls: " << statistics.falls << " time: " << statistics.time << " totalTime: " << statistics.totalTime;
+      os << "jumps: " << statistics.jumps << ", falls: " << statistics.falls <<
+         ", time: " << statistics.time << ", totalTime: " << statistics.totalTime;
       return os;
    }
 }

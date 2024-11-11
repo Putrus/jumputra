@@ -14,6 +14,7 @@ namespace jp::algorithm
       virtual void update(float dt) override;
 
       const std::shared_ptr<logic::Character>& getCharacter() const;
+      const std::shared_ptr<logic::Segment>& getCurrentSegment() const;
       math::Vector2<float> getPosition() const;
       math::Vector2<float> getPositionBeforeMoves() const;
       logic::CharacterDirection getDirection() const;

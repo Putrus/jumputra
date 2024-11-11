@@ -12,7 +12,7 @@ namespace jp::algorithm
          throw std::runtime_error("jp::algorithm::QLearning::QLearning - Failed to lock, engine doesn't exist");
       }
 
-      mAgents.push_back(std::make_shared<Agent>(mProperties, lockedEngine->characters().back()));
+      mAgents.push_back(std::make_shared<Wanderer>(mProperties, lockedEngine->characters().back()));
    }
 
    std::string QLearning::getName() const

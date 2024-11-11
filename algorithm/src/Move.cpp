@@ -78,7 +78,7 @@ namespace jp::algorithm
 
    std::ostream& operator<<(std::ostream& os, const Move& move)
    {
-      os << "type: " << move.type << " direction: " << move.direction << " value: " << move.value;
+      os << "type: " << move.type << ", direction: " << move.direction << ", value: " << move.value;
       return os;
    }
 }
