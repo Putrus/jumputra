@@ -37,7 +37,7 @@ namespace jp::algorithm
    {
       if (core::Random::getFloat(0.f, 1.f) <= JUMP_CHANCE)
       {
-         mSegmentBeforeJump = getVisitedSegments().back();
+         mSegmentBeforeJump = getCurrentSegment();
          setMove(Move::randomSideJump(10.f, mCharacter->getProperties().character.jump.max.y));
       }
    }
@@ -56,19 +56,19 @@ namespace jp::algorithm
 
    void Wanderer::wander(math::Vector2<float>& position)
    {
-      float leftEdgeDiff = position.x + mCharacter->getRect().width - getVisitedSegments().back()->a.x;
-      float rightEdgeDiff = getVisitedSegments().back()->b.x - position.x;
+      float leftEdgeDiff = position.x + mCharacter->getRect().width - getCurrentSegment()->a.x;
+      float rightEdgeDiff = getCurrentSegment()->b.x - position.x;
       if ((mLastPosition == position &&
          mLastChangeDirectionPosition != position) ||
          leftEdgeDiff < EDGE_THRESHOLD || rightEdgeDiff < EDGE_THRESHOLD)
       {
          if (leftEdgeDiff < EDGE_THRESHOLD)
          {
-            mCharacter->setPosition(getVisitedSegments().back()->a.x - mCharacter->getRect().width + EDGE_THRESHOLD, mCharacter->getPosition().y);
+            mCharacter->setPosition(getCurrentSegment()->a.x - mCharacter->getRect().width + EDGE_THRESHOLD, mCharacter->getPosition().y);
          }
          else if (rightEdgeDiff < EDGE_THRESHOLD)
          {
-            mCharacter->setPosition(getVisitedSegments().back()->b.x - EDGE_THRESHOLD, mCharacter->getPosition().y);
+            mCharacter->setPosition(getCurrentSegment()->b.x - EDGE_THRESHOLD, mCharacter->getPosition().y);
          }
          position = getPosition();;
          mCharacter->setRunSpeed(0.f);

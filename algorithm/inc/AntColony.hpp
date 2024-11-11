@@ -2,6 +2,7 @@
 
 #include "Algorithm.hpp"
 #include "Ant.hpp"
+#include "AntGraph.hpp"
 
 #include <set>
 
@@ -21,7 +22,6 @@ namespace jp::algorithm
       void clearAnts();
 
       std::vector<std::shared_ptr<Bot>>& mAnts = mBots;
-      std::vector<std::shared_ptr<Pheromone>> mPheromones;
-      size_t mPheromonesLastSize = 0;
+      AntGraph mGraph;
    };
 }

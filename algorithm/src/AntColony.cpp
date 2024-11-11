@@ -21,28 +21,10 @@ namespace jp::algorithm
 
    void AntColony::update(float dt)
    {
-      for (auto& pheromone : mPheromones)
-      {
-         pheromone->evaporate(dt);
-      }
-
-      mPheromones.erase(std::remove_if(mPheromones.begin(), mPheromones.end(),
-         [](const auto& pheromone)
-         {
-            return pheromone->getIntensity() < 0.f;
-         }), mPheromones.end());
-
-      float bestY = std::numeric_limits<float>::max();
       for (auto& ant : mAnts)
       {
          ant->update(dt);
-         if (ant->getPosition().y < bestY)
-         {
-            bestY = ant->getPosition().y;
-         }
       }
-
-      mPheromonesLastSize = mPheromones.size();
    }
 
    void AntColony::addAnt(const math::Rect<float>& rect)
@@ -54,7 +36,7 @@ namespace jp::algorithm
       }
 
       lockedEngine->addCharacter(rect);
-      mAnts.push_back(std::make_shared<Ant>(mPheromones, mProperties, lockedEngine->characters().back()));
+      mAnts.push_back(std::make_shared<Ant>(mProperties, lockedEngine->characters().back(), mGraph));
    }
 
    void AntColony::clearAnts()

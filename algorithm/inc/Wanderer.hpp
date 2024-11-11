@@ -9,16 +9,19 @@
 
 namespace jp::algorithm
 {
-   class Wanderer final : public Bot
+   class Wanderer : public Bot
    {
    public:
       Wanderer(const algorithm::Properties& properties, const std::shared_ptr<logic::Character>& character);
 
-      virtual void update(float dt) override;
+      void update(float dt) override;
 
    protected:
       virtual void afterMove(math::Vector2<float>& position);
       virtual void whileWander(math::Vector2<float>& position);
+
+      std::shared_ptr<logic::Segment> mSegmentBeforeJump;
+      const Properties& mProperties;
 
    private:
       void setMove(const Move& move);
@@ -26,7 +29,5 @@ namespace jp::algorithm
 
       math::Vector2<float> mLastChangeDirectionPosition = math::Vector2<float>();
       math::Vector2<float> mLastPosition = math::Vector2<float>();
-      std::shared_ptr<logic::Segment> mSegmentBeforeJump;
-      const Properties& mProperties;
    };
 }
