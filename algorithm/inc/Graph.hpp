@@ -11,10 +11,10 @@ namespace jp::algorithm
    class Graph
    {
    public:
-      void insertEdge(const std::shared_ptr<logic::Segment>& originSegment,
+      virtual void insertEdge(const std::shared_ptr<logic::Segment>& originSegment,
          const std::shared_ptr<logic::Segment>& destinationSegment,
          const std::shared_ptr<EdgeMove>& edgeMove);
-      
+
       friend std::ostream& operator<<(std::ostream& os, const Graph& graph);
 
    protected:

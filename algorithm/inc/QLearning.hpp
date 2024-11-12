@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Algorithm.hpp"
+#include "QGraph.hpp"
 #include "Wanderer.hpp"
 
 namespace jp::algorithm
@@ -16,5 +17,6 @@ namespace jp::algorithm
 
    private:    
       std::vector<std::shared_ptr<Bot>>& mAgents = mBots;
+      QGraph mGraph;
    };
 }

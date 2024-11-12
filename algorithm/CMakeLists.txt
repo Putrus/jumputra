@@ -7,6 +7,7 @@ DESCRIPTION "jumputra algorithm"
 )
 
 set(HEADERS
+   inc/Agent.hpp
    inc/Algorithm.hpp
    inc/Ant.hpp
    inc/AntColony.hpp
@@ -23,11 +24,13 @@ set(HEADERS
    inc/Move.hpp
    inc/Pheromone.hpp
    inc/Properties.hpp
+   inc/QGraph.hpp
    inc/QLearning.hpp
    inc/Wanderer.hpp
    )
 
 set(SOURCES
+   src/Agent.cpp
    src/Algorithm.cpp
    src/Ant.cpp
    src/AntColony.cpp
@@ -44,6 +47,7 @@ set(SOURCES
    src/Move.cpp
    src/Pheromone.cpp
    src/Properties.cpp
+   src/QGraph.cpp
    src/QLearning.cpp
    src/Wanderer.cpp
    )
