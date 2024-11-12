@@ -3,7 +3,9 @@
       "antColony": {
          "ants": 100,
          "randomJumpChance": 0.01,
-         "evaporationRate": 0.1
+         "evaporationRate": 0.1,
+         "maxIntensity": 100.0,
+         "minIntensity": 1.0
       },
       "decisionTree": {
          "jumps": 20,

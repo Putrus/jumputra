@@ -19,15 +19,15 @@ namespace jp::algorithm
    protected:
       virtual void afterMove(math::Vector2<float>& position);
       virtual void whileWander(math::Vector2<float>& position);
+      void setMove(const Move& move);
 
       std::shared_ptr<logic::Segment> mSegmentBeforeJump;
+      math::Vector2<float> mLastPosition = math::Vector2<float>();
       const Properties& mProperties;
 
    private:
-      void setMove(const Move& move);
       void wander(math::Vector2<float>& position);
 
       math::Vector2<float> mLastChangeDirectionPosition = math::Vector2<float>();
-      math::Vector2<float> mLastPosition = math::Vector2<float>();
    };
 }

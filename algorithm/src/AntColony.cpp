@@ -4,7 +4,7 @@ namespace jp::algorithm
 {
    AntColony::AntColony(const std::shared_ptr<logic::Engine>& engine,
       const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties)
-      : Algorithm(engine, logger, properties)
+      : mGraph(properties), Algorithm(engine, logger, properties)
    {
       math::Rect<float> startRect = engine->getCharacters().front()->getRect();
       clearAnts();
@@ -25,6 +25,8 @@ namespace jp::algorithm
       {
          ant->update(dt);
       }
+
+      mGraph.update(dt);
    }
 
    void AntColony::addAnt(const math::Rect<float>& rect)

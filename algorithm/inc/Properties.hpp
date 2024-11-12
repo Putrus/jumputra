@@ -13,6 +13,9 @@ namespace jp::algorithm
       {
          size_t ants;
          float randomJumpChance;
+         float evaporationRate;
+         float maxIntensity;
+         float minIntensity;
       } antColony;
 
       struct DecisionTree

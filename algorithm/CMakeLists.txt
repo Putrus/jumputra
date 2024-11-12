@@ -10,11 +10,13 @@ set(HEADERS
    inc/Algorithm.hpp
    inc/Ant.hpp
    inc/AntColony.hpp
+   inc/AntGraph.hpp
    inc/Bot.hpp
    inc/DecisionNode.hpp
    inc/DecisionTree.hpp
    inc/EdgeMove.hpp
    inc/Genetic.hpp
+   inc/Graph.hpp
    inc/Greedy.hpp
    inc/Human.hpp
    inc/Movable.hpp
@@ -29,11 +31,13 @@ set(SOURCES
    src/Algorithm.cpp
    src/Ant.cpp
    src/AntColony.cpp
+   src/AntGraph.cpp
    src/Bot.cpp
    src/DecisionNode.cpp
    src/DecisionTree.cpp
    src/EdgeMove.cpp
    src/Genetic.cpp
+   src/Graph.cpp
    src/Greedy.cpp
    src/Human.cpp
    src/Movable.cpp

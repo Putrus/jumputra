@@ -6,6 +6,9 @@ namespace jp::algorithm
    {
       antColony.ants = json.at("antColony").at("ants");
       antColony.randomJumpChance = json.at("antColony").at("randomJumpChance");
+      antColony.evaporationRate = json.at("antColony").at("evaporationRate");
+      antColony.maxIntensity = json.at("antColony").at("maxIntensity");
+      antColony.minIntensity = json.at("antColony").at("minIntensity");
 
       decisionTree.jumps = json.at("decisionTree").at("jumps");
       decisionTree.jumpValue = json.at("decisionTree").at("jumpValue");
@@ -27,6 +30,9 @@ namespace jp::algorithm
       nlohmann::json json;
       json["antColony"]["ants"] = antColony.ants;
       json["antColony"]["randomJumpChance"] = antColony.randomJumpChance;
+      json["antColony"]["evaporationRate"] = antColony.evaporationRate;
+      json["antColony"]["maxIntensity"] = antColony.maxIntensity;
+      json["antColony"]["minIntensity"] = antColony.minIntensity;
 
       json["decisionTree"]["jumps"] = decisionTree.jumps;
       json["decisionTree"]["jumpValue"] = decisionTree.jumpValue;

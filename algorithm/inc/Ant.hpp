@@ -21,5 +21,6 @@ namespace jp::algorithm
 
    private:
       AntGraph& mGraph;
+      std::shared_ptr<EdgeMove> mDestinationPheromone = nullptr;
    };
 }
