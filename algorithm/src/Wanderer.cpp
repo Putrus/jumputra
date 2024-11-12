@@ -13,6 +13,7 @@ namespace jp::algorithm
 
    void Wanderer::update(float dt)
    {
+      mJumpTime += dt;
       Bot::update(dt);
       math::Vector2<float> position = getPosition();
       if (finishedMoves())
@@ -39,6 +40,7 @@ namespace jp::algorithm
       {
          mSegmentBeforeJump = getCurrentSegment();
          setMove(Move::randomSideJump(10.f, mCharacter->getProperties().character.jump.max.y));
+         mJumpTime = 0.f;
       }
    }
 

@@ -11,50 +11,21 @@ namespace jp::algorithm
 
    void Ant::afterMove(math::Vector2<float>& position)
    {
-      if (getCurrentSegment() != mSegmentBeforeJump && !(getVisitedSegments().size() > 2 &&
-         getVisitedSegments().at(getVisitedSegments().size() - 3) == getCurrentSegment()))
+      auto currentSegment = getCurrentSegment();
+      auto visitedSegments = getVisitedSegments();
+      if (currentSegment != mSegmentBeforeJump)
       {
-         if (!mDestinationPheromone)
-         {
-            float intensity = std::max(mSegmentBeforeJump->a.y - getCurrentSegment()->a.y +
-               std::abs(mSegmentBeforeJump->a.x - getCurrentSegment()->a.x), mProperties.antColony.minIntensity);
-            bool visited = false;
-            for (size_t i = 0; i < getVisitedSegments().size() - 1; ++i)
-            {
-               if (getCurrentSegment() == getVisitedSegments().at(i))
-               {
-                  visited = true;
-                  break;
-               }
-            }
+         float heightDiff = mSegmentBeforeJump->a.y - getCurrentSegment()->a.y;
+         float intensity = std::max(heightDiff + std::abs(mSegmentBeforeJump->a.x - getCurrentSegment()->a.x),
+            mProperties.antColony.minIntensity);
 
-            if (visited)
-            {
-               intensity = mProperties.antColony.minIntensity;
-            }
-            mGraph.insertPheromone(mSegmentBeforeJump, getCurrentSegment(),
-               std::make_shared<Pheromone>(mLastPosition, getMoves().back(), intensity, 1.f));
-         }
-         else
+         if (isSegmentVisited(currentSegment, visitedSegments.size() - 1))
          {
-            bool visited = false;
-            float intensity = std::max(mSegmentBeforeJump->a.y - getCurrentSegment()->a.y, mProperties.antColony.minIntensity);
-            for (size_t i = 0; i < getVisitedSegments().size() - 1; ++i)
-            {
-               if (getCurrentSegment() == getVisitedSegments().at(i))
-               {
-                  visited = true;
-                  break;
-               }
-            }
-
-            if (visited)
-            {
-               intensity = mProperties.antColony.minIntensity;
-            }
-            mGraph.insertPheromone(mSegmentBeforeJump, getCurrentSegment(),
-               std::make_shared<Pheromone>(mLastPosition, getMoves().back(), intensity, 1.f));
+            intensity = heightDiff > 0 ? mProperties.antColony.minIntensity : 0.f;
          }
+
+         mGraph.insertPheromone(mSegmentBeforeJump, getCurrentSegment(),
+            std::make_shared<Pheromone>(mLastPosition, getMoves().back(), intensity, mJumpTime));
       }
 
       mDestinationPheromone = mGraph.getDestinationPheromone(getCurrentSegment());
@@ -80,12 +51,14 @@ namespace jp::algorithm
          {
             mSegmentBeforeJump = getCurrentSegment();
             setMove(Move::randomSideJump(10.f, mCharacter->getProperties().character.jump.max.y));
+            mJumpTime = 0.f;
          }
       }
       else if (std::abs(getPosition().x - mDestinationPheromone->position.x) < COLLISION_THRESHOLD)
       {
          mSegmentBeforeJump = getCurrentSegment();
          setMove(mDestinationPheromone->move);
+         mJumpTime = 0.f;
       }
    }
 }

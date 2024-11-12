@@ -97,6 +97,20 @@ namespace jp::algorithm
       return mCharacter->getVisitedSegments();
    }
 
+   bool Bot::isSegmentVisited(const std::shared_ptr<logic::Segment>& segment, size_t size) const
+   {
+      auto visitedSegments = getVisitedSegments();
+      size = std::min(visitedSegments.size(), size);
+      for (size_t i = 0; i < size; ++i)
+      {
+         if (segment == getVisitedSegments().at(i))
+         {
+            return true;
+         }
+      }
+      return false;
+   }
+
    bool Bot::finishedMoves() const
    {
       return mFinishedMoves;

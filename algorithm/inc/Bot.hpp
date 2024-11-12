@@ -21,6 +21,7 @@ namespace jp::algorithm
       const logic::Character& getFinishedCharacter() const;
       const std::vector<std::shared_ptr<logic::Segment>>& getVisitedSegments() const;
 
+      bool isSegmentVisited(const std::shared_ptr<logic::Segment>& segment, size_t size) const;
       bool finishedMoves() const;
 
    protected:

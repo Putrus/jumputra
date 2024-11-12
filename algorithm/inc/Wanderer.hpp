@@ -24,6 +24,7 @@ namespace jp::algorithm
       std::shared_ptr<logic::Segment> mSegmentBeforeJump;
       math::Vector2<float> mLastPosition = math::Vector2<float>();
       const Properties& mProperties;
+      float mJumpTime = 0.f;
 
    private:
       void wander(math::Vector2<float>& position);
