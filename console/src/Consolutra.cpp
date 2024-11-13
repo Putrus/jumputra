@@ -17,6 +17,7 @@ namespace jp::console
    const char* LOGS_DIRECTORY = "data/logs/";
    const char* STATISTICS_DIRECTORY = "data/statistics/";
    constexpr int MAX_EXECUTION_MINUTES = 4;
+   constexpr int EXECUTION_NUMBER = 24;
 
    Consolutra::Consolutra(const Properties& properties, const std::string& worldFilename,
          const std::string& resultDirectory, algorithm::AlgorithmName algorithmName)
@@ -84,7 +85,7 @@ namespace jp::console
                {
                   properties.algorithm.greedy.epsilon = epsilon;
                   std::string subDir =  resultDir + "epsilon_" + std::to_string(epsilon) + "_bots_" + std::to_string(bots) + "/";
-                  for (int i = 0; i < 100; ++i)
+                  for (int i = 0; i < EXECUTION_NUMBER; ++i)
                   {
                      Consolutra consolutra(properties, mWorldFilename, resultDir, algorithmName);
                      consolutra.run();
