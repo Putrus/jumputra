@@ -11,11 +11,70 @@ namespace jp::algorithm
 
    void Agent::afterMove(math::Vector2<float>& position)
    {
-      Wanderer::afterMove(position);
+      auto currentSegment = getCurrentSegment();
+      auto visitedSegments = getVisitedSegments();
+      if (currentSegment != mSegmentBeforeJump)
+      {
+         float reward = mSegmentBeforeJump->a.y - getCurrentSegment()->a.y;
+
+         mGraph.insertEdge(mSegmentBeforeJump, currentSegment,
+            std::make_shared<EdgeMove>(mLastPosition, getMoves().back(), reward, mJumpTime));
+         if (getPosition().y < mTMPBestPosition.y)
+         {
+            mTMPBestPosition = getPosition();
+         }
+      }
+
+      mDestinationAction = nullptr;
+      if (core::Random::getFloat(0.f, 1.f) > mProperties.qLearning.epsilon)
+      {
+         mDestinationAction = mGraph.getBestAction(currentSegment);
+      }
+      else
+      {
+         mDestinationAction = mGraph.getRandomAction(currentSegment);
+      }
+
+      if (!mDestinationAction)
+      {
+         Wanderer::afterMove(position);
+      }
+      else if (mDestinationAction->position.x > getPosition().x)
+      {
+         setMove(Move::infiniteRun(logic::CharacterDirection::Right));
+      }
+      else
+      {
+         setMove(Move::infiniteRun(logic::CharacterDirection::Left));
+      }
    }
 
    void Agent::whileWander(math::Vector2<float>& position)
    {
-      Wanderer::whileWander(position);
+      if (mTMPTime > 500)
+      {
+         std::cout << "---------------------------------------------" << std::endl;
+         std::cout << mGraph << std::endl;
+         std::cout << "Position: " << getPosition() << std::endl;
+         std::cout << "Best position: " << mTMPBestPosition << std::endl;
+         mTMPBestPosition = math::Vector2<float>(0.f, 90000.f);
+         mTMPTime = 0.f;
+      }
+      mTMPTime += 0.016f;
+      if (!mDestinationAction)
+      {
+         if (core::Random::getFloat(0.f, 1.f) <= mProperties.qLearning.randomJumpChance)
+         {
+            mSegmentBeforeJump = getCurrentSegment();
+            setMove(Move::randomSideJump(10.f, mCharacter->getProperties().character.jump.max.y));
+            mJumpTime = 0.f;
+         }
+      }
+      else if (std::abs(getPosition().x - mDestinationAction->position.x) < COLLISION_THRESHOLD)
+      {
+         mSegmentBeforeJump = getCurrentSegment();
+         setMove(mDestinationAction->move);
+         mJumpTime = 0.f;
+      }
    }
 }

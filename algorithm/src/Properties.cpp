@@ -23,6 +23,11 @@ namespace jp::algorithm
 
       greedy.bots = json.at("greedy").at("bots");
       greedy.epsilon = json.at("greedy").at("epsilon");
+
+      qLearning.learningRate = json.at("qLearning").at("learningRate");
+      qLearning.discountFactor = json.at("qLearning").at("discountFactor");
+      qLearning.epsilon = json.at("qLearning").at("epsilon");
+      qLearning.randomJumpChance = json.at("qLearning").at("randomJumpChance");
    }
 
    nlohmann::json Properties::toJson() const
@@ -47,6 +52,11 @@ namespace jp::algorithm
 
       json["greedy"]["bots"] = greedy.bots;
       json["greedy"]["epsilon"] = greedy.epsilon;
+
+      json["qLearning"]["learningRate"] = qLearning.learningRate;
+      json["qLearning"]["discountFactor"] = qLearning.discountFactor;
+      json["qLearning"]["epsilon"] = qLearning.epsilon;
+      json["qLearning"]["randomJumpChance"] = qLearning.randomJumpChance;
 
       return json;
    }

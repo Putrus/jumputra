@@ -21,6 +21,8 @@ namespace jp::algorithm
 
    private:
       QGraph& mGraph;
-      std::shared_ptr<EdgeMove> mDestinationPheromone = nullptr;
+      std::shared_ptr<EdgeMove> mDestinationAction = nullptr;
+      float mTMPTime = 0.f;
+      math::Vector2<float> mTMPBestPosition = math::Vector2<float>(0.f, 90000.f);
    };
 }

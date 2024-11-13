@@ -14,7 +14,14 @@ namespace jp::algorithm
          const std::shared_ptr<logic::Segment>& destinationSegment,
          const std::shared_ptr<EdgeMove>& edgeMove) override;
 
+      std::shared_ptr<EdgeMove> getBestAction(const std::shared_ptr<logic::Segment>& segment) const;
+      std::shared_ptr<EdgeMove> getRandomAction(const std::shared_ptr<logic::Segment>& segment) const;
+
    private:
+      float getQ(const std::shared_ptr<logic::Segment>& originSegment,
+         const std::shared_ptr<logic::Segment>& destinationSegment) const;
+      float getMaxQ(const std::shared_ptr<logic::Segment>& segment) const;
+
       const Properties& mProperties;
    };
 }

@@ -49,5 +49,13 @@ namespace jp::algorithm
          size_t bots;
          float epsilon;
       } greedy;
+
+      struct QLearning
+      {
+         float learningRate;
+         float discountFactor;
+         float epsilon;
+         float randomJumpChance;
+      } qLearning;
    };
 }

@@ -27,6 +27,12 @@
       "greedy": {
          "bots":  100,
          "epsilon": 0.2
+      },
+      "qLearning": {
+         "learningRate": 0.4,
+         "discountFactor": 0.9,
+         "epsilon": 0.5,
+         "randomJumpChance": 0.01
       }
    },
    "graphic": {
