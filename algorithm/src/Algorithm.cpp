@@ -126,6 +126,8 @@ namespace jp::algorithm
          *mLogger << "Statistics: " << lockedEngine->getStatistics() << std::endl;
 
          nlohmann::json json;
+         json["completed"] = lockedEngine->getWinner() ? 1 : 0;
+         json["properties"] = mProperties.toJson();
          json["totalStatistics"] = lockedEngine->getStatistics().toJson();
          json["movesSize"] = mMoves.size();
          for (const auto& move : mMoves)

@@ -4,24 +4,45 @@
 
 int main(int argc, char** argv)
 {
-   if (argc != 4)
+   if (argc != 5)
    {
-      std::cerr << "Wrong arguments number. Should be " << argv[0] << " <properties filename> <world filename> <algorithm name>" << std::endl;
+      std::cerr << "Wrong arguments number. Should be " << argv[0] << " <action> <properties filename> <world filename> <algorithm name>" << std::endl;
       return -1;
    }
 
-   std::string propertiesFilename = argv[1];
-   std::string worldFilename = argv[2];
-   std::string algortihmName = argv[3];
+   std::string action = argv[1];
+   std::string propertiesFilename = argv[2];
+   std::string worldFilename = argv[3];
+   std::string algortihmName = argv[4];
 
-   try
+   if (action == "-run")
    {
-      jp::console::Consolutra consolutra(propertiesFilename, worldFilename, algortihmName);
-      consolutra.run();
+      try
+      {
+         jp::console::Consolutra consolutra(propertiesFilename, worldFilename, algortihmName);
+         consolutra.run();
+      }
+      catch (const std::exception& e)
+      {
+         std::cerr << e.what() << std::endl;
+      }
    }
-   catch (const std::exception& e)
+   else if (action == "-investigate")
    {
-      std::cerr << e.what() << std::endl;
+      try
+      {
+         jp::console::Consolutra consolutra(propertiesFilename, worldFilename, algortihmName);
+         consolutra.investigate();
+      }
+      catch (const std::exception& e)
+      {
+         std::cerr << e.what() << std::endl;
+      }
+   }
+   else
+   {
+      std::cerr << "Wrong action name. Possible actions: -run, -investigate" << std::endl;
+      return -1;
    }
    
    return 0;
