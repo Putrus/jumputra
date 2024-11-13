@@ -18,6 +18,8 @@ namespace jp::console
       void run();
       void investigate();
 
+      std::shared_ptr<logic::Engine> getEngine() const;
+
    private:
       Properties mProperties;
 

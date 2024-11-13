@@ -61,31 +61,50 @@ namespace jp::console
 
    void Consolutra::investigate()
    {
+      std::fstream csvFile;
       algorithm::AlgorithmName algorithmName = algorithm::Algorithm::stringToName(mAlgorithm->getName());
-      std::cout << algorithmName << std::endl;
+      std::string resultDir = "data/console/" + core::String::toLower(mAlgorithm->getName()) + '_' + mCurrentDate + "/";
       switch(algorithmName)
       {
          case algorithm::AlgorithmName::Greedy:
+         {
+            std::filesystem::create_directories(resultDir);
+            csvFile.open(resultDir + "result.csv", std::ios::out | std::ios::app);
+            if (!csvFile.is_open())
             {
-               Properties properties = mProperties;
-               for (int bots = 10; bots < 200; bots += 10)
+               throw std::runtime_error("jp::console::Consolutra::investigate - Failed to open csv file");
+            }
+            csvFile << "id;completed;bots;epsilon;moves;falls;jumps;time;totalTime;" << std::endl;
+            Properties properties = mProperties;
+            int id = 0;
+            for (int bots = 10; bots < 200; bots += 10)
+            {
+               properties.algorithm.greedy.bots = bots;
+               for (float epsilon = 0.1f; epsilon < 0.9f; epsilon += 0.1f)
                {
-                  properties.algorithm.greedy.bots = bots;
-                  for (float epsilon = 0.1f; epsilon < 0.9f; epsilon += 0.1f)
+                  properties.algorithm.greedy.epsilon = epsilon;
+                  std::string subDir =  resultDir + "epsilon_" + std::to_string(epsilon) + "_bots_" + std::to_string(bots) + "/";
+                  for (int i = 0; i < 100; ++i)
                   {
-                     properties.algorithm.greedy.epsilon = epsilon;
-                     std::string resultDir = "data/console/" + mCurrentDate + "/" +
-                        core::String::toLower(mAlgorithm->getName()) +
-                        "/epsilon_" + std::to_string(epsilon) + "_bots_" + std::to_string(bots) + "/";
-                     for (int i = 0; i < 100; ++i)
-                     {
-                        Consolutra consolutra(properties, mWorldFilename, resultDir, algorithmName);
-                        consolutra.run();
-                     }
+                     Consolutra consolutra(properties, mWorldFilename, resultDir, algorithmName);
+                     consolutra.run();
+                     bool completed = consolutra.getEngine()->getWinner() ? true : false;
+                     logic::Statistics statistics = consolutra.getEngine()->getStatistics();
+                     csvFile << id << ';' << completed << ';' << bots << ';' << epsilon << ';' << consolutra.mAlgorithm->getMoves().size() << ';' <<
+                        statistics.falls << ';' << statistics.jumps << ';' << statistics.time << ';' << statistics.totalTime << ';' << std::endl;
+                     ++id;
                   }
                }
             }
-            break;
+         }
+         break;
       }
+
+      csvFile.close();
+   }
+
+   std::shared_ptr<logic::Engine> Consolutra::getEngine() const
+   {
+      return mEngine;
    }
 }
