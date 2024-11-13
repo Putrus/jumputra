@@ -26,4 +26,11 @@ namespace jp::core
       std::string time = std::format("{:%d-%m-%Y_%H-%M}", now);
       return time;
    }
+
+   std::string String::currentDateWithSeconds()
+   {
+      const auto now = std::chrono::system_clock::now();
+      std::string time = std::format("{:%d-%m-%Y_%H-%M-%S}", now);
+      return time;
+   }
 }

@@ -21,11 +21,11 @@ namespace jp::console
 
    Consolutra::Consolutra(const Properties& properties, const std::string& worldFilename,
          const std::string& resultDirectory, algorithm::AlgorithmName algorithmName)
-      : mLogsDirectory(resultDirectory), mStatisticsDirectory(resultDirectory), mCurrentDate(core::String::currentDate()), mStartTime(std::chrono::steady_clock::now()), mLogger(),
+      : mLogsDirectory(resultDirectory), mStatisticsDirectory(resultDirectory), mCurrentDate(core::String::currentDateWithSeconds()), mStartTime(std::chrono::steady_clock::now()), mLogger(),
       mProperties(properties), mWorld(core::String::toLower(std::filesystem::path(worldFilename).stem().string()))
    {
       mLogger = std::make_shared<core::Logger>(resultDirectory + mWorld + "_" +
-         core::String::toLower(algorithm::Algorithm::nameToString(algorithmName)) + "_" + core::String::currentDate() + "_log.txt", true);
+         core::String::toLower(algorithm::Algorithm::nameToString(algorithmName)) + "_" + mCurrentDate + "_log.txt", true);
       mEngine = std::make_shared<logic::Engine>(mProperties.logic, worldFilename);
       mAlgorithm = algorithm::Algorithm::create(algorithmName, mEngine, mLogger, mProperties.algorithm);
    }
@@ -81,7 +81,7 @@ namespace jp::console
             for (int bots = 10; bots < 200; bots += 10)
             {
                properties.algorithm.greedy.bots = bots;
-               for (float epsilon = 0.1f; epsilon < 0.9f; epsilon += 0.1f)
+               for (float epsilon = 0.1f; epsilon < 1.0f; epsilon += 0.1f)
                {
                   properties.algorithm.greedy.epsilon = epsilon;
                   std::string subDir =  resultDir + "epsilon_" + std::to_string(epsilon) + "_bots_" + std::to_string(bots) + "/";
