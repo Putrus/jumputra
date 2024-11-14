@@ -81,6 +81,11 @@ namespace jp::console
 
       switch(algorithmName)
       {
+         case algorithm::AlgorithmName::AntColony:
+         {
+            antColonyInvestigation(csvFile, resultDir, algorithmName);
+         }
+         break;
          case algorithm::AlgorithmName::Genetic:
          {
             geneticInvestigation(csvFile, resultDir, algorithmName);
@@ -103,7 +108,45 @@ namespace jp::console
 
    void Consolutra::antColonyInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName)
    {
-      csvFile << "id;;falls;jumps;time;totalTime;" << std::endl;
+      csvFile << "id;completed;ants;randomJumpChance;evaporationRate;minIntensity;maxIntensity;moves;falls;jumps;time;totalTime;" << std::endl;
+      Properties properties = mProperties;
+      int id = 0;
+      for (int ants = 10; ants <= 200; ants += 10)
+      {
+         properties.algorithm.antColony.ants = ants;
+         for (float randomJumpChance = 0.005; randomJumpChance < 0.025; randomJumpChance += 0.005)
+         {
+            properties.algorithm.antColony.randomJumpChance = randomJumpChance;
+            for (float evaporationRate = 0.5; evaporationRate < 4.1; evaporationRate += 0.5)
+            {
+               properties.algorithm.antColony.evaporationRate = evaporationRate;
+               for (float minIntensity = 5.f; minIntensity < 28.f; minIntensity += 5.f)
+               {
+                  properties.algorithm.antColony.minIntensity = minIntensity;
+                  for (float maxIntensity = 250.f; maxIntensity < 2001.f; maxIntensity += 250.f)
+                  {
+                     for (int i = 0; i < EXECUTION_NUMBER; ++i)
+                     {
+                        properties.algorithm.antColony.maxIntensity = maxIntensity;
+                        auto engineCopy = std::make_shared<logic::Engine>(*mEngine);
+                        engineCopy->removeAllCharacters();
+                        engineCopy->addCharacter(mEngine->getCharacters().front()->getRect());
+                        Consolutra consolutra(engineCopy, properties, mWorldFilename, resultDir, algorithmName, mLogger);
+                        consolutra.run(false);
+                        bool completed = consolutra.mEngine->getWinner() ? true : false;
+                        const logic::Statistics& statistics = consolutra.mEngine->getStatistics();
+                        auto moves = consolutra.mAlgorithm->getMoves();
+                        csvFile << id << ';' << completed << ';' << ants << ';' << randomJumpChance << ';' <<
+                           evaporationRate << ';' << minIntensity << ';' << maxIntensity << ';' <<
+                           moves.size() + 1 << ';' << statistics.falls << ';' << statistics.jumps << ';' <<
+                           statistics.time << ';' << statistics.totalTime << ';' << std::endl;
+                        ++id;
+                     }
+                  }
+               }
+            }
+         }
+      }
    }
 
    void Consolutra::geneticInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName)
