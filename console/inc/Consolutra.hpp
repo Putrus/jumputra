@@ -11,7 +11,7 @@ namespace jp::console
    class Consolutra
    {
    public:
-      Consolutra(const Properties& properties, const std::string& worldFilename,
+      Consolutra(const std::shared_ptr<logic::Engine>& engine, const Properties& properties, const std::string& worldFilename,
          const std::string& resultDirectory, algorithm::AlgorithmName algorithmName, const std::shared_ptr<core::Logger>& logger);
       Consolutra(const std::string& propertiesFilename, const std::string& worldFilename, const std::string& algorithmName);
 

@@ -19,12 +19,11 @@ namespace jp::console
    constexpr int MAX_EXECUTION_MINUTES = 1;
    constexpr int EXECUTION_NUMBER = 24;
 
-   Consolutra::Consolutra(const Properties& properties, const std::string& worldFilename,
+   Consolutra::Consolutra(const std::shared_ptr<logic::Engine>& engine, const Properties& properties, const std::string& worldFilename,
       const std::string& resultDirectory, algorithm::AlgorithmName algorithmName, const std::shared_ptr<core::Logger>& logger)
       : mLogsDirectory(resultDirectory), mStatisticsDirectory(resultDirectory), mCurrentDate(core::String::currentDateWithSeconds()), mStartTime(std::chrono::steady_clock::now()),
-      mProperties(properties), mWorld(core::String::toLower(std::filesystem::path(worldFilename).stem().string())), mLogger(logger)
+      mProperties(properties), mWorld(core::String::toLower(std::filesystem::path(worldFilename).stem().string())), mLogger(logger), mEngine(engine)
    {
-      mEngine = std::make_shared<logic::Engine>(mProperties.logic, worldFilename);
       mAlgorithm = algorithm::Algorithm::create(algorithmName, mEngine, mLogger, mProperties.algorithm);
    }
 
@@ -59,9 +58,9 @@ namespace jp::console
             break;
          }
       }
-      std::string filename = mStatisticsDirectory +
-         core::String::toLower(mWorld + "_" + mAlgorithm->getName()) + "_" + mCurrentDate + ".json";
-      mAlgorithm->saveStatistics(filename);
+      // std::string filename = mStatisticsDirectory +
+      //    core::String::toLower(mWorld + "_" + mAlgorithm->getName()) + "_" + mCurrentDate + ".json";
+      // mAlgorithm->saveStatistics(filename);
    }
 
    void Consolutra::investigate()
@@ -109,7 +108,10 @@ namespace jp::console
                *mLogger << "Run with parameters: " << std::endl;
                *mLogger << "bots = " << bots << std::endl;
                *mLogger << "epsilon = " << epsilon << std::endl;
-               Consolutra consolutra(properties, mWorldFilename, resultDir, algorithmName, mLogger);
+               auto engineCopy = std::make_shared<logic::Engine>(*mEngine);
+               engineCopy->removeAllCharacters();
+               engineCopy->addCharacter(mEngine->getCharacters().front()->getRect());
+               Consolutra consolutra(engineCopy, properties, mWorldFilename, resultDir, algorithmName, mLogger);
                consolutra.run();
                bool completed = consolutra.mEngine->getWinner() ? true : false;
                logic::Statistics statistics = consolutra.mEngine->getStatistics();
@@ -132,7 +134,10 @@ namespace jp::console
          for (float runValue = 0.025f; runValue <= 1.f; runValue += 0.025f)
          {
             properties.algorithm.decisionTree.runValue = runValue;
-            Consolutra consolutra(properties, mWorldFilename, resultDir, algorithmName, mLogger);
+            auto engineCopy = std::make_shared<logic::Engine>(*mEngine);
+            engineCopy->removeAllCharacters();
+            engineCopy->addCharacter(mEngine->getCharacters().front()->getRect());
+            Consolutra consolutra(engineCopy, properties, mWorldFilename, resultDir, algorithmName, mLogger);
             consolutra.run();
             bool completed = consolutra.mEngine->getWinner() ? true : false;
             const logic::Statistics& statistics = consolutra.mEngine->getStatistics();
