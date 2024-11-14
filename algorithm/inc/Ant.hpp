@@ -13,7 +13,8 @@ namespace jp::algorithm
    class Ant final : public Wanderer
    {
    public:
-      Ant(const algorithm::Properties& properties, const std::shared_ptr<logic::Character>& character, AntGraph& antGraph);
+      Ant(const algorithm::Properties& properties, const std::shared_ptr<logic::Character>& character,
+         AntGraph& antGraph, core::Logger& logger);
 
    protected:
       virtual void afterMove(math::Vector2<float>& position) override;
@@ -21,6 +22,7 @@ namespace jp::algorithm
 
    private:
       AntGraph& mGraph;
+      core::Logger& mLogger;
       std::shared_ptr<EdgeMove> mDestinationPheromone = nullptr;
    };
 }

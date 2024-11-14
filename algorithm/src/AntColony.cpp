@@ -45,7 +45,7 @@ namespace jp::algorithm
       }
 
       lockedEngine->addCharacter(rect);
-      mAnts.push_back(std::make_shared<Ant>(mProperties, lockedEngine->characters().back(), mGraph));
+      mAnts.push_back(std::make_shared<Ant>(mProperties, lockedEngine->characters().back(), mGraph, *mLogger));
    }
 
    void AntColony::clearAnts()

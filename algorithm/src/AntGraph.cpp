@@ -8,7 +8,6 @@ namespace jp::algorithm
 
    void AntGraph::update(float dt)
    {
-      mTMPTime += dt;
       for (auto& segment : mAdjacencyList)
       {
          for (auto& pheromone : segment.second)
@@ -16,18 +15,12 @@ namespace jp::algorithm
             pheromone.second->value = std::max(0.f, pheromone.second->value - dt * mProperties.antColony.evaporationRate);
          }
       }
-
-      if (mTMPTime > 15.f)
-      {
-         std::cout << "-----------GRAPH-----------" << std::endl;
-         std::cout << *this << std::endl;
-         mTMPTime = 0.f;
-      }
    }
 
    void AntGraph::insertPheromone(const std::shared_ptr<logic::Segment>& originSegment,
       const std::shared_ptr<logic::Segment>& destinationSegment,
-      const std::shared_ptr<Pheromone>& pheromone)
+      const std::shared_ptr<Pheromone>& pheromone,
+      core::Logger& logger)
    {
       auto originFind = mAdjacencyList.find(originSegment);
       if (originFind != mAdjacencyList.end())
@@ -46,6 +39,10 @@ namespace jp::algorithm
                pheromone->intensity = std::min(mProperties.antColony.maxIntensity,
                   pheromone->intensity + destinationFind->second->value);
             }
+         }
+         else
+         {
+            logger << "New pheromone between segments (" << *originSegment << ") and (" << *destinationSegment << ")" << std::endl;
          }
       }
 

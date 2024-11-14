@@ -6,8 +6,9 @@ namespace jp::algorithm
 {
    constexpr float COLLISION_THRESHOLD = 1.f;
 
-   Ant::Ant(const algorithm::Properties& properties, const std::shared_ptr<logic::Character>& character, AntGraph& antGraph)
-      : mGraph(antGraph), Wanderer(properties, character) {}
+   Ant::Ant(const algorithm::Properties& properties, const std::shared_ptr<logic::Character>& character,
+      AntGraph& antGraph, core::Logger& logger)
+      : mGraph(antGraph), mLogger(logger), Wanderer(properties, character) {}
 
    void Ant::afterMove(math::Vector2<float>& position)
    {
@@ -25,7 +26,7 @@ namespace jp::algorithm
          }
 
          mGraph.insertPheromone(mSegmentBeforeJump, getCurrentSegment(),
-            std::make_shared<Pheromone>(mLastPosition, getMoves().back(), intensity, mJumpTime));
+            std::make_shared<Pheromone>(mLastPosition, getMoves().back(), intensity, mJumpTime), mLogger);
       }
 
       mDestinationPheromone = mGraph.getDestinationPheromone(getCurrentSegment());
