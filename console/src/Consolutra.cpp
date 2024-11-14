@@ -16,7 +16,7 @@ namespace jp::console
 {
    const char* LOGS_DIRECTORY = "data/logs/";
    const char* STATISTICS_DIRECTORY = "data/statistics/";
-   constexpr int MAX_EXECUTION_MINUTES = 1;
+   constexpr int MAX_EXECUTION_MINUTES = 2;
    constexpr int EXECUTION_NUMBER = 24;
 
    Consolutra::Consolutra(const std::shared_ptr<logic::Engine>& engine, const Properties& properties, const std::string& worldFilename,
@@ -151,7 +151,7 @@ namespace jp::console
       for (int bots = 10; bots < 200; bots += 10)
       {
          properties.algorithm.greedy.bots = bots;
-         for (float epsilon = 0.1f; epsilon < 1.0f; epsilon += 0.1f)
+         for (float epsilon = 0.05f; epsilon < 0.7f; epsilon += 0.05f)
          {
             properties.algorithm.greedy.epsilon = epsilon;
             for (int i = 0; i < EXECUTION_NUMBER; ++i)
