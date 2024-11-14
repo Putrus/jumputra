@@ -133,7 +133,7 @@ namespace jp::console
                         csvFile << id << ';' << completed << ';' << populationSize << ';' << populationElitism << ';' <<
                            mutationChange << ';' << mutationMax << ';' << tournament << ';' << visitedSegmentsImpact << ';' <<
                            jumpMoves << ';' << moves.size() << ';' << statistics.falls << ';' << statistics.jumps << ';' <<
-                           statistics.time << ';' << statistics.totalTime << ';';
+                           statistics.time << ';' << statistics.totalTime << ';' << std::endl;
                         ++id;
                      }
                   }
