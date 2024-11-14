@@ -77,6 +77,11 @@ namespace jp::console
 
       switch(algorithmName)
       {
+         case algorithm::AlgorithmName::Genetic:
+         {
+            geneticInvestigation(csvFile, resultDir, algorithmName);
+         }
+         break;
          case algorithm::AlgorithmName::Greedy:
          {
             greedyInvestigation(csvFile, resultDir, algorithmName);
@@ -90,6 +95,52 @@ namespace jp::console
       }
 
       csvFile.close();
+   }
+
+   void Consolutra::geneticInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName)
+   {
+      csvFile << "id;completed;population size;population elitism;mutation change;mutation max;tournament;visited segments impact;jump moves;moves;falls;jumps;time;totalTime;" << std::endl;
+      Properties properties = mProperties;
+      int id = 0;
+      for (int populationSize = 50; populationSize < 800; populationSize += 50)
+      {
+         properties.algorithm.genetic.population.size = populationSize;
+         for (float populationElitism = 0.125; populationElitism < 0.6; populationElitism += 0.125)
+         {
+            properties.algorithm.genetic.population.elitism = populationElitism;
+            for (float mutationChange = 0.002; mutationChange < 0.02; mutationChange += 0.002)
+            {
+               properties.algorithm.genetic.mutation.change = mutationChange;
+               for (float mutationMax = 0.02; mutationMax < 0.09; mutationMax += 0.02)
+               {
+                  properties.algorithm.genetic.mutation.change = mutationMax;
+                  for (float tournament = 0.1; tournament < 1.0; tournament += 0.1)
+                  {
+                     properties.algorithm.genetic.tournament = tournament;
+                     for (float visitedSegmentsImpact = 1.0; visitedSegmentsImpact < 20; ++visitedSegmentsImpact)
+                     {
+                        properties.algorithm.genetic.visitedSegmentsImpact = visitedSegmentsImpact;
+                        auto engineCopy = std::make_shared<logic::Engine>(*mEngine);
+                        engineCopy->removeAllCharacters();
+                        engineCopy->addCharacter(mEngine->getCharacters().front()->getRect());
+                        Consolutra consolutra(engineCopy, properties, mWorldFilename, resultDir, algorithmName, mLogger);
+                        consolutra.run();
+                        bool completed = consolutra.mEngine->getWinner() ? true : false;
+                        const logic::Statistics& statistics = consolutra.mEngine->getStatistics();
+                        auto moves = consolutra.mAlgorithm->getMoves();
+                        int jumpMoves = std::count_if(moves.begin(), moves.end(), [](const algorithm::Move &move)
+                           { return move.type == algorithm::MoveType::Jump; });
+                        csvFile << id << ';' << completed << ';' << populationSize << ';' << populationElitism << ';' <<
+                           mutationChange << ';' << mutationMax << ';' << tournament << ';' << visitedSegmentsImpact << ';' <<
+                           jumpMoves << ';' << moves.size() << ';' << statistics.falls << ';' << statistics.jumps << ';' <<
+                           statistics.time << ';' << statistics.totalTime << ';';
+                        ++id;
+                     }
+                  }
+               }
+            }
+         }
+      }
    }
 
    void Consolutra::greedyInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName)
