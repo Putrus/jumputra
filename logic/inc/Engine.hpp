@@ -39,6 +39,8 @@ namespace jp::logic
       const Properties& getProperties() const;
       const Statistics& getStatistics() const;
 
+      void setProperties(const Properties& properties);
+
    protected:
       void goalFromJson(const nlohmann::json& json);
       void charactersFromJson(const nlohmann::json& json);

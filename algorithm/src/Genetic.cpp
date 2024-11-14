@@ -8,6 +8,13 @@ namespace jp::algorithm
       const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties)
       : mStartRect(engine->getCharacters().at(0)->getRect()), Algorithm(engine, logger, properties)
    {
+      *mLogger << "Genetic algorithm parameters:" << std::endl;
+      *mLogger << "mutation.change = " << properties.genetic.mutation.change << std::endl;
+      *mLogger << "mutation.max = " << properties.genetic.mutation.max << std::endl;
+      *mLogger << "population.size = " << properties.genetic.population.size << std::endl;
+      *mLogger << "population.elitism = " << properties.genetic.population.elitism << std::endl;
+      *mLogger << "tournament = " << properties.genetic.tournament << std::endl;
+      *mLogger << "visitedSegmentsImpact = " << properties.genetic.visitedSegmentsImpact << std::endl;
       initializePopulation();
    }
 

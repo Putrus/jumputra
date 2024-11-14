@@ -16,11 +16,22 @@ namespace jp::console
 {
    const char* LOGS_DIRECTORY = "data/logs/";
    const char* STATISTICS_DIRECTORY = "data/statistics/";
-   constexpr int MAX_EXECUTION_MINUTES = 4;
+   constexpr int MAX_EXECUTION_MINUTES = 1;
    constexpr int EXECUTION_NUMBER = 24;
 
+   Consolutra::Consolutra(const std::shared_ptr<logic::Engine>& engine, const Properties& properties, const std::string& worldFilename,
+      const std::string& resultDirectory, algorithm::AlgorithmName algorithmName)
+      : mLogsDirectory(resultDirectory), mStatisticsDirectory(resultDirectory), mCurrentDate(core::String::currentDateWithSeconds()), mStartTime(std::chrono::steady_clock::now()), mLogger(),
+      mProperties(properties), mWorld(core::String::toLower(std::filesystem::path(worldFilename).stem().string())), mEngine(engine)
+   {
+      mLogger = std::make_shared<core::Logger>(resultDirectory + mWorld + "_" +
+         core::String::toLower(algorithm::Algorithm::nameToString(algorithmName)) + "_" + mCurrentDate + "_log.txt", true);
+      mEngine->setProperties(mProperties.logic);
+      mAlgorithm = algorithm::Algorithm::create(algorithmName, mEngine, mLogger, mProperties.algorithm);
+   }
+
    Consolutra::Consolutra(const Properties& properties, const std::string& worldFilename,
-         const std::string& resultDirectory, algorithm::AlgorithmName algorithmName)
+      const std::string& resultDirectory, algorithm::AlgorithmName algorithmName)
       : mLogsDirectory(resultDirectory), mStatisticsDirectory(resultDirectory), mCurrentDate(core::String::currentDateWithSeconds()), mStartTime(std::chrono::steady_clock::now()), mLogger(),
       mProperties(properties), mWorld(core::String::toLower(std::filesystem::path(worldFilename).stem().string()))
    {
@@ -49,9 +60,15 @@ namespace jp::console
          mEngine->update(mEngine->getProperties().secondsPerUpdate);
          mAlgorithm->update(mEngine->getProperties().secondsPerUpdate);
 
-         if (std::chrono::duration_cast<std::chrono::minutes>(std::chrono::steady_clock::now() - mStartTime).count() > MAX_EXECUTION_MINUTES)
+         if (std::chrono::duration_cast<std::chrono::minutes>(std::chrono::steady_clock::now() - mStartTime).count() >= MAX_EXECUTION_MINUTES)
          {
             *mLogger << "The algorithm takes more than " << MAX_EXECUTION_MINUTES << " minutes, terminated" << std::endl;
+            break;
+         }
+
+         if (mEngine->getCharacters().empty())
+         {
+            *mLogger << "No character exists, terminated" << std::endl;
             break;
          }
       }
@@ -65,38 +82,23 @@ namespace jp::console
       std::fstream csvFile;
       algorithm::AlgorithmName algorithmName = algorithm::Algorithm::stringToName(mAlgorithm->getName());
       std::string resultDir = "data/console/" + core::String::toLower(mAlgorithm->getName()) + '_' + mCurrentDate + "/";
+      std::filesystem::create_directories(resultDir);
+      csvFile.open(resultDir + "result.csv", std::ios::out | std::ios::app);
+      if (!csvFile.is_open())
+      {
+         throw std::runtime_error("jp::console::Consolutra::investigate - Failed to open csv file");
+      }
+
       switch(algorithmName)
       {
          case algorithm::AlgorithmName::Greedy:
          {
-            std::filesystem::create_directories(resultDir);
-            csvFile.open(resultDir + "result.csv", std::ios::out | std::ios::app);
-            if (!csvFile.is_open())
-            {
-               throw std::runtime_error("jp::console::Consolutra::investigate - Failed to open csv file");
-            }
-            csvFile << "id;completed;bots;epsilon;moves;falls;jumps;time;totalTime;" << std::endl;
-            Properties properties = mProperties;
-            int id = 0;
-            for (int bots = 10; bots < 200; bots += 10)
-            {
-               properties.algorithm.greedy.bots = bots;
-               for (float epsilon = 0.1f; epsilon < 1.0f; epsilon += 0.1f)
-               {
-                  properties.algorithm.greedy.epsilon = epsilon;
-                  std::string subDir =  resultDir + "epsilon_" + std::to_string(epsilon) + "_bots_" + std::to_string(bots) + "/";
-                  for (int i = 0; i < EXECUTION_NUMBER; ++i)
-                  {
-                     Consolutra consolutra(properties, mWorldFilename, resultDir, algorithmName);
-                     consolutra.run();
-                     bool completed = consolutra.getEngine()->getWinner() ? true : false;
-                     logic::Statistics statistics = consolutra.getEngine()->getStatistics();
-                     csvFile << id << ';' << completed << ';' << bots << ';' << epsilon << ';' << consolutra.mAlgorithm->getMoves().size() << ';' <<
-                        statistics.falls << ';' << statistics.jumps << ';' << statistics.time << ';' << statistics.totalTime << ';' << std::endl;
-                     ++id;
-                  }
-               }
-            }
+            greedyInvestigation(csvFile, resultDir, algorithmName);
+         }
+         break;
+         case algorithm::AlgorithmName::DecisionTree:
+         {
+            decisionTreeInvestigation(csvFile, resultDir, algorithmName);
          }
          break;
       }
@@ -104,8 +106,57 @@ namespace jp::console
       csvFile.close();
    }
 
-   std::shared_ptr<logic::Engine> Consolutra::getEngine() const
+   void Consolutra::greedyInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName)
    {
-      return mEngine;
+      csvFile << "id;completed;bots;epsilon;moves;falls;jumps;time;totalTime;" << std::endl;
+      Properties properties = mProperties;
+      int id = 0;
+      for (int bots = 10; bots < 200; bots += 10)
+      {
+         properties.algorithm.greedy.bots = bots;
+         for (float epsilon = 0.1f; epsilon < 1.0f; epsilon += 0.1f)
+         {
+            properties.algorithm.greedy.epsilon = epsilon;
+            for (int i = 0; i < EXECUTION_NUMBER; ++i)
+            {
+               *mLogger << "Run with parameters: " << std::endl;
+               *mLogger << "bots = " << bots << std::endl;
+               *mLogger << "epsilon = " << epsilon << std::endl;
+               Consolutra consolutra(properties, mWorldFilename, resultDir, algorithmName);
+               consolutra.run();
+               bool completed = consolutra.mEngine->getWinner() ? true : false;
+               logic::Statistics statistics = consolutra.mEngine->getStatistics();
+               csvFile << id << ';' << completed << ';' << bots << ';' << epsilon << ';' << consolutra.mAlgorithm->getMoves().size() << ';' <<
+                  statistics.falls << ';' << statistics.jumps << ';' << statistics.time << ';' << statistics.totalTime << ';' << std::endl;
+               ++id;
+            }
+         }
+      }
+   }
+
+   void Consolutra::decisionTreeInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName)
+   {
+      csvFile << "id;completed;decision jumps;jump value;run value;jump moves;moves;falls;jumps;time;totalTime;" << std::endl;
+      Properties properties = mProperties;
+      int id = 0;
+      for (int jumps = 2; jumps <= 100; jumps += 2)
+      {
+         properties.algorithm.decisionTree.jumps = jumps;
+         for (float runValue = 0.025f; runValue <= 1.f; runValue += 0.025f)
+         {
+            properties.algorithm.decisionTree.runValue = runValue;
+            Consolutra consolutra(std::make_shared<logic::Engine>(*mEngine), properties, mWorldFilename, resultDir, algorithmName);
+            consolutra.run();
+            bool completed = consolutra.mEngine->getWinner() ? true : false;
+            logic::Statistics statistics = consolutra.mEngine->getStatistics();
+            auto moves = consolutra.mAlgorithm->getMoves();
+            int jumpMoves = std::count_if(moves.begin(), moves.end(), [](const algorithm::Move &move)
+               { return move.type == algorithm::MoveType::Jump; });
+            csvFile << id << ';' << completed << ';' << jumps << ';' << properties.algorithm.decisionTree.jumpValue << ';' << runValue << ';' <<
+               jumpMoves << ';' << moves.size() << ';' << statistics.falls << ';' << statistics.jumps << ';' <<
+               statistics.time << ';' << statistics.totalTime << ';' << std::endl;
+            ++id;
+         }  
+      }
    }
 }

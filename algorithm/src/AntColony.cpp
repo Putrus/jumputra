@@ -6,6 +6,13 @@ namespace jp::algorithm
       const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties)
       : mGraph(properties), Algorithm(engine, logger, properties)
    {
+      *mLogger << "Ant Colony algorithm parameters:" << std::endl;
+      *mLogger << "ants = " << properties.antColony.ants << std::endl;
+      *mLogger << "evaporationRate = " << properties.antColony.evaporationRate << std::endl;
+      *mLogger << "maxIntensity = " << properties.antColony.maxIntensity << std::endl;
+      *mLogger << "minIntensity = " << properties.antColony.minIntensity << std::endl;
+      *mLogger << "randomJumpChance = " << properties.antColony.randomJumpChance << std::endl;
+
       math::Rect<float> startRect = engine->getCharacters().front()->getRect();
       clearAnts();
       for (int i = 0; i < mProperties.antColony.ants; ++i)

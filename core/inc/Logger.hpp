@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <memory>
 #include <string>
 
 namespace jp::core
@@ -19,16 +20,16 @@ namespace jp::core
       Logger& operator<<(std::ostream& (*manip)(std::ostream&));
 
    private:
-      std::ofstream mFile;
+      std::unique_ptr<std::ofstream> mFile;
       bool mConsole;
    };
 
    template <typename T>
    Logger& Logger::operator<<(const T& value)
    {
-      if (mFile.is_open())
+      if (mFile->is_open())
       {
-         mFile << value;
+         *mFile << value;
       }
       else
       {

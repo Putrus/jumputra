@@ -155,6 +155,11 @@ namespace jp::logic
       return mStatistics;
    }
 
+   void Engine::setProperties(const Properties& properties)
+   {
+      mProperties = properties;
+   }
+
    void Engine::goalFromJson(const nlohmann::json& json)
    {
       if (json.find("goal") == json.end())

@@ -7,7 +7,11 @@ namespace jp::algorithm
    Greedy::Greedy(const std::shared_ptr<logic::Engine>& engine,
       const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties)
       : Algorithm(engine, logger, properties)
-   {
+   {      
+      *mLogger << "Greedy algorithm parameters:" << std::endl;
+      *mLogger << "bots = " << properties.greedy.bots << std::endl;
+      *mLogger << "epsilon = " << properties.greedy.epsilon << std::endl;
+
       auto lockedEngine = mEngine.lock();
       if (!lockedEngine)
       {

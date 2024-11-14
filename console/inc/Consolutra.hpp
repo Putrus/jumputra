@@ -11,6 +11,8 @@ namespace jp::console
    class Consolutra
    {
    public:
+      Consolutra(const std::shared_ptr<logic::Engine>& engine, const Properties& properties, const std::string& worldFilename,
+         const std::string& resultDirectory, algorithm::AlgorithmName algorithmName);
       Consolutra(const Properties& properties, const std::string& worldFilename,
          const std::string& resultDirectory, algorithm::AlgorithmName algorithmName);
       Consolutra(const std::string& propertiesFilename, const std::string& worldFilename, const std::string& algorithmName);
@@ -18,7 +20,8 @@ namespace jp::console
       void run();
       void investigate();
 
-      std::shared_ptr<logic::Engine> getEngine() const;
+      void greedyInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName);
+      void decisionTreeInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName);
 
    private:
       Properties mProperties;
