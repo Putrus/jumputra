@@ -39,7 +39,7 @@ namespace jp::console
       mAlgorithm = algorithm::Algorithm::create(algorithm::Algorithm::stringToName(algorithmName), mEngine, mLogger, mProperties.algorithm);
    }
 
-   void Consolutra::run()
+   void Consolutra::run(bool saveStatistics/* = true*/)
    {
       while (!mEngine->getWinner())
       {
@@ -58,9 +58,13 @@ namespace jp::console
             break;
          }
       }
-      // std::string filename = mStatisticsDirectory +
-      //    core::String::toLower(mWorld + "_" + mAlgorithm->getName()) + "_" + mCurrentDate + ".json";
-      // mAlgorithm->saveStatistics(filename);
+
+      if (saveStatistics)
+      {
+         std::string filename = mStatisticsDirectory +
+            core::String::toLower(mWorld + "_" + mAlgorithm->getName()) + "_" + mCurrentDate + ".json";
+         mAlgorithm->saveStatistics(filename);
+      }
    }
 
    void Consolutra::investigate()
@@ -97,6 +101,11 @@ namespace jp::console
       csvFile.close();
    }
 
+   void Consolutra::antColonyInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName)
+   {
+      csvFile << "id;;falls;jumps;time;totalTime;" << std::endl;
+   }
+
    void Consolutra::geneticInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName)
    {
       csvFile << "id;completed;population size;population elitism;mutation change;mutation max;tournament;visited segments impact;jump moves;moves;falls;jumps;time;totalTime;" << std::endl;
@@ -124,7 +133,7 @@ namespace jp::console
                         engineCopy->removeAllCharacters();
                         engineCopy->addCharacter(mEngine->getCharacters().front()->getRect());
                         Consolutra consolutra(engineCopy, properties, mWorldFilename, resultDir, algorithmName, mLogger);
-                        consolutra.run();
+                        consolutra.run(false);
                         bool completed = consolutra.mEngine->getWinner() ? true : false;
                         const logic::Statistics& statistics = consolutra.mEngine->getStatistics();
                         auto moves = consolutra.mAlgorithm->getMoves();
@@ -163,7 +172,7 @@ namespace jp::console
                engineCopy->removeAllCharacters();
                engineCopy->addCharacter(mEngine->getCharacters().front()->getRect());
                Consolutra consolutra(engineCopy, properties, mWorldFilename, resultDir, algorithmName, mLogger);
-               consolutra.run();
+               consolutra.run(false);
                bool completed = consolutra.mEngine->getWinner() ? true : false;
                logic::Statistics statistics = consolutra.mEngine->getStatistics();
                csvFile << id << ';' << completed << ';' << bots << ';' << epsilon << ';' << consolutra.mAlgorithm->getMoves().size() << ';' <<

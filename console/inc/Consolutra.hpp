@@ -15,9 +15,10 @@ namespace jp::console
          const std::string& resultDirectory, algorithm::AlgorithmName algorithmName, const std::shared_ptr<core::Logger>& logger);
       Consolutra(const std::string& propertiesFilename, const std::string& worldFilename, const std::string& algorithmName);
 
-      void run();
+      void run(bool saveStatistics = true);
       void investigate();
 
+      void antColonyInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName);
       void geneticInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName);
       void greedyInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName);
       void decisionTreeInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName);
