@@ -19,6 +19,10 @@ namespace jp::algorithm
       {
          addAnt(startRect);
       }
+
+      //to remove, very ugly hardcoded code for babiac world todo
+      mStartSegment = engine->getSegmentByPosition(math::Vector2<float>(127, 15448));
+      mEndSegment = engine->getSegmentByPosition(math::Vector2<float>(152, 13648));
    }
 
    std::string AntColony::getName() const
@@ -28,6 +32,17 @@ namespace jp::algorithm
 
    void AntColony::update(float dt)
    {
+      auto lockedEngine = mEngine.lock();
+      if (!lockedEngine)
+      {
+         throw std::runtime_error("jp::algorithm::AntColony::update - Failed to check win, engine doesn't exist");
+      }
+
+      if (lockedEngine->getWinner())
+      {
+         mMoves = mGraph.getShortestMovesPath(mStartSegment, mEndSegment);
+      }
+
       for (auto& ant : mAnts)
       {
          ant->update(dt);

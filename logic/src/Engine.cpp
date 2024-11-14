@@ -155,6 +155,20 @@ namespace jp::logic
       return mStatistics;
    }
 
+   std::shared_ptr<logic::Segment> Engine::getSegmentByPosition(const math::Vector2<float>& a)
+   {
+      auto find = std::find_if(mSegments.begin(), mSegments.end(), [a](const auto& segment)
+         {
+            return segment->a == a;
+         });
+      if (find != mSegments.end())
+      {
+         return *find;
+      }
+
+      return nullptr;
+   }
+
    void Engine::setProperties(const Properties& properties)
    {
       mProperties = properties;

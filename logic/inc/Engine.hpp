@@ -38,6 +38,7 @@ namespace jp::logic
       const std::vector<std::shared_ptr<Wind>>& getWinds() const;
       const Properties& getProperties() const;
       const Statistics& getStatistics() const;
+      std::shared_ptr<logic::Segment> getSegmentByPosition(const math::Vector2<float>& a);
 
       void setProperties(const Properties& properties);
 
