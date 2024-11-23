@@ -16,6 +16,7 @@ namespace jp::algorithm
 
       std::string getName() const override;
       void update(float dt) override;
+      void fillMoves(const std::shared_ptr<logic::Character>& winner) override;
 
    private:
       void addAnt(const math::Rect<float>& rect);

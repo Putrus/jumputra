@@ -51,6 +51,7 @@ namespace jp::algorithm
          if (core::Random::getFloat(0.f, 1.f) <= mProperties.antColony.randomJumpChance)
          {
             mSegmentBeforeJump = getCurrentSegment();
+            mLastPosition = mCharacter->getPosition();
             setMove(Move::randomSideJump(10.f, mCharacter->getProperties().character.jump.max.y));
             mJumpTime = 0.f;
          }
@@ -58,6 +59,8 @@ namespace jp::algorithm
       else if (std::abs(getPosition().x - mDestinationPheromone->position.x) < COLLISION_THRESHOLD)
       {
          mSegmentBeforeJump = getCurrentSegment();
+         mCharacter->setPosition(mDestinationPheromone->position);
+         mLastPosition = mCharacter->getPosition();
          setMove(mDestinationPheromone->move);
          mJumpTime = 0.f;
       }

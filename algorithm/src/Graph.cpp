@@ -26,6 +26,8 @@ namespace jp::algorithm
    std::vector<Move> Graph::getShortestMovesPath(const std::shared_ptr<logic::Segment>& originSegment,
       const std::shared_ptr<logic::Segment>& destinationSegment)
    {
+      std::cout << "Getting shortest path" << std::endl;
+      std::cout << *originSegment << " | " << *destinationSegment << std::endl;
       std::vector<Move> path;
       if (originSegment == destinationSegment)
       {
@@ -60,6 +62,8 @@ namespace jp::algorithm
                minSegment = segment;
             }
          }
+
+         std::cout << "minValue = " << minValue << std::endl;
 
          for (const auto& [neighbour, move] : mAdjacencyList.at(minSegment))
          {

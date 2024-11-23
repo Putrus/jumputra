@@ -14,6 +14,7 @@ namespace jp::algorithm
 
       std::string getName() const override;
       void update(float dt) override;
+      void fillMoves(const std::shared_ptr<logic::Character>& winner) override;
 
    private:    
       std::vector<std::shared_ptr<Bot>>& mAgents = mBots;

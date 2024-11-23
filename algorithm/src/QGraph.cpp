@@ -21,9 +21,10 @@ namespace jp::algorithm
          if (destinationFind != originFind->second.end())
          {
             q = destinationFind->second->value;
-            if (destinationFind->second->time < edgeMove->time)
+            if (destinationFind->second->time <= edgeMove->time)
             {
                edgeMove->move = destinationFind->second->move;
+               edgeMove->value += 1.f;
                edgeMove->time = destinationFind->second->time;
             }
          }
@@ -43,11 +44,17 @@ namespace jp::algorithm
       {
          for (const auto& action : segmentFind->second)
          {
-            if (!bestAction || action.second->value > bestAction->value)
+            if (core::Random::getFloat(0, 1.f) > mProperties.qLearning.epsilon &&
+               (!bestAction || action.second->value > bestAction->value))
             {
                bestAction = action.second;
             }
          }
+      }
+
+      if (!bestAction || bestAction->value < 0.f)
+      {
+         return nullptr;
       }
       return bestAction;
    }

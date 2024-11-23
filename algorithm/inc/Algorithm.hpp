@@ -37,6 +37,7 @@ namespace jp::algorithm
 
       virtual std::string getName() const = 0;
       virtual void saveStatistics(const std::string& filename) const;
+      virtual void fillMoves(const std::shared_ptr<logic::Character>& winner);
 
    protected:
       void addBot(const logic::Character& character, const std::vector<Move>& moves);

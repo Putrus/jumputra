@@ -14,7 +14,6 @@ namespace jp::algorithm
    void Wanderer::update(float dt)
    {
       mJumpTime += dt;
-      Bot::update(dt);
       math::Vector2<float> position = getPosition();
       if (finishedMoves())
       {
@@ -25,6 +24,7 @@ namespace jp::algorithm
          wander(position);
          whileWander(position);
       }
+      Bot::update(dt);
    }
 
    void Wanderer::afterMove(math::Vector2<float>& position)

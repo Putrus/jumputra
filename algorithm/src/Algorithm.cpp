@@ -145,6 +145,11 @@ namespace jp::algorithm
       }
    }
 
+   void Algorithm::fillMoves(const std::shared_ptr<logic::Character>& winner)
+   {
+      //some of the algorithms are filling moves during execution, not at the end
+   }
+
    void Algorithm::addBot(const logic::Character& character, const std::vector<Move>& moves)
    {
       if (auto lockedEngine = mEngine.lock())

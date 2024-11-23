@@ -43,8 +43,8 @@ namespace jp::console
    {
       while (!mEngine->getWinner())
       {
-         mEngine->update(mEngine->getProperties().secondsPerUpdate);
          mAlgorithm->update(mEngine->getProperties().secondsPerUpdate);
+         mEngine->update(mEngine->getProperties().secondsPerUpdate);
 
          if (std::chrono::duration_cast<std::chrono::minutes>(std::chrono::steady_clock::now() - mStartTime).count() >= MAX_EXECUTION_MINUTES)
          {
@@ -58,7 +58,7 @@ namespace jp::console
             break;
          }
       }
-
+      mAlgorithm->fillMoves(mEngine->getWinner());
       if (saveStatistics)
       {
          std::string filename = mStatisticsDirectory +

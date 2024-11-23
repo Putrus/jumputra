@@ -13,7 +13,7 @@ namespace jp::algorithm
    {
       auto currentSegment = getCurrentSegment();
       auto visitedSegments = getVisitedSegments();
-      if (currentSegment != mSegmentBeforeJump && currentSegment->a.y <= mSegmentBeforeJump->a.y)
+      if (currentSegment != mSegmentBeforeJump)
       {
          float reward = mSegmentBeforeJump->a.y - getCurrentSegment()->a.y;
 
@@ -30,10 +30,6 @@ namespace jp::algorithm
       if (core::Random::getFloat(0.f, 1.f) > mProperties.qLearning.epsilon)
       {
          mDestinationAction = mGraph.getBestAction(currentSegment);
-      }
-      else
-      {
-         mDestinationAction = mGraph.getRandomAction(currentSegment);
       }
 
       if (!mDestinationAction)
@@ -74,6 +70,8 @@ namespace jp::algorithm
       else if (std::abs(getPosition().x - mDestinationAction->position.x) < COLLISION_THRESHOLD)
       {
          mSegmentBeforeJump = getCurrentSegment();
+         mCharacter->setPosition(mDestinationAction->position);
+         mLastPosition = mCharacter->getPosition();
          setMove(mDestinationAction->move);
          mJumpTime = 0.f;
       }

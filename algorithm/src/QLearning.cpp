@@ -59,4 +59,17 @@ namespace jp::algorithm
          agent->update(dt);
       }
    }
+
+   void QLearning::fillMoves(const std::shared_ptr<logic::Character>& winner)
+   {
+      std::vector<std::shared_ptr<logic::Segment>> visitedHorizontalSegments = winner->getVisitedHorizontalSegments();
+      if (visitedHorizontalSegments.empty())
+      {
+         throw std::runtime_error("jp::algorithm::QLearning::fillMoves - Failed to get winner visited horizontal segments, segments are empty");
+      }
+
+      std::shared_ptr<logic::Segment> startSegment = visitedHorizontalSegments.front();
+      std::shared_ptr<logic::Segment> endSegment = visitedHorizontalSegments.back();
+      mMoves = mGraph.getShortestMovesPath(startSegment, endSegment);
+   }
 }

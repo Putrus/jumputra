@@ -64,8 +64,8 @@ namespace jp::game
 
    void StateGame::update(float dt)
    {
-      mGame->update(dt);
       mAlgorithm->update(dt);
+      mGame->update(dt);
       if (mGame->getWinner())
       {
          if (mContext.algorithm == algorithm::AlgorithmName::Human)
@@ -78,6 +78,7 @@ namespace jp::game
             std::filesystem::create_directory(STATISTICS_DIR);
          }
 
+         mAlgorithm->fillMoves(mGame->getWinner());
          std::string filename = std::string(STATISTICS_DIR) +
             core::String::toLower(mContext.world + "_" + mAlgorithm->getName()) + "_" + core::String::currentDate() + ".json";
          mAlgorithm->saveStatistics(filename);
