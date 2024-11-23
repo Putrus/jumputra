@@ -65,6 +65,8 @@ namespace jp::algorithm
       mMoves = moves;
       mFinishedMoves = false;
       mPositionBeforeMoves = rect.getPosition();
+      mCurrentMove.id = 0;
+      mCurrentMove.value = 0.f;
    }
 
    const std::shared_ptr<logic::Character>& Bot::getCharacter() const

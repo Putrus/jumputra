@@ -537,13 +537,16 @@ namespace jp::logic
 
    void Character::reset(const math::Rect<float>& rect)
    {
-      mRect = rect;
-      mVelocity = math::Vector2<float>();
-      mAcceleration = math::Vector2<float>();
-      mDirection = logic::CharacterDirection::Up;
+      setRect(rect);
+      setVelocity(math::Vector2<float>());
+      setAcceleration(math::Vector2<float>());
+      setDirection(logic::CharacterDirection::Up);
+      setRunSpeed(0.f);
+      resetJumpPower();
+      mGravity = 0.f;
       mState = logic::CharacterState::Flying;
-      mRunSpeed = 0.f;
       mStatistics = Statistics();
+      mVisitedSegments.clear();
    }
 
    void Character::setDirection(CharacterDirection direction)
