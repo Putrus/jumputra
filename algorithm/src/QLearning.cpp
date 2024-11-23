@@ -62,6 +62,11 @@ namespace jp::algorithm
 
    void QLearning::fillMoves(const std::shared_ptr<logic::Character>& winner)
    {
+      if (!winner)
+      {
+         return;
+      }
+
       std::vector<std::shared_ptr<logic::Segment>> visitedHorizontalSegments = winner->getVisitedHorizontalSegments();
       if (visitedHorizontalSegments.empty())
       {
