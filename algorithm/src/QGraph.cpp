@@ -4,7 +4,8 @@
 
 namespace jp::algorithm
 {
-   QGraph::QGraph(const Properties& properties) : mProperties(properties) {}
+   QGraph::QGraph(const Properties& properties, const std::shared_ptr<core::Logger>& logger)
+      : mProperties(properties), mLogger(logger) {}
 
    void QGraph::insertEdge(const std::shared_ptr<logic::Segment>& originSegment,
       const std::shared_ptr<logic::Segment>& destinationSegment,
@@ -14,12 +15,14 @@ namespace jp::algorithm
       float q = 0.f;
       float maxQ = getMaxQ(destinationSegment);
 
+      bool log = true;
       auto originFind = mAdjacencyList.find(originSegment);
       if (originFind != mAdjacencyList.end())
       {
          auto destinationFind = originFind->second.find(destinationSegment);
          if (destinationFind != originFind->second.end())
          {
+            log = false;
             q = destinationFind->second->value;
             if (destinationFind->second->time <= edgeMove->time)
             {
@@ -34,6 +37,12 @@ namespace jp::algorithm
 
       mAdjacencyList[originSegment][destinationSegment] = edgeMove;
       mBackwardAdjacencyList[destinationSegment][originSegment] = edgeMove;
+
+      if (log)
+      {
+         *mLogger << "New edge between segments (" << *originSegment << ") and (" <<
+            *destinationSegment << ") Q(s, a) = " << edgeMove->value <<  std::endl;
+      }
    }
 
    std::shared_ptr<EdgeMove> QGraph::getBestAction(const std::shared_ptr<logic::Segment>& segment) const

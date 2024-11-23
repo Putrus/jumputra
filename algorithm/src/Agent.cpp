@@ -19,11 +19,6 @@ namespace jp::algorithm
 
          mGraph.insertEdge(mSegmentBeforeJump, currentSegment,
             std::make_shared<EdgeMove>(mLastPosition, getMoves().back(), reward, mJumpTime));
-         std::cout << getPosition() << std::endl;
-         // if (getPosition().y < mTMPBestPosition.y)
-         // {
-         //    mTMPBestPosition = getPosition();
-         // }
       }
 
       mDestinationAction = nullptr;
@@ -48,16 +43,6 @@ namespace jp::algorithm
 
    void Agent::whileWander(math::Vector2<float>& position)
    {
-      // if (mTMPTime > 500)
-      // {
-      //    std::cout << "---------------------------------------------" << std::endl;
-      //    std::cout << mGraph << std::endl;
-      //    std::cout << "Position: " << getPosition() << std::endl;
-      //    std::cout << "Best position: " << mTMPBestPosition << std::endl;
-      //    mTMPBestPosition = math::Vector2<float>(0.f, 90000.f);
-      //    mTMPTime = 0.f;
-      // }
-      // mTMPTime += 0.016f;
       if (!mDestinationAction)
       {
          if (core::Random::getFloat(0.f, 1.f) <= mProperties.qLearning.randomJumpChance)

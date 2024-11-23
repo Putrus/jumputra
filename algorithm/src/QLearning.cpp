@@ -5,7 +5,7 @@ namespace jp::algorithm
 {
    QLearning::QLearning(const std::shared_ptr<logic::Engine>& engine,
       const std::shared_ptr<core::Logger>& logger, const algorithm::Properties& properties)
-      : mGraph(properties), Algorithm(engine, logger, properties)
+      : mGraph(properties, logger), Algorithm(engine, logger, properties)
    {
       *mLogger << "Q-Learning algorithm parameters:" << std::endl;
       *mLogger << "agents = " << properties.qLearning.agents << std::endl;

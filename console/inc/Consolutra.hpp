@@ -12,8 +12,10 @@ namespace jp::console
    {
    public:
       Consolutra(const std::shared_ptr<logic::Engine>& engine, const Properties& properties, const std::string& worldFilename,
-         const std::string& resultDirectory, algorithm::AlgorithmName algorithmName, const std::shared_ptr<core::Logger>& logger);
-      Consolutra(const std::string& propertiesFilename, const std::string& worldFilename, const std::string& algorithmName);
+         const std::string& resultDirectory, algorithm::AlgorithmName algorithmName, const std::shared_ptr<core::Logger>& logger,
+         int maxExecutionMinutes);
+      Consolutra(const std::string& propertiesFilename, const std::string& worldFilename,
+         const std::string& algorithmName, int maxExecutionMinutes, int minBots, int maxBots, int stepBots);
 
       void run(bool saveStatistics = true);
       void investigate();
@@ -22,6 +24,7 @@ namespace jp::console
       void geneticInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName);
       void greedyInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName);
       void decisionTreeInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName);
+      void qLearningInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName);
 
    private:
       Properties mProperties;
@@ -37,5 +40,10 @@ namespace jp::console
       std::unique_ptr<algorithm::Algorithm> mAlgorithm;
 
       std::chrono::steady_clock::time_point mStartTime;
+
+      int mMaxExecutionMinutes = 0;
+      int mMinBots = 0;
+      int mMaxBots = 0;
+      int mStepBots = 0;
    };
 }
