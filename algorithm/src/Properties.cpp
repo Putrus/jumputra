@@ -24,6 +24,7 @@ namespace jp::algorithm
       greedy.bots = json.at("greedy").at("bots");
       greedy.epsilon = json.at("greedy").at("epsilon");
 
+      qLearning.agents = json.at("qLearning").at("agents");
       qLearning.learningRate = json.at("qLearning").at("learningRate");
       qLearning.discountFactor = json.at("qLearning").at("discountFactor");
       qLearning.epsilon = json.at("qLearning").at("epsilon");
@@ -53,6 +54,7 @@ namespace jp::algorithm
       json["greedy"]["bots"] = greedy.bots;
       json["greedy"]["epsilon"] = greedy.epsilon;
 
+      json["qLearning"]["agents"] = qLearning.agents;
       json["qLearning"]["learningRate"] = qLearning.learningRate;
       json["qLearning"]["discountFactor"] = qLearning.discountFactor;
       json["qLearning"]["epsilon"] = qLearning.epsilon;

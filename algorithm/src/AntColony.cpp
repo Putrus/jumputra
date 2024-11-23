@@ -36,17 +36,15 @@ namespace jp::algorithm
 
       if (lockedEngine->getWinner())
       {
-         
-         
-      //to remove, very ugly hardcoded code for babiac world todo
-      std::vector<std::shared_ptr<logic::Segment>> visitedHorizontalSegments = lockedEngine->getWinner()->getVisitedHorizontalSegments();
-      if (visitedHorizontalSegments.empty())
-      {
-         throw std::runtime_error("jp::algorithm::AntColony::update - Failed to get winner visited horizontal segments, segments are empty");
-      }
-      mStartSegment = visitedHorizontalSegments.front();
-      mEndSegment = visitedHorizontalSegments.back();
-      mMoves = mGraph.getShortestMovesPath(mStartSegment, mEndSegment);
+         std::vector<std::shared_ptr<logic::Segment>> visitedHorizontalSegments = lockedEngine->getWinner()->getVisitedHorizontalSegments();
+         if (visitedHorizontalSegments.empty())
+         {
+            throw std::runtime_error("jp::algorithm::AntColony::update - Failed to get winner visited horizontal segments, segments are empty");
+         }
+
+         std::shared_ptr<logic::Segment> startSegment = visitedHorizontalSegments.front();
+         std::shared_ptr<logic::Segment> endSegment = visitedHorizontalSegments.back();
+         mMoves = mGraph.getShortestMovesPath(startSegment, endSegment);
       }
 
       for (auto& ant : mAnts)

@@ -31,7 +31,7 @@ namespace jp::algorithm
       void adjustMutationRate(float fitness);
       void clearPopulation();
       void addIndividual(const math::Rect<float>& rect, const std::vector<Move>& moves);
-      void resetIndividual(int id, const math::Rect<float>& rect, const std::vector<Move>& moves);
+      void resetIndividual(size_t id, const math::Rect<float>& rect, const std::vector<Move>& moves);
 
       bool shouldBeMutated() const;
       bool haveIndividualsFinishedMoves() const;

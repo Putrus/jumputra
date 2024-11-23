@@ -23,7 +23,5 @@ namespace jp::algorithm
 
       std::vector<std::shared_ptr<Bot>>& mAnts = mBots;
       AntGraph mGraph;
-      std::shared_ptr<logic::Segment> mStartSegment = nullptr;
-      std::shared_ptr<logic::Segment> mEndSegment = nullptr;
    };
 }

@@ -13,16 +13,17 @@ namespace jp::algorithm
    {
       auto currentSegment = getCurrentSegment();
       auto visitedSegments = getVisitedSegments();
-      if (currentSegment != mSegmentBeforeJump)
+      if (currentSegment != mSegmentBeforeJump && currentSegment->a.y <= mSegmentBeforeJump->a.y)
       {
          float reward = mSegmentBeforeJump->a.y - getCurrentSegment()->a.y;
 
          mGraph.insertEdge(mSegmentBeforeJump, currentSegment,
             std::make_shared<EdgeMove>(mLastPosition, getMoves().back(), reward, mJumpTime));
-         if (getPosition().y < mTMPBestPosition.y)
-         {
-            mTMPBestPosition = getPosition();
-         }
+         std::cout << getPosition() << std::endl;
+         // if (getPosition().y < mTMPBestPosition.y)
+         // {
+         //    mTMPBestPosition = getPosition();
+         // }
       }
 
       mDestinationAction = nullptr;
@@ -51,16 +52,16 @@ namespace jp::algorithm
 
    void Agent::whileWander(math::Vector2<float>& position)
    {
-      if (mTMPTime > 500)
-      {
-         std::cout << "---------------------------------------------" << std::endl;
-         std::cout << mGraph << std::endl;
-         std::cout << "Position: " << getPosition() << std::endl;
-         std::cout << "Best position: " << mTMPBestPosition << std::endl;
-         mTMPBestPosition = math::Vector2<float>(0.f, 90000.f);
-         mTMPTime = 0.f;
-      }
-      mTMPTime += 0.016f;
+      // if (mTMPTime > 500)
+      // {
+      //    std::cout << "---------------------------------------------" << std::endl;
+      //    std::cout << mGraph << std::endl;
+      //    std::cout << "Position: " << getPosition() << std::endl;
+      //    std::cout << "Best position: " << mTMPBestPosition << std::endl;
+      //    mTMPBestPosition = math::Vector2<float>(0.f, 90000.f);
+      //    mTMPTime = 0.f;
+      // }
+      // mTMPTime += 0.016f;
       if (!mDestinationAction)
       {
          if (core::Random::getFloat(0.f, 1.f) <= mProperties.qLearning.randomJumpChance)

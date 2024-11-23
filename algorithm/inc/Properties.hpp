@@ -52,6 +52,7 @@ namespace jp::algorithm
 
       struct QLearning
       {
+         size_t agents;
          float learningRate;
          float discountFactor;
          float epsilon;

@@ -21,9 +21,6 @@ namespace jp::algorithm
 
       std::shared_ptr<EdgeMove> getDestinationPheromone(const std::shared_ptr<logic::Segment>& segment) const;
 
-      std::vector<Move> getShortestMovesPath(const std::shared_ptr<logic::Segment>& originSegment,
-         const std::shared_ptr<logic::Segment>& destinationSegment);
-
    private:
       const Properties& mProperties;
    };

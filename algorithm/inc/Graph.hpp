@@ -15,6 +15,9 @@ namespace jp::algorithm
          const std::shared_ptr<logic::Segment>& destinationSegment,
          const std::shared_ptr<EdgeMove>& edgeMove);
 
+      std::vector<Move> getShortestMovesPath(const std::shared_ptr<logic::Segment>& originSegment,
+         const std::shared_ptr<logic::Segment>& destinationSegment);
+
       friend std::ostream& operator<<(std::ostream& os, const Graph& graph);
 
    protected:

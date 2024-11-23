@@ -132,19 +132,13 @@ namespace jp::algorithm
 
    std::vector<Move> Genetic::crossover(const std::pair<std::vector<Move>, std::vector<Move>>& parentsMoves) const
    {
-      std::vector<Move> moves;
-      if (parentsMoves.first.size() < parentsMoves.second.size())
-      {
-         moves = parentsMoves.second;
-      }
-      else
-      {
-         moves = parentsMoves.first;
-      }
-      size_t crossoverPoint = core::Random::getInt(0, std::min(parentsMoves.first.size(), parentsMoves.second.size()) - 1);
+      std::vector<Move> moves = parentsMoves.first.size() < parentsMoves.second.size() ? parentsMoves.second : parentsMoves.first;
+      const std::vector<Move>& lessParentsMoves = parentsMoves.first.size() < parentsMoves.second.size() ?
+         parentsMoves.first : parentsMoves.second;
+      size_t crossoverPoint = core::Random::getInt(0, lessParentsMoves.size() - 1);
       for (size_t i = 0; i < crossoverPoint; ++i)
       {
-         moves.at(i) = parentsMoves.first.at(i);
+         moves.at(i) = lessParentsMoves.at(i);
       }
 
       return moves;
@@ -224,9 +218,9 @@ namespace jp::algorithm
       mPopulation.push_back(std::make_shared<Individual>(lockedEngine->getCharacters().back(), moves));
    }
 
-   void Genetic::resetIndividual(int id, const math::Rect<float>& rect, const std::vector<Move>& moves)
+   void Genetic::resetIndividual(size_t id, const math::Rect<float>& rect, const std::vector<Move>& moves)
    {
-      if (id >= mPopulation.size() || id < 0)
+      if (id >= mPopulation.size())
       {
          throw std::runtime_error("jp::algorithm::Genetic::resetIndividual - Failed to reset individual, wrong id number");
       }
