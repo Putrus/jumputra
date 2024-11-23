@@ -80,19 +80,18 @@ namespace jp::algorithm
       std::pair<std::vector<Move>, std::vector<Move>> parentsMoves =
          { parents.first->getMoves(), parents.second->getMoves() };
 
-      clearPopulation();
       size_t elitismSize = static_cast<size_t>(mProperties.genetic.population.size * mProperties.genetic.population.elitism);
       for (size_t i = 0; i < elitismSize; ++i)
       {
          std::vector<Move> moves = crossover(parentsMoves);
          addRandomMoves(moves);
-         addIndividual(mStartRect, moves);
+         resetIndividual(i, mStartRect, moves);
       }
       for (size_t i = elitismSize; i < mProperties.genetic.population.size; ++i)
       {
          std::vector<Move> moves = crossover(parentsMoves);
          mutate(moves);
-         addIndividual(mStartRect, moves);
+         resetIndividual(i, mStartRect, moves);
       }
    }
 
@@ -223,6 +222,15 @@ namespace jp::algorithm
 
       lockedEngine->addCharacter(rect);
       mPopulation.push_back(std::make_shared<Individual>(lockedEngine->getCharacters().back(), moves));
+   }
+
+   void Genetic::resetIndividual(int id, const math::Rect<float>& rect, const std::vector<Move>& moves)
+   {
+      if (id >= mPopulation.size() || id < 0)
+      {
+         throw std::runtime_error("jp::algorithm::Genetic::resetIndividual - Failed to reset individual, wrong id number");
+      }
+      mPopulation.at(id)->reset(rect, moves);
    }
 
    bool Genetic::shouldBeMutated() const

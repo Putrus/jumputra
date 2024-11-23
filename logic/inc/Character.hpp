@@ -74,6 +74,7 @@ namespace jp::logic
       void run(CharacterDirection direction);
       void squat();
       void stop();
+      void reset(const math::Rect<float>& rect);
       
       void setDirection(CharacterDirection direction);
       void setRunSpeed(float speed);

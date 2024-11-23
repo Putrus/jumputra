@@ -58,6 +58,15 @@ namespace jp::algorithm
       }   
    }
 
+   void Bot::reset(const math::Rect<float>& rect, const std::vector<Move>& moves)
+   {
+      mCharacter->reset(rect);
+      mFinishedCharacter.reset(rect);
+      mMoves = moves;
+      mFinishedMoves = false;
+      mPositionBeforeMoves = rect.getPosition();
+   }
+
    const std::shared_ptr<logic::Character>& Bot::getCharacter() const
    {
       return mCharacter;
