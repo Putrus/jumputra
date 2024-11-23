@@ -34,11 +34,6 @@ namespace jp::algorithm
       for (auto& individual : mPopulation)
       {
          individual->update(dt);
-         if (lockedEngine->getWinner() == individual->getCharacter())
-         {
-            mMoves = individual->getMoves();
-            return;
-         }
       }
 
       if (haveIndividualsFinishedMoves())
@@ -52,6 +47,18 @@ namespace jp::algorithm
             " moves: " << parents.first->getMoves().size() << " mutation: " << mMutationRate << std::endl;
          lockedEngine->resetWinds();
          createPopulation(parents);
+      }
+   }
+
+   void Genetic::fillMoves(const std::shared_ptr<logic::Character>& winner)
+   {
+      for (auto& individual : mPopulation)
+      {
+         if (winner == individual->getCharacter())
+         {
+            mMoves = individual->getMoves();
+            return;
+         }
       }
    }
 
