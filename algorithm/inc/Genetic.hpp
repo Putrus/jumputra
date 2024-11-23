@@ -19,6 +19,8 @@ namespace jp::algorithm
       void update(float dt) override;
       void fillMoves(const std::shared_ptr<logic::Character>& winner) override;
 
+      size_t getGenerations() const;
+
    private:
       void initializePopulation();
       void createPopulation(const std::pair<std::shared_ptr<Individual>, std::shared_ptr<Individual>>& parents);

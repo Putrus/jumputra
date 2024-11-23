@@ -62,6 +62,11 @@ namespace jp::algorithm
       }
    }
 
+   size_t Genetic::getGenerations() const
+   {
+      return mGeneration;
+   }
+
    void Genetic::initializePopulation()
    {
       auto lockedEngine = mEngine.lock();

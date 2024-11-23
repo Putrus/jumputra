@@ -157,7 +157,7 @@ namespace jp::console
 
    void Consolutra::geneticInvestigation(std::fstream& csvFile, const std::string& resultDir, algorithm::AlgorithmName algorithmName)
    {
-      csvFile << "id;completed;population size;population elitism;mutation change;mutation max;tournament;visited segments impact;jump moves;moves;falls;jumps;time;totalTime;" << std::endl;
+      csvFile << "id;completed;population size;population elitism;mutation change;mutation max;tournament;visited segments impact;generations;jump moves;moves;falls;jumps;time;totalTime;" << std::endl;
       Properties properties = mProperties;
       int id = 0;
       for (int populationSize = mMinBots; populationSize <= mMaxBots; populationSize += mStepBots)
@@ -180,11 +180,12 @@ namespace jp::console
                   bool completed = consolutra.mEngine->getWinner() ? true : false;
                   const logic::Statistics& statistics = consolutra.mEngine->getStatistics();
                   auto moves = consolutra.mAlgorithm->getMoves();
+                  size_t generations = reinterpret_cast<algorithm::Genetic*>(consolutra.mAlgorithm.get())->getGenerations();
                   int jumpMoves = std::count_if(moves.begin(), moves.end(), [](const algorithm::Move &move)
                      { return move.type == algorithm::MoveType::Jump; });
                   csvFile << id << ';' << completed << ';' << populationSize << ';' << populationElitism << ';' <<
                      properties.algorithm.genetic.mutation.change << ';' << properties.algorithm.genetic.mutation.max << ';' <<
-                     tournament << ';' << visitedSegmentsImpact << ';' <<
+                     tournament << ';' << visitedSegmentsImpact << ';' << generations << ';' <<
                      jumpMoves << ';' << moves.size() << ';' << statistics.falls << ';' << statistics.jumps << ';' <<
                      statistics.time << ';' << statistics.totalTime << ';' << std::endl;
                   ++id;
