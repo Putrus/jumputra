@@ -75,7 +75,7 @@ namespace jp::console
       algorithm::AlgorithmName algorithmName = algorithm::Algorithm::stringToName(mAlgorithm->getName());
       std::string resultDir = "data/console/" + core::String::toLower(mAlgorithm->getName()) + '_' + mCurrentDate + "/";
       std::filesystem::create_directories(resultDir);
-      csvFile.open(resultDir + "result.csv", std::ios::out | std::ios::app);
+      csvFile.open(resultDir + "result_" + std::to_string(mMinBots) + std::to_string(mMaxBots) + ".csv", std::ios::out | std::ios::app);
       if (!csvFile.is_open())
       {
          throw std::runtime_error("jp::console::Consolutra::investigate - Failed to open csv file");
