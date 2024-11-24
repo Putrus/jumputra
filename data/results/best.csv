@@ -1,5 +1,6 @@
 falls,jumps,time,total jumps,total falls,total time,level,player,id
-0,24,45.0076484680175,25000,3750,221400,babiac,human,0
+0,24,45.00764847,25000,3750,221400,babiac,human,0
 0,25,47.96015021,449,3084,716.666,babiac,antColony,21
 0,26,72.2299,2314,930,72.2299,babiac,decisionTree,496
 0,43,97.2142,2150,754,97.2142,babiac,greedy,54
+0,21,40.3292,20916,2374,105.598,babiac,qLearning,391
