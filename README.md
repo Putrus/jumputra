@@ -46,5 +46,5 @@ The jumputra executable (jumputra.exe on windows) is located in the build/bin fo
 ### consolutra
 The console version of consolutra (consolutra.exe on windows) simulating the algorithms is also located in the build/bin folder. It should be executed with the parameters.
 ```
-consolutra.exe <properties filename> <world filename> <algorithm name> # Windows
+consolutra.exe -run <properties filename> <world filename> <algorithm name> <max execution minutes> # Windows
 ```
