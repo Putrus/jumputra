@@ -23,7 +23,7 @@ cmake -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc -DCMA
 cmake --build build                          # Game installation
 ```
 
-### How to install required libraries on Ubuntu
+### Installing required libraries on Ubuntu
 ```
 sudo apt-get install cmake
 sudo apt-get install build-essential
