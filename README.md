@@ -19,7 +19,7 @@ The minimum required version is 3.6.
 git clone https://github.com/Putrus/jumputra # Cloning a repository
 cd jumputra                                  # Main directory of the cloned repository.
 cmake -S . -B build                          # Default compiler
-cmake -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc -S -DCMAKE_BUILD_TYPE=Release -S . -B build # Recommended g++ compiler
+cmake -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc -DCMAKE_BUILD_TYPE=Release -S . -B build # Recommended g++ compiler
 cmake --build build                          # Game installation
 ```
 
