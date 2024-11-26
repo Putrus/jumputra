@@ -23,6 +23,22 @@ cmake -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc -DCMA
 cmake --build build                          # Game installation
 ```
 
+### How to install required libraries on Ubuntu
+```
+sudo apt-get install cmake
+sudo apt-get install build-essential
+sudo apt-get install libx11-dev
+sudo apt-get install libxrandr-dev
+sudo apt-get install libxinerama-dev
+sudo apt-get install libxcursor-dev
+sudo apt-get install libgl1-mesa-dev
+sudo apt-get install libudev-dev
+sudo apt-get install libfreetype-dev
+sudo apt-get install libopenal-dev
+sudo apt-get install libvorbis-dev
+sudo apt-get install libflac-dev
+```
+
 ## Run
 ### jumputra
 The jumputra executable (jumputra.exe on windows) is located in the build/bin folder
