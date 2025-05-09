@@ -63,4 +63,4 @@ set_target_properties(jp_game PROPERTIES
    OUTPUT_NAME "jumputra"
    )
 
-target_link_libraries(jp_game PUBLIC jp_graphic jp_algorithm)
+target_link_libraries(jp_game PUBLIC jp_graphics jp_algorithm)

@@ -6,11 +6,11 @@ namespace jp::game
 {
    StateMainMenu::StateMainMenu(StateStack* stack, Context& context) : StateMenu(stack, context)
    { 
-      mMenu.addItem(context.language.getString("newGame"), context.resources.getFont(graphic::FontID::Pixeled));
-      mMenu.addItem(context.language.getString("continue"), context.resources.getFont(graphic::FontID::Pixeled));
-      mMenu.addItem(context.language.getString("algorithms"), context.resources.getFont(graphic::FontID::Pixeled));
-      mMenu.addItem(context.language.getString("language"), context.resources.getFont(graphic::FontID::Pixeled));
-      mMenu.addItem(context.language.getString("quit"), context.resources.getFont(graphic::FontID::Pixeled));
+      mMenu.addItem(context.language.getString("newGame"), context.resources.getFont(graphics::FontID::Pixeled));
+      mMenu.addItem(context.language.getString("continue"), context.resources.getFont(graphics::FontID::Pixeled));
+      mMenu.addItem(context.language.getString("algorithms"), context.resources.getFont(graphics::FontID::Pixeled));
+      mMenu.addItem(context.language.getString("language"), context.resources.getFont(graphics::FontID::Pixeled));
+      mMenu.addItem(context.language.getString("quit"), context.resources.getFont(graphics::FontID::Pixeled));
    }
 
    void StateMainMenu::update(float dt)

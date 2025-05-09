@@ -5,19 +5,19 @@ namespace jp::game
    StateWin::StateWin(StateStack* stack, Context& context) : StateMenu(stack, context)
    {
       mMenu.addItem(mContext.language.getString(mContext.world) + " " + mContext.language.getString("isReached"),
-         mContext.resources.getFont(graphic::FontID::Pixeled));
+         mContext.resources.getFont(graphics::FontID::Pixeled));
       mMenu.addItem(mContext.language.getString("statistics"),
-         mContext.resources.getFont(graphic::FontID::Pixeled));
+         mContext.resources.getFont(graphics::FontID::Pixeled));
       mMenu.addItem(mContext.language.getString("jumps") + ": " + std::to_string(mContext.statistics.jumps),
-         mContext.resources.getFont(graphic::FontID::Pixeled));
+         mContext.resources.getFont(graphics::FontID::Pixeled));
       mMenu.addItem(mContext.language.getString("falls") + ": " + std::to_string(mContext.statistics.falls),
-         mContext.resources.getFont(graphic::FontID::Pixeled));
+         mContext.resources.getFont(graphics::FontID::Pixeled));
       mMenu.addItem(mContext.language.getString("time") + ": " + std::to_string((int)mContext.statistics.time) + " s",
-         mContext.resources.getFont(graphic::FontID::Pixeled));
+         mContext.resources.getFont(graphics::FontID::Pixeled));
       mMenu.addItem(mContext.language.getString("totalTime") + ": " + std::to_string((int)mContext.statistics.totalTime) + " s",
-         mContext.resources.getFont(graphic::FontID::Pixeled));
+         mContext.resources.getFont(graphics::FontID::Pixeled));
       mMenu.addItem(mContext.language.getString("back"),
-         mContext.resources.getFont(graphic::FontID::Pixeled));
+         mContext.resources.getFont(graphics::FontID::Pixeled));
    }
 
    void StateWin::update(float dt)

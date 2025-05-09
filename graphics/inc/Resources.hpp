@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-namespace jp::graphic
+namespace jp::graphics
 {
    enum class FontID : unsigned long long
    {

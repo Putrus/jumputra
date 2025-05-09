@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace jp::graphic
+namespace jp::graphics
 {
    class Window : public sf::RenderWindow
    {

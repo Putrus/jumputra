@@ -11,10 +11,10 @@ namespace jp::game
    {
       for (const auto& language : context.language.getAvailableLanguages())
       {
-         mMenu.addItem(core::String::toUpper(language), context.resources.getFont(graphic::FontID::Pixeled));
+         mMenu.addItem(core::String::toUpper(language), context.resources.getFont(graphics::FontID::Pixeled));
       }
       
-      mMenu.addItem(context.language.getString("back"), context.resources.getFont(graphic::FontID::Pixeled));
+      mMenu.addItem(context.language.getString("back"), context.resources.getFont(graphics::FontID::Pixeled));
    }
 
    void StateLanguage::update(float dt)

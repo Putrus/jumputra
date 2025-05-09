@@ -20,4 +20,8 @@ set(SOURCES
    src/String.cpp
    )
 
+find_package(nlohmann_json REQUIRED)
+
 add_library(jp_core STATIC ${HEADERS} ${SOURCES})
+
+target_link_libraries(jp_core PUBLIC nlohmann_json::nlohmann_json)

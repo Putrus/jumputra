@@ -7,8 +7,8 @@
 
 #include "../../math/inc/Vector2.hpp"
 
-#include "../../graphic/inc/Resources.hpp"
-#include "../../graphic/inc/Window.hpp"
+#include "../../graphics/inc/Resources.hpp"
+#include "../../graphics/inc/Window.hpp"
 
 #include "../../logic/inc/Statistics.hpp"
 
@@ -25,8 +25,8 @@ namespace jp::game
    {
       Context();
 
-      graphic::Resources resources;
-      graphic::Window window;
+      graphics::Resources resources;
+      graphics::Window window;
 
       Language language;
       Properties properties;

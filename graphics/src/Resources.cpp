@@ -1,6 +1,6 @@
 #include "../inc/Resources.hpp"
 
-namespace jp::graphic
+namespace jp::graphics
 {
    void Resources::loadFromDirectory(const std::string& dirname)
    {

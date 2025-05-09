@@ -4,7 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace jp::graphic
+namespace jp::graphics
 {
    class Segment : public sf::Drawable
    {

@@ -4,7 +4,7 @@
 
 #include "../../core/inc/Jsonable.hpp"
 
-namespace jp::graphic
+namespace jp::graphics
 {
    struct Properties : public core::Jsonable
    {

@@ -1,0 +1,13 @@
+{
+  "dependencies": [
+      "nlohmann-json",
+      "sfml",
+      "gtest"
+   ],
+   "overrides": [
+   {
+      "name": "sfml",
+      "version": "2.6.2"
+   }
+  ]
+}

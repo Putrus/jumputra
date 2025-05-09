@@ -1,6 +1,6 @@
 #include "../inc/Properties.hpp"
 
-namespace jp::graphic
+namespace jp::graphics
 {
    void Properties::fromJson(const nlohmann::json& json)
    {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../algorithm/inc/Properties.hpp"
-#include "../../graphic/inc/Properties.hpp"
+#include "../../graphics/inc/Properties.hpp"
 #include "../../logic/inc/Properties.hpp"
 
 namespace jp::game
@@ -12,7 +12,7 @@ namespace jp::game
       nlohmann::json toJson() const override;
 
       algorithm::Properties algorithm;
-      graphic::Properties graphic;
+      graphics::Properties graphic;
       logic::Properties logic;
    };
 }

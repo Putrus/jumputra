@@ -1,6 +1,6 @@
 #include "../inc/Goal.hpp"
 
-namespace jp::graphic
+namespace jp::graphics
 {
    Goal::Goal(const math::Rect<float>& rect) : mShape(sf::Vector2f(rect.width, rect.height))
    {

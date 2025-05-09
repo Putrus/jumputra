@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../graphic/inc/Wind.hpp"
+#include "../../graphics/inc/Wind.hpp"
 #include "../../logic/inc/Wind.hpp"
 
 namespace jp::game
 {
-   class Wind : public graphic::Wind, public logic::Wind
+   class Wind : public graphics::Wind, public logic::Wind
    {
    public:
       Wind(float impact, const math::Vector2<float>& maxVelocity,

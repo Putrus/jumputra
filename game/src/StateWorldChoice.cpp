@@ -7,10 +7,10 @@ namespace jp::game
       context.loadWorlds();
       for (const auto& world : context.worlds)
       {
-         mMenu.addItem(context.language.getString(world), context.resources.getFont(graphic::FontID::Pixeled));
+         mMenu.addItem(context.language.getString(world), context.resources.getFont(graphics::FontID::Pixeled));
       }
       
-      mMenu.addItem(context.language.getString("back"), context.resources.getFont(graphic::FontID::Pixeled));
+      mMenu.addItem(context.language.getString("back"), context.resources.getFont(graphics::FontID::Pixeled));
    }
 
    void StateWorldChoice::update(float dt)

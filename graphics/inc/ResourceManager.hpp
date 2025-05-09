@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace jp::graphic
+namespace jp::graphics
 {
    template <typename Identifier, typename Resource>
    class ResourceManager
@@ -27,7 +27,7 @@ namespace jp::graphic
       std::unique_ptr<Resource> resource(new Resource());
       if (!resource->loadFromFile(filename))
       {
-         throw std::runtime_error("jp::graphic::ResourceManager::load -\
+         throw std::runtime_error("jp::graphics::ResourceManager::load -\
             Failed to load " + std::string(filename));
       }
       insertResource(id, std::move(resource));
@@ -39,7 +39,7 @@ namespace jp::graphic
       auto found = mResourceMap.find(id);
       if (found == mResourceMap.end())
       {
-         throw std::runtime_error("jp::graphic::ResourceManager::load -\
+         throw std::runtime_error("jp::graphics::ResourceManager::load -\
             Failed to get resource with id " + std::to_string((int)id));
       }
       return *found->second;
@@ -52,7 +52,7 @@ namespace jp::graphic
       auto inserted = mResourceMap.insert(std::make_pair(id, std::move(resource)));
       if (!inserted.second)
       {
-         throw std::runtime_error("jp::graphic::ResourceManager::insertResource -\
+         throw std::runtime_error("jp::graphics::ResourceManager::insertResource -\
             Failed to insert resource with id " + std::to_string((int)id));
       }
    }

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../graphic/inc/Segment.hpp"
+#include "../../graphics/inc/Segment.hpp"
 #include "../../logic/inc/Segment.hpp"
 
 namespace jp::game
 {
-   class Segment : public graphic::Segment
+   class Segment : public graphics::Segment
    {
    public:
       Segment(float aX, float aY, float bX, float bY,

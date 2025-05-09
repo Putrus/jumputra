@@ -7,24 +7,24 @@ namespace jp::game
       logic::Statistics& totalStatistics,
       const std::vector<std::shared_ptr<logic::Segment>>& segments,
       const std::vector<std::shared_ptr<logic::Wind>>& winds)
-      : graphic::Character(position, size), logic::Character(position, size, properties, totalStatistics, segments, winds) {}
+      : graphics::Character(position, size), logic::Character(position, size, properties, totalStatistics, segments, winds) {}
 
    Character::Character(const math::Rect<float>& rect,
       const logic::Properties &properties,
       logic::Statistics& totalStatistics,
       const std::vector<std::shared_ptr<logic::Segment>>& segments,
       const std::vector<std::shared_ptr<logic::Wind>>& winds)
-      : graphic::Character(rect), logic::Character(rect, properties, totalStatistics, segments, winds) {}
+      : graphics::Character(rect), logic::Character(rect, properties, totalStatistics, segments, winds) {}
 
    Character::Character(const nlohmann::json& json,
       const logic::Properties &properties,
       logic::Statistics& totalStatistics,
       const std::vector<std::shared_ptr<logic::Segment>>& segments,
       const std::vector<std::shared_ptr<logic::Wind>>& winds)
-      : graphic::Character(json), logic::Character(json, properties, totalStatistics, segments, winds) {}
+      : graphics::Character(json), logic::Character(json, properties, totalStatistics, segments, winds) {}
 
    Character::Character(const logic::Character& character)
-      : graphic::Character(character.getRect()), logic::Character(character) {}
+      : graphics::Character(character.getRect()), logic::Character(character) {}
 
    std::shared_ptr<Character> Character::create(const nlohmann::json& json,
       const logic::Properties &properties,
@@ -37,43 +37,43 @@ namespace jp::game
 
    void Character::setPosition(float x, float y)
    {
-      graphic::Character::setPosition(x, y);
+      graphics::Character::setPosition(x, y);
       logic::Character::setPosition(x, y);
    }
 
    void Character::setPosition(const math::Vector2<float>& position)
    {
-      graphic::Character::setPosition(position);
+      graphics::Character::setPosition(position);
       logic::Character::setPosition(position);
    }
 
    void Character::setRect(const math::Rect<float>& rect)
    {
-      graphic::Character::setRect(rect);
+      graphics::Character::setRect(rect);
       logic::Character::setRect(rect);
    }
 
    void Character::setRectTop(float y)
    {
-      graphic::Character::setRectTop(y);
+      graphics::Character::setRectTop(y);
       logic::Character::setRectTop(y);
    }
 
    void Character::setRectBottom(float y)
    {
-      graphic::Character::setRectBottom(y);
+      graphics::Character::setRectBottom(y);
       logic::Character::setRectBottom(y);
    }
 
    void Character::setRectLeft(float x)
    {
-      graphic::Character::setRectLeft(x);
+      graphics::Character::setRectLeft(x);
       logic::Character::setRectLeft(x);
    }
 
    void Character::setRectRight(float x)
    {
-      graphic::Character::setRectRight(x);
+      graphics::Character::setRectRight(x);
       logic::Character::setRectRight(x);
    }
 
@@ -82,15 +82,15 @@ namespace jp::game
       switch (state)
       {
          case logic::CharacterState::Squatting:
-            graphic::Character::setFlattening(mRect.height * 1.f / 3.f);
+            graphics::Character::setFlattening(mRect.height * 1.f / 3.f);
             break;
          case logic::CharacterState::Burying:
          case logic::CharacterState::Dying:
          case logic::CharacterState::Lying:
-            graphic::Character::setFlattening(mRect.height * 2.f / 3.f);
+            graphics::Character::setFlattening(mRect.height * 2.f / 3.f);
             break;
          default:
-            graphic::Character::setFlattening(0.f);
+            graphics::Character::setFlattening(0.f);
             break;
       }
       logic::Character::setState(state);

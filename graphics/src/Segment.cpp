@@ -2,7 +2,7 @@
 
 #include "../../math/inc/Vector2.hpp"
 
-namespace jp::graphic
+namespace jp::graphics
 {
    Segment::Segment(float aX, float aY, float bX, float bY,
       const sf::Color& color/* = sf::Color::White*/) : mVertices(sf::PrimitiveType::Lines, 2)

@@ -22,7 +22,9 @@ if(BUILD_TESTING)
       src/VerticalSegmentTest.cpp
       src/WindTest.cpp
       )
-   
+
+   find_package(GTest CONFIG REQUIRED)
+
    add_executable(jp_ut_logic ${HEADERS} ${SOURCES})
 
    target_link_libraries(jp_ut_logic PRIVATE GTest::gmock_main GTest::gtest_main jp_logic)

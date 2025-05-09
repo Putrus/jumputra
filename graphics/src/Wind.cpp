@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace jp::graphic
+namespace jp::graphics
 {
    Wind::Wind(const sf::FloatRect& rect) : mSprite(*mTexture)
    {
@@ -21,7 +21,7 @@ namespace jp::graphic
       }
       if (!mTexture->loadFromImage(*img))
       {
-         throw std::runtime_error("jp::graphic::Wind::createTexture - Failed to load texture from image");
+         throw std::runtime_error("jp::graphics::Wind::createTexture - Failed to load texture from image");
       }
 
       mSprite = sf::Sprite(*mTexture);

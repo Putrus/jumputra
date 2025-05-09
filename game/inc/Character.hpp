@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../../graphic/inc/Character.hpp"
+#include "../../graphics/inc/Character.hpp"
 #include "../../logic/inc/Character.hpp"
 
 #include <SFML/Graphics.hpp>
 
 namespace jp::game
 {
-   class Character : public graphic::Character, public logic::Character
+   class Character : public graphics::Character, public logic::Character
    {
    public:
       Character(const math::Vector2<float> &position, const math::Vector2<float> &size,

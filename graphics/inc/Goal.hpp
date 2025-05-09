@@ -5,7 +5,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace jp::graphic
+namespace jp::graphics
 {
    class Goal : public sf::Drawable
    {

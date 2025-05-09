@@ -4,7 +4,7 @@
 
 #include <nlohmann/json.hpp>
 
-namespace jp::graphic
+namespace jp::graphics
 {
    class Wind : public sf::Drawable
    {

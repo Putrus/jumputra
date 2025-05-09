@@ -6,7 +6,9 @@ if(BUILD_TESTING)
       src/SegmentTest.cpp
       src/Vector2Test.cpp
       )
-   
+
+   find_package(GTest CONFIG REQUIRED)
+
    add_executable(jp_ut_math ${HEADERS} ${SOURCES})
 
    target_link_libraries(jp_ut_math PRIVATE GTest::gtest_main jp_math)

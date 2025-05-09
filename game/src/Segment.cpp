@@ -5,7 +5,7 @@ namespace jp::game
    Segment::Segment(float aX, float aY, float bX, float bY,
       logic::SegmentSurface surface/* = logic::SegmentSurface::Ordinary*/)
       : mLogicSegment(logic::Segment::create(aX, aY, bX, bY, surface)),
-      graphic::Segment(aX, aY, bX, bY)
+      graphics::Segment(aX, aY, bX, bY)
    {
       switch (mLogicSegment->getSurface())
       {

@@ -1,6 +1,6 @@
 #include "../inc/Character.hpp"
 
-namespace jp::graphic
+namespace jp::graphics
 {
    Character::Character(const math::Vector2<float>& position, const math::Vector2<float>& size)
       : mShape(sf::Vector2f(size.x, size.y))
