@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.6..3.28)
+cmake_minimum_required(VERSION 3.6)
 
 project(jp_graphics
-VERSION 0.0.1
+VERSION 0.0.3
 LANGUAGES CXX
 DESCRIPTION "jumputra graphics"
 )
@@ -27,8 +27,8 @@ set(SOURCES
    src/Window.cpp
    )
 
-find_package(SFML COMPONENTS graphics window audio system CONFIG REQUIRED)
+find_package(SFML COMPONENTS Graphics Window Audio System CONFIG REQUIRED)
 
 add_library(jp_graphics STATIC ${HEADERS} ${SOURCES})
 
-target_link_libraries(jp_graphics PUBLIC jp_core sfml-graphics sfml-window sfml-audio sfml-system)
+target_link_libraries(jp_graphics PUBLIC jp_core SFML::Graphics SFML::Window SFML::Audio SFML::System)

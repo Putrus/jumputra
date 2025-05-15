@@ -16,7 +16,7 @@ namespace jp::game
       resetView();
    }
 
-   void Game::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
+   void Game::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
       for (const auto& drawable : mDrawables)
       {
@@ -24,22 +24,22 @@ namespace jp::game
       }
    }
 
-   void Game::event(const sf::Event& event)
+   void Game::event(const std::optional<sf::Event>& event)
    {
-      if (event.type == sf::Event::KeyReleased)
+      if (const auto* keyReleased = event->getIf<sf::Event::KeyReleased>())
       {
-         switch (event.key.code)
+         switch (keyReleased->scancode)
          {
-         case sf::Keyboard::Key::V:
+         case sf::Keyboard::Scancode::V:
             mViewFollowCharacter = mViewFollowCharacter ? false : true;
             break;
-         case sf::Keyboard::Key::Numpad8:
+         case sf::Keyboard::Scancode::Numpad8:
             if (!mViewFollowCharacter)
             {
                changeView(-static_cast<float>(mContext.properties.graphic.window.size.y));
             }
             break;
-         case sf::Keyboard::Key::Numpad2:
+         case sf::Keyboard::Scancode::Numpad2:
             if (!mViewFollowCharacter)
             {
                changeView(mContext.properties.graphic.window.size.y);
@@ -176,7 +176,7 @@ namespace jp::game
          }), mDrawables.end());
    }
 
-   void Game::humanCharacterControl(const sf::Event& event)
+   void Game::humanCharacterControl(const std::optional<sf::Event>& event)
    {
       if (mCharacters.empty())
       {
@@ -184,48 +184,48 @@ namespace jp::game
       }
 
       logic::Character& controlledCharacter = *mCharacters.at(0);
-      if (event.type == sf::Event::KeyPressed)
+      if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
       {
-         switch (event.key.code)
+         switch (keyPressed->scancode)
          {
-         case sf::Keyboard::Key::Left:
-         case sf::Keyboard::Key::A:
+         case sf::Keyboard::Scancode::Left:
+         case sf::Keyboard::Scancode::A:
             controlledCharacter.run(logic::CharacterDirection::Left);
             break;
-         case sf::Keyboard::Key::Right:
-         case sf::Keyboard::Key::D:
+         case sf::Keyboard::Scancode::Right:
+         case sf::Keyboard::Scancode::D:
             controlledCharacter.run(logic::CharacterDirection::Right);
             break;
-         case sf::Keyboard::Key::Space:
+         case sf::Keyboard::Scancode::Space:
             controlledCharacter.squat();
             break;
          default:
             break;
          }
       }
-
-      if (event.type == sf::Event::KeyReleased)
+      
+      if (const auto* keyReleased = event->getIf<sf::Event::KeyReleased>())
       {
-         switch (event.key.code)
+         switch (keyReleased->scancode)
          {
-         case sf::Keyboard::Key::Space:
+         case sf::Keyboard::Scancode::Space:
             controlledCharacter.jump();
             break;
-         case sf::Keyboard::Key::Left:
-         case sf::Keyboard::Key::A:
+         case sf::Keyboard::Scancode::Left:
+         case sf::Keyboard::Scancode::A:
             if (controlledCharacter.getDirection() == logic::CharacterDirection::Left)
             {
                controlledCharacter.stop();
             }
             break;
-         case sf::Keyboard::Key::Right:
-         case sf::Keyboard::Key::D:
+         case sf::Keyboard::Scancode::Right:
+         case sf::Keyboard::Scancode::D:
             if (controlledCharacter.getDirection() == logic::CharacterDirection::Right)
             {
                controlledCharacter.stop();
             }
             break;
-         case sf::Keyboard::Key::L:
+         case sf::Keyboard::Scancode::L:
             std::cout << "Log: " << std::endl;
             std::cout << "position: " << controlledCharacter.getPosition() << std::endl;
             std::cout << "state: " << controlledCharacter.getState() << std::endl;

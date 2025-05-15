@@ -11,7 +11,7 @@ if(BUILD_TESTING)
 
    add_executable(jp_ut_math ${HEADERS} ${SOURCES})
 
-   target_link_libraries(jp_ut_math PRIVATE GTest::gtest_main jp_math)
+   target_link_libraries(jp_ut_math PRIVATE GTest::gtest_main)
    
    include(GoogleTest)
    gtest_discover_tests(jp_ut_math)

@@ -13,7 +13,7 @@ namespace jp::graphics
       Goal(const math::Rect<float>& rect);
       Goal(const nlohmann::json& json);
       
-      void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
+      void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
    private:
       sf::RectangleShape mShape;

@@ -10,8 +10,7 @@ namespace jp::game
       properties.loadFromJsonFile(std::string(OPTIONS_DIR) + "properties.json");
       setLanguage(properties.graphic.language);
 
-      sf::Image image;
-      image.create(sf::Vector2u(24, 24), sf::Color::Red);
+      sf::Image image(sf::Vector2u(24, 24), sf::Color::Red);
       window.setIcon(image);
       window.setSize(sf::Vector2u(properties.graphic.window.size.x, properties.graphic.window.size.y));
       window.setVerticalSyncEnabled(true);

@@ -20,8 +20,8 @@ namespace jp::game
       Game(Context& context);
       virtual ~Game();
 
-      void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
-      void event(const sf::Event& event) override;
+      void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+      void event(const std::optional<sf::Event>& event) override;
       void update(float dt) override;
 
       void addCharacter(const math::Rect<float>& rect) override;
@@ -37,7 +37,7 @@ namespace jp::game
    private:
       void updateView();
       void removeRedundantDrawables();
-      void humanCharacterControl(const sf::Event& event);
+      void humanCharacterControl(const std::optional<sf::Event>& event);
       void changeView(float y);
 
       void setGoal(const nlohmann::json& json) override;

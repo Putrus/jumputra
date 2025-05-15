@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.6..3.28)
+cmake_minimum_required(VERSION 3.6)
 
 project(jp_logic
-VERSION 0.0.1
+VERSION 0.0.3
 LANGUAGES CXX
 DESCRIPTION "jumputra logic"
 )
@@ -45,4 +45,4 @@ set(SOURCES
 
 add_library(jp_logic STATIC ${HEADERS} ${SOURCES})
 
-target_link_libraries(jp_logic PUBLIC jp_math)
+target_link_libraries(jp_logic PUBLIC jp_core)

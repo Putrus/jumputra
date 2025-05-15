@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.6..3.28)
+cmake_minimum_required(VERSION 3.6)
 
 project(jumputra
-   VERSION 0.0.1
+   VERSION 0.0.3
    LANGUAGES CXX
    DESCRIPTION "Comparative Analysis of Metaheuristics, Machine Learning, and Human in a Platform Game"
    )

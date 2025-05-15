@@ -24,28 +24,30 @@ namespace jp::game
 
    void Jumputra::event()
    {
-      sf::Event event;
-      while (mContext.window.pollEvent(event))
+      while (const std::optional event = mContext.window.pollEvent())
       {
-         mStateStack.event(event);
+         mStateStack.event(event.value());
 
-         if (event.type == sf::Event::Closed)
+         if (event->is<sf::Event::Closed>())
          {
             mContext.window.close();
          }
-
-         switch (event.key.code)
+         
+         if (const auto* keyPressed = event->getIf<sf::Event::KeyReleased>())
          {
-         case sf::Keyboard::Key::F1:
-            mContext.window.setSize(sf::Vector2u(480, 360));
-            break;
-         case sf::Keyboard::Key::F2:
-            mContext.window.setSize(sf::Vector2u(720, 540));
-            break;
-         case sf::Keyboard::Key::F3:
-            mContext.window.setSize(sf::Vector2u(960, 720));
-         default:
-            break;
+            switch (keyPressed->scancode)
+            {
+            case sf::Keyboard::Scancode::F1:
+               mContext.window.setSize(sf::Vector2u(480, 360));
+               break;
+            case sf::Keyboard::Scancode::F2:
+               mContext.window.setSize(sf::Vector2u(720, 540));
+               break;
+            case sf::Keyboard::Scancode::F3:
+               mContext.window.setSize(sf::Vector2u(960, 720));
+            default:
+               break;
+            }
          }
       }
    }

@@ -4,30 +4,30 @@ namespace jp::game
 {
    StateMenu::StateMenu(StateStack* stack, Context& context) : State(stack, context) {}
 
-   void StateMenu::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
+   void StateMenu::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
       target.draw(mMenu);
    }
 
-   void StateMenu::event(const sf::Event& event)
+   void StateMenu::event(const std::optional<sf::Event>& event)
    {
-      if (event.type == sf::Event::KeyReleased)
+      if (const auto* keyPressed = event->getIf<sf::Event::KeyReleased>())
       {
-         switch (event.key.code)
+         switch (keyPressed->scancode)
          {
-         case sf::Keyboard::Key::Up:
-         case sf::Keyboard::Key::W:
+         case sf::Keyboard::Scancode::Up:
+         case sf::Keyboard::Scancode::W:
             mMenu.setSelected(mMenu.getSelected() - 1);
             break;
-         case sf::Keyboard::Key::Down:
-         case sf::Keyboard::Key::S:
+         case sf::Keyboard::Scancode::Down:
+         case sf::Keyboard::Scancode::S:
             mMenu.setSelected(mMenu.getSelected() + 1);
             break;
-         case sf::Keyboard::Key::Space:
-         case sf::Keyboard::Key::Enter:
+         case sf::Keyboard::Scancode::Space:
+         case sf::Keyboard::Scancode::Enter:
             performSelected();
             break;
-         case sf::Keyboard::Key::Escape:
+         case sf::Keyboard::Scancode::Escape:
             close();
             break;
          default:

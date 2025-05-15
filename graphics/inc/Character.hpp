@@ -14,7 +14,7 @@ namespace jp::graphics
       Character(const math::Rect<float>& rect);
       Character(const nlohmann::json& json);
 
-      void draw(sf::RenderTarget &target, const sf::RenderStates &states) const override;
+      void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
    protected:
       void setFlattening(float flattening);

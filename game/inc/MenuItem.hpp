@@ -14,7 +14,7 @@ namespace jp::game
          const sf::Color& deselectColor = sf::Color::White,
          const sf::Color& selectColor = sf::Color::Yellow);
 
-      void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+      void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
       void deselect() override;
       void select() override;

@@ -18,7 +18,7 @@ namespace jp::graphics
    Character::Character(const nlohmann::json& json)
       : Character(math::Rect<float>(json["rect"]["left"], json["rect"]["top"], json["rect"]["width"], json["rect"]["height"])) {}
 
-   void Character::draw(sf::RenderTarget &target, const sf::RenderStates &states) const
+   void Character::draw(sf::RenderTarget &target, sf::RenderStates states) const
    {
       target.draw(mShape);
    }

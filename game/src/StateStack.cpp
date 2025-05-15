@@ -14,7 +14,7 @@ namespace jp::game
       pushState(id);
    }
 
-   void StateStack::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
+   void StateStack::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
       if (!mStack.empty())
       {
@@ -22,7 +22,7 @@ namespace jp::game
       }
    }
 
-   void StateStack::event(const sf::Event& event)
+   void StateStack::event(const std::optional<sf::Event>& event)
    {
       if (!mStack.empty())
       {

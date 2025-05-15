@@ -39,7 +39,7 @@ namespace jp::graphics
       mVertices[1].color = color;
    }
 
-   void Segment::draw(sf::RenderTarget &target, const sf::RenderStates &states) const
+   void Segment::draw(sf::RenderTarget &target, sf::RenderStates states) const
    {
       target.draw(mVertices);
    }

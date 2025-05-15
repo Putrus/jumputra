@@ -10,7 +10,7 @@ namespace jp::game
    class Menu : public sf::Drawable, public logic::SelectionManager
    {
    public:
-      void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+      void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
       void addItem(const std::string& text, const sf::Font& font,
          const sf::Color& deselectColor = sf::Color::White,

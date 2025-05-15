@@ -12,7 +12,7 @@ namespace jp::game
       mText.setFillColor(deselectColor);
    }
 
-   void MenuItem::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
+   void MenuItem::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
       target.draw(mText);
    }

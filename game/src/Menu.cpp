@@ -2,7 +2,7 @@
 
 namespace jp::game
 {
-   void Menu::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
+   void Menu::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
       for (const auto& item : mItems)
       {

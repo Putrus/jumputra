@@ -7,8 +7,8 @@ namespace jp::graphics
    Wind::Wind(const sf::FloatRect& rect) : mSprite(*mTexture)
    {
       //temporary, sf::Sprite default constructor is deleted...
-      std::unique_ptr<sf::Image> img = std::make_unique<sf::Image>();
-      img->create(sf::Vector2u(static_cast<unsigned int>(rect.width * 2), static_cast<unsigned int>(rect.height)), sf::Color::Transparent);
+      std::unique_ptr<sf::Image> img = std::make_unique<sf::Image>(sf::Vector2u(static_cast<unsigned int>(rect.size.x * 2),
+         static_cast<unsigned int>(rect.size.y)), sf::Color::Transparent);
       unsigned int yInterspace = 32;
       unsigned int xInterspace = yInterspace * 2;
       for (unsigned int y = 0; y < img->getSize().y; y += yInterspace)
@@ -25,13 +25,13 @@ namespace jp::graphics
       }
 
       mSprite = sf::Sprite(*mTexture);
-      mSprite.setPosition(sf::Vector2f(rect.left - mTexture->getSize().x, rect.top));
+      mSprite.setPosition(sf::Vector2f(rect.position.x - mTexture->getSize().x, rect.position.y));
    }
 
    Wind::Wind(const nlohmann::json& json)
       : Wind(sf::FloatRect(sf::Vector2f(json["rect"]["left"], json["rect"]["top"]), sf::Vector2f(json["rect"]["width"], json["rect"]["height"]))) {}
 
-   void Wind::draw(sf::RenderTarget &target, const sf::RenderStates &states) const
+   void Wind::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
       target.draw(mSprite);
    }

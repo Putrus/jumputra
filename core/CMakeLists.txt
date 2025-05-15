@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.6..3.28)
+cmake_minimum_required(VERSION 3.6)
 
 project(jp_core
-VERSION 0.0.1
+VERSION 0.0.3
 LANGUAGES CXX
 DESCRIPTION "jumputra core"
 )
@@ -20,7 +20,7 @@ set(SOURCES
    src/String.cpp
    )
 
-find_package(nlohmann_json REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 add_library(jp_core STATIC ${HEADERS} ${SOURCES})
 

@@ -23,26 +23,26 @@ namespace jp::game
       mAlgorithm = algorithm::Algorithm::create(mContext.algorithm, mGame, logger, context.properties.algorithm);
    }
 
-   void StateGame::draw(sf::RenderTarget& target, const sf::RenderStates& states) const
+   void StateGame::draw(sf::RenderTarget& target, sf::RenderStates states) const
    {
       target.draw(*mGame);
    }
 
-   void StateGame::event(const sf::Event& event)
+   void StateGame::event(const std::optional<sf::Event>& event)
    {
-      if (event.type == sf::Event::Closed)
-      {
+      if (event->is<sf::Event::Closed>())
+        {
          if (mContext.algorithm == algorithm::AlgorithmName::Human)
          {
             mGame->save();
          }
       }
 
-      if (event.type == sf::Event::KeyReleased)
+      if (const auto* keyReleased = event->getIf<sf::Event::KeyReleased>())
       {
-         switch (event.key.code)
+         switch (keyReleased->scancode)
          {
-         case sf::Keyboard::Key::Escape:
+         case sf::Keyboard::Scancode::Escape:
             if (mContext.algorithm == algorithm::AlgorithmName::Human)
             {
                mGame->save();
@@ -51,7 +51,7 @@ namespace jp::game
             mContext.statistics = mGame->getStatistics();
             pushState(StateID::Pause);
             break;
-         case sf::Keyboard::Key::M:
+         case sf::Keyboard::Scancode::M:
             mAlgorithm->saveMoves("test.json");
             break;
          default:

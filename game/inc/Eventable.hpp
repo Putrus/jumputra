@@ -7,6 +7,6 @@ namespace jp::game
    class Eventable
    {
    public:
-      virtual void event(const sf::Event& event) = 0;
+      virtual void event(const std::optional<sf::Event>& event) = 0;
    };
 }

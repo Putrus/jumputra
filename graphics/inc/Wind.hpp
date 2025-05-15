@@ -12,7 +12,7 @@ namespace jp::graphics
       Wind(const sf::FloatRect& rect);
       Wind(const nlohmann::json& json);
 
-      void draw(sf::RenderTarget& target, const sf::RenderStates& states) const override;
+      void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
    protected:
       void move(const sf::Vector2f& offset);

@@ -25,7 +25,7 @@ namespace jp::graphics
    void ResourceManager<Identifier, Resource>::load(Identifier id, const std::string& filename)
    {
       std::unique_ptr<Resource> resource(new Resource());
-      if (!resource->loadFromFile(filename))
+      if (!resource->openFromFile(filename))
       {
          throw std::runtime_error("jp::graphics::ResourceManager::load -\
             Failed to load " + std::string(filename));

@@ -13,7 +13,7 @@ namespace jp::graphics
    Goal::Goal(const nlohmann::json& json)
       : Goal(math::Rect<float>(json["rect"]["left"], json["rect"]["top"], json["rect"]["width"], json["rect"]["height"])) {}
 
-   void Goal::draw(sf::RenderTarget &target, const sf::RenderStates &states) const
+   void Goal::draw(sf::RenderTarget &target, sf::RenderStates states) const
    {
       target.draw(mShape);
    }
