@@ -15,6 +15,26 @@ Polish: Analiza porównawcza algorytmów metaheurystycznych, uczenia maszynowego
 
 ### CMake
 The minimum required version is 3.6. 
+
+### Windows
+```
+git clone https://github.com/Putrus/jumputra
+```
+```
+cd jumputra
+```
+```
+git submodule update --init --recursive
+```
+```
+vcpkg/bootstrap-vcpkg.bat
+```
+```
+cmake --preset=msvc-x64
+```
+```
+cmake --build --preset=msvc-x64-release
+```
 ```
 git clone https://github.com/Putrus/jumputra # Cloning a repository
 cd jumputra                                  # Main directory of the cloned repository.
