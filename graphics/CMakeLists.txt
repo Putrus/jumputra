@@ -27,6 +27,10 @@ set(SOURCES
    src/Window.cpp
    )
 
+if(VCPKG_TARGET_TRIPLET STREQUAL "x64-mingw-static")
+   add_compile_definitions(SFML_STATIC)
+endif()
+
 find_package(SFML COMPONENTS Graphics Window Audio System CONFIG REQUIRED)
 
 add_library(jp_graphics STATIC ${HEADERS} ${SOURCES})

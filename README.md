@@ -29,20 +29,22 @@ git submodule update --init --recursive
 ```
 vcpkg/bootstrap-vcpkg.bat
 ```
+
+### MSVC x64 Release
 ```
 cmake --preset=msvc-x64
 ```
 ```
 cmake --build --preset=msvc-x64-release
 ```
-```
-git clone https://github.com/Putrus/jumputra # Cloning a repository
-cd jumputra                                  # Main directory of the cloned repository.
-cmake -S . -B build                          # Default compiler
-cmake -G "MinGW Makefiles" -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc -DCMAKE_BUILD_TYPE=Release -S . -B build # Recommended g++ compiler
-cmake --build build                          # Game installation
-```
 
+### MinGW x64 g++
+```
+cmake --preset=msvc-x64
+```
+```
+cmake --build --preset=msvc-x64-release
+```
 ### Installing required libraries on Ubuntu
 ```
 sudo apt-get install cmake
@@ -61,10 +63,10 @@ sudo apt-get install libflac-dev
 
 ## Run
 ### jumputra
-The jumputra executable (jumputra.exe on windows) is located in the build/bin folder
+The jumputra executable (jumputra.exe on windows) is located in the build/${presetName}/bin folder
 
 ### consolutra
-The console version of consolutra (consolutra.exe on windows) simulating the algorithms is also located in the build/bin folder. It should be executed with the parameters.
+The console version of consolutra (consolutra.exe on windows) simulating the algorithms is also located in the build/${presetName}/bin folder. It should be executed with the parameters.
 ```
-consolutra.exe -run <properties filename> <world filename> <algorithm name> <max execution minutes> # Windows
+consolutra.exe -run <properties filename> <world filename> <algorithm name> <max execution minutes>
 ```
