@@ -40,25 +40,10 @@ cmake --build --preset=msvc-x64-release
 
 ### MinGW x64 g++
 ```
-cmake --preset=msvc-x64
+cmake --preset=gcc-windows-x64
 ```
 ```
-cmake --build --preset=msvc-x64-release
-```
-### Installing required libraries on Ubuntu
-```
-sudo apt-get install cmake
-sudo apt-get install build-essential
-sudo apt-get install libx11-dev
-sudo apt-get install libxrandr-dev
-sudo apt-get install libxinerama-dev
-sudo apt-get install libxcursor-dev
-sudo apt-get install libgl1-mesa-dev
-sudo apt-get install libudev-dev
-sudo apt-get install libfreetype-dev
-sudo apt-get install libopenal-dev
-sudo apt-get install libvorbis-dev
-sudo apt-get install libflac-dev
+cmake --build --preset=gcc-windows-x64-release
 ```
 
 ## Run
